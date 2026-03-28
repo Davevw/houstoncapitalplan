@@ -1516,3 +1516,214 @@ function SSEWF({m,f,cs,ml,rng}){
       </tr>);})}
   </tbody></table></div>);
 }
+
+// ═══════════════════════════════════════════════════════════════
+// TAB 9: DATA VAULT
+// ═══════════════════════════════════════════════════════════════
+const VAULT_CATEGORIES = [
+  {
+    name: "Financial Models", icon: "\ud83d\udcca",
+    docs: [
+      { name: "ITPH Financial Model v9.xlsx", desc: "Complete working financial model with lot schedule, cash flows, equity waterfall", type: "xlsx", placeholder: false },
+      { name: "OPC Breakdown.xlsx", desc: "Opinion of Probable Cost by construction phase", type: "xlsx", placeholder: false },
+    ]
+  },
+  {
+    name: "Project Documents", icon: "\ud83d\udccb",
+    docs: [
+      { name: "Equity Investment Proposal.docx", desc: "Confidential investment memorandum for equity partners", type: "docx", placeholder: false },
+      { name: "Project Summary.pdf", desc: "Executive summary of ITP Houston development", type: "pdf", placeholder: false },
+    ]
+  },
+  {
+    name: "Engineering & Infrastructure", icon: "\ud83c\udfd7\ufe0f",
+    docs: [
+      { name: "Site Plan.pdf", desc: "", type: "pdf", placeholder: true },
+      { name: "MUD Bond Documentation.pdf", desc: "", type: "pdf", placeholder: true },
+      { name: "Environmental Reports.pdf", desc: "", type: "pdf", placeholder: true },
+    ]
+  },
+  {
+    name: "Maps & Plans", icon: "\ud83d\udcd0",
+    docs: [
+      { name: "Master Plan.pdf", desc: "", type: "pdf", placeholder: true },
+      { name: "Lot Map.pdf", desc: "", type: "pdf", placeholder: true },
+      { name: "Infrastructure Phasing Plan.pdf", desc: "", type: "pdf", placeholder: true },
+    ]
+  },
+  {
+    name: "Legal & Compliance", icon: "\u2696\ufe0f",
+    docs: [
+      { name: "Joint Venture Agreement.pdf", desc: "", type: "pdf", placeholder: true },
+      { name: "MUD District Documentation.pdf", desc: "", type: "pdf", placeholder: true },
+    ]
+  },
+  {
+    name: "Media & Marketing", icon: "\ud83d\udcf8",
+    docs: [
+      { name: "Aerial Photography.zip", desc: "", type: "zip", placeholder: true },
+      { name: "Marketing Presentation.pptx", desc: "", type: "pptx", placeholder: true },
+    ]
+  },
+];
+
+const FILE_TYPE_COLORS = { pdf: "#E85D75", xlsx: "#2E8B57", docx: "#3D8EC9", pptx: "#C4703E", png: "#D4A84B", zip: "#7A8B9A", jpg: "#D4A84B" };
+
+function DataVaultTab() {
+  const [documents, setDocuments] = useState([]);
+  const [uploading, setUploading] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const fileInputRef = useRef(null);
+  const [uploadCategory, setUploadCategory] = useState(null);
+
+  useEffect(() => {
+    fetchDocuments();
+  }, []);
+
+  async function fetchDocuments() {
+    const { data } = await supabase.from("vault_documents").select("*").order("uploaded_at", { ascending: false });
+    if (data) setDocuments(data);
+  }
+
+  async function handleUpload(category, file) {
+    if (!file) return;
+    setUploading(category);
+    setUploadProgress(10);
+
+    const ext = file.name.split(".").pop().toLowerCase();
+    const folderName = category.replace(/[^a-zA-Z0-9]/g, "_");
+    const filePath = folderName + "/" + Date.now() + "_" + file.name;
+
+    setUploadProgress(30);
+    const { error: storageError } = await supabase.storage.from("itph-data-vault").upload(filePath, file);
+    if (storageError) { console.error(storageError); setUploading(null); return; }
+
+    setUploadProgress(70);
+    const { error: dbError } = await supabase.from("vault_documents").insert({
+      name: file.name,
+      description: "",
+      category: category,
+      file_path: filePath,
+      file_type: ext,
+      file_size: file.size,
+    });
+
+    setUploadProgress(100);
+    if (!dbError) await fetchDocuments();
+    setTimeout(() => { setUploading(null); setUploadProgress(0); }, 500);
+  }
+
+  function getDocUrl(filePath) {
+    const { data } = supabase.storage.from("itph-data-vault").getPublicUrl(filePath);
+    return data.publicUrl;
+  }
+
+  const totalDocs = documents.length;
+  const totalCategories = VAULT_CATEGORIES.length;
+
+  return (
+    <div>
+      <SectionTitle icon={"\ud83d\udcc1"}>Project Data Vault</SectionTitle>
+      <div style={{ fontSize: 12, color: "#7A8B9A", marginBottom: 16 }}>
+        Secure document repository for ITP Houston project materials. All documents are confidential and for authorized recipients only.
+      </div>
+      <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: LIGHT, padding: "8px 16px", borderRadius: 8, fontSize: 12, color: NAVY, fontWeight: 600, marginBottom: 24 }}>
+        <FileText size={14} /> {totalDocs} documents across {totalCategories} categories
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
+        {VAULT_CATEGORIES.map(cat => {
+          const catDocs = documents.filter(d => d.category === cat.name);
+          return (
+            <div key={cat.name} style={{ background: "white", borderRadius: 12, padding: 20, boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span style={{ fontSize: 20 }}>{cat.icon}</span>
+                  <span style={{ fontSize: 16, fontWeight: 700, color: NAVY }}>{cat.name}</span>
+                  <span style={{ background: STEEL + "30", color: TEAL, fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 10 }}>{catDocs.length}</span>
+                </div>
+                <button
+                  onClick={() => { setUploadCategory(cat.name); fileInputRef.current && fileInputRef.current.click(); }}
+                  style={{ display: "inline-flex", alignItems: "center", gap: 4, background: TERRA, color: "white", border: "none", padding: "6px 12px", borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: "pointer" }}
+                >
+                  <Upload size={12} /> Upload
+                </button>
+              </div>
+
+              {uploading === cat.name && (
+                <div style={{ marginBottom: 12 }}>
+                  <div style={{ background: "#F0F2F4", borderRadius: 4, height: 6, overflow: "hidden" }}>
+                    <div style={{ width: uploadProgress + "%", height: "100%", background: TEAL, borderRadius: 4, transition: "width 0.3s" }} />
+                  </div>
+                  <div style={{ fontSize: 10, color: "#7A8B9A", marginTop: 4 }}>Uploading... {uploadProgress}%</div>
+                </div>
+              )}
+
+              {/* Uploaded documents */}
+              {catDocs.map(doc => (
+                <div key={doc.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #F0F2F4" }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 13, color: NAVY, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{doc.name}</div>
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
+                      <span style={{ background: (FILE_TYPE_COLORS[doc.file_type] || "#7A8B9A") + "26", color: FILE_TYPE_COLORS[doc.file_type] || "#7A8B9A", fontSize: 10, padding: "3px 8px", borderRadius: 4, fontWeight: 700, textTransform: "uppercase" }}>{doc.file_type}</span>
+                      <span style={{ fontSize: 12, color: "#7A8B9A" }}>{new Date(doc.uploaded_at).toLocaleDateString()}</span>
+                      {doc.file_size && <span style={{ fontSize: 12, color: "#7A8B9A" }}>{(doc.file_size / 1024).toFixed(0)} KB</span>}
+                    </div>
+                  </div>
+                  <a href={getDocUrl(doc.file_path)} download style={{ display: "inline-flex", alignItems: "center", gap: 4, border: "1.5px solid " + STEEL, color: TEAL, background: "white", padding: "4px 10px", borderRadius: 6, fontSize: 11, fontWeight: 600, textDecoration: "none", cursor: "pointer" }}>
+                    <Download size={12} /> Download
+                  </a>
+                </div>
+              ))}
+
+              {/* Placeholder documents */}
+              {cat.docs.filter(d => d.placeholder && !catDocs.find(cd => cd.name === d.name)).map(doc => (
+                <div key={doc.name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px dashed #E0E4E8" }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 13, color: "#B0BEC5", fontWeight: 500 }}>{doc.name}</div>
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
+                      <span style={{ background: "#F0F2F4", color: "#B0BEC5", fontSize: 10, padding: "3px 8px", borderRadius: 4, fontWeight: 700, textTransform: "uppercase" }}>{doc.type}</span>
+                      <span style={{ fontSize: 12, color: "#B0BEC5" }}>Pending upload</span>
+                    </div>
+                  </div>
+                  <span style={{ fontSize: 11, color: "#B0BEC5", fontStyle: "italic" }}>Coming soon</span>
+                </div>
+              ))}
+
+              {/* Non-placeholder docs that haven't been uploaded yet */}
+              {cat.docs.filter(d => !d.placeholder && !catDocs.find(cd => cd.name === d.name)).map(doc => (
+                <div key={doc.name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #F0F2F4" }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontSize: 13, color: "#7A8B9A", fontWeight: 500 }}>{doc.name}</div>
+                    {doc.desc && <div style={{ fontSize: 11, color: "#9AA5B0", marginTop: 2 }}>{doc.desc}</div>}
+                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
+                      <span style={{ background: (FILE_TYPE_COLORS[doc.type] || "#7A8B9A") + "26", color: FILE_TYPE_COLORS[doc.type] || "#7A8B9A", fontSize: 10, padding: "3px 8px", borderRadius: 4, fontWeight: 700, textTransform: "uppercase" }}>{doc.type}</span>
+                      <span style={{ fontSize: 12, color: "#B0BEC5" }}>Not yet uploaded</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })}
+      </div>
+
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept=".pdf,.xlsx,.docx,.pptx,.png,.jpg,.zip"
+        style={{ display: "none" }}
+        onChange={(e) => {
+          if (e.target.files[0] && uploadCategory) {
+            handleUpload(uploadCategory, e.target.files[0]);
+          }
+          e.target.value = "";
+        }}
+      />
+
+      <div style={{ textAlign: "center", marginTop: 32, padding: 16, fontSize: 11, color: "#7A8B9A", borderTop: "1px solid #E0E4E8" }}>
+        Documents are confidential. Distribution requires written authorization from LANDCO NEXA Development.
+      </div>
+    </div>
+  );
+}
