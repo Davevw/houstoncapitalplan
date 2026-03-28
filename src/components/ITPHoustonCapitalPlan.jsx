@@ -979,7 +979,7 @@ export default function App(){
               <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>International Trade Park Houston</h1>
               <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
             </div>
-            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}><div>Capital Plan — Interactive Financial Model</div><div>Confidential — March 2026</div></div>
+            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}><div style={{fontSize:14,fontWeight:700,letterSpacing:1}}>PLUSAdvantage™ 2026</div><div>Capital Plan — Interactive Financial Model</div><div>Confidential — March 2026</div></div>
           </div>
           <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap"}}>
             {TABS.map((t,i)=>(
