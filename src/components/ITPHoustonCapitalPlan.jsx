@@ -1722,7 +1722,8 @@ function DataVaultTab() {
       />
 
       <div style={{ textAlign: "center", marginTop: 32, padding: 16, fontSize: 11, color: "#7A8B9A", borderTop: "1px solid #E0E4E8" }}>
-        Documents are confidential. Distribution requires written authorization from LANDCO NEXA Development.
+        <div>Documents are confidential. Distribution requires written authorization from LANDCO NEXA Development.</div>
+        <div style={{ marginTop: 6, opacity: 0.7 }}>Powered by PLUSAdvantage™</div>
       </div>
     </div>
   );
