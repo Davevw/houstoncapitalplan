@@ -956,7 +956,7 @@ function SectionTitle({children,icon}){
 // MAIN APP
 // ═══════════════════════════════════════════════════════════════
 
-const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Equity Waterfall","Expenditures","Deemed Capital","Financial Model"];
+const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Equity Waterfall","Expenditures","Deemed Capital","Financial Model","Data Vault"];
 
 export default function App(){
   const [activeTab,setActiveTab]=useState(0);
