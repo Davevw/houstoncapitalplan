@@ -1531,6 +1531,7 @@ const VAULT_CATEGORIES = [
   {
     name: "Project Documents", icon: "\ud83d\udccb",
     docs: [
+      { name: "Equity Investment Presentation", desc: "Confidential investor presentation — ITP Houston equity opportunity", type: "pdf", placeholder: false },
       { name: "Equity Investment Proposal.docx", desc: "Confidential investment memorandum for equity partners", type: "docx", placeholder: false },
       { name: "Project Summary.pdf", desc: "Executive summary of ITP Houston development", type: "pdf", placeholder: false },
     ]
