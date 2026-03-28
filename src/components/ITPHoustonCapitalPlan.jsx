@@ -997,6 +997,7 @@ export default function App(){
         {activeTab===5&&<ExpendituresTab/>}
         {activeTab===6&&<DeemedCapitalTab/>}
         {activeTab===7&&<SpreadsheetTab model={model} params={params}/>}
+        {activeTab===8&&<DataVaultTab/>}
       </div>
       <div style={{background:NAVY,padding:"20px 32px",textAlign:"center"}}>
         <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>LANDCO NEXA Development &nbsp;|&nbsp; Confidential Investment Analysis &nbsp;|&nbsp; For Authorized Recipients Only</div>
