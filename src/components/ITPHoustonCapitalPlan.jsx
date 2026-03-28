@@ -969,6 +969,14 @@ export default function App(){
   const updateParam=useCallback((key,val)=>setParams(p=>({...p,[key]:val})),[]);
   const updateLot=useCallback((id,month)=>setLots(prev=>prev.map(l=>l.id===id?{...l,saleMonth:month}:l)),[]);
 
+  const [showPresentation, setShowPresentation] = useState(false);
+  const [presentationUrl, setPresentationUrl] = useState(null);
+
+  useEffect(() => {
+    const { data } = supabase.storage.from("itph-data-vault").getPublicUrl("Presentations/ITP_Houston_Investor_Presentation.pdf");
+    if (data?.publicUrl) setPresentationUrl(data.publicUrl);
+  }, []);
+
   return(
     <div style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif"}}>
       <div style={{background:`linear-gradient(135deg,${NAVY} 0%,${TEAL} 100%)`,padding:"28px 32px 20px",color:"white"}}>
@@ -979,7 +987,19 @@ export default function App(){
               <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>International Trade Park Houston</h1>
               <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
             </div>
-            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}><div style={{fontSize:14,fontWeight:700,letterSpacing:1}}>PLUSAdvantage™ 2026</div><div>Capital Plan — Interactive Financial Model</div><div>Confidential — March 2026</div></div>
+            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
+              <div style={{fontSize:14,fontWeight:700,letterSpacing:1}}>PLUSAdvantage™ 2026</div>
+              <div>Capital Plan — Interactive Financial Model</div>
+              <div>Confidential — March 2026</div>
+              <button
+                onClick={() => setShowPresentation(true)}
+                style={{marginTop:8,display:"inline-flex",alignItems:"center",gap:6,background:"white",color:NAVY,border:"none",padding:"10px 20px",borderRadius:8,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s",boxShadow:"0 2px 8px rgba(0,0,0,0.15)"}}
+                onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.25)"}}
+                onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.15)"}}
+              >
+                <Presentation size={16} /> View Investor Presentation
+              </button>
+            </div>
           </div>
           <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap"}}>
             {TABS.map((t,i)=>(
