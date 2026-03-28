@@ -1392,8 +1392,59 @@ function SpreadsheetTab({model,params}){
   const minM=Math.max(0,am[0]||0),maxM=Math.min(NUM_MONTHS,(am[am.length-1]||NUM_MONTHS)+1);
   const rng=[];for(let i=minM;i<=maxM;i++)rng.push(i);
 
+  const [modelFileUrl, setModelFileUrl] = useState(null);
+  const [opcFileUrl, setOpcFileUrl] = useState(null);
+  const [modelUpdated, setModelUpdated] = useState(null);
+  const [opcUpdated, setOpcUpdated] = useState(null);
+
+  useEffect(() => {
+    async function checkFiles() {
+      const { data: modelDoc } = await supabase.from("vault_documents").select("file_path, uploaded_at").eq("name", "ITPH Financial Model v9.xlsx").maybeSingle();
+      if (modelDoc) {
+        const { data: urlData } = supabase.storage.from("itph-data-vault").getPublicUrl(modelDoc.file_path);
+        setModelFileUrl(urlData.publicUrl);
+        setModelUpdated(modelDoc.uploaded_at);
+      }
+      const { data: opcDoc } = await supabase.from("vault_documents").select("file_path, uploaded_at").eq("name", "OPC Breakdown.xlsx").maybeSingle();
+      if (opcDoc) {
+        const { data: urlData } = supabase.storage.from("itph-data-vault").getPublicUrl(opcDoc.file_path);
+        setOpcFileUrl(urlData.publicUrl);
+        setOpcUpdated(opcDoc.uploaded_at);
+      }
+    }
+    checkFiles();
+  }, []);
+
   return(<div>
-    <SectionTitle icon="\ud83d\udcc1">Financial Model \u2014 Live Spreadsheet View</SectionTitle>
+    <div style={{display:"flex",gap:12,marginBottom:20,alignItems:"flex-start",flexWrap:"wrap"}}>
+      <div>
+        {modelFileUrl ? (
+          <a href={modelFileUrl} download style={{display:"inline-flex",alignItems:"center",gap:8,background:NAVY,color:"white",padding:"12px 24px",borderRadius:12,fontWeight:600,fontSize:13,textDecoration:"none",cursor:"pointer",border:"none"}}>
+            <ArrowDownToLine size={16}/> Download Excel Model (ITPH v9)
+          </a>
+        ) : (
+          <button disabled title="File not yet uploaded — use Data Vault to upload" style={{display:"inline-flex",alignItems:"center",gap:8,background:"#B0BEC5",color:"white",padding:"12px 24px",borderRadius:12,fontWeight:600,fontSize:13,border:"none",cursor:"not-allowed",opacity:0.7}}>
+            <ArrowDownToLine size={16}/> Download Excel Model (ITPH v9)
+          </button>
+        )}
+        <div style={{fontSize:11,color:"#7A8B9A",marginTop:4}}>Full working Excel model with all formulas — ITPH Financial Model v9</div>
+        {modelUpdated && <div style={{fontSize:10,color:"#9AA5B0",marginTop:2}}>Last updated: {new Date(modelUpdated).toLocaleDateString()}</div>}
+      </div>
+      <div>
+        {opcFileUrl ? (
+          <a href={opcFileUrl} download style={{display:"inline-flex",alignItems:"center",gap:8,background:"white",color:NAVY,padding:"12px 24px",borderRadius:12,fontWeight:600,fontSize:13,textDecoration:"none",cursor:"pointer",border:"2px solid "+NAVY}}>
+            <Download size={16}/> Download OPC Breakdown
+          </a>
+        ) : (
+          <button disabled title="File not yet uploaded — use Data Vault to upload" style={{display:"inline-flex",alignItems:"center",gap:8,background:"white",color:"#B0BEC5",padding:"12px 24px",borderRadius:12,fontWeight:600,fontSize:13,border:"2px solid #B0BEC5",cursor:"not-allowed",opacity:0.7}}>
+            <Download size={16}/> Download OPC Breakdown
+          </button>
+        )}
+        {opcUpdated && <div style={{fontSize:10,color:"#9AA5B0",marginTop:6}}>Last updated: {new Date(opcUpdated).toLocaleDateString()}</div>}
+      </div>
+    </div>
+
+    <SectionTitle icon={"\ud83d\udcc1"}>Financial Model — Live Spreadsheet View</SectionTitle>
     <div style={{fontSize:12,color:"#7A8B9A",marginBottom:16}}>All values recalculate in real time as you adjust inputs on other tabs.</div>
     <div style={{display:"flex",gap:2,marginBottom:0}}>
       {SHEETS.map((s,i)=>(<button key={s} onClick={()=>setSheet(i)} style={{padding:"8px 16px",border:"1px solid #D0D7DE",borderBottom:sheet===i?"2px solid white":"1px solid #D0D7DE",borderRadius:"6px 6px 0 0",cursor:"pointer",fontSize:11,fontWeight:600,background:sheet===i?"white":"#F6F8FA",color:sheet===i?NAVY:"#7A8B9A",marginBottom:sheet===i?-1:0,position:"relative",zIndex:sheet===i?1:0}}>{s}</button>))}
