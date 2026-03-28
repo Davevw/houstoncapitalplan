@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Area, AreaChart, Legend, ComposedChart, Line } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
-import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X } from "lucide-react";
+import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation } from "lucide-react";
 
 // ═══════════════════════════════════════════════════════════════
 // ITP HOUSTON CAPITAL PLAN — COMPLETE FINANCIAL MODEL (v9)
@@ -969,6 +969,14 @@ export default function App(){
   const updateParam=useCallback((key,val)=>setParams(p=>({...p,[key]:val})),[]);
   const updateLot=useCallback((id,month)=>setLots(prev=>prev.map(l=>l.id===id?{...l,saleMonth:month}:l)),[]);
 
+  const [showPresentation, setShowPresentation] = useState(false);
+  const [presentationUrl, setPresentationUrl] = useState(null);
+
+  useEffect(() => {
+    const { data } = supabase.storage.from("itph-data-vault").getPublicUrl("Presentations/ITP_Houston_Investor_Presentation.pdf");
+    if (data?.publicUrl) setPresentationUrl(data.publicUrl);
+  }, []);
+
   return(
     <div style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif"}}>
       <div style={{background:`linear-gradient(135deg,${NAVY} 0%,${TEAL} 100%)`,padding:"28px 32px 20px",color:"white"}}>
@@ -979,7 +987,19 @@ export default function App(){
               <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>International Trade Park Houston</h1>
               <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
             </div>
-            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}><div style={{fontSize:14,fontWeight:700,letterSpacing:1}}>PLUSAdvantage™ 2026</div><div>Capital Plan — Interactive Financial Model</div><div>Confidential — March 2026</div></div>
+            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
+              <div style={{fontSize:14,fontWeight:700,letterSpacing:1}}>PLUSAdvantage™ 2026</div>
+              <div>Capital Plan — Interactive Financial Model</div>
+              <div>Confidential — March 2026</div>
+              <button
+                onClick={() => setShowPresentation(true)}
+                style={{marginTop:8,display:"inline-flex",alignItems:"center",gap:6,background:"white",color:NAVY,border:"none",padding:"10px 20px",borderRadius:8,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s",boxShadow:"0 2px 8px rgba(0,0,0,0.15)"}}
+                onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.25)"}}
+                onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.15)"}}
+              >
+                <Presentation size={16} /> View Investor Presentation
+              </button>
+            </div>
           </div>
           <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap"}}>
             {TABS.map((t,i)=>(
@@ -999,6 +1019,33 @@ export default function App(){
         {activeTab===7&&<SpreadsheetTab model={model} params={params}/>}
         {activeTab===8&&<DataVaultTab/>}
       </div>
+
+      {/* Investor Presentation Modal */}
+      {showPresentation && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.7)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center"}} onClick={()=>setShowPresentation(false)}>
+          <div style={{background:"white",width:"90%",maxWidth:900,maxHeight:"85vh",borderRadius:16,overflow:"hidden",display:"flex",flexDirection:"column",boxShadow:"0 8px 32px rgba(0,0,0,0.3)"}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"16px 24px",borderBottom:"1px solid #E0E4E8"}}>
+              <div style={{fontSize:16,fontWeight:700,color:NAVY}}>Investor Presentation — ITP Houston</div>
+              <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                {presentationUrl && (
+                  <a href={presentationUrl} download="ITP_Houston_Investor_Presentation.pdf" style={{display:"inline-flex",alignItems:"center",gap:6,background:NAVY,color:"white",border:"none",padding:"8px 16px",borderRadius:8,fontSize:12,fontWeight:600,textDecoration:"none",cursor:"pointer"}}>
+                    <Download size={14}/> Download PDF
+                  </a>
+                )}
+                <button onClick={()=>setShowPresentation(false)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 12px"}}>✕ Close</button>
+              </div>
+            </div>
+            <div style={{flex:1,overflow:"auto",minHeight:0}}>
+              {presentationUrl ? (
+                <iframe src={presentationUrl} style={{width:"100%",height:"70vh",border:"none"}} title="Investor Presentation" />
+              ) : (
+                <div style={{padding:40,textAlign:"center",color:"#7A8B9A"}}>Your browser doesn't support inline PDF viewing. Click Download PDF above.</div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div style={{background:NAVY,padding:"20px 32px",textAlign:"center"}}>
         <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>LANDCO NEXA Development &nbsp;|&nbsp; Confidential Investment Analysis &nbsp;|&nbsp; For Authorized Recipients Only</div>
       </div>
@@ -1531,6 +1578,7 @@ const VAULT_CATEGORIES = [
   {
     name: "Project Documents", icon: "\ud83d\udccb",
     docs: [
+      { name: "Equity Investment Presentation", desc: "Confidential investor presentation — ITP Houston equity opportunity", type: "pdf", placeholder: false },
       { name: "Equity Investment Proposal.docx", desc: "Confidential investment memorandum for equity partners", type: "docx", placeholder: false },
       { name: "Project Summary.pdf", desc: "Executive summary of ITP Houston development", type: "pdf", placeholder: false },
     ]
