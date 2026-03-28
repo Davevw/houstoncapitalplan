@@ -14,7 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      vault_documents: {
+        Row: {
+          category: string
+          description: string | null
+          file_path: string
+          file_size: number | null
+          file_type: string
+          id: string
+          name: string
+          uploaded_at: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          category: string
+          description?: string | null
+          file_path: string
+          file_size?: number | null
+          file_type: string
+          id?: string
+          name: string
+          uploaded_at?: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          category?: string
+          description?: string | null
+          file_path?: string
+          file_size?: number | null
+          file_type?: string
+          id?: string
+          name?: string
+          uploaded_at?: string
+          uploaded_by?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
