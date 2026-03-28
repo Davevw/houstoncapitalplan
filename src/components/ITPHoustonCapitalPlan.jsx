@@ -1019,6 +1019,33 @@ export default function App(){
         {activeTab===7&&<SpreadsheetTab model={model} params={params}/>}
         {activeTab===8&&<DataVaultTab/>}
       </div>
+
+      {/* Investor Presentation Modal */}
+      {showPresentation && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.7)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center"}} onClick={()=>setShowPresentation(false)}>
+          <div style={{background:"white",width:"90%",maxWidth:900,maxHeight:"85vh",borderRadius:16,overflow:"hidden",display:"flex",flexDirection:"column",boxShadow:"0 8px 32px rgba(0,0,0,0.3)"}} onClick={e=>e.stopPropagation()}>
+            <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"16px 24px",borderBottom:"1px solid #E0E4E8"}}>
+              <div style={{fontSize:16,fontWeight:700,color:NAVY}}>Investor Presentation — ITP Houston</div>
+              <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                {presentationUrl && (
+                  <a href={presentationUrl} download="ITP_Houston_Investor_Presentation.pdf" style={{display:"inline-flex",alignItems:"center",gap:6,background:NAVY,color:"white",border:"none",padding:"8px 16px",borderRadius:8,fontSize:12,fontWeight:600,textDecoration:"none",cursor:"pointer"}}>
+                    <Download size={14}/> Download PDF
+                  </a>
+                )}
+                <button onClick={()=>setShowPresentation(false)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 12px"}}>✕ Close</button>
+              </div>
+            </div>
+            <div style={{flex:1,overflow:"auto",minHeight:0}}>
+              {presentationUrl ? (
+                <iframe src={presentationUrl} style={{width:"100%",height:"70vh",border:"none"}} title="Investor Presentation" />
+              ) : (
+                <div style={{padding:40,textAlign:"center",color:"#7A8B9A"}}>Your browser doesn't support inline PDF viewing. Click Download PDF above.</div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       <div style={{background:NAVY,padding:"20px 32px",textAlign:"center"}}>
         <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>LANDCO NEXA Development &nbsp;|&nbsp; Confidential Investment Analysis &nbsp;|&nbsp; For Authorized Recipients Only</div>
       </div>
