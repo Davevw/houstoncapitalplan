@@ -1683,11 +1683,27 @@ const VAULT_CATEGORIES = [
 const FILE_TYPE_COLORS = { pdf: "#E85D75", xlsx: "#2E8B57", docx: "#3D8EC9", pptx: "#C4703E", png: "#D4A84B", zip: "#7A8B9A", jpg: "#D4A84B" };
 
 function DataVaultTab() {
+  const [unlocked,setUnlocked]=useState(false);
+  const [code,setCode]=useState("");
+  const [codeError,setCodeError]=useState(false);
   const [documents, setDocuments] = useState([]);
   const [uploading, setUploading] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
   const fileInputRef = useRef(null);
   const [uploadCategory, setUploadCategory] = useState(null);
+
+  if(!unlocked){
+    return(<div style={{display:"flex",justifyContent:"center",alignItems:"center",minHeight:400}}>
+      <div style={{background:"white",borderRadius:16,padding:40,boxShadow:"0 4px 24px rgba(0,0,0,0.12)",textAlign:"center",maxWidth:380,width:"100%"}}>
+        <div style={{fontSize:32,marginBottom:12}}>🔒</div>
+        <div style={{fontSize:18,fontWeight:700,color:NAVY,marginBottom:4}}>Secure Data</div>
+        <div style={{fontSize:13,color:"#7A8B9A",marginBottom:24}}>Enter the access code to view Data Vault.</div>
+        <input type="password" value={code} onChange={e=>{setCode(e.target.value);setCodeError(false);}} onKeyDown={e=>{if(e.key==="Enter"){if(code==="ITCH"){setUnlocked(true);}else{setCodeError(true);setCode("");}}}} placeholder="Access Code" style={{width:"100%",padding:"12px 16px",borderRadius:8,border:`2px solid ${codeError?"#E85D75":"#D0D7DE"}`,fontSize:14,textAlign:"center",letterSpacing:4,marginBottom:12,outline:"none",boxSizing:"border-box"}}/>
+        {codeError&&<div style={{fontSize:12,color:"#E85D75",marginBottom:12}}>Invalid code. Please try again.</div>}
+        <button onClick={()=>{if(code==="ITCH"){setUnlocked(true);}else{setCodeError(true);setCode("");}}} style={{width:"100%",padding:"12px",borderRadius:8,background:NAVY,color:"white",fontSize:14,fontWeight:600,border:"none",cursor:"pointer"}}>Unlock</button>
+      </div>
+    </div>);
+  }
 
   useEffect(() => {
     fetchDocuments();
