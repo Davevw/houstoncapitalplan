@@ -1076,7 +1076,7 @@ function DashboardTab({model,params,updateParam}){
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
         <div>
-          <SectionTitle icon="\ud83d\udcca">Revenue by Quarter</SectionTitle>
+          <SectionTitle>Revenue by Quarter</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={revenueByQ} barCategoryGap="20%">
