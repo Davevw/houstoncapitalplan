@@ -1714,14 +1714,7 @@ function DataVaultTab() {
     </div>);
   }
 
-  useEffect(() => {
-    fetchDocuments();
-  }, []);
 
-  async function fetchDocuments() {
-    const { data } = await supabase.from("vault_documents").select("*").order("uploaded_at", { ascending: false });
-    if (data) setDocuments(data);
-  }
 
   async function handleUpload(category, file) {
     if (!file) return;
