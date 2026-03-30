@@ -1071,8 +1071,8 @@ function DashboardTab({model,params,updateParam}){
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,marginBottom:24}}>
         <MetricCard label="Total Revenue" value={fmt(m.totalRev)} sub={`Lots: ${fmt(m.totalLotRev)} + MUD: ${fmt(m.totalMudRev)}`} accent={TEAL}/>
         <MetricCard label="Total Cost" value={fmt(m.totalCost)} sub={`Hard: ${fmt(m.totalHard)} | Soft: ${fmt(m.totalSoft)}`} accent={TERRA}/>
-        <MetricCard label="Net Profit" value={fmt(m.totalProfit)} sub={`${pct(m.totalProfit/m.equity)} return on equity`} accent="#2E8B57"/>
-        <MetricCard label="Project Multiple" value={((m.totalProfit/m.equity)+1).toFixed(2)+"x"} sub={`On ${fmt(m.equity)} deemed capital`} accent={GOLD}/>
+        <MetricCard label="Total Project Profit" value={fmt(m.totalProfit)} sub="Before equity/developer split" accent="#2E8B57"/>
+        <MetricCard label="Project Multiple" value={((m.totalProfit/m.equity)+1).toFixed(2)+"x"} sub="Total return on deemed capital basis" accent={GOLD}/>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
         <div>
