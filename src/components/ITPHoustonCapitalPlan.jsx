@@ -1337,9 +1337,24 @@ function WaterfallTab({model,params,updateParam}){
         </div>
         <div style={{background:"white",borderRadius:12,padding:20,marginTop:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
           <div style={{fontSize:13,fontWeight:700,color:NAVY,marginBottom:12}}>Deal Summary</div>
-          {[["Equity Partner",""],["  Contributions",fmtFull(Math.round(m.eqTotalContrib))],["  Pref Return Earned",fmtFull(Math.round(m.eqTotalPref))],["  Total Distributions",fmtFull(Math.round(m.eqTotalDist+m.eqTotalFinal))],["  Net Profit",fmtFull(Math.round(m.eqNetProfit))],["",""],["Developer",""],["  Net Profit",fmtFull(Math.round(m.devNetProfit))]].map(([l,v],i)=>(
-            <div key={i} style={{display:"flex",justifyContent:"space-between",padding:"5px 0",borderBottom:v?"1px solid #F0F2F4":"none",fontSize:12,fontWeight:l.startsWith("  ")?400:700,color:l.startsWith("  ")?"#555":NAVY}}>
-              <span>{l}</span><span style={{fontWeight:600,color:NAVY}}>{v}</span>
+          {[
+            {l:"Equity Partner",v:"",header:true},
+            {l:"  Deemed Capital Basis",v:fmtFull(Math.round(params.equity))},
+            {l:"  Total Capital Deployed",v:fmtFull(Math.round(m.eqTotalContrib)),sub:"Incl. recycled CF"},
+            {l:"  Preferred Return ("+pct(params.prefReturn)+")",v:fmtFull(Math.round(m.eqTotalPref))},
+            {l:"  Total Distributions",v:fmtFull(Math.round(m.eqTotalDist+m.eqTotalFinal))},
+            {l:"  Total Profit",v:fmtFull(Math.round(m.eqNetProfit)),sub:"Capital return + pref + "+pct(params.equityPct)+" profit share"},
+            {l:"",v:"",spacer:true},
+            {l:"Developer",v:"",header:true},
+            {l:"  Capital Contributed",v:"$0"},
+            {l:"  Total Profit",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(params.devPct)+" of residual profit"},
+          ].map((item,i)=>(
+            item.spacer?<div key={i} style={{height:8}}/>:
+            <div key={i} style={{padding:"5px 0",borderBottom:item.v||item.header?"1px solid #F0F2F4":"none"}}>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:12,fontWeight:item.header?700:400,color:item.header?NAVY:"#555"}}>
+                <span>{item.l}</span><span style={{fontWeight:600,color:NAVY}}>{item.v}</span>
+              </div>
+              {item.sub&&<div style={{fontSize:10,color:"#9AA5B0",marginTop:1,paddingLeft:12}}>{item.sub}</div>}
             </div>))}
         </div>
       </div>
