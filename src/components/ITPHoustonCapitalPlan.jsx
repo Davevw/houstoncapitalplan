@@ -1308,9 +1308,9 @@ function WaterfallTab({model,params,updateParam}){
   const wfData=[{name:"Equity In",value:-m.eqTotalContrib,fill:"#E85D75"},{name:"Pref Return",value:m.eqTotalPref,fill:GOLD},{name:"Equity Dist.",value:m.eqTotalDist,fill:TEAL},{name:"Profit Split",value:m.eqTotalFinal,fill:STEEL},{name:"Dev Profit",value:m.devNetProfit,fill:TERRA}];
   return(<div>
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,marginBottom:8}}>
-      <MetricCard label="Equity Invested" value={fmt(m.eqTotalContrib)} accent="#E85D75"/>
+      <MetricCard label="Deemed Capital Basis" value={fmt(params.equity)} sub="Initial equity contribution" accent="#E85D75"/>
       <MetricCard label="Preferred Return" value={fmtFull(Math.round(m.eqTotalPref))} sub={pct(params.prefReturn)+" annual"} accent={GOLD}/>
-      <MetricCard label="Equity Net Profit" value={fmtFull(Math.round(m.eqNetProfit))} accent={TEAL}/>
+      <MetricCard label="Equity Total Profit" value={fmtFull(Math.round(m.eqNetProfit))} sub="Capital return + pref + profit share" accent={TEAL}/>
       <MetricCard label="Equity Multiple" value={m.eqMultiple.toFixed(2)+"x"} accent={NAVY}/>
     </div>
     <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
