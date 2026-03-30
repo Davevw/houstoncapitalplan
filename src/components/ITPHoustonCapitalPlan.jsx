@@ -1250,7 +1250,7 @@ function CapitalStackTab({model,params}){
       <MetricCard label="Accrued Preferred Return" value={fmtFull(3161805)} sub="8% simple interest on deployed capital" accent={GOLD}/>
       <MetricCard label="Total Deemed Capital" value={fmtFull(Math.round(totalDeemed))} sub="Equity partner\u2019s capital basis" accent={TERRA}/>
     </div>
-    <SectionTitle icon="\ud83c\udfe6">Capital Structure — Deemed Capital Basis</SectionTitle>
+    <SectionTitle>Capital Structure — Deemed Capital Basis</SectionTitle>
     <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:24}}>
       <div style={{background:"white",borderRadius:12,padding:24,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
         <div style={{fontSize:14,fontWeight:700,color:NAVY,marginBottom:16}}>How the Equity Basis Was Built</div>
