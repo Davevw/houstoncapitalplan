@@ -1154,10 +1154,10 @@ function DashboardTab({model,params,updateParam}){
           <div style={{background:"white",borderRadius:12,padding:16,marginTop:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <div style={{fontSize:12,fontWeight:600,color:NAVY,marginBottom:8}}>Returns Summary</div>
             {[
-              {l:"Equity Preferred Return (8%)",v:fmtFull(Math.round(m.eqTotalPref))},
-              {l:"Equity Net Profit",v:fmtFull(Math.round(m.eqNetProfit)),sub:"After capital return: pref + "+pct(m.equityPct)+" profit share"},
-              {l:"Residual Profit Split ("+pct(m.equityPct)+"/"+pct(m.devPct)+")",v:fmtFull(Math.round(m.eqTotalFinal))+" each",sub:"Equal share of residual profit after equity return & pref"},
-              {l:"Developer Promote",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(m.devPct)+" of residual after equity capital + pref returned"},
+              {l:"Preferred Return (8%)",v:fmtFull(Math.round(m.eqTotalPref)),sub:"Accrued on equity capital deployed"},
+              {l:"Equity Profit Share",v:fmtFull(Math.round(m.eqTotalFinal)),sub:pct(m.equityPct)+" of residual after capital + pref returned"},
+              {l:"Developer Profit Share",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(m.devPct)+" of residual after capital + pref returned"},
+              {l:"Equity Total Profit",v:fmtFull(Math.round(m.eqTotalPref+m.eqTotalFinal)),sub:"Pref return + equity profit share"},
               {l:"Peak Loan Requirement",v:fmtFull(Math.round(m.peakLoan))},
             ].map((item)=>(
               <div key={item.l} style={{padding:"6px 0",borderBottom:"1px solid #F0F2F4"}}>
@@ -1321,8 +1321,9 @@ function CapitalStackTab({model,params}){
         ))}
         <div style={{marginTop:16,padding:16,background:LIGHT,borderRadius:8,fontSize:12,color:"#555",lineHeight:1.6}}>
           <strong style={{color:NAVY}}>Profit Split:</strong> {pct(params.equityPct)} Equity Partner / {pct(params.devPct)} Developer<br/>
-          <strong style={{color:NAVY}}>Equity Net Profit:</strong> {fmtFull(Math.round(m.eqNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>(after capital returned: pref + profit share)</span><br/>
-          <strong style={{color:NAVY}}>Developer Promote:</strong> {fmtFull(Math.round(m.devNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>(profit share only — no capital at risk)</span>
+          <strong style={{color:NAVY}}>Preferred Return:</strong> {fmtFull(Math.round(m.eqTotalPref))} <span style={{fontSize:10,color:"#7A8B9A"}}>(8% accrued on equity capital)</span><br/>
+          <strong style={{color:NAVY}}>Equity Profit Share:</strong> {fmtFull(Math.round(m.eqTotalFinal))} <span style={{fontSize:10,color:"#7A8B9A"}}>({pct(params.equityPct)} of residual after capital + pref)</span><br/>
+          <strong style={{color:NAVY}}>Developer Profit Share:</strong> {fmtFull(Math.round(m.devNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>({pct(params.devPct)} of residual after capital + pref)</span>
         </div>
       </div>
     </div>
@@ -1334,13 +1335,13 @@ function CapitalStackTab({model,params}){
 // ═══════════════════════════════════════════════════════════════
 function WaterfallTab({model,params,updateParam}){
   const m=model;
-  const wfData=[{name:"Equity In",value:-m.eqTotalContrib,fill:"#E85D75"},{name:"Pref Return",value:m.eqTotalPref,fill:GOLD},{name:"Equity Dist.",value:m.eqTotalDist,fill:TEAL},{name:"Profit Split",value:m.eqTotalFinal,fill:STEEL},{name:"Dev Profit",value:m.devNetProfit,fill:TERRA}];
+  const wfData=[{name:"Equity In",value:-m.eqTotalContrib,fill:"#E85D75"},{name:"Pref Return",value:m.eqTotalPref,fill:GOLD},{name:"Capital Return",value:Math.max(0,m.eqTotalDist-m.eqTotalPref),fill:TEAL},{name:"Equity Share",value:m.eqTotalFinal,fill:STEEL},{name:"Dev Share",value:m.devNetProfit,fill:TERRA}];
   return(<div>
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,marginBottom:8}}>
       <MetricCard label="Deemed Capital Basis" value={fmt(params.equity)} sub="Initial equity contribution" accent="#E85D75"/>
       <MetricCard label="Preferred Return" value={fmtFull(Math.round(m.eqTotalPref))} sub={pct(params.prefReturn)+" annual (accrued)"} accent={GOLD}/>
-      <MetricCard label="Equity Net Profit" value={fmtFull(Math.round(m.eqNetProfit))} sub="After capital returned" accent={TEAL}/>
-      <MetricCard label="Developer Promote" value={fmtFull(Math.round(m.devNetProfit))} sub={pct(params.devPct)+" of residual"} accent={TERRA}/>
+      <MetricCard label="Equity Profit Share" value={fmtFull(Math.round(m.eqTotalFinal))} sub={pct(params.equityPct)+" of residual"} accent={TEAL}/>
+      <MetricCard label="Developer Profit Share" value={fmtFull(Math.round(m.devNetProfit))} sub={pct(params.devPct)+" of residual"} accent={TERRA}/>
       <MetricCard label="Equity Multiple" value={m.eqMultiple.toFixed(2)+"x"} accent={NAVY}/>
     </div>
     <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
@@ -1378,12 +1379,12 @@ function WaterfallTab({model,params,updateParam}){
             {l:"",v:"",spacer:true},
             {l:"TIER 3 — Profit Split ("+pct(params.equityPct)+"/"+pct(params.devPct)+")",v:"",header:true},
             {l:"  Equity Profit Share",v:fmtFull(Math.round(m.eqTotalFinal)),sub:pct(params.equityPct)+" of residual after capital + pref"},
-            {l:"  Developer Promote",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(params.devPct)+" of residual after capital + pref"},
+            {l:"  Developer Profit Share",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(params.devPct)+" of residual after capital + pref"},
             {l:"",v:"",spacer:true},
             {l:"TOTALS",v:"",header:true},
             {l:"  Equity Total Return",v:fmtFull(Math.round(m.eqTotalDist+m.eqTotalFinal)),sub:"Capital back + pref + profit share"},
-            {l:"  Equity Net Profit",v:fmtFull(Math.round(m.eqNetProfit)),sub:"Total return minus capital invested"},
-            {l:"  Developer Promote",v:fmtFull(Math.round(m.devNetProfit)),sub:"Promote only (no capital at risk)"},
+            {l:"  Equity Total Profit",v:fmtFull(Math.round(m.eqTotalPref+m.eqTotalFinal)),sub:"Pref return + equity profit share"},
+            {l:"  Developer Total Profit",v:fmtFull(Math.round(m.devNetProfit)),sub:"Profit share only (no capital at risk)"},
             {l:"  Equity Multiple",v:m.eqMultiple.toFixed(2)+"x"},
           ].map((item,i)=>(
             item.spacer?<div key={i} style={{height:8}}/>:
@@ -1609,7 +1610,7 @@ function SpreadsheetTab({model,params}){
 }
 
 function SSDash({m,f,fp,cs}){
-  const rows=[["Key Metrics",null,1],["Peak Loan Requirement",f(m.peakLoan)],["Total Project Revenue",f(m.totalRev)],["Total Project Cost",f(m.totalCost)],["Project Gross Margin",f(m.totalProfit),0,1],["Margin % (Return on Equity)",fp(m.totalProfit/m.equity)],["Project Multiple",((m.totalProfit/m.equity)+1).toFixed(2)+"x"],[null],["Waterfall Distribution",null,1],["Equity Net Profit (after capital return: pref + share)",f(m.eqNetProfit)],["Developer Promote (profit share only)",f(m.devNetProfit)]];
+  const rows=[["Key Metrics",null,1],["Peak Loan Requirement",f(m.peakLoan)],["Total Project Revenue",f(m.totalRev)],["Total Project Cost",f(m.totalCost)],["Project Gross Margin",f(m.totalProfit),0,1],["Margin % (Return on Equity)",fp(m.totalProfit/m.equity)],["Project Multiple",((m.totalProfit/m.equity)+1).toFixed(2)+"x"],[null],["Waterfall Distribution",null,1],["Preferred Return (8%)",f(m.eqTotalPref)],["Equity Profit Share ("+((m.equityPct*100).toFixed(0))+"%)",f(m.eqTotalFinal)],["Developer Profit Share ("+((m.devPct*100).toFixed(0))+"%)",f(m.devNetProfit)],["Equity Total Profit (pref + share)",f(m.eqTotalPref+m.eqTotalFinal),0,1]];
   return(<table style={{width:"100%",borderCollapse:"collapse"}}><thead><tr><th style={{...cs(1),width:280}}>ITP Houston Project Briefing</th><th style={{...cs(1),width:180}}>Results</th><th style={cs(1)}/></tr></thead><tbody>
     {rows.map((r,i)=>!r[0]?<tr key={i}><td colSpan={3} style={{height:12}}/></tr>:r[2]?<tr key={i}><td colSpan={3} style={{...cs(0,1),background:LIGHT,fontWeight:700,fontSize:12,padding:"10px 10px"}}>{r[0]}</td></tr>:<tr key={i}><td style={cs(0,1,r[3])}>{r[0]}</td><td style={{...cs(0,0,r[3]),textAlign:"right",fontWeight:700}}>{r[1]}</td><td style={cs(0)}/></tr>)}
   </tbody></table>);
@@ -1626,7 +1627,7 @@ function SSLots({m,f,cs}){
 }
 
 function SSAssum({m,params,f,fp,cs}){
-  const secs=[{t:"Project Overview",r:[["Project Name","ITPH"],["Location","Houston, TX"],["# of Lots",m.lotsCalc.length],["Land Size","136 acres"]]},{t:"Project Budget",r:[["Hard Costs",f(m.totalHard)],["Soft Costs",f(m.totalSoft)],["Deemed Land Value",f(m.equity)],["Developer Fee",f(m.totalDevFee)],["Subtotal Unlevered",f(m.totalUnlev),1],["Finance Costs",f(m.totalFin)],["Total Project Cost",f(m.totalCost),1]]},{t:"MUD Bonds",r:[["MUD Principal",f(params.mudTotal)],["1st Issuance Mo",params.mudMonth1],["2nd Issuance Mo",params.mudMonth2]]},{t:"Equity Partner",r:[["Deemed Capital",f(params.equity)],["Pref Return",fp(params.prefReturn)],["Profit Split",fp(params.equityPct)]]},{t:"Returns (Waterfall)",r:[["Revenue",f(m.totalRev)],["Cost",f(m.totalCost)],["Project Gross Margin",f(m.totalProfit),1],["Equity Net Profit",f(m.eqNetProfit)],["Developer Promote",f(m.devNetProfit)]]}];
+  const secs=[{t:"Project Overview",r:[["Project Name","ITPH"],["Location","Houston, TX"],["# of Lots",m.lotsCalc.length],["Land Size","136 acres"]]},{t:"Project Budget",r:[["Hard Costs",f(m.totalHard)],["Soft Costs",f(m.totalSoft)],["Deemed Land Value",f(m.equity)],["Developer Fee",f(m.totalDevFee)],["Subtotal Unlevered",f(m.totalUnlev),1],["Finance Costs",f(m.totalFin)],["Total Project Cost",f(m.totalCost),1]]},{t:"MUD Bonds",r:[["MUD Principal",f(params.mudTotal)],["1st Issuance Mo",params.mudMonth1],["2nd Issuance Mo",params.mudMonth2]]},{t:"Equity Partner",r:[["Deemed Capital",f(params.equity)],["Pref Return",fp(params.prefReturn)],["Profit Split",fp(params.equityPct)]]},{t:"Returns (Waterfall)",r:[["Revenue",f(m.totalRev)],["Cost",f(m.totalCost)],["Project Gross Margin",f(m.totalProfit),1],["Preferred Return (8%)",f(m.eqTotalPref)],["Equity Profit Share ("+((m.equityPct*100).toFixed(0))+"% of residual)",f(m.eqTotalFinal)],["Developer Profit Share ("+((m.devPct*100).toFixed(0))+"% of residual)",f(m.devNetProfit)],["Equity Total Profit",f(m.eqTotalPref+m.eqTotalFinal),1]]}];
   return(<table style={{width:"100%",borderCollapse:"collapse"}}><tbody>
     {secs.map((s,si)=><React.Fragment key={si}><tr><td colSpan={3} style={{...cs(0,1),background:NAVY,color:"white",fontWeight:700,padding:"8px 10px",fontSize:12}}>{s.t}</td></tr>
       {s.r.map(([l,v,tot],ri)=><tr key={ri} style={{background:ri%2?"#FAFBFC":"white"}}><td style={{...cs(0,1,!!tot),width:240}}>{l}</td><td style={{...cs(0,0,!!tot),textAlign:"right",width:180,fontWeight:tot?700:400}}>{v}</td><td style={cs(0)}/></tr>)}
