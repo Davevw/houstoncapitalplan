@@ -1335,7 +1335,7 @@ function CapitalStackTab({model,params}){
 // ═══════════════════════════════════════════════════════════════
 function WaterfallTab({model,params,updateParam}){
   const m=model;
-  const wfData=[{name:"Equity In",value:-m.eqTotalContrib,fill:"#E85D75"},{name:"Pref Return",value:m.eqTotalPref,fill:GOLD},{name:"Equity Dist.",value:m.eqTotalDist,fill:TEAL},{name:"Profit Split",value:m.eqTotalFinal,fill:STEEL},{name:"Dev Profit",value:m.devNetProfit,fill:TERRA}];
+  const wfData=[{name:"Equity In",value:-m.eqTotalContrib,fill:"#E85D75"},{name:"Pref Return",value:m.eqTotalPref,fill:GOLD},{name:"Capital Return",value:Math.max(0,m.eqTotalDist-m.eqTotalPref),fill:TEAL},{name:"Equity Share",value:m.eqTotalFinal,fill:STEEL},{name:"Dev Share",value:m.devNetProfit,fill:TERRA}];
   return(<div>
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,marginBottom:8}}>
       <MetricCard label="Deemed Capital Basis" value={fmt(params.equity)} sub="Initial equity contribution" accent="#E85D75"/>
