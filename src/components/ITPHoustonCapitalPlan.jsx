@@ -1292,8 +1292,8 @@ function CapitalStackTab({model,params}){
         ))}
         <div style={{marginTop:16,padding:16,background:LIGHT,borderRadius:8,fontSize:12,color:"#555",lineHeight:1.6}}>
           <strong style={{color:NAVY}}>Profit Split:</strong> {pct(params.equityPct)} Equity Partner / {pct(params.devPct)} Developer<br/>
-          <strong style={{color:NAVY}}>Equity Net Profit:</strong> {fmtFull(Math.round(m.eqNetProfit))}<br/>
-          <strong style={{color:NAVY}}>Developer Net Profit:</strong> {fmtFull(Math.round(m.devNetProfit))}
+          <strong style={{color:NAVY}}>Equity Total Profit:</strong> {fmtFull(Math.round(m.eqNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>(capital return + pref + share)</span><br/>
+          <strong style={{color:NAVY}}>Developer Total Profit:</strong> {fmtFull(Math.round(m.devNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>(profit share only)</span>
         </div>
       </div>
     </div>
