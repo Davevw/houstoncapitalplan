@@ -1379,7 +1379,7 @@ function WaterfallTab({model,params,updateParam}){
             {l:"",v:"",spacer:true},
             {l:"TIER 3 — Profit Split ("+pct(params.equityPct)+"/"+pct(params.devPct)+")",v:"",header:true},
             {l:"  Equity Profit Share",v:fmtFull(Math.round(m.eqTotalFinal)),sub:pct(params.equityPct)+" of residual after capital + pref"},
-            {l:"  Developer Promote",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(params.devPct)+" of residual after capital + pref"},
+            {l:"  Developer Profit Share",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(params.devPct)+" of residual after capital + pref"},
             {l:"",v:"",spacer:true},
             {l:"TOTALS",v:"",header:true},
             {l:"  Equity Total Return",v:fmtFull(Math.round(m.eqTotalDist+m.eqTotalFinal)),sub:"Capital back + pref + profit share"},
