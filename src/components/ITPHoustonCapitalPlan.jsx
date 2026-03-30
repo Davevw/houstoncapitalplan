@@ -1315,7 +1315,7 @@ function WaterfallTab({model,params,updateParam}){
     </div>
     <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
       <div>
-        <SectionTitle icon="\ud83c\udfe6">Distribution Waterfall</SectionTitle>
+        <SectionTitle>Distribution Waterfall</SectionTitle>
         <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={wfData} layout="vertical" barSize={32}>
