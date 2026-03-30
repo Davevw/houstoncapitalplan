@@ -1124,9 +1124,18 @@ function DashboardTab({model,params,updateParam}){
           </div>
           <div style={{background:"white",borderRadius:12,padding:16,marginTop:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <div style={{fontSize:12,fontWeight:600,color:NAVY,marginBottom:8}}>Returns Summary</div>
-            {[["Equity Pref Return",fmtFull(m.eqTotalPref)],["Equity Net Profit",fmtFull(m.eqNetProfit)],["Developer Net Profit",fmtFull(m.devNetProfit)],["Peak Loan",fmtFull(m.peakLoan)]].map(([l,v])=>(
-              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:"1px solid #F0F2F4",fontSize:12}}>
-                <span style={{color:"#7A8B9A"}}>{l}</span><span style={{fontWeight:700,color:NAVY}}>{v}</span>
+            {[
+              {l:"Equity Preferred Return (8%)",v:fmtFull(Math.round(m.eqTotalPref))},
+              {l:"Equity Total Profit",v:fmtFull(Math.round(m.eqNetProfit)),sub:"Includes return of capital + pref return + "+pct(m.equityPct)+" profit share"},
+              {l:"Residual Profit Split ("+pct(m.equityPct)+"/"+pct(m.devPct)+")",v:fmtFull(Math.round(m.eqTotalFinal))+" each",sub:"Equal share of residual profit after equity return & pref"},
+              {l:"Developer Total Profit",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(m.devPct)+" of residual profit after equity return & pref"},
+              {l:"Peak Loan Requirement",v:fmtFull(Math.round(m.peakLoan))},
+            ].map((item)=>(
+              <div key={item.l} style={{padding:"6px 0",borderBottom:"1px solid #F0F2F4"}}>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:12}}>
+                  <span style={{color:"#7A8B9A"}}>{item.l}</span><span style={{fontWeight:700,color:NAVY}}>{item.v}</span>
+                </div>
+                {item.sub&&<div style={{fontSize:10,color:"#9AA5B0",marginTop:2}}>{item.sub}</div>}
               </div>))}
           </div>
         </div>
