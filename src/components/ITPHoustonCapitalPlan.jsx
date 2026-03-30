@@ -1215,7 +1215,7 @@ function CashFlowTab({model}){
         </ComposedChart>
       </ResponsiveContainer>
     </div>
-    <SectionTitle icon="\ud83c\udfd7\ufe0f">Infrastructure Cost Breakdown</SectionTitle>
+    <SectionTitle>Infrastructure Cost Breakdown</SectionTitle>
     <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
       {HARD_COSTS.map(c=>{const p=c.total/m.totalHard;return(
         <div key={c.name} style={{marginBottom:12}}>
