@@ -1071,8 +1071,8 @@ function DashboardTab({model,params,updateParam}){
       <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,marginBottom:24}}>
         <MetricCard label="Total Revenue" value={fmt(m.totalRev)} sub={`Lots: ${fmt(m.totalLotRev)} + MUD: ${fmt(m.totalMudRev)}`} accent={TEAL}/>
         <MetricCard label="Total Cost" value={fmt(m.totalCost)} sub={`Hard: ${fmt(m.totalHard)} | Soft: ${fmt(m.totalSoft)}`} accent={TERRA}/>
-        <MetricCard label="Net Profit" value={fmt(m.totalProfit)} sub={`${pct(m.totalProfit/m.equity)} return on equity`} accent="#2E8B57"/>
-        <MetricCard label="Project Multiple" value={((m.totalProfit/m.equity)+1).toFixed(2)+"x"} sub={`On ${fmt(m.equity)} deemed capital`} accent={GOLD}/>
+        <MetricCard label="Total Project Profit" value={fmt(m.totalProfit)} sub="Before equity/developer split" accent="#2E8B57"/>
+        <MetricCard label="Project Multiple" value={((m.totalProfit/m.equity)+1).toFixed(2)+"x"} sub="Total return on deemed capital basis" accent={GOLD}/>
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
         <div>
@@ -1124,9 +1124,18 @@ function DashboardTab({model,params,updateParam}){
           </div>
           <div style={{background:"white",borderRadius:12,padding:16,marginTop:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <div style={{fontSize:12,fontWeight:600,color:NAVY,marginBottom:8}}>Returns Summary</div>
-            {[["Equity Pref Return",fmtFull(m.eqTotalPref)],["Equity Net Profit",fmtFull(m.eqNetProfit)],["Developer Net Profit",fmtFull(m.devNetProfit)],["Peak Loan",fmtFull(m.peakLoan)]].map(([l,v])=>(
-              <div key={l} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderBottom:"1px solid #F0F2F4",fontSize:12}}>
-                <span style={{color:"#7A8B9A"}}>{l}</span><span style={{fontWeight:700,color:NAVY}}>{v}</span>
+            {[
+              {l:"Equity Preferred Return (8%)",v:fmtFull(Math.round(m.eqTotalPref))},
+              {l:"Equity Total Profit",v:fmtFull(Math.round(m.eqNetProfit)),sub:"Includes return of capital + pref return + "+pct(m.equityPct)+" profit share"},
+              {l:"Residual Profit Split ("+pct(m.equityPct)+"/"+pct(m.devPct)+")",v:fmtFull(Math.round(m.eqTotalFinal))+" each",sub:"Equal share of residual profit after equity return & pref"},
+              {l:"Developer Total Profit",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(m.devPct)+" of residual profit after equity return & pref"},
+              {l:"Peak Loan Requirement",v:fmtFull(Math.round(m.peakLoan))},
+            ].map((item)=>(
+              <div key={item.l} style={{padding:"6px 0",borderBottom:"1px solid #F0F2F4"}}>
+                <div style={{display:"flex",justifyContent:"space-between",fontSize:12}}>
+                  <span style={{color:"#7A8B9A"}}>{item.l}</span><span style={{fontWeight:700,color:NAVY}}>{item.v}</span>
+                </div>
+                {item.sub&&<div style={{fontSize:10,color:"#9AA5B0",marginTop:2}}>{item.sub}</div>}
               </div>))}
           </div>
         </div>
@@ -1283,8 +1292,8 @@ function CapitalStackTab({model,params}){
         ))}
         <div style={{marginTop:16,padding:16,background:LIGHT,borderRadius:8,fontSize:12,color:"#555",lineHeight:1.6}}>
           <strong style={{color:NAVY}}>Profit Split:</strong> {pct(params.equityPct)} Equity Partner / {pct(params.devPct)} Developer<br/>
-          <strong style={{color:NAVY}}>Equity Net Profit:</strong> {fmtFull(Math.round(m.eqNetProfit))}<br/>
-          <strong style={{color:NAVY}}>Developer Net Profit:</strong> {fmtFull(Math.round(m.devNetProfit))}
+          <strong style={{color:NAVY}}>Equity Total Profit:</strong> {fmtFull(Math.round(m.eqNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>(capital return + pref + share)</span><br/>
+          <strong style={{color:NAVY}}>Developer Total Profit:</strong> {fmtFull(Math.round(m.devNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>(profit share only)</span>
         </div>
       </div>
     </div>
@@ -1299,9 +1308,9 @@ function WaterfallTab({model,params,updateParam}){
   const wfData=[{name:"Equity In",value:-m.eqTotalContrib,fill:"#E85D75"},{name:"Pref Return",value:m.eqTotalPref,fill:GOLD},{name:"Equity Dist.",value:m.eqTotalDist,fill:TEAL},{name:"Profit Split",value:m.eqTotalFinal,fill:STEEL},{name:"Dev Profit",value:m.devNetProfit,fill:TERRA}];
   return(<div>
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,marginBottom:8}}>
-      <MetricCard label="Equity Invested" value={fmt(m.eqTotalContrib)} accent="#E85D75"/>
+      <MetricCard label="Deemed Capital Basis" value={fmt(params.equity)} sub="Initial equity contribution" accent="#E85D75"/>
       <MetricCard label="Preferred Return" value={fmtFull(Math.round(m.eqTotalPref))} sub={pct(params.prefReturn)+" annual"} accent={GOLD}/>
-      <MetricCard label="Equity Net Profit" value={fmtFull(Math.round(m.eqNetProfit))} accent={TEAL}/>
+      <MetricCard label="Equity Total Profit" value={fmtFull(Math.round(m.eqNetProfit))} sub="Capital return + pref + profit share" accent={TEAL}/>
       <MetricCard label="Equity Multiple" value={m.eqMultiple.toFixed(2)+"x"} accent={NAVY}/>
     </div>
     <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
@@ -1328,9 +1337,24 @@ function WaterfallTab({model,params,updateParam}){
         </div>
         <div style={{background:"white",borderRadius:12,padding:20,marginTop:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
           <div style={{fontSize:13,fontWeight:700,color:NAVY,marginBottom:12}}>Deal Summary</div>
-          {[["Equity Partner",""],["  Contributions",fmtFull(Math.round(m.eqTotalContrib))],["  Pref Return Earned",fmtFull(Math.round(m.eqTotalPref))],["  Total Distributions",fmtFull(Math.round(m.eqTotalDist+m.eqTotalFinal))],["  Net Profit",fmtFull(Math.round(m.eqNetProfit))],["",""],["Developer",""],["  Net Profit",fmtFull(Math.round(m.devNetProfit))]].map(([l,v],i)=>(
-            <div key={i} style={{display:"flex",justifyContent:"space-between",padding:"5px 0",borderBottom:v?"1px solid #F0F2F4":"none",fontSize:12,fontWeight:l.startsWith("  ")?400:700,color:l.startsWith("  ")?"#555":NAVY}}>
-              <span>{l}</span><span style={{fontWeight:600,color:NAVY}}>{v}</span>
+          {[
+            {l:"Equity Partner",v:"",header:true},
+            {l:"  Deemed Capital Basis",v:fmtFull(Math.round(params.equity))},
+            {l:"  Total Capital Deployed",v:fmtFull(Math.round(m.eqTotalContrib)),sub:"Incl. recycled CF"},
+            {l:"  Preferred Return ("+pct(params.prefReturn)+")",v:fmtFull(Math.round(m.eqTotalPref))},
+            {l:"  Total Distributions",v:fmtFull(Math.round(m.eqTotalDist+m.eqTotalFinal))},
+            {l:"  Total Profit",v:fmtFull(Math.round(m.eqNetProfit)),sub:"Capital return + pref + "+pct(params.equityPct)+" profit share"},
+            {l:"",v:"",spacer:true},
+            {l:"Developer",v:"",header:true},
+            {l:"  Capital Contributed",v:"$0"},
+            {l:"  Total Profit",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(params.devPct)+" of residual profit"},
+          ].map((item,i)=>(
+            item.spacer?<div key={i} style={{height:8}}/>:
+            <div key={i} style={{padding:"5px 0",borderBottom:item.v||item.header?"1px solid #F0F2F4":"none"}}>
+              <div style={{display:"flex",justifyContent:"space-between",fontSize:12,fontWeight:item.header?700:400,color:item.header?NAVY:"#555"}}>
+                <span>{item.l}</span><span style={{fontWeight:600,color:NAVY}}>{item.v}</span>
+              </div>
+              {item.sub&&<div style={{fontSize:10,color:"#9AA5B0",marginTop:1,paddingLeft:12}}>{item.sub}</div>}
             </div>))}
         </div>
       </div>
@@ -1507,7 +1531,7 @@ function SpreadsheetTab({model,params}){
 }
 
 function SSDash({m,f,fp,cs}){
-  const rows=[["Key Metrics",null,1],["Peak Loan Requirement",f(m.peakLoan)],["Total Project Revenue",f(m.totalRev)],["Total Project Cost",f(m.totalCost)],["Total Project Profit",f(m.totalProfit),0,1],["Profit % (Return on Equity)",fp(m.totalProfit/m.equity)],["Project Multiple",((m.totalProfit/m.equity)+1).toFixed(2)+"x"],[null],["Returns Distribution",null,1],["Equity Net Profit",f(m.eqNetProfit)],["Developer's Net Profit",f(m.devNetProfit)]];
+  const rows=[["Key Metrics",null,1],["Peak Loan Requirement",f(m.peakLoan)],["Total Project Revenue",f(m.totalRev)],["Total Project Cost",f(m.totalCost)],["Total Project Profit",f(m.totalProfit),0,1],["Profit % (Return on Equity)",fp(m.totalProfit/m.equity)],["Project Multiple",((m.totalProfit/m.equity)+1).toFixed(2)+"x"],[null],["Returns Distribution",null,1],["Equity Total Profit (capital return + pref + share)",f(m.eqNetProfit)],["Developer Total Profit (profit share only)",f(m.devNetProfit)]];
   return(<table style={{width:"100%",borderCollapse:"collapse"}}><thead><tr><th style={{...cs(1),width:280}}>ITP Houston Project Briefing</th><th style={{...cs(1),width:180}}>Results</th><th style={cs(1)}/></tr></thead><tbody>
     {rows.map((r,i)=>!r[0]?<tr key={i}><td colSpan={3} style={{height:12}}/></tr>:r[2]?<tr key={i}><td colSpan={3} style={{...cs(0,1),background:LIGHT,fontWeight:700,fontSize:12,padding:"10px 10px"}}>{r[0]}</td></tr>:<tr key={i}><td style={cs(0,1,r[3])}>{r[0]}</td><td style={{...cs(0,0,r[3]),textAlign:"right",fontWeight:700}}>{r[1]}</td><td style={cs(0)}/></tr>)}
   </tbody></table>);
@@ -1524,7 +1548,7 @@ function SSLots({m,f,cs}){
 }
 
 function SSAssum({m,params,f,fp,cs}){
-  const secs=[{t:"Project Overview",r:[["Project Name","ITPH"],["Location","Houston, TX"],["# of Lots",m.lotsCalc.length],["Land Size","136 acres"]]},{t:"Project Budget",r:[["Hard Costs",f(m.totalHard)],["Soft Costs",f(m.totalSoft)],["Deemed Land Value",f(m.equity)],["Developer Fee",f(m.totalDevFee)],["Subtotal Unlevered",f(m.totalUnlev),1],["Finance Costs",f(m.totalFin)],["Total Project Cost",f(m.totalCost),1]]},{t:"MUD Bonds",r:[["MUD Principal",f(params.mudTotal)],["1st Issuance Mo",params.mudMonth1],["2nd Issuance Mo",params.mudMonth2]]},{t:"Equity Partner",r:[["Deemed Capital",f(params.equity)],["Pref Return",fp(params.prefReturn)],["Profit Split",fp(params.equityPct)]]},{t:"Returns",r:[["Revenue",f(m.totalRev)],["Cost",f(m.totalCost)],["Profit",f(m.totalProfit),1],["Equity Net Profit",f(m.eqNetProfit)],["Developer Net Profit",f(m.devNetProfit)]]}];
+  const secs=[{t:"Project Overview",r:[["Project Name","ITPH"],["Location","Houston, TX"],["# of Lots",m.lotsCalc.length],["Land Size","136 acres"]]},{t:"Project Budget",r:[["Hard Costs",f(m.totalHard)],["Soft Costs",f(m.totalSoft)],["Deemed Land Value",f(m.equity)],["Developer Fee",f(m.totalDevFee)],["Subtotal Unlevered",f(m.totalUnlev),1],["Finance Costs",f(m.totalFin)],["Total Project Cost",f(m.totalCost),1]]},{t:"MUD Bonds",r:[["MUD Principal",f(params.mudTotal)],["1st Issuance Mo",params.mudMonth1],["2nd Issuance Mo",params.mudMonth2]]},{t:"Equity Partner",r:[["Deemed Capital",f(params.equity)],["Pref Return",fp(params.prefReturn)],["Profit Split",fp(params.equityPct)]]},{t:"Returns",r:[["Revenue",f(m.totalRev)],["Cost",f(m.totalCost)],["Total Project Profit",f(m.totalProfit),1],["Equity Total Profit",f(m.eqNetProfit)],["Developer Total Profit",f(m.devNetProfit)]]}];
   return(<table style={{width:"100%",borderCollapse:"collapse"}}><tbody>
     {secs.map((s,si)=><React.Fragment key={si}><tr><td colSpan={3} style={{...cs(0,1),background:NAVY,color:"white",fontWeight:700,padding:"8px 10px",fontSize:12}}>{s.t}</td></tr>
       {s.r.map(([l,v,tot],ri)=><tr key={ri} style={{background:ri%2?"#FAFBFC":"white"}}><td style={{...cs(0,1,!!tot),width:240}}>{l}</td><td style={{...cs(0,0,!!tot),textAlign:"right",width:180,fontWeight:tot?700:400}}>{v}</td><td style={cs(0)}/></tr>)}
@@ -1550,7 +1574,7 @@ function SSCF({m,f,cs,ml,rng}){
 
 function SSEWF({m,f,cs,ml,rng}){
   let cum=0;const cumArr=m.leveredCF.map(cf=>{cum+=cf;return cum;});
-  const rows=[{l:"100% Cash Flows",h:1},{l:"Cash Flow Stream",d:m.leveredCF,t:m.leveredCF.reduce((a,b)=>a+b,0)},{l:"Cumulative",d:cumArr},{s:1},{l:"Equity Partner",h:1},{l:"  Beg Balance",d:m.eqBeg},{l:"  Contributions",d:m.eqContrib,t:m.eqTotalContrib},{l:"  Pref Return",d:m.eqPref,t:m.eqTotalPref},{l:"  Distributions",d:m.eqDist,t:-m.eqTotalDist},{l:"  End Balance",d:m.eqEnd,tot:1},{s:1},{l:"Remaining CF",d:m.remaining},{s:1},{l:"Final Split",h:1},{l:`  Equity (${(m.equityPct*100).toFixed(0)}%)`,d:m.eqFinalDist,t:m.eqTotalFinal},{l:`  Developer (${(m.devPct*100).toFixed(0)}%)`,d:m.devFinalDist,t:m.devNetProfit},{s:1},{l:"Equity Net CF",d:m.eqContrib.map((c,i)=>-c+(-m.eqDist[i])+m.eqFinalDist[i]),t:m.eqNetProfit,tot:1,hl:1}];
+  const rows=[{l:"100% Cash Flows",h:1},{l:"Cash Flow Stream",d:m.leveredCF,t:m.leveredCF.reduce((a,b)=>a+b,0)},{l:"Cumulative",d:cumArr},{s:1},{l:"Equity Partner",h:1},{l:"  Beg Balance",d:m.eqBeg},{l:"  Contributions",d:m.eqContrib,t:m.eqTotalContrib},{l:"  Pref Return",d:m.eqPref,t:m.eqTotalPref},{l:"  Distributions",d:m.eqDist,t:-m.eqTotalDist},{l:"  End Balance",d:m.eqEnd,tot:1},{s:1},{l:"Remaining CF",d:m.remaining},{s:1},{l:"Final Split",h:1},{l:`  Equity Total Profit (${(m.equityPct*100).toFixed(0)}%)`,d:m.eqFinalDist,t:m.eqTotalFinal},{l:`  Developer Total Profit (${(m.devPct*100).toFixed(0)}%)`,d:m.devFinalDist,t:m.devNetProfit},{s:1},{l:"Equity Net CF",d:m.eqContrib.map((c,i)=>-c+(-m.eqDist[i])+m.eqFinalDist[i]),t:m.eqNetProfit,tot:1,hl:1}];
   return(<div style={{overflowX:"auto"}}><table style={{borderCollapse:"collapse",minWidth:rng.length*85+260}}><thead><tr>
     <th style={{...cs(1),position:"sticky",left:0,zIndex:2,minWidth:200}}>Line Item</th><th style={{...cs(1),minWidth:100}}>Total</th>
     {rng.map(i=><th key={i} style={{...cs(1),minWidth:80,textAlign:"center",fontSize:10}}><div>Mo {i}</div><div style={{fontWeight:400,opacity:0.7}}>{ml[i]}</div></th>)}
