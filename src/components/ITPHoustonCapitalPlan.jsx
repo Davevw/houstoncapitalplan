@@ -1103,7 +1103,7 @@ function DashboardTab({model,params,updateParam}){
           </div>
         </div>
         <div>
-          <SectionTitle icon="\u2699\ufe0f">Scenario Controls</SectionTitle>
+          <SectionTitle>Scenario Controls</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <SliderInput label="Equity / Deemed Capital" value={params.equity} onChange={v=>updateParam("equity",v)} min={5000000} max={20000000} step={100000} format={v=>fmt(v)}/>
             <SliderInput label="Preferred Return" value={params.prefReturn} onChange={v=>updateParam("prefReturn",v)} min={0.04} max={0.15} step={0.005} format={v=>pct(v)}/>
