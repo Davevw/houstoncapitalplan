@@ -1383,8 +1383,8 @@ function WaterfallTab({model,params,updateParam}){
             {l:"",v:"",spacer:true},
             {l:"TOTALS",v:"",header:true},
             {l:"  Equity Total Return",v:fmtFull(Math.round(m.eqTotalDist+m.eqTotalFinal)),sub:"Capital back + pref + profit share"},
-            {l:"  Equity Net Profit",v:fmtFull(Math.round(m.eqNetProfit)),sub:"Total return minus capital invested"},
-            {l:"  Developer Promote",v:fmtFull(Math.round(m.devNetProfit)),sub:"Promote only (no capital at risk)"},
+            {l:"  Equity Total Profit",v:fmtFull(Math.round(m.eqTotalPref+m.eqTotalFinal)),sub:"Pref return + equity profit share"},
+            {l:"  Developer Total Profit",v:fmtFull(Math.round(m.devNetProfit)),sub:"Profit share only (no capital at risk)"},
             {l:"  Equity Multiple",v:m.eqMultiple.toFixed(2)+"x"},
           ].map((item,i)=>(
             item.spacer?<div key={i} style={{height:8}}/>:
