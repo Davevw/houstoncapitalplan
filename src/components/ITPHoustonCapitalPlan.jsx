@@ -2,6 +2,8 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from "react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Area, AreaChart, Legend, ComposedChart, Line } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation } from "lucide-react";
+// Data and engine are also kept inline below for Lovable compatibility
+// Canonical extracted versions: src/data/projectData.js, src/engine/runModel.js
 
 // ═══════════════════════════════════════════════════════════════
 // ITP HOUSTON CAPITAL PLAN — COMPLETE FINANCIAL MODEL (v10)
