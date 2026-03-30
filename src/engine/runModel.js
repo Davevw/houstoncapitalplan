@@ -54,6 +54,9 @@ function runModel(lots, params) {
   const totalFinCost=finFixedMo.map((f,i)=>f+loanInt[i]);
   const leveredCF=totalRevenue.map((r,i)=>r-unleveredCost[i]-totalFinCost[i]+(loanDraw[i]-loanPay[i]));
 
+  // Two-pass waterfall: Capital Return + Pref first, then Profit Split
+  // Pass 1: All positive CF pays down equity balance (no premature splits)
+  // Pass 2: Total residual after all equity repaid gets split at end
   const eqBeg=new Array(NUM_MONTHS+1).fill(0),eqContrib=new Array(NUM_MONTHS+1).fill(0);
   const eqPref=new Array(NUM_MONTHS+1).fill(0),eqDist=new Array(NUM_MONTHS+1).fill(0);
   const eqEnd=new Array(NUM_MONTHS+1).fill(0),remaining=new Array(NUM_MONTHS+1).fill(0);
@@ -63,12 +66,27 @@ function runModel(lots, params) {
     eqBeg[m]=m===0?0:eqEnd[m-1];
     eqContrib[m]=leveredCF[m]<0?-leveredCF[m]:0;
     eqPref[m]=m===0?0:eqBeg[m]*((1+prefReturn)**(1/12)-1);
-    eqDist[m]=leveredCF[m]>0?-Math.min(leveredCF[m],eqBeg[m]+eqContrib[m]+eqPref[m]):0;
-    eqEnd[m]=eqBeg[m]+eqContrib[m]+eqPref[m]+eqDist[m];
-    remaining[m]=leveredCF[m]>0?leveredCF[m]+eqDist[m]:0;
-    eqFinalDist[m]=remaining[m]*equityPct;
-    devFinalDist[m]=remaining[m]*devPct;
+    const eqOwed=eqBeg[m]+eqContrib[m]+eqPref[m];
+    if(leveredCF[m]>0){
+      const payToEquity=Math.min(leveredCF[m],eqOwed);
+      eqDist[m]=-payToEquity;
+    } else {
+      eqDist[m]=0;
+    }
+    eqEnd[m]=eqOwed+eqDist[m];
   }
+  // Pass 2: Final settlement - pay off remaining equity, then split residual
+  const finalBal=eqEnd[NUM_MONTHS];
+  const totalPosCF=leveredCF.reduce((a,cf)=>a+(cf>0?cf:0),0);
+  const totalDistributed=-eqDist.reduce((a,b)=>a+b,0);
+  const surplusCF=totalPosCF-totalDistributed;
+  const finalPayoff=Math.min(surplusCF,finalBal);
+  const totalResidual=Math.max(0,surplusCF-finalPayoff);
+  eqDist[NUM_MONTHS]+=-finalPayoff;
+  eqEnd[NUM_MONTHS]=Math.max(0,finalBal-finalPayoff);
+  remaining[NUM_MONTHS]=totalResidual;
+  eqFinalDist[NUM_MONTHS]=totalResidual*equityPct;
+  devFinalDist[NUM_MONTHS]=totalResidual*devPct;
 
   const totalLotRev=lotRevenue.reduce((a,b)=>a+b,0);
   const totalMudRev=mudRevenue.reduce((a,b)=>a+b,0);
