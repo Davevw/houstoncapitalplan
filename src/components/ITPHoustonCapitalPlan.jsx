@@ -1076,7 +1076,7 @@ function DashboardTab({model,params,updateParam}){
       </div>
       <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
         <div>
-          <SectionTitle icon="\ud83d\udcca">Revenue by Quarter</SectionTitle>
+          <SectionTitle>Revenue by Quarter</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <ResponsiveContainer width="100%" height={280}>
               <BarChart data={revenueByQ} barCategoryGap="20%">
@@ -1089,7 +1089,7 @@ function DashboardTab({model,params,updateParam}){
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <SectionTitle icon="\ud83d\udcc8">Cumulative Cash Flow</SectionTitle>
+          <SectionTitle>Cumulative Cash Flow</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <ResponsiveContainer width="100%" height={260}>
               <AreaChart data={m.monthlyCFData}>
@@ -1103,7 +1103,7 @@ function DashboardTab({model,params,updateParam}){
           </div>
         </div>
         <div>
-          <SectionTitle icon="\u2699\ufe0f">Scenario Controls</SectionTitle>
+          <SectionTitle>Scenario Controls</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <SliderInput label="Equity / Deemed Capital" value={params.equity} onChange={v=>updateParam("equity",v)} min={5000000} max={20000000} step={100000} format={v=>fmt(v)}/>
             <SliderInput label="Preferred Return" value={params.prefReturn} onChange={v=>updateParam("prefReturn",v)} min={0.04} max={0.15} step={0.005} format={v=>pct(v)}/>
@@ -1111,7 +1111,7 @@ function DashboardTab({model,params,updateParam}){
             <SliderInput label="MUD Principal" value={params.mudTotal} onChange={v=>updateParam("mudTotal",v)} min={15000000} max={30000000} step={500000} format={v=>fmt(v)}/>
             <SliderInput label="Loan Rate" value={params.loanRate} onChange={v=>updateParam("loanRate",v)} min={0.06} max={0.15} step={0.005} format={v=>pct(v)}/>
           </div>
-          <SectionTitle icon="\ud83c\udfd7\ufe0f">Lot Mix by Type</SectionTitle>
+          <SectionTitle>Lot Mix by Type</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <ResponsiveContainer width="100%" height={200}>
               <PieChart><Pie data={lotTypeData} cx="50%" cy="50%" outerRadius={75} innerRadius={40} dataKey="value" paddingAngle={3}>
@@ -1315,7 +1315,7 @@ function WaterfallTab({model,params,updateParam}){
     </div>
     <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
       <div>
-        <SectionTitle icon="\ud83c\udfe6">Distribution Waterfall</SectionTitle>
+        <SectionTitle>Distribution Waterfall</SectionTitle>
         <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={wfData} layout="vertical" barSize={32}>
@@ -1329,7 +1329,7 @@ function WaterfallTab({model,params,updateParam}){
         </div>
       </div>
       <div>
-        <SectionTitle icon="\u2699\ufe0f">Waterfall Terms</SectionTitle>
+        <SectionTitle>Waterfall Terms</SectionTitle>
         <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
           <SliderInput label="Equity Contribution" value={params.equity} onChange={v=>updateParam("equity",v)} min={5000000} max={20000000} step={100000} format={v=>fmt(v)}/>
           <SliderInput label="Preferred Return" value={params.prefReturn} onChange={v=>updateParam("prefReturn",v)} min={0.04} max={0.15} step={0.005} format={v=>pct(v)}/>
