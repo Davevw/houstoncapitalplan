@@ -12,8 +12,8 @@ dist
 dist-ssr
 *.local
 
-# Environment variables
-.env
+# Environment variables (keep .env tracked for Lovable deployment)
+# .env
 .env.local
 .env.production
 
