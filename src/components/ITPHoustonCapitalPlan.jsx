@@ -1692,6 +1692,15 @@ function DataVaultTab() {
   const fileInputRef = useRef(null);
   const [uploadCategory, setUploadCategory] = useState(null);
 
+  useEffect(() => {
+    if (unlocked) fetchDocuments();
+  }, [unlocked]);
+
+  async function fetchDocuments() {
+    const { data } = await supabase.from("vault_documents").select("*").order("uploaded_at", { ascending: false });
+    if (data) setDocuments(data);
+  }
+
   if(!unlocked){
     return(<div style={{display:"flex",justifyContent:"center",alignItems:"center",minHeight:400}}>
       <div style={{background:"white",borderRadius:16,padding:40,boxShadow:"0 4px 24px rgba(0,0,0,0.12)",textAlign:"center",maxWidth:380,width:"100%"}}>
