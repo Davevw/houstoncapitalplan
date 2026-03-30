@@ -1200,7 +1200,7 @@ function CashFlowTab({model}){
       <MetricCard label="Soft Costs" value={fmt(m.totalSoft)} accent={GOLD}/>
       <MetricCard label="Peak Loan" value={fmtFull(Math.round(m.peakLoan))} accent="#E85D75"/>
     </div>
-    <SectionTitle icon="\ud83d\udcb0">Monthly Revenue vs. Costs</SectionTitle>
+    <SectionTitle>Monthly Revenue vs. Costs</SectionTitle>
     <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
       <ResponsiveContainer width="100%" height={320}>
         <ComposedChart data={m.monthlyCFData}>
