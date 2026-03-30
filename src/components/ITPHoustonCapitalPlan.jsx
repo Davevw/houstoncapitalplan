@@ -1111,7 +1111,7 @@ function DashboardTab({model,params,updateParam}){
             <SliderInput label="MUD Principal" value={params.mudTotal} onChange={v=>updateParam("mudTotal",v)} min={15000000} max={30000000} step={500000} format={v=>fmt(v)}/>
             <SliderInput label="Loan Rate" value={params.loanRate} onChange={v=>updateParam("loanRate",v)} min={0.06} max={0.15} step={0.005} format={v=>pct(v)}/>
           </div>
-          <SectionTitle icon="\ud83c\udfd7\ufe0f">Lot Mix by Type</SectionTitle>
+          <SectionTitle>Lot Mix by Type</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <ResponsiveContainer width="100%" height={200}>
               <PieChart><Pie data={lotTypeData} cx="50%" cy="50%" outerRadius={75} innerRadius={40} dataKey="value" paddingAngle={3}>
