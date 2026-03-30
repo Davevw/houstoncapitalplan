@@ -1340,8 +1340,8 @@ function WaterfallTab({model,params,updateParam}){
     <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:16,marginBottom:8}}>
       <MetricCard label="Deemed Capital Basis" value={fmt(params.equity)} sub="Initial equity contribution" accent="#E85D75"/>
       <MetricCard label="Preferred Return" value={fmtFull(Math.round(m.eqTotalPref))} sub={pct(params.prefReturn)+" annual (accrued)"} accent={GOLD}/>
-      <MetricCard label="Equity Net Profit" value={fmtFull(Math.round(m.eqNetProfit))} sub="After capital returned" accent={TEAL}/>
-      <MetricCard label="Developer Promote" value={fmtFull(Math.round(m.devNetProfit))} sub={pct(params.devPct)+" of residual"} accent={TERRA}/>
+      <MetricCard label="Equity Profit Share" value={fmtFull(Math.round(m.eqTotalFinal))} sub={pct(params.equityPct)+" of residual"} accent={TEAL}/>
+      <MetricCard label="Developer Profit Share" value={fmtFull(Math.round(m.devNetProfit))} sub={pct(params.devPct)+" of residual"} accent={TERRA}/>
       <MetricCard label="Equity Multiple" value={m.eqMultiple.toFixed(2)+"x"} accent={NAVY}/>
     </div>
     <div style={{display:"grid",gridTemplateColumns:"1fr 320px",gap:24}}>
