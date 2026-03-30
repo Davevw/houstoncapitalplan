@@ -1531,7 +1531,7 @@ function SpreadsheetTab({model,params}){
 }
 
 function SSDash({m,f,fp,cs}){
-  const rows=[["Key Metrics",null,1],["Peak Loan Requirement",f(m.peakLoan)],["Total Project Revenue",f(m.totalRev)],["Total Project Cost",f(m.totalCost)],["Total Project Profit",f(m.totalProfit),0,1],["Profit % (Return on Equity)",fp(m.totalProfit/m.equity)],["Project Multiple",((m.totalProfit/m.equity)+1).toFixed(2)+"x"],[null],["Returns Distribution",null,1],["Equity Net Profit",f(m.eqNetProfit)],["Developer's Net Profit",f(m.devNetProfit)]];
+  const rows=[["Key Metrics",null,1],["Peak Loan Requirement",f(m.peakLoan)],["Total Project Revenue",f(m.totalRev)],["Total Project Cost",f(m.totalCost)],["Total Project Profit",f(m.totalProfit),0,1],["Profit % (Return on Equity)",fp(m.totalProfit/m.equity)],["Project Multiple",((m.totalProfit/m.equity)+1).toFixed(2)+"x"],[null],["Returns Distribution",null,1],["Equity Total Profit (capital return + pref + share)",f(m.eqNetProfit)],["Developer Total Profit (profit share only)",f(m.devNetProfit)]];
   return(<table style={{width:"100%",borderCollapse:"collapse"}}><thead><tr><th style={{...cs(1),width:280}}>ITP Houston Project Briefing</th><th style={{...cs(1),width:180}}>Results</th><th style={cs(1)}/></tr></thead><tbody>
     {rows.map((r,i)=>!r[0]?<tr key={i}><td colSpan={3} style={{height:12}}/></tr>:r[2]?<tr key={i}><td colSpan={3} style={{...cs(0,1),background:LIGHT,fontWeight:700,fontSize:12,padding:"10px 10px"}}>{r[0]}</td></tr>:<tr key={i}><td style={cs(0,1,r[3])}>{r[0]}</td><td style={{...cs(0,0,r[3]),textAlign:"right",fontWeight:700}}>{r[1]}</td><td style={cs(0)}/></tr>)}
   </tbody></table>);
