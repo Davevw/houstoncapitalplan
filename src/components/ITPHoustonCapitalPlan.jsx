@@ -1089,7 +1089,7 @@ function DashboardTab({model,params,updateParam}){
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <SectionTitle icon="\ud83d\udcc8">Cumulative Cash Flow</SectionTitle>
+          <SectionTitle>Cumulative Cash Flow</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <ResponsiveContainer width="100%" height={260}>
               <AreaChart data={m.monthlyCFData}>
