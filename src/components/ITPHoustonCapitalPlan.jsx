@@ -1321,8 +1321,9 @@ function CapitalStackTab({model,params}){
         ))}
         <div style={{marginTop:16,padding:16,background:LIGHT,borderRadius:8,fontSize:12,color:"#555",lineHeight:1.6}}>
           <strong style={{color:NAVY}}>Profit Split:</strong> {pct(params.equityPct)} Equity Partner / {pct(params.devPct)} Developer<br/>
-          <strong style={{color:NAVY}}>Equity Net Profit:</strong> {fmtFull(Math.round(m.eqNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>(after capital returned: pref + profit share)</span><br/>
-          <strong style={{color:NAVY}}>Developer Promote:</strong> {fmtFull(Math.round(m.devNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>(profit share only — no capital at risk)</span>
+          <strong style={{color:NAVY}}>Preferred Return:</strong> {fmtFull(Math.round(m.eqTotalPref))} <span style={{fontSize:10,color:"#7A8B9A"}}>(8% accrued on equity capital)</span><br/>
+          <strong style={{color:NAVY}}>Equity Profit Share:</strong> {fmtFull(Math.round(m.eqTotalFinal))} <span style={{fontSize:10,color:"#7A8B9A"}}>({pct(params.equityPct)} of residual after capital + pref)</span><br/>
+          <strong style={{color:NAVY}}>Developer Profit Share:</strong> {fmtFull(Math.round(m.devNetProfit))} <span style={{fontSize:10,color:"#7A8B9A"}}>({pct(params.devPct)} of residual after capital + pref)</span>
         </div>
       </div>
     </div>
