@@ -1366,13 +1366,37 @@ function WaterfallTab({model,params,updateParam}){
 // TAB 6: EXPENDITURES (Full Historical Record)
 // ═══════════════════════════════════════════════════════════════
 function ExpendituresTab(){
+  const [unlocked,setUnlocked]=useState(false);
+  const [code,setCode]=useState("");
+  const [error,setError]=useState(false);
   const [filter,setFilter]=useState("All");
   const years=[...new Set(EXPENDITURES.map(e=>e.d?e.d.substring(0,4):"2019"))].sort();
   const filtered=filter==="All"?EXPENDITURES:EXPENDITURES.filter(e=>(e.d||"2019").startsWith(filter));
   const total=filtered.reduce((a,e)=>a+e.a,0);
   let running=0;
+
+  if(!unlocked){
+    return(<div style={{display:"flex",justifyContent:"center",alignItems:"center",minHeight:400}}>
+      <div style={{background:"white",borderRadius:16,padding:40,boxShadow:"0 4px 24px rgba(0,0,0,0.12)",textAlign:"center",maxWidth:380,width:"100%"}}>
+        <div style={{fontSize:32,marginBottom:12}}>🔒</div>
+        <div style={{fontSize:18,fontWeight:700,color:NAVY,marginBottom:4}}>Secure Data</div>
+        <div style={{fontSize:13,color:"#7A8B9A",marginBottom:24}}>Enter the access code to view Expenditures.</div>
+        <input
+          type="password"
+          value={code}
+          onChange={e=>{setCode(e.target.value);setError(false);}}
+          onKeyDown={e=>{if(e.key==="Enter"){if(code==="ITCH"){setUnlocked(true);}else{setError(true);setCode("");}}}}
+          placeholder="Access Code"
+          style={{width:"100%",padding:"12px 16px",borderRadius:8,border:`2px solid ${error?"#E85D75":"#D0D7DE"}`,fontSize:14,textAlign:"center",letterSpacing:4,marginBottom:12,outline:"none",boxSizing:"border-box"}}
+        />
+        {error&&<div style={{fontSize:12,color:"#E85D75",marginBottom:12}}>Invalid code. Please try again.</div>}
+        <button onClick={()=>{if(code==="ITCH"){setUnlocked(true);}else{setError(true);setCode("");}}} style={{width:"100%",padding:"12px",borderRadius:8,background:NAVY,color:"white",fontSize:14,fontWeight:600,border:"none",cursor:"pointer"}}>Unlock</button>
+      </div>
+    </div>);
+  }
+
   return(<div>
-    <SectionTitle icon="\ud83d\udcdd">Project Expenditures — Full Historical Record</SectionTitle>
+    <SectionTitle>Project Expenditures — Full Historical Record</SectionTitle>
     <div style={{fontSize:12,color:"#7A8B9A",marginBottom:16}}>Complete record of all capital deployed into ITP Houston since land acquisition (June 2019). {EXPENDITURES.length} line items totaling {fmtFull(Math.round(EXPENDITURES.reduce((a,e)=>a+e.a,0)))}.</div>
     <div style={{display:"flex",gap:6,marginBottom:16,flexWrap:"wrap"}}>
       {["All",...years].map(y=>(<button key={y} onClick={()=>setFilter(y)} style={{padding:"6px 14px",borderRadius:6,border:`1.5px solid ${filter===y?TEAL:"#D0D7DE"}`,background:filter===y?TEAL:"white",color:filter===y?"white":NAVY,fontSize:11,fontWeight:600,cursor:"pointer"}}>{y}{y!=="All"?` (${EXPENDITURES.filter(e=>(e.d||"2019").startsWith(y)).length})`:""}</button>))}
