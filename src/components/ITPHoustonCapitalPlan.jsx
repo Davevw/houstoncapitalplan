@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from "react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Area, AreaChart, Legend, ComposedChart, Line } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation } from "lucide-react";
-import AdminFooterNav from "./AdminFooterNav";
+import AdminPasscodeGate, { isAdminUnlocked } from "./AdminPasscodeGate";
 import TaxDashboard from "./TaxDashboard";
 import itpLogo from "@/assets/itp-houston-logo.png";
 // Data and engine are also kept inline below for Lovable compatibility
@@ -1005,19 +1005,54 @@ export default function App(){
   const [showPresentation, setShowPresentation] = useState(false);
   const [presentationUrl, setPresentationUrl] = useState(null);
   const [activeAdminTab, setActiveAdminTab] = useState(null);
+  const [showAdminMenu, setShowAdminMenu] = useState(false);
+  const [showAdminGate, setShowAdminGate] = useState(false);
+  const [pendingAdminTab, setPendingAdminTab] = useState(null);
+  const adminMenuRef = useRef(null);
+
+  // Close admin dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (adminMenuRef.current && !adminMenuRef.current.contains(e.target)) {
+        setShowAdminMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const { data } = supabase.storage.from("itph-data-vault").getPublicUrl("Presentations/ITP_Houston_Investor_Presentation.pdf");
     if (data?.publicUrl) setPresentationUrl(data.publicUrl);
   }, []);
 
-  // Admin tabs are rendered as overlays, not mapped to main tab indices
-  function handleAdminTabSelect(tab) {
-    setActiveAdminTab(tab);
+  function handleAdminTabClick(tab) {
+    if (isAdminUnlocked()) {
+      setActiveAdminTab(activeAdminTab === tab ? null : tab);
+      setShowAdminMenu(false);
+    } else {
+      setPendingAdminTab(tab);
+      setShowAdminGate(true);
+      setShowAdminMenu(false);
+    }
+  }
+
+  function handleAdminUnlocked() {
+    setShowAdminGate(false);
+    if (pendingAdminTab) {
+      setActiveAdminTab(pendingAdminTab);
+      setPendingAdminTab(null);
+    }
   }
 
   return(
-    <div data-build={BUILD_STAMP} style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif",paddingBottom:60}}>
+    <div data-build={BUILD_STAMP} style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif"}}>
+      {showAdminGate && (
+        <AdminPasscodeGate
+          onSuccess={handleAdminUnlocked}
+          onClose={() => { setShowAdminGate(false); setPendingAdminTab(null); }}
+        />
+      )}
       <div style={{background:`linear-gradient(135deg,${NAVY} 0%,${TEAL} 100%)`,padding:"28px 32px 20px",color:"white"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:16}}>
@@ -1040,10 +1075,30 @@ export default function App(){
               </button>
             </div>
           </div>
-          <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap"}}>
+          <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap",alignItems:"center"}}>
             {TABS.map((t,i)=>(
               <button key={t} onClick={()=>setActiveTab(i)} style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeTab===i?"white":"rgba(255,255,255,0.12)",color:activeTab===i?NAVY:"rgba(255,255,255,0.8)"}}>{t}</button>
             ))}
+            <div style={{marginLeft:"auto",position:"relative"}} ref={adminMenuRef}>
+              <button
+                onClick={()=>setShowAdminMenu(!showAdminMenu)}
+                style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeAdminTab?"white":"rgba(255,255,255,0.12)",color:activeAdminTab?NAVY:"rgba(255,255,255,0.8)",display:"flex",alignItems:"center",gap:6}}
+              >
+                🔒 Admin ▾
+              </button>
+              {showAdminMenu && (
+                <div style={{position:"absolute",right:0,top:"100%",background:"white",borderRadius:"0 0 8px 8px",boxShadow:"0 8px 24px rgba(0,0,0,0.2)",minWidth:180,zIndex:9999,overflow:"hidden"}}>
+                  {[{id:"data-vault",icon:"📊",label:"Data Vault"},{id:"waterfall",icon:"💧",label:"Waterfall"},{id:"tax-dashboard",icon:"🏛️",label:"Tax Dashboard"}].map(item=>(
+                    <button key={item.id} onClick={()=>handleAdminTabClick(item.id)} style={{display:"flex",alignItems:"center",gap:8,width:"100%",padding:"12px 16px",border:"none",background:activeAdminTab===item.id?"#F0F6F8":"white",color:NAVY,fontSize:13,fontWeight:activeAdminTab===item.id?700:500,cursor:"pointer",textAlign:"left",transition:"background 0.15s"}}
+                      onMouseEnter={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="#F7F9FB"}}
+                      onMouseLeave={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="white"}}
+                    >
+                      <span>{item.icon}</span>{item.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -1059,7 +1114,7 @@ export default function App(){
 
       {/* Admin overlay panels (footer nav tabs) */}
       {activeAdminTab === "tax-dashboard" && (
-        <div style={{position:"fixed",top:0,left:0,right:0,bottom:56,background:"white",zIndex:8000,overflowY:"auto"}}>
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Dashboard</button>
           </div>
@@ -1067,7 +1122,7 @@ export default function App(){
         </div>
       )}
       {activeAdminTab === "waterfall" && (
-        <div style={{position:"fixed",top:0,left:0,right:0,bottom:56,background:"white",zIndex:8000,overflowY:"auto"}}>
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Waterfall</button>
           </div>
@@ -1077,7 +1132,7 @@ export default function App(){
         </div>
       )}
       {activeAdminTab === "data-vault" && (
-        <div style={{position:"fixed",top:0,left:0,right:0,bottom:56,background:"white",zIndex:8000,overflowY:"auto"}}>
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Data Vault</button>
           </div>
@@ -1117,8 +1172,6 @@ export default function App(){
         <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>ITP Houston Capital Plan &nbsp;|&nbsp; For Authorized Recipients Only</div>
       </div>
 
-      {/* Admin Footer Navigation */}
-      <AdminFooterNav activeAdminTab={activeAdminTab} onTabSelect={handleAdminTabSelect}/>
     </div>
   );
 }
