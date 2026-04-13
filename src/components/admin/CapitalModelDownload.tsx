@@ -89,7 +89,7 @@ const COPILOT_PROMPTS = [
   {
     tab: "🔗 Cross-Sheet Analysis",
     prompts: [
-      "Looking across all tabs, summarize the complete capital story for The Plaza in 5 bullet points — suitable for an investor overview.",
+      "Looking across all tabs, summarize the complete capital story for the Houston project in 5 bullet points — suitable for an investor overview.",
       "What are the three biggest risks to project returns based on the sensitivity tables? Rank them.",
       "Build an executive summary table pulling the top KPIs from each tab: TDC, LTC, LTV, DSCR, NOI, stabilized value, JV partner total return, and equity multiple.",
       "Compare the Assumptions tab inputs to the Pro Forma outputs. Are there any assumptions that seem aggressive relative to market norms?",
@@ -151,7 +151,7 @@ export default function CapitalModelDownload() {
             <FileSpreadsheet size={22} /> CAPITAL MODEL
           </div>
           <div style={{ fontSize: 13, opacity: 0.8, marginTop: 4 }}>
-            The Plaza at Watsonville · ThePlaza_CapitalModel_v1
+            ITP Houston Capital Plan · HoustonCapitalPlan_v1
           </div>
           <div style={{ fontSize: 12, opacity: 0.6, marginTop: 2 }}>
             9 tabs · 106 live formulas · Copilot-ready
@@ -169,7 +169,7 @@ export default function CapitalModelDownload() {
 
       {/* Metadata strip */}
       <div style={{ background: CREAM, padding: "10px 24px", fontSize: 12, color: "#6B7280", borderBottom: "1px solid #E0E4E8" }}>
-        📊 ThePlaza_CapitalModel_v1.xlsx &nbsp;·&nbsp; 9 Tabs &nbsp;·&nbsp; 106 Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 12, 2026
+        📊 HoustonCapitalPlan_v1.xlsx &nbsp;·&nbsp; 9 Tabs &nbsp;·&nbsp; 106 Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 12, 2026
         <br />
         <span style={{ opacity: 0.7 }}>Built by PLUSAdvantage™</span>
       </div>
