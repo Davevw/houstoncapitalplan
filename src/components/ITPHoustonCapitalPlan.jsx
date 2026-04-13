@@ -1021,13 +1021,14 @@ export default function App(){
       <div style={{background:`linear-gradient(135deg,${NAVY} 0%,${TEAL} 100%)`,padding:"28px 32px 20px",color:"white"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:16}}>
-            <div>
-              <div style={{fontSize:13,fontWeight:600,letterSpacing:3,opacity:0.7,marginBottom:4}}>ITP HOUSTON</div>
-              <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>ITP Houston Capital Plan</h1>
-              <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
+            <div style={{display:"flex",alignItems:"center",gap:16}}>
+              <img src={itpLogo} alt="ITP Houston" width={70} height={70} />
+              <div>
+                <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>ITP Houston Capital Plan</h1>
+                <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
+              </div>
             </div>
-            <div style={{textAlign:"right"}}>
-              <img src={itpLogo} alt="ITP Houston" width={100} height={100} style={{marginBottom:4}} />
+            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
               <div>Last Update: April 13, 2026</div>
               <button
                 onClick={() => setShowPresentation(true)}
