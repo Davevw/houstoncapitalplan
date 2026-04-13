@@ -1,7 +1,8 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Area, AreaChart, Legend, ComposedChart, Line } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
-import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation } from "lucide-react";
+import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation, FileSpreadsheet } from "lucide-react";
+import { exportModelToExcel } from "@/utils/exportToExcel";
 import AdminPasscodeGate, { isAdminUnlocked } from "./AdminPasscodeGate";
 import TaxDashboard from "./TaxDashboard";
 import itpLogo from "@/assets/itp-houston-logo.png";
@@ -1062,14 +1063,24 @@ export default function App(){
             </div>
             <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
               <div>Last Update: April 13, 2026</div>
-              <button
-                onClick={() => setShowPresentation(true)}
-                style={{marginTop:8,display:"inline-flex",alignItems:"center",gap:6,background:"white",color:NAVY,border:"none",padding:"10px 20px",borderRadius:8,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s",boxShadow:"0 2px 8px rgba(0,0,0,0.15)"}}
-                onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.25)"}}
-                onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.15)"}}
-              >
-                <Presentation size={16} /> View Investor Presentation
-              </button>
+              <div style={{display:"flex",gap:8,marginTop:8,flexWrap:"wrap",justifyContent:"flex-end"}}>
+                <button
+                  onClick={() => setShowPresentation(true)}
+                  style={{display:"inline-flex",alignItems:"center",gap:6,background:"white",color:NAVY,border:"none",padding:"10px 20px",borderRadius:8,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s",boxShadow:"0 2px 8px rgba(0,0,0,0.15)"}}
+                  onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.25)"}}
+                  onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.15)"}}
+                >
+                  <Presentation size={16} /> View Investor Presentation
+                </button>
+                <button
+                  onClick={() => exportModelToExcel(model, params, lots)}
+                  style={{display:"inline-flex",alignItems:"center",gap:6,background:"#217346",color:"white",border:"none",padding:"10px 20px",borderRadius:8,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s",boxShadow:"0 2px 8px rgba(0,0,0,0.15)"}}
+                  onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.25)"}}
+                  onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.15)"}}
+                >
+                  <FileSpreadsheet size={16} /> Export to Excel
+                </button>
+              </div>
             </div>
           </div>
           <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap",alignItems:"center"}}>
