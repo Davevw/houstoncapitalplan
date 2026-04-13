@@ -1039,10 +1039,7 @@ export default function App(){
 
   function handleAdminUnlocked() {
     setShowAdminGate(false);
-    if (pendingAdminTab) {
-      setActiveAdminTab(pendingAdminTab);
-      setPendingAdminTab(null);
-    }
+    setShowAdminMenu(true);
   }
 
   return(
