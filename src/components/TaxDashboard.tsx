@@ -537,6 +537,7 @@ function MetricCard({
 function ParcelCard({
   label,
   address,
+  apn,
   county,
   acreage,
   use,
@@ -544,6 +545,7 @@ function ParcelCard({
 }: {
   label: string;
   address: string;
+  apn?: string;
   county: string;
   acreage: string;
   use: string;
@@ -571,9 +573,14 @@ function ParcelCard({
       >
         {label}
       </div>
-      <div style={{ fontSize: 14, fontWeight: 700, color: NAVY, marginBottom: 6 }}>
+      <div style={{ fontSize: 14, fontWeight: 700, color: NAVY, marginBottom: 4 }}>
         {address}
       </div>
+      {apn && (
+        <div style={{ fontSize: 11, color: "#9AA5B0", marginBottom: 4, fontWeight: 600 }}>
+          {apn}
+        </div>
+      )}
       <div style={{ fontSize: 12, color: "#7A8B9A" }}>
         {county} &nbsp;·&nbsp; {acreage} &nbsp;·&nbsp; {use}
       </div>
