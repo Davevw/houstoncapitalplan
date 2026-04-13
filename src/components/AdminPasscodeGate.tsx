@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const NAVY = "#0B3D5C";
-const ADMIN_CODE = "HS0";
+const ADMIN_CODE = "HC01";
 const SESSION_KEY = "admin_unlocked";
 
 export function isAdminUnlocked(): boolean {
