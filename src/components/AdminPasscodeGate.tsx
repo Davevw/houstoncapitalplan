@@ -30,7 +30,7 @@ export default function AdminPasscodeGate({ onSuccess, onClose }: AdminPasscodeG
   const [error, setError] = useState(false);
 
   function handleSubmit() {
-    if (code === ADMIN_CODE) {
+    if (code.toUpperCase() === ADMIN_CODE.toUpperCase()) {
       unlockAdmin();
       onSuccess();
     } else {
