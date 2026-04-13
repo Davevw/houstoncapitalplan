@@ -987,7 +987,7 @@ function SectionTitle({children,icon}){
 // MAIN APP
 // ═══════════════════════════════════════════════════════════════
 
-const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Equity Waterfall","Expenditures","Deemed Capital","Financial Model","Data Vault"];
+const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model"];
 const BUILD_STAMP = "2026-03-30-1919";
 
 export default function App(){
@@ -1010,11 +1010,9 @@ export default function App(){
     if (data?.publicUrl) setPresentationUrl(data.publicUrl);
   }, []);
 
-  // Map admin tab IDs to main tab indices for Data Vault (8) and Waterfall (4)
+  // Admin tabs are rendered as overlays, not mapped to main tab indices
   function handleAdminTabSelect(tab) {
     setActiveAdminTab(tab);
-    if (tab === "data-vault") { setActiveTab(8); }
-    else if (tab === "waterfall") { setActiveTab(4); }
   }
 
   return(
@@ -1053,20 +1051,38 @@ export default function App(){
         {activeTab===1&&<LotTab lots={lots} model={model} updateLot={updateLot}/>}
         {activeTab===2&&<CashFlowTab model={model}/>}
         {activeTab===3&&<CapitalStackTab model={model} params={params}/>}
-        {activeTab===4&&<WaterfallTab model={model} params={params} updateParam={updateParam}/>}
-        {activeTab===5&&<ExpendituresTab/>}
-        {activeTab===6&&<DeemedCapitalTab/>}
-        {activeTab===7&&<SpreadsheetTab model={model} params={params}/>}
-        {activeTab===8&&<DataVaultTab/>}
+        {activeTab===4&&<ExpendituresTab/>}
+        {activeTab===5&&<DeemedCapitalTab/>}
+        {activeTab===6&&<SpreadsheetTab model={model} params={params}/>}
       </div>
 
-      {/* Tax Dashboard Modal (admin footer tab) */}
+      {/* Admin overlay panels (footer nav tabs) */}
       {activeAdminTab === "tax-dashboard" && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:56,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Dashboard</button>
           </div>
           <TaxDashboard/>
+        </div>
+      )}
+      {activeAdminTab === "waterfall" && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:56,background:"white",zIndex:8000,overflowY:"auto"}}>
+          <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
+            <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Waterfall</button>
+          </div>
+          <div style={{maxWidth:1200,margin:"0 auto",padding:"24px 32px"}}>
+            <WaterfallTab model={model} params={params} updateParam={updateParam}/>
+          </div>
+        </div>
+      )}
+      {activeAdminTab === "data-vault" && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:56,background:"white",zIndex:8000,overflowY:"auto"}}>
+          <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
+            <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Data Vault</button>
+          </div>
+          <div style={{maxWidth:1200,margin:"0 auto",padding:"24px 32px"}}>
+            <DataVaultTab/>
+          </div>
         </div>
       )}
 
