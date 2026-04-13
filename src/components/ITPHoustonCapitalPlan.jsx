@@ -1005,6 +1005,21 @@ export default function App(){
   const [showPresentation, setShowPresentation] = useState(false);
   const [presentationUrl, setPresentationUrl] = useState(null);
   const [activeAdminTab, setActiveAdminTab] = useState(null);
+  const [showAdminMenu, setShowAdminMenu] = useState(false);
+  const [showAdminGate, setShowAdminGate] = useState(false);
+  const [pendingAdminTab, setPendingAdminTab] = useState(null);
+  const adminMenuRef = useRef(null);
+
+  // Close admin dropdown on outside click
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (adminMenuRef.current && !adminMenuRef.current.contains(e.target)) {
+        setShowAdminMenu(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     const { data } = supabase.storage.from("itph-data-vault").getPublicUrl("Presentations/ITP_Houston_Investor_Presentation.pdf");
