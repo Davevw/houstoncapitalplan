@@ -1156,6 +1156,17 @@ export default function App(){
           </div>
         </div>
       )}
+      )}
+      {activeAdminTab === "capital-model" && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
+          <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
+            <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Capital Model</button>
+          </div>
+          <div style={{maxWidth:1200,margin:"0 auto",padding:"24px 32px"}}>
+            <CapitalModelDownload/>
+          </div>
+        </div>
+      )}
 
       {/* Investor Presentation Modal */}
       {showPresentation && (
