@@ -171,7 +171,7 @@ export default function CapitalModelDownload() {
       <div style={{ background: CREAM, padding: "10px 24px", fontSize: 12, color: "#6B7280", borderBottom: "1px solid #E0E4E8" }}>
         📊 ThePlaza_CapitalModel_v1.xlsx &nbsp;·&nbsp; 9 Tabs &nbsp;·&nbsp; 106 Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 12, 2026
         <br />
-        <span style={{ opacity: 0.7 }}>Built by PLUSAdvantage™ · Western Realty Finance</span>
+        <span style={{ opacity: 0.7 }}>Built by PLUSAdvantage™</span>
       </div>
 
       {/* How to use with Copilot */}
@@ -290,7 +290,7 @@ export default function CapitalModelDownload() {
 
       {/* Footer */}
       <div style={{ background: CREAM, padding: "10px 24px", fontSize: 11, color: "#9CA3AF", textAlign: "center", borderTop: "1px solid #E0E4E8" }}>
-        PLUSAdvantage™ 2026 · Western Realty Finance · CONFIDENTIAL
+        PLUSAdvantage™ 2026 · CONFIDENTIAL
       </div>
     </div>
   );
