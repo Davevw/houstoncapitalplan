@@ -1046,7 +1046,13 @@ export default function App(){
   }
 
   return(
-    <div data-build={BUILD_STAMP} style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif",paddingBottom:60}}>
+    <div data-build={BUILD_STAMP} style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif"}}>
+      {showAdminGate && (
+        <AdminPasscodeGate
+          onSuccess={handleAdminUnlocked}
+          onClose={() => { setShowAdminGate(false); setPendingAdminTab(null); }}
+        />
+      )}
       <div style={{background:`linear-gradient(135deg,${NAVY} 0%,${TEAL} 100%)`,padding:"28px 32px 20px",color:"white"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:16}}>
