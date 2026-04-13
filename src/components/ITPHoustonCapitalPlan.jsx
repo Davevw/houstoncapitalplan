@@ -1027,7 +1027,7 @@ export default function App(){
             </div>
             <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
               <div style={{fontSize:14,fontWeight:700,letterSpacing:1}}>PLUSAdvantage™ 2026</div>
-              <div>Capital Plan — Interactive Financial Model</div>
+              <div>Interactive Financial Model</div>
               <div>Last Update: April 13, 2026</div>
               <button
                 onClick={() => setShowPresentation(true)}
