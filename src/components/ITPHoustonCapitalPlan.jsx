@@ -1022,7 +1022,7 @@ export default function App(){
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:16}}>
             <div>
               <div style={{fontSize:13,fontWeight:600,letterSpacing:3,opacity:0.7,marginBottom:4}}>LANDCO NEXA DEVELOPMENT</div>
-              <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>International Trade Park Houston</h1>
+              <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>ITP Houston Capital Plan</h1>
               <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
             </div>
             <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
