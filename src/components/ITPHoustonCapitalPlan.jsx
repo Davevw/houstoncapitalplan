@@ -1186,7 +1186,7 @@ export default function App(){
       )}
 
       <div style={{background:NAVY,padding:"20px 32px",textAlign:"center"}}>
-        <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>Powered by PLUSAdvantage™ 2026 &nbsp;—&nbsp; A Western Realty Finance Brand</div>
+        <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>Powered by PLUSAdvantage™ 2026</div>
       </div>
 
     </div>
