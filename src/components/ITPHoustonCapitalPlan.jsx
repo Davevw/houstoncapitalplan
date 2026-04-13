@@ -1026,9 +1026,23 @@ export default function App(){
     if (data?.publicUrl) setPresentationUrl(data.publicUrl);
   }, []);
 
-  // Admin tabs are rendered as overlays, not mapped to main tab indices
-  function handleAdminTabSelect(tab) {
-    setActiveAdminTab(tab);
+  function handleAdminTabClick(tab) {
+    if (isAdminUnlocked()) {
+      setActiveAdminTab(activeAdminTab === tab ? null : tab);
+      setShowAdminMenu(false);
+    } else {
+      setPendingAdminTab(tab);
+      setShowAdminGate(true);
+      setShowAdminMenu(false);
+    }
+  }
+
+  function handleAdminUnlocked() {
+    setShowAdminGate(false);
+    if (pendingAdminTab) {
+      setActiveAdminTab(pendingAdminTab);
+      setPendingAdminTab(null);
+    }
   }
 
   return(
