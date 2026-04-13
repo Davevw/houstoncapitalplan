@@ -444,8 +444,8 @@ export default function TaxDashboard() {
             borderTop: "1px solid #E0E4E8",
           }}
         >
-          PLUSAdvantage™ 2026 &nbsp;|&nbsp; LANDCO NEXA Development &nbsp;|&nbsp;
-          Confidential — For Authorized Recipients Only
+          PLUSAdvantage™ 2026 &nbsp;|&nbsp;
+          For Authorized Recipients Only
         </div>
       </div>
     </div>
