@@ -2,6 +2,8 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from "react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Area, AreaChart, Legend, ComposedChart, Line } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation } from "lucide-react";
+import AdminFooterNav from "./AdminFooterNav";
+import TaxDashboard from "./TaxDashboard";
 // Data and engine are also kept inline below for Lovable compatibility
 // Canonical extracted versions: src/data/projectData.js, src/engine/runModel.js
 
@@ -1001,14 +1003,22 @@ export default function App(){
 
   const [showPresentation, setShowPresentation] = useState(false);
   const [presentationUrl, setPresentationUrl] = useState(null);
+  const [activeAdminTab, setActiveAdminTab] = useState(null);
 
   useEffect(() => {
     const { data } = supabase.storage.from("itph-data-vault").getPublicUrl("Presentations/ITP_Houston_Investor_Presentation.pdf");
     if (data?.publicUrl) setPresentationUrl(data.publicUrl);
   }, []);
 
+  // Map admin tab IDs to main tab indices for Data Vault (8) and Waterfall (4)
+  function handleAdminTabSelect(tab) {
+    setActiveAdminTab(tab);
+    if (tab === "data-vault") { setActiveTab(8); }
+    else if (tab === "waterfall") { setActiveTab(4); }
+  }
+
   return(
-    <div data-build={BUILD_STAMP} style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif"}}>
+    <div data-build={BUILD_STAMP} style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif",paddingBottom:60}}>
       <div style={{background:`linear-gradient(135deg,${NAVY} 0%,${TEAL} 100%)`,padding:"28px 32px 20px",color:"white"}}>
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:16}}>
@@ -1050,6 +1060,16 @@ export default function App(){
         {activeTab===8&&<DataVaultTab/>}
       </div>
 
+      {/* Tax Dashboard Modal (admin footer tab) */}
+      {activeAdminTab === "tax-dashboard" && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:56,background:"white",zIndex:8000,overflowY:"auto"}}>
+          <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
+            <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Dashboard</button>
+          </div>
+          <TaxDashboard/>
+        </div>
+      )}
+
       {/* Investor Presentation Modal */}
       {showPresentation && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.7)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center"}} onClick={()=>setShowPresentation(false)}>
@@ -1079,6 +1099,9 @@ export default function App(){
       <div style={{background:NAVY,padding:"20px 32px",textAlign:"center"}}>
         <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>LANDCO NEXA Development &nbsp;|&nbsp; Confidential Investment Analysis &nbsp;|&nbsp; For Authorized Recipients Only</div>
       </div>
+
+      {/* Admin Footer Navigation */}
+      <AdminFooterNav activeAdminTab={activeAdminTab} onTabSelect={handleAdminTabSelect}/>
     </div>
   );
 }
