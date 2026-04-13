@@ -1,8 +1,7 @@
 import React, { useState, useMemo, useCallback, useEffect, useRef } from "react";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Area, AreaChart, Legend, ComposedChart, Line } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
-import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation, FileSpreadsheet } from "lucide-react";
-import { exportModelToExcel } from "@/utils/exportToExcel";
+import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation } from "lucide-react";
 import AdminPasscodeGate, { isAdminUnlocked } from "./AdminPasscodeGate";
 import TaxDashboard from "./TaxDashboard";
 import CapitalModelDownload from "./admin/CapitalModelDownload";
@@ -1072,14 +1071,6 @@ export default function App(){
                   onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.15)"}}
                 >
                   <Presentation size={16} /> View Investor Presentation
-                </button>
-                <button
-                  onClick={() => exportModelToExcel(model, params, lots)}
-                  style={{display:"inline-flex",alignItems:"center",gap:6,background:"#217346",color:"white",border:"none",padding:"10px 20px",borderRadius:8,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s",boxShadow:"0 2px 8px rgba(0,0,0,0.15)"}}
-                  onMouseEnter={e=>{e.currentTarget.style.transform="scale(1.02)";e.currentTarget.style.boxShadow="0 4px 16px rgba(0,0,0,0.25)"}}
-                  onMouseLeave={e=>{e.currentTarget.style.transform="scale(1)";e.currentTarget.style.boxShadow="0 2px 8px rgba(0,0,0,0.15)"}}
-                >
-                  <FileSpreadsheet size={16} /> Export to Excel
                 </button>
               </div>
             </div>
