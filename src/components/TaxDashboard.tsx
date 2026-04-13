@@ -107,7 +107,7 @@ export default function TaxDashboard() {
               marginBottom: 4,
             }}
           >
-            ITPH HOUSTON — ADMIN DASHBOARD
+            ITPH HOUSTON — PROPERTY TAX MANAGEMENT DASHBOARD
           </div>
           <h1
             style={{
@@ -121,7 +121,7 @@ export default function TaxDashboard() {
             🏛️ Property Tax Management Dashboard
           </h1>
           <div style={{ fontSize: 14, opacity: 0.8, marginTop: 4 }}>
-            International Trade Park Houston — Property Tax Overview
+            International Trade Park Houston &nbsp;|&nbsp; 12000 Bissonnet St, Houston TX 77099
           </div>
         </div>
       </div>
@@ -140,7 +140,8 @@ export default function TaxDashboard() {
           <ParcelCard
             label="Parcel 1"
             address="12000 Bissonnet St, Houston TX 77099"
-            county="Harris County"
+            apn="APN: To Be Added"
+            county="Alief ISD + Harris County"
             acreage="~50 acres"
             use="Industrial / Development Land"
             color={TEAL}
@@ -148,7 +149,8 @@ export default function TaxDashboard() {
           <ParcelCard
             label="Parcel 2"
             address="Bissonnet Street Tract — Adjacent Parcel"
-            county="Harris County"
+            apn="APN: To Be Added"
+            county="Alief ISD + Harris County + IMD"
             acreage="~86 acres"
             use="Mixed-Use / Development Land"
             color={NAVY}
@@ -428,7 +430,8 @@ export default function TaxDashboard() {
         >
           <strong>⚠️ Disclaimer:</strong> This dashboard provides analysis and
           document preparation for review purposes only. No filings or
-          submissions are made on your behalf.
+          submissions are made on your behalf. All decisions remain with the
+          property owner.
         </div>
 
         {/* Footer */}
@@ -534,6 +537,7 @@ function MetricCard({
 function ParcelCard({
   label,
   address,
+  apn,
   county,
   acreage,
   use,
@@ -541,6 +545,7 @@ function ParcelCard({
 }: {
   label: string;
   address: string;
+  apn?: string;
   county: string;
   acreage: string;
   use: string;
@@ -568,9 +573,14 @@ function ParcelCard({
       >
         {label}
       </div>
-      <div style={{ fontSize: 14, fontWeight: 700, color: NAVY, marginBottom: 6 }}>
+      <div style={{ fontSize: 14, fontWeight: 700, color: NAVY, marginBottom: 4 }}>
         {address}
       </div>
+      {apn && (
+        <div style={{ fontSize: 11, color: "#9AA5B0", marginBottom: 4, fontWeight: 600 }}>
+          {apn}
+        </div>
+      )}
       <div style={{ fontSize: 12, color: "#7A8B9A" }}>
         {county} &nbsp;·&nbsp; {acreage} &nbsp;·&nbsp; {use}
       </div>
