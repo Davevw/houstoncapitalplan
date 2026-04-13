@@ -1520,7 +1520,7 @@ function ExpendituresTab(){
           type="password"
           value={code}
           onChange={e=>{setCode(e.target.value);setError(false);}}
-          onKeyDown={e=>{if(e.key==="Enter"){if(code==="ITPH"){setUnlocked(true);}else{setError(true);setCode("");}}}}
+          onKeyDown={e=>{if(e.key==="Enter"){if(code.toUpperCase()==="ITPH"){setUnlocked(true);}else{setError(true);setCode("");}}}}
           placeholder="Access Code"
           style={{width:"100%",padding:"12px 16px",borderRadius:8,border:`2px solid ${error?"#E85D75":"#D0D7DE"}`,fontSize:14,textAlign:"center",letterSpacing:4,marginBottom:12,outline:"none",boxSizing:"border-box"}}
         />
