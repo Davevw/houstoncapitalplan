@@ -1172,8 +1172,6 @@ export default function App(){
         <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>ITP Houston Capital Plan &nbsp;|&nbsp; For Authorized Recipients Only</div>
       </div>
 
-      {/* Admin Footer Navigation */}
-      <AdminFooterNav activeAdminTab={activeAdminTab} onTabSelect={handleAdminTabSelect}/>
     </div>
   );
 }
