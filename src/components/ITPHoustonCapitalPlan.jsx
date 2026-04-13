@@ -5,6 +5,7 @@ import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentatio
 import { exportModelToExcel } from "@/utils/exportToExcel";
 import AdminPasscodeGate, { isAdminUnlocked } from "./AdminPasscodeGate";
 import TaxDashboard from "./TaxDashboard";
+import CapitalModelDownload from "./admin/CapitalModelDownload";
 import itpLogo from "@/assets/itp-houston-logo.png";
 // Data and engine are also kept inline below for Lovable compatibility
 // Canonical extracted versions: src/data/projectData.js, src/engine/runModel.js
