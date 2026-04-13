@@ -1069,10 +1069,30 @@ export default function App(){
               </button>
             </div>
           </div>
-          <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap"}}>
+          <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap",alignItems:"center"}}>
             {TABS.map((t,i)=>(
               <button key={t} onClick={()=>setActiveTab(i)} style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeTab===i?"white":"rgba(255,255,255,0.12)",color:activeTab===i?NAVY:"rgba(255,255,255,0.8)"}}>{t}</button>
             ))}
+            <div style={{marginLeft:"auto",position:"relative"}} ref={adminMenuRef}>
+              <button
+                onClick={()=>setShowAdminMenu(!showAdminMenu)}
+                style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeAdminTab?"white":"rgba(255,255,255,0.12)",color:activeAdminTab?NAVY:"rgba(255,255,255,0.8)",display:"flex",alignItems:"center",gap:6}}
+              >
+                🔒 Admin ▾
+              </button>
+              {showAdminMenu && (
+                <div style={{position:"absolute",right:0,top:"100%",background:"white",borderRadius:"0 0 8px 8px",boxShadow:"0 8px 24px rgba(0,0,0,0.2)",minWidth:180,zIndex:9999,overflow:"hidden"}}>
+                  {[{id:"data-vault",icon:"📊",label:"Data Vault"},{id:"waterfall",icon:"💧",label:"Waterfall"},{id:"tax-dashboard",icon:"🏛️",label:"Tax Dashboard"}].map(item=>(
+                    <button key={item.id} onClick={()=>handleAdminTabClick(item.id)} style={{display:"flex",alignItems:"center",gap:8,width:"100%",padding:"12px 16px",border:"none",background:activeAdminTab===item.id?"#F0F6F8":"white",color:NAVY,fontSize:13,fontWeight:activeAdminTab===item.id?700:500,cursor:"pointer",textAlign:"left",transition:"background 0.15s"}}
+                      onMouseEnter={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="#F7F9FB"}}
+                      onMouseLeave={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="white"}}
+                    >
+                      <span>{item.icon}</span>{item.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
