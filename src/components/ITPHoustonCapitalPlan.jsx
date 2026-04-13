@@ -4,6 +4,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation } from "lucide-react";
 import AdminFooterNav from "./AdminFooterNav";
 import TaxDashboard from "./TaxDashboard";
+import itpLogo from "@/assets/itp-houston-logo.png";
 // Data and engine are also kept inline below for Lovable compatibility
 // Canonical extracted versions: src/data/projectData.js, src/engine/runModel.js
 
@@ -1025,8 +1026,8 @@ export default function App(){
               <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>ITP Houston Capital Plan</h1>
               <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
             </div>
-            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
-              <div style={{fontSize:14,fontWeight:700,letterSpacing:1}}>PLUSAdvantage™ 2026</div>
+            <div style={{textAlign:"right"}}>
+              <img src={itpLogo} alt="ITP Houston" width={100} height={100} style={{marginBottom:4}} />
               <div>Last Update: April 13, 2026</div>
               <button
                 onClick={() => setShowPresentation(true)}
