@@ -5,6 +5,7 @@ import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentatio
 import { exportModelToExcel } from "@/utils/exportToExcel";
 import AdminPasscodeGate, { isAdminUnlocked } from "./AdminPasscodeGate";
 import TaxDashboard from "./TaxDashboard";
+import CapitalModelDownload from "./admin/CapitalModelDownload";
 import itpLogo from "@/assets/itp-houston-logo.png";
 // Data and engine are also kept inline below for Lovable compatibility
 // Canonical extracted versions: src/data/projectData.js, src/engine/runModel.js
@@ -1102,7 +1103,7 @@ export default function App(){
               </button>
               {showAdminMenu && isAdminUnlocked() && (
                 <div style={{position:"absolute",right:0,top:"100%",background:"white",borderRadius:"0 0 8px 8px",boxShadow:"0 8px 24px rgba(0,0,0,0.2)",minWidth:180,zIndex:9999,overflow:"hidden"}}>
-                  {[{id:"data-vault",icon:"📊",label:"Data Vault"},{id:"waterfall",icon:"💧",label:"Waterfall"},{id:"tax-dashboard",icon:"🏛️",label:"Tax Dashboard"}].map(item=>(
+                  {[{id:"data-vault",icon:"📊",label:"Data Vault"},{id:"waterfall",icon:"💧",label:"Waterfall"},{id:"tax-dashboard",icon:"🏛️",label:"Tax Dashboard"},{id:"capital-model",icon:"📈",label:"Capital Model"}].map(item=>(
                     <button key={item.id} onClick={()=>{setActiveAdminTab(item.id); setShowAdminMenu(false);}} style={{display:"flex",alignItems:"center",gap:8,width:"100%",padding:"12px 16px",border:"none",background:activeAdminTab===item.id?"#F0F6F8":"white",color:NAVY,fontSize:13,fontWeight:activeAdminTab===item.id?700:500,cursor:"pointer",textAlign:"left",transition:"background 0.15s"}}
                       onMouseEnter={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="#F7F9FB"}}
                       onMouseLeave={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="white"}}
@@ -1152,6 +1153,17 @@ export default function App(){
           </div>
           <div style={{maxWidth:1200,margin:"0 auto",padding:"24px 32px"}}>
             <DataVaultTab/>
+          </div>
+        </div>
+      )}
+      )}
+      {activeAdminTab === "capital-model" && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
+          <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
+            <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Capital Model</button>
+          </div>
+          <div style={{maxWidth:1200,margin:"0 auto",padding:"24px 32px"}}>
+            <CapitalModelDownload/>
           </div>
         </div>
       )}
