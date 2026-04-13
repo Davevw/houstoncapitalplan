@@ -10,7 +10,7 @@ import TaxDashboard from "./TaxDashboard";
 // ═══════════════════════════════════════════════════════════════
 // ITP HOUSTON CAPITAL PLAN — COMPLETE FINANCIAL MODEL (v10)
 // Waterfall display corrected: proper tier breakdown per ML feedback
-// LANDCO NEXA Development | Confidential
+// ITP Houston Capital Plan
 // ═══════════════════════════════════════════════════════════════
 
 const LOTS = [
@@ -1021,7 +1021,7 @@ export default function App(){
         <div style={{maxWidth:1200,margin:"0 auto"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:16}}>
             <div>
-              <div style={{fontSize:13,fontWeight:600,letterSpacing:3,opacity:0.7,marginBottom:4}}>LANDCO NEXA DEVELOPMENT</div>
+              <div style={{fontSize:13,fontWeight:600,letterSpacing:3,opacity:0.7,marginBottom:4}}>ITP HOUSTON</div>
               <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>ITP Houston Capital Plan</h1>
               <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
             </div>
@@ -1113,7 +1113,7 @@ export default function App(){
       )}
 
       <div style={{background:NAVY,padding:"20px 32px",textAlign:"center"}}>
-        <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>LANDCO NEXA Development &nbsp;|&nbsp; Confidential Investment Analysis &nbsp;|&nbsp; For Authorized Recipients Only</div>
+        <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>ITP Houston Capital Plan &nbsp;|&nbsp; For Authorized Recipients Only</div>
       </div>
 
       {/* Admin Footer Navigation */}
@@ -1931,7 +1931,7 @@ function DataVaultTab() {
       />
 
       <div style={{ textAlign: "center", marginTop: 32, padding: 16, fontSize: 11, color: "#7A8B9A", borderTop: "1px solid #E0E4E8" }}>
-        <div>Documents are confidential. Distribution requires written authorization from LANDCO NEXA Development.</div>
+        <div>Documents are confidential. Distribution requires written authorization.</div>
         <div style={{ marginTop: 6, opacity: 0.7 }}>Powered by PLUSAdvantage™</div>
       </div>
     </div>
