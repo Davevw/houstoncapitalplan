@@ -1028,7 +1028,7 @@ export default function App(){
             <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
               <div style={{fontSize:14,fontWeight:700,letterSpacing:1}}>PLUSAdvantage™ 2026</div>
               <div>Capital Plan — Interactive Financial Model</div>
-              <div>Confidential — March 2026</div>
+              <div>Last Update: April 13, 2026</div>
               <button
                 onClick={() => setShowPresentation(true)}
                 style={{marginTop:8,display:"inline-flex",alignItems:"center",gap:6,background:"white",color:NAVY,border:"none",padding:"10px 20px",borderRadius:8,fontSize:12,fontWeight:600,cursor:"pointer",transition:"all 0.2s",boxShadow:"0 2px 8px rgba(0,0,0,0.15)"}}
