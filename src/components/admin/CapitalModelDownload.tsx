@@ -19,66 +19,113 @@ const MODEL_TABS = [
 
 const COPILOT_PROMPTS = [
   {
-    tab: "Assumptions",
+    tab: "📋 Assumptions",
     prompts: [
-      "What are the key inputs that drive the permanent DSCR?",
-      "What happens to the interest reserve if the bond rate increases to 6%?",
+      "On the Assumptions tab, what are the key inputs that drive the permanent DSCR? Show me which cells I should change to stress test the debt coverage.",
+      "Walk me through the financing assumptions. What happens to the interest reserve if the bond rate increases to 6%?",
+      "List every blue input cell on the Assumptions tab and group them by category.",
     ],
   },
   {
-    tab: "Dev Budget",
+    tab: "💰 Dev Budget",
     prompts: [
-      "What are the top 3 line items by dollar amount? Show as a bar chart.",
-      "Create a pie chart of the Sources of Funds.",
+      "On the Dev Budget tab, what are the top 3 line items by dollar amount? Show me as a bar chart.",
+      "What percentage of total project cost is hard construction costs? Include new construction, air-rights, horizontal, and retail pavilion.",
+      "Create a pie chart of the Sources of Funds showing Senior Loan, LIHTC Equity, JV Land, and City Contribution.",
     ],
   },
   {
-    tab: "Capital Stack",
+    tab: "🏗️ Capital Stack",
     prompts: [
-      "Does the project pass both the 80% LTC and 65% LTV tests? Which governs?",
-      "Show me the LIHTC equity calculation step by step.",
+      "On the Capital Stack tab, does the project pass both the 80% LTC and 65% LTV tests? Explain which constraint governs and why.",
+      "Show me the LIHTC equity calculation step by step — eligible basis through final equity amount.",
+      "What is the monthly interest-only payment during construction? What does that annualize to over 36 months?",
+      "If the credit price drops from $0.92 to $0.88, how does that change the LIHTC equity? Update the Assumptions tab and show me the new number.",
     ],
   },
   {
-    tab: "Pro Forma",
+    tab: "📊 Pro Forma",
     prompts: [
-      "Build a waterfall chart: Gross Rent → Vacancy → EGI → OpEx → NOI.",
-      "If vacancy increases to 8%, what happens to NOI and stabilized value?",
+      "On the Pro Forma tab, build a waterfall chart showing Gross Rent → Vacancy → Retail Income → EGI → OpEx → NOI.",
+      "What unit type generates the most annual revenue? Show me a comparison.",
+      "If vacancy increases from 5% to 8%, what happens to NOI and the stabilized value? Model it.",
+      "What cap rate would be needed for stabilized value to equal total development cost of $69.7M?",
     ],
   },
   {
-    tab: "JV Waterfall",
+    tab: "🤝 JV Waterfall",
     prompts: [
-      "Walk me through the 4-step distribution priority in plain English.",
-      "How much does the JV Partner receive before any profit split?",
+      "On the JV Waterfall tab, walk me through the 4-step distribution priority in plain English.",
+      "How much does the JV Partner need to receive before any profit split occurs? Include return of capital and accrued preferred.",
+      "If the land contribution were only $2M instead of $2.576M, how does that change the preferred return dollar amount?",
     ],
   },
   {
-    tab: "Cap Events",
+    tab: "📅 Cap Events",
     prompts: [
-      "Compare Year 3 refi vs Year 10 sale for the JV Partner. Which is better?",
-      "What is the implied IRR for the JV Partner in the Year 10 sale scenario?",
+      "On the Cap Events tab, compare the Year 3 refinance vs. Year 10 sale for the JV Partner. Which produces a better return and why?",
+      "Create a timeline chart showing JV Partner cumulative returns from Day 1 through Year 10.",
+      "What is the implied IRR for the JV Partner in the Year 10 sale scenario given a $2.576M land contribution and $16.06M total return?",
+      "If NOI growth is 2% instead of 2.5%, what does the Year 10 sale price become?",
     ],
   },
   {
-    tab: "Sensitivity",
+    tab: "📈 Balance Sheet",
     prompts: [
-      "Which interest rate scenarios put the project below 1.15x DSCR?",
-      "Create a heat map of the DSCR table — green, yellow, red.",
+      "On the Balance Sheet tab, show me the JV Partner equity position at Day 1 vs. Year 15 as a column chart.",
+      "What is the equity multiple from Day 1 to Year 15 for the JV Partner?",
+      "If the permanent loan were paid down by $5M by Year 15, how does that change net equity?",
     ],
   },
   {
-    tab: "Cross-Sheet",
+    tab: "🔬 Sensitivity",
     prompts: [
-      "Summarize the complete capital story for The Plaza in 5 bullet points.",
-      "Build an executive summary table with the top KPIs from each tab.",
-      "Model a downside: costs +10%, rents -5%, cap rate 4.75%. Show new DSCR.",
+      "On the Sensitivity tab, highlight all cells where the stabilized value exceeds $65M. What NOI and cap rate combinations produce those results?",
+      "In the DSCR sensitivity table, which interest rate scenarios put the project below 1.15x coverage?",
+      "Create a heat map visualization of the DSCR table — green for strong, yellow for borderline, red for below floor.",
+      "What is the maximum permanent rate this project can absorb and still maintain 1.10x DSCR?",
+    ],
+  },
+  {
+    tab: "🔗 Cross-Sheet Analysis",
+    prompts: [
+      "Looking across all tabs, summarize the complete capital story for The Plaza in 5 bullet points — suitable for an investor overview.",
+      "What are the three biggest risks to project returns based on the sensitivity tables? Rank them.",
+      "Build an executive summary table pulling the top KPIs from each tab: TDC, LTC, LTV, DSCR, NOI, stabilized value, JV partner total return, and equity multiple.",
+      "Compare the Assumptions tab inputs to the Pro Forma outputs. Are there any assumptions that seem aggressive relative to market norms?",
+    ],
+  },
+  {
+    tab: "🎯 Scenario Modeling",
+    prompts: [
+      "Model a downside scenario: construction costs increase 10%, rents are 5% lower, and the cap rate is 4.75%. Show me the new DSCR and JV Partner return.",
+      "Model an upside scenario: rents increase 8%, exit cap rate is 4.25%, and NOI grows 3% annually. What does the Year 10 sale return look like?",
+      "Create a data table showing JV Partner Year 10 return across 5 NOI scenarios and 3 exit cap rates.",
+    ],
+  },
+  {
+    tab: "📊 Charts & Visualization",
+    prompts: [
+      "Create a stacked bar chart showing Sources of Funds: Senior Loan, LIHTC Equity, JV Land, City Contribution.",
+      "Build a line chart showing project value growth from stabilization through Year 15 at 2.5% NOI growth.",
+      "Create a waterfall chart of the JV Partner Year 10 distribution: Return of Capital → Preferred Return → 50% Residual → Total.",
+      "Make a dashboard summary on a new sheet with the top 8 KPIs displayed as cards.",
     ],
   },
 ];
 
+const COPILOT_TIPS = [
+  { tip: "Name the tab first", detail: '"On the Assumptions tab..." gets better results than generic prompts' },
+  { tip: "Reference blue cells", detail: '"Change the blue input in C30 to 6%" — Copilot understands color coding' },
+  { tip: "Ask for explanations", detail: '"Explain why the LTV ceiling governs over LTC" — Copilot reads formulas' },
+  { tip: "Request new sheets", detail: '"Create a new summary tab with..." — Copilot can build new content' },
+  { tip: "Use plain English", detail: '"What\'s the monthly payment?" works as well as "=PMT(...)"' },
+  { tip: "Scenario branching", detail: "Save a copy before big scenario changes — Copilot edits are live" },
+];
+
 export default function CapitalModelDownload() {
   const [showPrompts, setShowPrompts] = useState(false);
+  const [showTips, setShowTips] = useState(false);
   const [copiedIdx, setCopiedIdx] = useState<string | null>(null);
 
   const handleDownload = () => {
@@ -130,30 +177,36 @@ export default function CapitalModelDownload() {
       {/* How to use with Copilot */}
       <div style={{ padding: "20px 24px", borderBottom: "1px solid #E0E4E8" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 700, color: NAVY, marginBottom: 12 }}>
-          <Zap size={16} style={{ color: GOLD }} /> HOW TO USE WITH COPILOT IN EXCEL
+          <Zap size={16} style={{ color: GOLD }} /> HOW TO ACTIVATE COPILOT IN EXCEL
         </div>
         <ol style={{ margin: 0, paddingLeft: 20, fontSize: 13, color: "#374151", lineHeight: 2 }}>
           <li>Download the file using the button above</li>
-          <li>Open in Microsoft 365 Excel (desktop or web)</li>
+          <li>Open in <strong>Microsoft 365 Excel</strong> (desktop or web)</li>
           <li>Click <strong>Home → Copilot</strong> in the ribbon</li>
+          <li>The Copilot panel opens on the right side</li>
           <li>Use the prompt guide below to analyze the model</li>
         </ol>
-        <div style={{ marginTop: 12, background: "#FFFBEB", border: "1px solid #FDE68A", color: "#92400E", fontSize: 12, borderRadius: 6, padding: "8px 12px", display: "inline-block" }}>
-          ⚠️ Requires Microsoft 365 Business or Enterprise subscription
+        <div style={{ marginTop: 12, display: "flex", flexWrap: "wrap", gap: 8, alignItems: "center" }}>
+          <div style={{ background: "#FFFBEB", border: "1px solid #FDE68A", color: "#92400E", fontSize: 12, borderRadius: 6, padding: "8px 12px" }}>
+            ⚠️ Requires Microsoft 365 Business, Business Premium, or Enterprise license
+          </div>
+          <div style={{ background: "#EFF6FF", border: "1px solid #BFDBFE", color: "#1E40AF", fontSize: 12, borderRadius: 6, padding: "8px 12px" }}>
+            💡 Pro tip: Always start your prompt with the sheet name so Copilot knows where to look
+          </div>
         </div>
       </div>
 
       {/* Model Tabs */}
       <div style={{ padding: "20px 24px", borderBottom: "1px solid #E0E4E8" }}>
         <div style={{ fontSize: 13, fontWeight: 700, color: NAVY, marginBottom: 12 }}>MODEL TABS</div>
-        <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 10 }}>
           {MODEL_TABS.map((t) => (
             <div key={t.name} title={t.desc} style={{ background: CREAM, color: NAVY, fontSize: 12, borderRadius: 6, padding: "6px 12px", fontWeight: 500, cursor: "default" }}>
               {t.name}
             </div>
           ))}
         </div>
-        <div style={{ marginTop: 10 }}>
+        <div>
           {MODEL_TABS.map((t) => (
             <div key={t.name} style={{ fontSize: 12, color: "#6B7280", padding: "3px 0" }}>
               <strong style={{ color: NAVY }}>{t.name}:</strong> {t.desc}
@@ -163,7 +216,7 @@ export default function CapitalModelDownload() {
       </div>
 
       {/* Copilot Prompt Library */}
-      <div style={{ padding: "16px 24px" }}>
+      <div style={{ padding: "16px 24px", borderBottom: "1px solid #E0E4E8" }}>
         <button
           onClick={() => setShowPrompts(!showPrompts)}
           style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 700, color: NAVY, padding: 0 }}
@@ -175,22 +228,22 @@ export default function CapitalModelDownload() {
         {showPrompts && (
           <div style={{ marginTop: 16 }}>
             {COPILOT_PROMPTS.map((group) => (
-              <div key={group.tab} style={{ marginBottom: 16 }}>
-                <div style={{ fontSize: 13, fontWeight: 600, color: NAVY, marginBottom: 6, display: "flex", alignItems: "center", gap: 6 }}>
-                  <span style={{ background: CREAM, borderRadius: 4, padding: "2px 8px", fontSize: 11 }}>{group.tab}</span>
+              <div key={group.tab} style={{ marginBottom: 20 }}>
+                <div style={{ fontSize: 14, fontWeight: 600, color: NAVY, marginBottom: 8, paddingBottom: 4, borderBottom: `1px solid ${CREAM}` }}>
+                  {group.tab}
                 </div>
                 {group.prompts.map((prompt, idx) => {
                   const key = `${group.tab}-${idx}`;
                   return (
                     <div
                       key={key}
-                      style={{ display: "flex", alignItems: "center", gap: 8, borderLeft: `2px solid ${GOLD}`, paddingLeft: 12, marginLeft: 8, marginBottom: 6, fontSize: 13, color: "#4B5563" }}
+                      style={{ display: "flex", alignItems: "flex-start", gap: 8, borderLeft: `2px solid ${GOLD}`, paddingLeft: 12, marginLeft: 8, marginBottom: 8, fontSize: 13, color: "#4B5563", lineHeight: 1.5 }}
                     >
                       <span style={{ flex: 1 }}>{prompt}</span>
                       <button
                         onClick={() => copyPrompt(prompt, key)}
-                        title="Copy prompt"
-                        style={{ background: "none", border: "none", cursor: "pointer", color: copiedIdx === key ? "#10B981" : "#9CA3AF", padding: 4, flexShrink: 0, transition: "color 0.2s" }}
+                        title={copiedIdx === key ? "Copied!" : "Copy prompt"}
+                        style={{ background: "none", border: "none", cursor: "pointer", color: copiedIdx === key ? "#10B981" : "#9CA3AF", padding: 4, flexShrink: 0, transition: "color 0.2s", marginTop: 1 }}
                       >
                         {copiedIdx === key ? <Check size={14} /> : <Copy size={14} />}
                       </button>
@@ -201,6 +254,43 @@ export default function CapitalModelDownload() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Copilot Tips */}
+      <div style={{ padding: "16px 24px" }}>
+        <button
+          onClick={() => setShowTips(!showTips)}
+          style={{ display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 13, fontWeight: 700, color: NAVY, padding: 0 }}
+        >
+          {showTips ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+          COPILOT TIPS — {showTips ? "Click to collapse" : "Click to expand"}
+        </button>
+
+        {showTips && (
+          <div style={{ marginTop: 12 }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+              <thead>
+                <tr style={{ borderBottom: `2px solid ${CREAM}` }}>
+                  <th style={{ textAlign: "left", padding: "8px 12px", color: NAVY, fontWeight: 600 }}>Tip</th>
+                  <th style={{ textAlign: "left", padding: "8px 12px", color: NAVY, fontWeight: 600 }}>Detail</th>
+                </tr>
+              </thead>
+              <tbody>
+                {COPILOT_TIPS.map((t) => (
+                  <tr key={t.tip} style={{ borderBottom: "1px solid #F3F4F6" }}>
+                    <td style={{ padding: "8px 12px", fontWeight: 600, color: NAVY, whiteSpace: "nowrap" }}>{t.tip}</td>
+                    <td style={{ padding: "8px 12px", color: "#6B7280" }}>{t.detail}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+
+      {/* Footer */}
+      <div style={{ background: CREAM, padding: "10px 24px", fontSize: 11, color: "#9CA3AF", textAlign: "center", borderTop: "1px solid #E0E4E8" }}>
+        PLUSAdvantage™ 2026 · Western Realty Finance · CONFIDENTIAL
       </div>
     </div>
   );
