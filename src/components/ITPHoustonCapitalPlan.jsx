@@ -1169,7 +1169,7 @@ export default function App(){
       )}
 
       <div style={{background:NAVY,padding:"20px 32px",textAlign:"center"}}>
-        <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>ITP Houston Capital Plan &nbsp;|&nbsp; For Authorized Recipients Only</div>
+        <div style={{color:"rgba(255,255,255,0.5)",fontSize:11}}>Powered by PLUSAdvantage™ 2026 &nbsp;—&nbsp; A Western Realty Finance Brand</div>
       </div>
 
     </div>
