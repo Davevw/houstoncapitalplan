@@ -14,8 +14,6 @@ const MODEL_TABS = [
   { name: "JV Waterfall", desc: "Partner equity, preferred return, profit split" },
   { name: "Cap Events", desc: "Buyout vs. development vs. partial sale scenarios" },
   { name: "Balance Sheet", desc: "Day 1 through full sellout" },
-  { name: "Sensitivity", desc: "Lot price × loan rate stress matrix" },
-  { name: "Project P&L", desc: "Full project profit & loss — gross margin, net profit, per-lot breakdown" },
   { name: "User Instructions", desc: "How to use the model, activate Copilot, quick-start prompts" },
 ];
 
@@ -147,8 +145,8 @@ export default function CapitalModelDownload() {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/assets/HoustonITP_CapitalModel_v1.xlsx";
-    link.download = "HoustonITP_CapitalModel_v1.xlsx";
+    link.href = "/assets/ITP_Houston_Capital_Model.xlsx";
+    link.download = "ITP_Houston_Capital_Model.xlsx";
     link.click();
     console.log("Capital model downloaded at:", new Date().toISOString());
   };
@@ -168,10 +166,10 @@ export default function CapitalModelDownload() {
             <FileSpreadsheet size={22} /> CAPITAL MODEL
           </div>
           <div style={{ fontSize: 13, opacity: 0.8, marginTop: 4 }}>
-            International Trade Park Houston · HoustonITP_CapitalModel_v1
+            International Trade Park Houston · ITP_Houston_Capital_Model
           </div>
           <div style={{ fontSize: 12, opacity: 0.6, marginTop: 2 }}>
-            11 tabs · live formulas · Copilot-ready
+            9 tabs · 106 live formulas · Copilot-ready
           </div>
         </div>
         <button
@@ -186,7 +184,7 @@ export default function CapitalModelDownload() {
 
       {/* Metadata strip */}
       <div style={{ background: CREAM, padding: "10px 24px", fontSize: 12, color: "#6B7280", borderBottom: "1px solid #E0E4E8" }}>
-        📊 HoustonITP_CapitalModel_v1.xlsx &nbsp;·&nbsp; 11 Tabs &nbsp;·&nbsp; Live Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 14, 2026
+        📊 ITP_Houston_Capital_Model.xlsx &nbsp;·&nbsp; 9 Tabs &nbsp;·&nbsp; 106 Live Formulas &nbsp;·&nbsp; Copilot-Ready &nbsp;·&nbsp; April 14, 2026
         <br />
         <span style={{ opacity: 0.7 }}>Built by PLUSAdvantage™</span>
       </div>
