@@ -5,6 +5,7 @@ import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentatio
 import AdminPasscodeGate, { isAdminUnlocked } from "./AdminPasscodeGate";
 import TaxDashboard from "./TaxDashboard";
 import CapitalModelDownload from "./admin/CapitalModelDownload";
+import JVReports from "./admin/JVReports";
 import itpLogo from "@/assets/itp-houston-logo.png";
 // Data and engine are also kept inline below for Lovable compatibility
 // Canonical extracted versions: src/data/projectData.js, src/engine/runModel.js
