@@ -19,5 +19,6 @@ export const jvReports: JVReport[] = [
     badge: "NEW",
     driveId: "1aOPaPpN-4sjWtWcndmWs0ZLtTwTCwFI9",
     htmlFile: "/assets/jv-report-apr-2026.html",
+    subtitle: "Supplement 7 · $25.8M Pipeline · Kirkwood Crossings",
   },
 ];
