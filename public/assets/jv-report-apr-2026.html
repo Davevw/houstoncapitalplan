@@ -31,6 +31,7 @@ body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
 .addr{font-size:12px;color:#888;line-height:1.7;margin-bottom:10px}
 .subject-line{font-size:13px;font-weight:700;color:#1B2A4A;background:#F5F0E8;padding:9px 14px;border-radius:6px;border-left:3px solid #C9A84C}
 .section-hdr{font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 10px;padding-bottom:7px;border-bottom:2px solid #C9A84C}
+.sn{color:#C9A84C;margin-right:6px}
 .body-text{font-size:13px;line-height:1.75;color:#222;margin-bottom:10px}
 .bullet-list{margin:6px 0 12px;padding-left:0;list-style:none}
 .bullet-list li{font-size:13px;line-height:1.65;color:#222;padding:3px 0 3px 20px;position:relative}
@@ -49,6 +50,14 @@ table.cap td{padding:7px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top
 table.act{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
 table.act th{background:#1B2A4A;color:#fff;padding:7px 10px;text-align:left;font-size:11px}
 table.act td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+table.sched{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+table.sched th{background:#1B2A4A;color:#C9A84C;padding:8px 10px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+table.sched td{padding:7px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+table.sched tr:nth-child(even) td{background:#fafafa}
+table.sales{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0}
+table.sales th{background:#1B2A4A;color:#C9A84C;padding:7px 8px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.03em}
+table.sales td{padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+table.sales tr:hover td{background:#fafafa}
 .pill{display:inline-block;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700}
 .pill.red{background:#FFC7CE;color:#9C0006}
 .pill.green{background:#C6EFCE;color:#276221}
@@ -60,12 +69,31 @@ table.act td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top
 .pri-med{background:#C9A84C;color:#1B2A4A;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:12px 0 16px}
 .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
 .kpi{background:#f7f7f7;border-radius:8px;padding:14px;border:1px solid #eee}
 .kpi .label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
 .kpi .value{font-size:18px;font-weight:700;color:#1B2A4A}
 .kpi .note{font-size:11px;color:#888;margin-top:3px}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:16px 0;border:1px solid #ddd;border-radius:8px;overflow:hidden}
+.compare-col{padding:18px}
+.compare-col.stay{background:#f0f7f0;border-right:1px solid #ddd}
+.compare-col.buy{background:#f0f0f7}
+.compare-col h4{font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;padding-bottom:8px;border-bottom:2px solid}
+.compare-col.stay h4{color:#276221;border-color:#276221}
+.compare-col.buy h4{color:#1B3A6B;border-color:#1B3A6B}
+.compare-item{font-size:12px;line-height:1.65;color:#444;padding:4px 0}
+.compare-item strong{color:#222}
 .sig-block{margin-top:28px;padding-top:18px;border-top:1px solid #eee;font-size:12px;color:#888}
 .sig-block strong{color:#222;display:block;margin-bottom:2px;font-size:14px}
+.exec-summary{background:linear-gradient(135deg,#1B2A4A 0%,#2a3f6a 100%);color:#fff;padding:20px 24px;border-radius:8px;margin-bottom:24px}
+.exec-summary h3{color:#C9A84C;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.exec-summary p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.85);margin-bottom:8px}
+.exec-summary p:last-child{margin-bottom:0}
+.collapsible-hdr{font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 0;padding:10px 0 7px;border-bottom:2px solid #C9A84C;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.collapsible-hdr::after{content:"\25BE";font-size:14px;color:#C9A84C;transition:transform .2s}
+.collapsible-hdr.collapsed::after{transform:rotate(-90deg)}
+.collapsible-body{overflow:hidden;transition:max-height .3s ease}
+.collapsible-body.collapsed{max-height:0 !important}
 .arch-intro{font-size:12px;color:#666;background:#f9f9f9;padding:10px 14px;border-radius:6px;margin-bottom:16px;line-height:1.6;border:1px solid #eee}
 .arch-section{margin-bottom:22px}
 .arch-section h3{font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:8px;padding:4px 0;border-bottom:1px solid #C9A84C}
@@ -77,6 +105,16 @@ table.act td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top
 .footer-brand{text-align:center;padding:14px;font-size:10px;color:#888;letter-spacing:.05em;border-top:1px solid #eee;background:#fafafa;border-radius:0 0 12px 12px}
 .drive-link{display:inline-block;margin-top:14px;padding:8px 16px;background:#1B2A4A;color:#C9A84C;font-size:12px;font-weight:700;border-radius:6px;text-decoration:none;letter-spacing:.03em}
 .drive-link:hover{background:#263a60}
+.toc{background:#F5F0E8;border-radius:6px;padding:14px 18px;margin-bottom:24px;border-left:3px solid #C9A84C}
+.toc-title{font-size:11px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.toc a{display:block;font-size:12px;color:#1B2A4A;text-decoration:none;padding:3px 0;line-height:1.5}
+.toc a:hover{color:#C9A84C}
+.toc .tn{color:#C9A84C;font-weight:700;margin-right:4px}
+.rating{display:inline-block;width:20px;height:20px;border-radius:50%;font-size:10px;font-weight:700;text-align:center;line-height:20px;color:#fff}
+.rating.high{background:#276221}
+.rating.med{background:#C9A84C;color:#1B2A4A}
+.rating.low{background:#D9D9D9;color:#444}
+.rating.hot{background:#C00000}
 </style>
 </head>
 <body>
@@ -84,8 +122,8 @@ table.act td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top
   <div class="top-bar">
     <div class="top-bar-inner">
       <div class="top-bar-left">
-        <h1>ITP Houston — Development Status</h1>
-        <p>Bissonnet 136, LLC &middot; Houston, TX &middot; PLUSAdvantage™ Advisory</p>
+        <h1>ITP Houston &mdash; Development Status</h1>
+        <p>Bissonnet 136, LLC &middot; Houston, TX &middot; PLUSAdvantage&trade; Advisory</p>
       </div>
       <div style="flex-shrink:0;margin-left:16px">
         <div class="date-badge">
@@ -106,171 +144,310 @@ table.act td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top
     </div>
   </div>
   <div class="content">
+    <!-- ====== SUPPLEMENT 7 ====== -->
     <div id="s7" class="panel active">
       <div class="letter-header">
         <div class="letter-meta">Via Email &middot; john.quinlan@gmail.com</div>
         <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:12px">April 2026</div>
         <div class="addr">Mr. John Quinlan &middot; Kirkwood Crossings &middot; 22310 Grand Corner Drive, Suite 130 &middot; Katy, TX 77494</div>
-        <div class="subject-line">Subject: ITP Houston — Development Status | Supplement 7</div>
+        <div class="subject-line">Subject: ITP Houston &mdash; Development Status &nbsp;|&nbsp; Supplement 7</div>
       </div>
-      <p class="body-text">John — The following is the April 2026 status of Kirkwood Crossings. This supplement consolidates and updates all prior reports through February 2025 and reflects current status. The format has been upgraded to give a cleaner picture of where things stand, what has moved, and what requires your attention.</p>
-      <p class="body-text">The project maintains strong market demand at over 60% of parcels engaged. Progress on regulatory and design fronts remains contingent on approvals and payments that sit with Bissonnet 136. Those items are identified plainly below.</p>
-      <div class="section-hdr">Project Status Dashboard</div>
-      <table class="dash"><tr><th>Topic</th><th>Status</th><th>Key Note</th></tr><tr><td><strong>Equity Buyout</strong></td><td><span class="pill blue">Active</span></td><td>Proposal A ($36M) presented Feb 2025; Proposal B (ARESC overseas) pending</td></tr><tr><td><strong>Capital Raise</strong></td><td><span class="pill blue">Active</span></td><td>6 intermediaries; Silver Arch term sheet; Hudson Bay soft offer; Copper Beach offer pending</td></tr><tr><td><strong>MUD 584</strong></td><td><span class="pill amber">In Review</span></td><td>COH approved Dec 2024; TCEQ staff recommends approval; PCS counterproposal the only impediment</td></tr><tr><td><strong>PCS / Harris County</strong></td><td><span class="pill amber">Negotiating</span></td><td>Amandes active; Feb 2025 TCEQ agenda passed; county counterproposal outstanding</td></tr><tr><td><strong>TPDES Permit</strong></td><td><span class="pill red">Delayed</span></td><td>Publication past due (Dec 12, 2024 deadline); HC opposition risk; action required</td></tr><tr><td><strong>TCEQ Authorization</strong></td><td><span class="pill blue">In Review</span></td><td>Phased approach agreed; Dec 2024 call completed; resubmission with revised plan required</td></tr><tr><td><strong>Infrastructure Design</strong></td><td><span class="pill red">On Hold</span></td><td>Engineering invoices 6+ months in arrears; OPCC and hydrology study blocked</td></tr><tr><td><strong>LFG Monitoring</strong></td><td><span class="pill red">Lapsed</span></td><td>No monitoring Dec 2024–Jan 2025; multiple TCEQ requests unanswered — immediate action required</td></tr><tr><td><strong>Sales Pipeline</strong></td><td><span class="pill green">Strong</span></td><td>60.02% of land area (13 parcels) in contract, LOI, or advanced discussion</td></tr><tr><td><strong>Starwood</strong></td><td><span class="pill red">Dropped</span></td><td>Withdrew citing delays; earnest money contested; open to 4% tax credit structure</td></tr><tr><td><strong>LoopNet / Marketing</strong></td><td><span class="pill green">Active</span></td><td>1,700-prospect monthly email cadence; robust weekly inquiries sustained</td></tr><tr><td><strong>Geotech / Pavement</strong></td><td><span class="pill amber">Pending</span></td><td>Goodheart change order awaiting Bissonnet 136 approval since May 2024</td></tr></table>
-      <div class="section-hdr">Equity Buyout</div>
-      <p class="body-text"><strong>Proposal A</strong> — Delivered February 2025. A lender has proposed $36 million covering: (1) first buyout tranche, (2) Phase 1 infrastructure, and (3) vertical for 45 homes and 80 finished lots. Remains the lead structure.</p>
-      <p class="body-text"><strong>Proposal B</strong> — ARESC Holdings, LLC (overseas equity) remains in process. Formal proposal to follow upon equity source confirmation.</p>
-      <p class="body-text"><strong>Two-Stage Structure</strong> — Phase 1 debt + preferred equity: $5M toward buyout plus infrastructure. Phase 2 releases remaining $5M from project proceeds.</p>
-      <div class="section-hdr">Capital Raise</div>
-      <p class="body-text">Six intermediaries currently working the deal. Post-election capital markets are active. The bottleneck remains the absence of finalized construction cost estimates and a schedule — without these, no lender will proceed to closing.</p>
-      <table class="cap"><tr><th>Firm</th><th>Mandate</th><th>Current Status</th></tr><tr><td><strong>CBRE — John Fenolio</strong></td><td>Debt only</td><td>One offer received — terms unacceptable</td></tr><tr><td><strong>Walker Dunlop — Jordan Casallas</strong></td><td>Equity + Debt</td><td>Hudson Bay soft debt offer; pref equity / mezz under consideration; term sheet pending</td></tr><tr><td><strong>Copper Beach</strong></td><td>Equity + Debt</td><td>One offer pending two-stage proforma update</td></tr><tr><td><strong>Reed Smith (Attorney)</strong></td><td>Equity</td><td>Saudi Arabian and Chinese clients; no production to date</td></tr><tr><td><strong>Manvitte (NY Broker-Dealer)</strong></td><td>Equity</td><td>No production to date</td></tr><tr><td><strong>Zarche Group</strong></td><td>Debt + Equity</td><td>Silver Arch term sheet in hand — debt only</td></tr></table>
-      <div class="section-hdr">Project Proforma</div>
-      <div class="three-col"><div class="kpi"><div class="label">Hard + Soft Costs Est.</div><div class="value">$31.5M</div><div class="note">Subject to OPCC revision</div></div><div class="kpi"><div class="label">OPCC Contingency</div><div class="value">20%</div><div class="note">Tightens with revised design and bids</div></div><div class="kpi"><div class="label">Buyout Structure</div><div class="value">$5M + $5M</div><div class="note">Phase 1 + Phase 2 two-stage</div></div></div>
-      <p class="body-text">Higher construction costs are partially self-mitigating — they increase the MUD reimbursement cap. Neither phase model is verifiable without revised design and competitive bids, both of which are gated behind outstanding engineering approvals and payments.</p>
-      <div class="section-hdr">Environmental — SKA Update (April 2026)</div>
-      <div class="alert-box"><strong>Immediate Action Required — LFG Compliance Gap:</strong> No landfill gas monitoring was performed in December 2024 or January 2025. The December quarterly monitoring event was missed. TCEQ's December 2024 information request regarding LFG exceedances has not been answered. HCAO has also requested updated monitoring data with no response provided. Continued non-response creates material risk to the TCEQ authorization and MUD approval.</div>
-      <ul class="bullet-list"><li>Non-Notice Modification to MSW Permit No. 1247: 30-day extension approved Dec 10, 2024; January 10 deadline missed; TCEQ offered second extension — not yet accepted</li><li>GV-10A and GV-10B vents off-gassing ~30% methane, ~35% CO₂, ~150 ppm H₂S — hydrogen sulfide treatment likely warranted</li><li>Six-month monitoring program for new vents (GV-24E, GV-46E) through February 2025 not completed</li></ul>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">TPDES Permit (Contaminated Wastewater)</p>
-      <ul class="bullet-list"><li>Application submitted October 2024; administrative completeness confirmed November 2024</li><li>Required publication in Houston Chronicle and La Voz (~$7,500) not made; deadline was December 12, 2024</li><li>Harris County Attorney requested copy January 2025 — PCS comment letter likely forthcoming</li><li>Recommendation: initiate City of Houston temporary discharge authorization as backup (3-month lead time)</li></ul>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">Subchapter N Mining Registration</p>
-      <ul class="bullet-list"><li>Proposal submitted to Bissonnet 136 — February 2024. Still awaiting approval — now over two years outstanding</li><li>Prior test pit data: more than half of landfill waste is suitable soil — significant disposal cost savings available</li><li>Takes 8–10 months to process; Harris County cannot demand a hearing on a registration</li></ul>
-      <div class="section-hdr">PCS / Harris County Matter</div>
-      <p class="body-text">COH approved MUD 584 in December 2024. TCEQ staff has recommended approval. PCS must now convince TCEQ commissioners that criteria have not been met — a position Allen Boone is well-positioned to rebut.</p>
-      <ul class="bullet-list"><li>October 2024 concession proposal presented to HCAO and PCS — county counterproposal still outstanding</li><li>TCEQ February 2025 agenda meetings have passed; meeting with PCS counsel in process</li><li>Allen Boone prepared to present; Dan Pearson to lobby TCEQ commissioners on affected-party theory</li><li>If necessary: Pat Pierce (former TCEQ Director) to be retained to advocate for denial of PCS hearing request</li><li class="sub">Key position: PCS is not an affected party — TCEQ staff and COH have both reached this conclusion</li></ul>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A">MUD delay does not prevent design, permitting, construction, or lot sales. It affects only the timing of bond reimbursements.</p>
-      <div class="section-hdr">Infrastructure Design &amp; Permitting</div>
-      <ul class="bullet-list"><li>All design work on hold — Kimley-Horn invoices 6+ months in arrears; hydrology study blocked pending payment</li><li>Goodheart pavement change order pending Bissonnet 136 approval since May 2024 — approaching two years outstanding</li><li>COH resubmission requires: updated drainage report, revised retention pond layout, revised geotechnical report</li><li>Pond reconfiguration (following 90-ft MSL contours) could eliminate nearly all waste removal from Pond 3 — estimated $7M+ savings; not executable until design resumes</li></ul>
-      <div class="section-hdr">Sales &amp; Contract Status</div>
-      <div class="two-col"><div class="kpi"><div class="label">Parcels Engaged</div><div class="value">13 of 30</div><div class="note">60.02% of total land area</div></div><div class="kpi"><div class="label">LoopNet Reach</div><div class="value">1,700</div><div class="note">Active prospect emails monthly</div></div></div>
-      <table class="cap"><tr><th>Party</th><th>Status</th><th>Notes</th></tr><tr><td><strong>Lincoln Avenue Capital</strong></td><td><span class="pill gray">No Change</span></td><td>Permit on hold pending MUD / PCS resolution</td></tr><tr><td><strong>Starwood</strong></td><td><span class="pill red">Dropped</span></td><td>Withdrew citing delays; earnest money contested; open to 4% tax credit discussion</td></tr><tr><td><strong>Medline Inc.</strong></td><td><span class="pill amber">Re-engaging</span></td><td>Alternative site location being proposed to address building-on-landfill concerns</td></tr><tr><td><strong>Cricket League</strong></td><td><span class="pill amber">Ongoing</span></td><td>Potential lease / purchase of retention pond area — hydrology and recreation dual use</td></tr><tr><td><strong>13 Other Parcels</strong></td><td><span class="pill green">60% Engaged</span></td><td>All contingent on road completion timeline; demand proven and sustained</td></tr></table>
-      <div class="section-hdr">Priority Action Items — Bissonnet 136 Response Required</div>
-      <table class="act"><tr><th>#</th><th>Action Item</th><th>Owner</th><th>Priority</th></tr><tr><td>1</td><td><strong style="color:#C00000">Accept TCEQ LFG extension; schedule overdue monitoring; respond to TCEQ December 2024 information request; respond to HCAO monitoring data request</strong></td><td>Bissonnet 136 / SKA</td><td><span class="pri-urgent">Urgent</span></td></tr><tr><td>2</td><td><strong style="color:#C00000">Authorize TPDES publication in Houston Chronicle and La Voz (~$7,500) — deadline passed December 2024</strong></td><td>Bissonnet 136 / SKA</td><td><span class="pri-urgent">Urgent</span></td></tr><tr><td>3</td><td>Bring Kimley-Horn invoices current to unblock hydrology study, OPCC, and infrastructure design restart</td><td>Bissonnet 136</td><td><span class="pri-high">High</span></td></tr><tr><td>4</td><td>Approve Goodheart change order for pavement sections and revised geotechnical report — outstanding since May 2024</td><td>Bissonnet 136</td><td><span class="pri-high">High</span></td></tr><tr><td>5</td><td>Approve Subchapter N mining registration proposal — submitted February 2024, now over two years outstanding</td><td>Bissonnet 136</td><td><span class="pri-high">High</span></td></tr><tr><td>6</td><td>Commission Market Study update ($7,500) to establish MUD bond cap under revised land use plan</td><td>Bissonnet 136 / Lester</td><td><span class="pri-med">Medium</span></td></tr></table>
-      <div class="section-hdr">Ongoing — No Change</div>
-      <ul class="bullet-list"><li><strong>CC&amp;Rs</strong> — Draft in progress; will govern setbacks, uses, signage, and common area association</li><li><strong>Design Architect</strong> — Identified; will align all builder-developers on design standards via CC&amp;R reference</li><li><strong>Standardized PSA</strong> — In customization; includes environmental disclosure, specific performance, and escrow provisions</li><li><strong>LoopNet Premium</strong> — Active and performing; monthly email cadence maintained</li></ul>
-      <p class="body-text" style="margin-top:18px">This concludes Supplement 7 to the ITP Houston Development Status Report. Market fundamentals remain strong. The critical path runs through the action items above — specifically LFG compliance and engineering invoice resolution. Both sit within Bissonnet 136's direct control and are simultaneously blocking progress across multiple workstreams.</p>
-      <div class="sig-block"><strong>Mark D. Lester</strong>Principal<br><br>C: Bissonnet 136, LLC — Noelle Sit (noelle@leonoraglen.com)<br>ML/ml</div>
+
+      <div class="toc">
+        <div class="toc-title">Contents</div>
+        <a href="#s1"><span class="tn">1.</span> Executive Overview</a>
+        <a href="#s2"><span class="tn">2.</span> Sales Pipeline &amp; Contract Status</a>
+        <a href="#s3"><span class="tn">3.</span> Cost to Date &amp; Anticipated Costs</a>
+        <a href="#s4"><span class="tn">4.</span> Critical Path &mdash; Construction Schedule</a>
+        <a href="#s5"><span class="tn">5.</span> Scenario Analysis &mdash; Stay In vs. Buyout</a>
+        <a href="#s6"><span class="tn">6.</span> Equity Buyout &amp; Capital Raise</a>
+        <a href="#s7s"><span class="tn">7.</span> Project Status Dashboard</a>
+        <a href="#s8"><span class="tn">8.</span> Environmental &mdash; SKA Update</a>
+        <a href="#s9"><span class="tn">9.</span> PCS / Harris County &amp; MUD</a>
+        <a href="#s10"><span class="tn">10.</span> Infrastructure Design &amp; Permitting</a>
+        <a href="#s11"><span class="tn">11.</span> Priority Action Items</a>
+        <a href="#s12"><span class="tn">12.</span> Ongoing &mdash; No Change</a>
+      </div>
+
+      <!-- 1 -->
+      <div id="s1" class="exec-summary">
+        <h3><span class="sn">1.</span> Executive Overview</h3>
+        <p>Kirkwood Crossings has an active sales pipeline of $25.8M across 9 named prospects, with Lincoln Avenue Capital in contract and 5 additional parties in PSA review. The sales response team has been consolidated under KET Enterprises (Sylvia Coronado and Tom Wilkinson) with the project listed on CoStar, LoopNet, and CREXI generating over 10,600 brochure distributions and consistent weekly inquiries.</p>
+        <p>The project proforma shows $31.5M in hard and soft costs with a two-stage buyout structure of $5M + $5M. A $36M Proposal A was presented in February 2025 and remains the lead capital structure. Construction is targeted to begin July 2026 with an 18-month build through January 2028.</p>
+        <p>The critical path runs through two items within Bissonnet 136&rsquo;s direct control: (1) LFG compliance &mdash; monitoring lapsed since December 2024, and (2) engineering invoices &mdash; Kimley-Horn 6+ months in arrears blocking all design work. MUD 584 is approved by COH and recommended by TCEQ staff. PCS is a timing issue on bond reimbursement only &mdash; it does not slow development.</p>
+      </div>
+
+      <!-- 2 -->
+      <div class="section-hdr" id="s2"><span class="sn">2.</span> Sales Pipeline &amp; Contract Status</div>
+      <div class="four-col">
+        <div class="kpi"><div class="label">Pipeline Value</div><div class="value">$25.8M</div><div class="note">9 active prospects</div></div>
+        <div class="kpi"><div class="label">In Contract</div><div class="value">$5.6M</div><div class="note">Lincoln Ave Capital (Lot 15 + MUD)</div></div>
+        <div class="kpi"><div class="label">PSA Under Review</div><div class="value">$20.1M</div><div class="note">6 parties in active negotiation</div></div>
+        <div class="kpi"><div class="label">Total Lot Inventory</div><div class="value">$39.4M</div><div class="note">30 lots / 99.4 acres</div></div>
+      </div>
+
+      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.1 Active Deal Pipeline (as of April 10, 2026)</p>
+      <table class="sales">
+        <tr><th>Prospect</th><th style="width:30px">Rtg</th><th>Deal Value</th><th>Lot(s)</th><th>Type</th><th>Status</th><th>Notes</th></tr>
+        <tr><td><strong>Lincoln Ave Capital</strong></td><td><span class="rating high">10</span></td><td>$3.65M + $2M MUD</td><td>15</td><td>MF / Affordable</td><td><span class="pill green">In Contract</span></td><td>Seeking non-profit partner; contract date May 1; 90-day feasibility</td></tr>
+        <tr><td><strong>Shazeb Ali</strong></td><td><span class="rating high">9</span></td><td>$1.54M</td><td>17 &amp; 22</td><td>Retail / Gas</td><td><span class="pill amber">PSA Review</span></td><td>Completed surveys; wants 120-day DD; bind in contract</td></tr>
+        <tr><td><strong>083 Auto LLC</strong></td><td><span class="rating high">9</span></td><td>$504K</td><td>10</td><td>Industrial / Auto</td><td><span class="pill amber">PSA Review</span></td><td>Awaiting business plan / intended use overview</td></tr>
+        <tr><td><strong>Paul Momoh</strong></td><td><span class="rating high">9</span></td><td>$691K</td><td>12</td><td>Industrial / Auto</td><td><span class="pill amber">PSA Review</span></td><td>Awaiting business plan / intended use overview</td></tr>
+        <tr><td><strong>Streetwise Retail</strong></td><td><span class="rating high">9</span></td><td>$980K</td><td>30</td><td>Retail Center</td><td><span class="pill amber">PSA Review</span></td><td>Reviewing documents; spoke 3/25, follow-up expected</td></tr>
+        <tr><td><strong>Revolution Soccer</strong></td><td><span class="rating med">7</span></td><td>$1.18M</td><td>1</td><td>Flex / Entertainment</td><td><span class="pill amber">PSA Review</span></td><td>Timing dependent on Woodlands site; anticipated Q2 2027 start</td></tr>
+        <tr><td><strong>Nasir Ali</strong></td><td><span class="rating med">6</span></td><td>$1.50M</td><td>8 &amp; 29</td><td>Retail / Gas</td><td><span class="pill amber">PSA Review</span></td><td>Gas station user; reviewing PSA</td></tr>
+        <tr><td><strong>Vivian Phan</strong></td><td><span class="rating med">6</span></td><td>$1.57M</td><td>20 &amp; 21</td><td>Retail / Funeral</td><td><span class="pill blue">New</span></td><td>Funeral home on Kirkwood retail lots; scheduling call</td></tr>
+        <tr><td><strong>Anzer Hussein / Octa Homes</strong></td><td><span class="rating gray" style="background:#888">?</span></td><td>$12.16M</td><td>13, 14, 16</td><td>SFH / Manufactured</td><td><span class="pill amber">PSA Review</span></td><td>Modular rental community; MUD valuation concern re: non-foundation product; offered $5.68/sf for 48.5ac</td></tr>
+      </table>
+
+      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.2 Octa Homes Offer Detail</p>
+      <ul class="bullet-list">
+        <li>Offer 1 (3/26): Verbal &mdash; $4&ndash;$6/sf for 50 acres; $25K EM after 60&ndash;70 days</li>
+        <li>Offer 2 (4/2): Formal &mdash; $12M for 48.5 acres at $5.68/sf; $25K EM after 150 days; two 30-day extensions at $25K each (non-refundable); 30-day closing</li>
+        <li>Seller concern: manufactured homes (not on foundation) may devalue property and hinder MUD tax valuation. Buyer exploring: (a) reduce to 25 acres, (b) purchase entire tract, (c) requesting TCEQ MSD documentation</li>
+        <li>Zoom call held with Anzer, Mike Schultz, Mark, Taylor, Tom, Sylvia. Buyer&rsquo;s concerns: lender approval and insurance for prior landfill use</li>
+      </ul>
+
+      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.3 New Prospects &mdash; Vetting</p>
+      <ul class="bullet-list">
+        <li><strong>Wea Lee / Tri Nguyen</strong> &mdash; gathering information</li>
+        <li><strong>StorageCaves</strong> &mdash; gathering information</li>
+        <li><strong>Hassan Aram</strong> (Rating 8) &mdash; investor group for office/warehouse on Lot 13b; being steered to alternate parcel (1 or 6)</li>
+        <li><strong>Vicente Vargas</strong> &mdash; SFH developer, 10&ndash;12ac, gated community on Lot 13</li>
+      </ul>
+
+      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.4 Stalled / Inactive</p>
+      <ul class="bullet-list">
+        <li><strong>Abdul Jaka</strong> (Lot 11) &mdash; 1031 exchange fell through; contingency floated, awaiting response</li>
+        <li><strong>Kevin Nguyen</strong> (Lots 5 &amp; 7) &mdash; gone dark; continuing follow-up</li>
+        <li><strong>Marco Antonio</strong> (Lot 9) &mdash; phone tag; waiting for email from broker</li>
+        <li><strong>Starwood</strong> &mdash; dropped Feb 2025; earnest money contested; open to 4% tax credit</li>
+      </ul>
+
+      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.5 Marketing &amp; Sales Team</p>
+      <p class="body-text">Sales response consolidated under <strong>KET Enterprises</strong> (Sylvia Coronado, Tom Wilkinson). Project listed on CoStar, LoopNet, CREXI. Mark joins calls as needed.</p>
+      <div class="three-col">
+        <div class="kpi"><div class="label">Total Brochures Distributed</div><div class="value">10,669</div><div class="note">Email + platform views</div></div>
+        <div class="kpi"><div class="label">LoopNet Views</div><div class="value">4,879</div><div class="note">~1,100/week sustained</div></div>
+        <div class="kpi"><div class="label">Direct Contacts Logged</div><div class="value">15</div><div class="note">Since March 24, 2026</div></div>
+      </div>
+
+      <!-- 3 -->
+      <div class="section-hdr" id="s3"><span class="sn">3.</span> Cost to Date &amp; Anticipated Costs</div>
+      <div class="three-col">
+        <div class="kpi"><div class="label">Hard + Soft Costs Est.</div><div class="value">$31.5M</div><div class="note">Subject to OPCC revision</div></div>
+        <div class="kpi"><div class="label">OPCC Contingency</div><div class="value">20%</div><div class="note">Tightens with revised design</div></div>
+        <div class="kpi"><div class="label">MUD Bond Reimbursement</div><div class="value">$23.4M</div><div class="note">Higher costs = higher MUD cap</div></div>
+      </div>
+      <p class="body-text">Construction estimates remain part of an ongoing OPCC exercise. Line-item bidding central to expense reduction. Higher costs are self-mitigating &mdash; they increase the MUD reimbursement cap. Mass grading and drainage costs cannot be accurately bid without revised design. Infrastructure cost estimates from engineers are based on public project comps and expensive GC markups &mdash; actual costs will be substantially lower with value engineering and trade bidding.</p>
+
+      <!-- 4 -->
+      <div class="section-hdr" id="s4"><span class="sn">4.</span> Critical Path &mdash; Construction Schedule</div>
+      <table class="sched">
+        <tr><th>Task</th><th>Duration</th><th>Start</th><th>Finish</th></tr>
+        <tr><td><strong>Construction (total program)</strong></td><td>403 days</td><td>Jul 1, 2026</td><td>Jan 14, 2028</td></tr>
+        <tr><td>Lot owners secure design team / complete CDs</td><td>21 weeks</td><td>May 1, 2026</td><td>Sep 24, 2026</td></tr>
+        <tr><td>Lot owners secure building permit</td><td>21 weeks</td><td>Sep 25, 2026</td><td>Feb 18, 2027</td></tr>
+        <tr><td>METRO clearing, grubbing &amp; site prep</td><td>8 weeks</td><td>Oct 1, 2026</td><td>Nov 25, 2026</td></tr>
+        <tr><td>Mass grading and detention</td><td>27 weeks</td><td>Feb 1, 2027</td><td>Aug 6, 2027</td></tr>
+        <tr><td>Water, sewer &amp; storm</td><td>19 weeks</td><td>May 31, 2027</td><td>Oct 8, 2027</td></tr>
+        <tr><td>Paving</td><td>10 weeks</td><td>Sep 13, 2027</td><td>Nov 19, 2027</td></tr>
+        <tr><td>Lot owners individual developments</td><td>39 weeks</td><td>Feb 19, 2027</td><td>Nov 18, 2027</td></tr>
+        <tr><td>Lot owners secure C of O</td><td>1 week</td><td>Nov 19, 2027</td><td>Nov 25, 2027</td></tr>
+      </table>
+      <p class="body-text">Lot owners must begin securing design teams by May 2026. Contingent on engineering design restart (Kimley-Horn invoices) and Goodheart change order.</p>
+
+      <!-- 5 -->
+      <div class="section-hdr" id="s5"><span class="sn">5.</span> Scenario Analysis &mdash; Stay In vs. Buyout</div>
+      <div class="compare-grid">
+        <div class="compare-col stay">
+          <h4>Scenario A &mdash; Stay In</h4>
+          <div class="compare-item"><strong>Structure:</strong> JV continues; Quinlan retains equity through development and lot sales</div>
+          <div class="compare-item"><strong>Revenue Potential:</strong> $39.4M total lot inventory at current pricing; $25.8M already in active pipeline</div>
+          <div class="compare-item"><strong>Profit:</strong> Higher total but longer duration (18+ months to realization)</div>
+          <div class="compare-item"><strong>MUD Bonds:</strong> Full $23.4M reimbursement flows to JV</div>
+          <div class="compare-item"><strong>Risk:</strong> Ongoing funding of LFG compliance, engineering, infrastructure</div>
+          <div class="compare-item"><strong>Developer Value:</strong> Full realization of advisory, lot premiums, capital markets execution</div>
+        </div>
+        <div class="compare-col buy">
+          <h4>Scenario B &mdash; Buyout</h4>
+          <div class="compare-item"><strong>Structure:</strong> $5M Phase 1 (debt + pref equity) + $5M Phase 2 (proceeds)</div>
+          <div class="compare-item"><strong>Proposal A:</strong> $36M &mdash; buyout tranche, Phase 1 infrastructure, vertical for 45 homes + 80 lots</div>
+          <div class="compare-item"><strong>Proposal B:</strong> ARESC Holdings (overseas) &mdash; pending</div>
+          <div class="compare-item"><strong>Timeline:</strong> Buyout at first funding eliminates future liabilities</div>
+          <div class="compare-item"><strong>Advantage:</strong> Clean exit with certain proceeds vs. shared upside with execution risk</div>
+          <div class="compare-item"><strong>Developer Value:</strong> Continuation of execution &mdash; value from developer&rsquo;s efforts and capital relationships</div>
+        </div>
+      </div>
+
+      <!-- 6 -->
+      <div class="section-hdr" id="s6"><span class="sn">6.</span> Equity Buyout &amp; Capital Raise</div>
+      <p class="body-text"><strong>Proposal A</strong> &mdash; $36M. First buyout tranche, Phase 1 infrastructure, vertical for 45 homes and 80 lots.</p>
+      <p class="body-text"><strong>Proposal B</strong> &mdash; ARESC Holdings, LLC (overseas equity). Pending source confirmation.</p>
+      <p class="body-text">Six intermediaries previously engaged. Bottleneck: no finalized construction costs or schedule. A debt vehicle for construction and acquisition must be established.</p>
+      <table class="cap">
+        <tr><th>Firm</th><th>Mandate</th><th>Status</th></tr>
+        <tr><td><strong>CBRE &mdash; John Fenolio</strong></td><td>Debt only</td><td>One offer &mdash; unacceptable terms</td></tr>
+        <tr><td><strong>Walker Dunlop &mdash; Jordan Casallas</strong></td><td>Equity + Debt</td><td>Hudson Bay soft debt offer; pref equity/mezz under consideration</td></tr>
+        <tr><td><strong>Copper Beach</strong></td><td>Equity + Debt</td><td>Offer pending two-stage proforma update</td></tr>
+        <tr><td><strong>Reed Smith</strong></td><td>Equity</td><td>Saudi/Chinese clients; no production</td></tr>
+        <tr><td><strong>Manvitte</strong></td><td>Equity</td><td>No production</td></tr>
+        <tr><td><strong>Zarche Group</strong></td><td>Debt + Equity</td><td>Silver Arch term sheet &mdash; debt only</td></tr>
+      </table>
+
+      <!-- 7 (collapsible) -->
+      <div class="collapsible-hdr" id="s7s" onclick="toggleSection(this)"><span class="sn">7.</span> Project Status Dashboard</div>
+      <div class="collapsible-body" style="max-height:2000px">
+        <table class="dash" style="margin-top:12px">
+          <tr><th>Topic</th><th>Status</th><th>Key Note</th></tr>
+          <tr><td><strong>Equity Buyout</strong></td><td><span class="pill blue">Active</span></td><td>Proposal A ($36M); Proposal B (ARESC) pending</td></tr>
+          <tr><td><strong>Capital Raise</strong></td><td><span class="pill blue">Active</span></td><td>6 intermediaries; Silver Arch term sheet; Hudson Bay soft offer</td></tr>
+          <tr><td><strong>MUD 584</strong></td><td><span class="pill amber">In Review</span></td><td>COH approved Dec 2024; TCEQ recommends; PCS pending</td></tr>
+          <tr><td><strong>PCS / Harris County</strong></td><td><span class="pill amber">Negotiating</span></td><td>Amandes active; counterproposal outstanding</td></tr>
+          <tr><td><strong>TPDES Permit</strong></td><td><span class="pill red">Delayed</span></td><td>Publication past due Dec 12, 2024</td></tr>
+          <tr><td><strong>TCEQ Authorization</strong></td><td><span class="pill blue">In Review</span></td><td>Phased approach agreed; resubmission required</td></tr>
+          <tr><td><strong>Infrastructure</strong></td><td><span class="pill red">On Hold</span></td><td>Invoices 6+ months arrears; OPCC blocked</td></tr>
+          <tr><td><strong>LFG Monitoring</strong></td><td><span class="pill red">Lapsed</span></td><td>No monitoring Dec 2024&ndash;Jan 2025</td></tr>
+          <tr><td><strong>Sales Pipeline</strong></td><td><span class="pill green">$25.8M</span></td><td>9 active prospects; Lincoln Ave in contract</td></tr>
+          <tr><td><strong>LoopNet / Marketing</strong></td><td><span class="pill green">Active</span></td><td>10,669 brochures; 4,879 LoopNet views; KET team</td></tr>
+          <tr><td><strong>Geotech / Pavement</strong></td><td><span class="pill amber">Pending</span></td><td>Goodheart change order since May 2024</td></tr>
+        </table>
+      </div>
+
+      <!-- 8 (collapsible) -->
+      <div class="collapsible-hdr" id="s8" onclick="toggleSection(this)"><span class="sn">8.</span> Environmental &mdash; SKA Update (April 2026)</div>
+      <div class="collapsible-body" style="max-height:2000px">
+        <div class="alert-box" style="margin-top:12px"><strong>Immediate Action &mdash; LFG Compliance Gap:</strong> No monitoring Dec 2024 or Jan 2025. December quarterly missed. TCEQ info request unanswered. HCAO data request unanswered. Material risk to authorization and MUD.</div>
+        <ul class="bullet-list">
+          <li>MSW Permit 1247: extension approved Dec 10; Jan 10 deadline missed; second extension offered &mdash; not accepted</li>
+          <li>GV-10A/GV-10B: ~30% methane, ~35% CO&#8322;, ~150 ppm H&#8322;S</li>
+          <li>Six-month monitoring (GV-24E, GV-46E) through Feb 2025 &mdash; not completed</li>
+        </ul>
+        <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">8.1 TPDES Permit</p>
+        <ul class="bullet-list"><li>Publication (~$7,500) not made; deadline Dec 12, 2024</li><li>HCAO requested copy Jan 2025</li><li>Recommend City temporary discharge authorization (3 months)</li></ul>
+        <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">8.2 Subchapter N Mining</p>
+        <ul class="bullet-list"><li>Proposal since Feb 2024 &mdash; over two years outstanding</li><li>Half of waste is suitable soil; PCS cannot demand hearing on registration</li></ul>
+      </div>
+
+      <!-- 9 (collapsible) -->
+      <div class="collapsible-hdr" id="s9" onclick="toggleSection(this)"><span class="sn">9.</span> PCS / Harris County &amp; MUD</div>
+      <div class="collapsible-body" style="max-height:2000px">
+        <p class="body-text" style="margin-top:12px">COH approved MUD 584 Dec 2024. TCEQ staff recommends approval. PCS must convince commissioners &mdash; Allen Boone well-positioned to rebut.</p>
+        <ul class="bullet-list">
+          <li>Oct 2024 concession proposal &mdash; counterproposal outstanding</li>
+          <li>Feb 2025 TCEQ agenda passed; meeting with PCS counsel in process</li>
+          <li>Allen Boone to present; Pearson to lobby; Pierce (former TCEQ Director) as backup</li>
+          <li class="sub">PCS is not an affected party &mdash; TCEQ and COH have concluded this</li>
+        </ul>
+        <p class="body-text" style="font-weight:700;color:#1B2A4A">MUD delay affects bond reimbursement timing only &mdash; not design, permitting, construction, or sales.</p>
+      </div>
+
+      <!-- 10 (collapsible) -->
+      <div class="collapsible-hdr" id="s10" onclick="toggleSection(this)"><span class="sn">10.</span> Infrastructure Design &amp; Permitting</div>
+      <div class="collapsible-body" style="max-height:2000px">
+        <ul class="bullet-list" style="margin-top:12px">
+          <li>All design on hold &mdash; Kimley-Horn invoices 6+ months arrears</li>
+          <li>Goodheart change order since May 2024 &mdash; nearly two years</li>
+          <li>COH resubmission: drainage report, retention pond layout, geotech report</li>
+          <li>Pond reconfiguration (90-ft MSL) could save $7M+ in waste removal</li>
+        </ul>
+      </div>
+
+      <!-- 11 -->
+      <div class="section-hdr" id="s11"><span class="sn">11.</span> Priority Action Items</div>
+      <table class="act">
+        <tr><th>#</th><th>Action Item</th><th>Owner</th><th>Priority</th></tr>
+        <tr><td>11.1</td><td><strong style="color:#C00000">Accept TCEQ LFG extension; schedule monitoring; respond to TCEQ and HCAO requests</strong></td><td>Bissonnet 136 / SKA</td><td><span class="pri-urgent">Urgent</span></td></tr>
+        <tr><td>11.2</td><td><strong style="color:#C00000">Authorize TPDES publication (~$7,500)</strong></td><td>Bissonnet 136 / SKA</td><td><span class="pri-urgent">Urgent</span></td></tr>
+        <tr><td>11.3</td><td>Bring Kimley-Horn invoices current &mdash; unblock hydrology, OPCC, design</td><td>Bissonnet 136</td><td><span class="pri-high">High</span></td></tr>
+        <tr><td>11.4</td><td>Approve Goodheart change order (since May 2024)</td><td>Bissonnet 136</td><td><span class="pri-high">High</span></td></tr>
+        <tr><td>11.5</td><td>Approve Subchapter N mining registration (since Feb 2024)</td><td>Bissonnet 136</td><td><span class="pri-high">High</span></td></tr>
+        <tr><td>11.6</td><td>Commission Market Study update ($7,500) for MUD bond cap</td><td>Bissonnet 136 / Lester</td><td><span class="pri-med">Medium</span></td></tr>
+        <tr><td>11.7</td><td>Establish debt vehicle for construction and acquisition</td><td>Lester / WRF</td><td><span class="pri-med">Medium</span></td></tr>
+      </table>
+
+      <!-- 12 -->
+      <div class="section-hdr" id="s12"><span class="sn">12.</span> Ongoing &mdash; No Change</div>
+      <ul class="bullet-list">
+        <li><strong>CC&amp;Rs</strong> &mdash; Draft in progress</li>
+        <li><strong>Design Architect</strong> &mdash; Identified; aligning builder-developers via CC&amp;R</li>
+        <li><strong>Standardized PSA</strong> &mdash; In customization</li>
+        <li><strong>LoopNet Premium</strong> &mdash; Active; monthly cadence maintained</li>
+      </ul>
+      <div class="sig-block"><strong>Mark D. Lester</strong>Principal<br><br>C: Bissonnet 136, LLC &mdash; Noelle Sit (noelle@leonoraglen.com)<br>ML/ml</div>
     </div>
 
+    <!-- ====== SUPPLEMENT 6 ====== -->
     <div id="s6" class="panel">
-      <div class="letter-header">
-        <div class="letter-meta">Via Email &middot; john.quinlan@gmail.com</div>
-        <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:12px">February 8, 2025</div>
-        <div class="addr">Mr. John Quinlan &middot; Kirkwood Crossings &middot; 22310 Grand Corner Drive, Suite 130 &middot; Katy, TX 77494</div>
-        <div class="subject-line">Subject: Kirkwood Crossings — Development Status | Supplement 6</div>
-      </div>
-      <p class="body-text">John — The following is the status of Kirkwood Crossings Development. This is a supplement to the last report dated January 7, 2025.</p>
-      <div class="section-hdr">Equity Buyout</div>
-      <p class="body-text"><strong>Proposal A</strong> — Provided February 4, 2025. A lender proposes $36 million for the first of a two-part buyout, infrastructure funding for the first phase, and vertical funding for 45 homes and 80 finished lots.</p>
-      <p class="body-text"><strong>Proposal B</strong> — Securing equity for buyout from overseas group. Proposal from ARESC Holdings, LLC will follow when equity source is secured.</p>
-      <div class="section-hdr">Capital Raise</div>
-      <p class="body-text">The equity and debt markets for investment have been more active recently. The election is over and there is some predictability as to business climate — money is looking for places to invest.</p>
-      <div class="section-hdr">Project Proforma</div>
-      <p class="body-text">The two-phase buyout models assume estimated cost of revised design, value add and competitive cost bidding. This is not verifiable without bidding on revised designs. Construction estimates are part of an ongoing OPCC exercise. OPCC shows contingency of 20% on all line items. Each model includes a buyout where debt is used for Phase 1 ($5M to buyout + infrastructure) with remaining $5M from Phase II funding. (Reference: Phase I Base Final and Base II Phase Final – 01.09.25)</p>
-      <div class="section-hdr">Environmental — SKA Update (February 3, 2025)</div>
-      <ul class="bullet-list"><li>December 3, 2024 conference call: TCEQ understood phased approach, agreed to continue review</li><li>30-day extension approved December 10, 2024 for Non-Notice Modification to MSW Permit No. 1247</li><li>January 10, 2025 deadline missed. TCEQ asked January 24 about another extension — no response provided</li></ul>
-      <div class="alert-box"><strong>LFG Monitoring Gap:</strong> No monthly LFG monitoring in December 2024 or January 2025. December quarterly event not performed. TCEQ emailed December 27, 2024 requesting background on LFG exceedances — clarified January 17 this is unrelated to Phase I Authorization. Due January 27, 2025 — not addressed.</div>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">TPDES Permit</p>
-      <ul class="bullet-list"><li>Application submitted October 3, 2024; completeness confirmed November 12, 2024</li><li>Publication required by December 12, 2024 (~$7,500) — not made</li><li>January 14, 2025: HCAO requested copy — PCS comment letter likely forthcoming</li><li>Earliest approval: end of May 2025 if no Harris County opposition</li><li>Recommend temporary discharge authorization from City as backup (3-month lead time)</li></ul>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">Subchapter N Mining Registration</p>
-      <ul class="bullet-list"><li>Proposal to Bissonnet 136 since February 12, 2024 — not approved</li><li>More than half of landfill waste is soil suitable for residential use; disposal ~$75/cy</li><li>PCS will likely oppose but cannot request a hearing on a registration</li></ul>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">Other Environmental</p>
-      <ul class="bullet-list"><li>SKA conceptual drainage plan sent to Kimley-Horn Oct 16, 2024 — unclear if reviewed</li><li>Lincoln Avenue Capital permit on hold pending MUD/PCS</li></ul>
-      <div class="section-hdr">PCS / Harris County Matter</div>
-      <p class="body-text">Amandes reached out to PCS lawyers in late January — PCS preparing a response. Meeting tentatively scheduled. TCEQ agenda February 13 and 27.</p>
-      <ul class="bullet-list"><li>January 13: HCAO and PCS working on counterproposal; requested LFG data since October 2024 — no data for Dec/Jan</li><li>PCS comment letter November 21, 2024 (liners/geotech) — no rebuttal prepared</li><li>COH approved MUD December 2024; TCEQ staff recommends proceeding</li><li>If hearing proceeds: Allen Boone presents; Dan Pearson lobbies commissioners</li><li>Backup: Pat Pierce (former TCEQ Director) to advocate denial of PCS hearing</li></ul>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A">MUD delay does not prevent design, permitting, construction, or lot sales.</p>
-      <div class="section-hdr">Infrastructure &amp; Design</div>
-      <ul class="bullet-list"><li>Waiting for design changes to resubmit — requires revised drainage report, reconfigured retention areas</li><li>Pond adjustments for waste depth optimization — delay advantageous for cost savings</li><li>Goodheart change order submitted May 8, 2024 — still awaiting Bissonnet 136 approval</li></ul>
-      <div class="section-hdr">MUD</div>
-      <ul class="bullet-list"><li>Market Study update ($7,500) requested — sets bond cap for infrastructure reimbursement</li><li>If PCS succeeds: 12–18 month delay on reimbursement only — development proceeds</li><li>Allen Boone: PCS not on court docket; court can refuse the action</li></ul>
-      <div class="section-hdr">Sales &amp; Contract Status</div>
-      <p class="body-text"><strong>Starwood</strong> — Dropping the deal. Alex Waterbury (former president) and Jessica Mullins (current president) focusing on other projects. Open to 4% tax credit approach. Asked for earnest money release — we do not believe they are entitled.</p>
-      <p class="body-text"><strong>Cricket League</strong> — Discussing lease/purchase of retention pond area for cricket field. Dual hydrology/recreation use potential.</p>
-      <p class="body-text">13 parcels (60.02%) in contract, LOI, or advanced conversation. Several calls per week from LoopNet. Not pressing for contracts due to timeline delays.</p>
-      <div class="section-hdr">Ongoing — No Change</div>
-      <ul class="bullet-list"><li><strong>CC&amp;Rs</strong> — Draft in progress</li><li><strong>Design Architect</strong> — Identified</li><li><strong>Standardized PSA</strong> — Being customized</li><li><strong>LoopNet Premium</strong> — Monthly 1,700-prospect emails; weekly price triggers</li></ul>
-      <div class="sig-block"><strong>Mark D. Lester</strong>Principal<br><br>C: Bissonnet 136, LLC — Noelle Sit (noelle@leonoraglen.com)<br>ML/ml</div>
+      <div class="letter-header"><div class="letter-meta">Via Email &middot; john.quinlan@gmail.com</div><div style="font-size:13px;font-weight:600;color:#222;margin-bottom:12px">February 8, 2025</div><div class="addr">Mr. John Quinlan &middot; Kirkwood Crossings &middot; 22310 Grand Corner Drive, Suite 130 &middot; Katy, TX 77494</div><div class="subject-line">Subject: Kirkwood Crossings &mdash; Development Status | Supplement 6</div></div>
+      <p class="body-text">Supplement to report dated January 7, 2025.</p>
+      <div class="section-hdr"><span class="sn">1.</span> Equity Buyout</div>
+      <p class="body-text"><strong>Proposal A</strong> &mdash; $36M for buyout, Phase 1 infrastructure, vertical for 45 homes and 80 lots.</p>
+      <p class="body-text"><strong>Proposal B</strong> &mdash; ARESC Holdings. Pending.</p>
+      <div class="section-hdr"><span class="sn">2.</span> Capital Raise</div>
+      <p class="body-text">Post-election markets more active.</p>
+      <div class="section-hdr"><span class="sn">3.</span> Proforma</div>
+      <p class="body-text">OPCC contingency 20%. Phase 1 $5M buyout + infrastructure; Phase 2 $5M from proceeds.</p>
+      <div class="section-hdr"><span class="sn">4.</span> Environmental</div>
+      <div class="alert-box"><strong>LFG:</strong> No monitoring Dec/Jan. TCEQ info request not addressed.</div>
+      <ul class="bullet-list"><li>TPDES publication not made (deadline Dec 12)</li><li>Mining registration since Feb 2024 &mdash; not approved</li></ul>
+      <div class="section-hdr"><span class="sn">5.</span> PCS / MUD</div>
+      <p class="body-text">Amandes active. COH approved MUD Dec 2024. TCEQ recommends.</p>
+      <div class="section-hdr"><span class="sn">6.</span> Sales</div>
+      <p class="body-text">Starwood dropped. Cricket League exploring retention pond. 13 parcels (60.02%) engaged.</p>
+      <div class="section-hdr"><span class="sn">7.</span> Ongoing</div>
+      <ul class="bullet-list"><li>CC&amp;Rs, Design Architect, PSA, LoopNet &mdash; all continuing</li></ul>
+      <div class="sig-block"><strong>Mark D. Lester</strong>Principal</div>
     </div>
 
+    <!-- ====== SUPPLEMENT 5 ====== -->
     <div id="s5" class="panel">
-      <div class="letter-header">
-        <div class="letter-meta">Via Email &middot; john.quinlan@gmail.com</div>
-        <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:12px">January 8, 2025</div>
-        <div class="addr">Mr. John Quinlan &middot; Kirkwood Crossings &middot; 22310 Grand Corner Drive, Suite 130 &middot; Katy, TX 77494</div>
-        <div class="subject-line">Subject: Kirkwood Crossings — Development Status | Supplement 5</div>
-      </div>
-      <p class="body-text">John — The following is the status of Kirkwood Crossings Development. This is a supplement to the last report dated December 2, 2024.</p>
-      <div class="section-hdr">Equity Buyout Strategy</div>
-      <p class="body-text">A two-stage buyout plan with debt and preferred equity financing provides buyout at first funding and the balance at second. Funds can also come from MUD or sale proceeds. The advantage: significant paydown to existing investor, elimination of future liabilities, and development moves forward.</p>
-      <p class="body-text"><strong>Phase 1:</strong> $5M to buyout + infrastructure via debt + preferred equity. <strong>Phase 2:</strong> Remaining $5M from project proceeds. (Reference: Phase I Base Final and Base II Phase Final – 01.09.25)</p>
-      <div class="section-hdr">Project Proforma</div>
-      <p class="body-text">Two-phase models assume estimated cost of revised design and competitive bidding — not verifiable without bids on revised designs. OPCC contingency at 20%. Line-item bidding central to expense reduction. Value engineering and revised specifications will improve reliability.</p>
-      <div class="section-hdr">Environmental — SKA Update (January 6, 2025)</div>
-      <ul class="bullet-list"><li>TCEQ conference call December 3: phased approach understood, agreed to continue review</li><li>30-day extension approved December 10, 2024 for Non-Notice Modification — comments not addressed, another extension likely needed</li></ul>
-      <div class="alert-box"><strong>LFG Monitoring Gap:</strong> No monitoring performed December 2024. December quarterly event not performed. TCEQ emailed December 27, 2024 requesting LFG exceedance background — not addressed.</div>
-      <ul class="bullet-list"><li>Two new LFG vents installed August 29–30, 2024 (GV-24E, GV-46E). Six-month program through February 2025</li><li>Non-notice permit modification for LFG program submitted September 25 — comments received December 9, not addressed</li></ul>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">TPDES Permit</p>
-      <ul class="bullet-list"><li>Submitted October 3, 2024; completeness confirmed November 12</li><li>Publication (~$7,500) required by December 12 — not made</li><li>Earliest approval: March 2025 if no opposition</li><li>Recommend temporary discharge from City as backup (3 months)</li></ul>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">Subchapter N Mining / Other</p>
-      <ul class="bullet-list"><li>Mining registration proposal to Bissonnet 136 since February 12, 2024 — not approved</li><li>PCS petition opposing MUD 584; October 14 meeting — settlement offered, no county response</li><li>PCS comment letter November 21, 2024 (liners/geotech) — no response prepared</li><li>Goodheart change order submitted May 8, 2024 — awaiting Bissonnet 136 approval</li><li>Lincoln Avenue Capital permit on hold pending MUD/PCS</li></ul>
-      <div class="section-hdr">PCS Matter</div>
-      <p class="body-text">No response from county on October 14 proposal. Nothing on February agenda yet. Amandes anticipates February hearing where Allen Boone will present. Dan Pearson to lobby commissioners. Allen Boone: PCS not on court docket — won't impede settlement. If needed: Pat Pierce to advocate denial.</p>
-      <p class="body-text" style="font-weight:700;color:#1B2A4A">MUD delay does not prevent design, permitting, construction, or lot sales. All criteria satisfied per Allen Boone and TCEQ staff.</p>
-      <div class="section-hdr">Infrastructure &amp; Design</div>
-      <ul class="bullet-list"><li>Waiting for design changes — requires revised drainage report, reconfigured retention areas</li><li>Pond adjustments for cost savings — delay worth the extreme savings potential</li><li>Modeling revised two-phase staging</li><li>Goodheart change order still pending (May 2024)</li></ul>
-      <div class="section-hdr">Capital Raise</div>
-      <p class="body-text">Continuing to seek debt and equity via broad intermediary engagement.</p>
-      <table class="cap"><tr><th>Firm</th><th>Mandate</th><th>Status</th></tr><tr><td><strong>CBRE — John Fenolio</strong></td><td>Debt only</td><td>One offer — unacceptable</td></tr><tr><td><strong>Walker Dunlop — Jordan Casallas</strong></td><td>Equity + Debt</td><td>Soft offer from Hudson Bay; pref equity/mezz; waiting for term sheet</td></tr><tr><td><strong>Copper Beach</strong></td><td>Equity + Debt</td><td>Offer pending two-stage proforma update</td></tr><tr><td><strong>Reed Smith</strong></td><td>Equity</td><td>Saudi/Chinese clients — no production</td></tr><tr><td><strong>Manvitte</strong></td><td>Equity</td><td>No production</td></tr><tr><td><strong>Zarche Group</strong></td><td>Debt + Equity</td><td>Silver Arch — debt-only term sheet</td></tr></table>
-      <div class="section-hdr">MUD</div>
-      <ul class="bullet-list"><li>Market Study update ($7,500) needed for revised land use</li><li>If PCS hearing succeeds: 12–18 month delay on reimbursement only</li><li>Court can refuse the action; if proposal acceptable, hearing withdrawn</li></ul>
-      <div class="section-hdr">Sales</div>
-      <p class="body-text"><strong>Starwood</strong> — Escrow not released; intending different apartment designs (9% or 4%). LANDCO NEXA engaged James Noteware for additional COH sources.</p>
-      <p class="body-text">13 parcels (60.02%) engaged. Several weekly LoopNet inquiries. Not pressing for contracts. (Ref: Deal Matrix 12-24-2024)</p>
-      <div class="section-hdr">Ongoing — No Change</div>
-      <ul class="bullet-list"><li><strong>CC&amp;Rs</strong> — Draft in progress</li><li><strong>Design Architect</strong> — Identified</li><li><strong>Standardized PSA</strong> — Being customized</li><li><strong>LoopNet Premium</strong> — Monthly 1,700 emails; weekly price triggers</li></ul>
-      <div class="sig-block"><strong>Mark D. Lester</strong>Principal<br><br>C: Bissonnet 136, LLC — Noelle Sit (noelle@leonoraglen.com)<br>ML/ml</div>
+      <div class="letter-header"><div class="letter-meta">Via Email &middot; john.quinlan@gmail.com</div><div style="font-size:13px;font-weight:600;color:#222;margin-bottom:12px">January 8, 2025</div><div class="addr">Mr. John Quinlan &middot; Kirkwood Crossings &middot; 22310 Grand Corner Drive, Suite 130 &middot; Katy, TX 77494</div><div class="subject-line">Subject: Kirkwood Crossings &mdash; Development Status | Supplement 5</div></div>
+      <p class="body-text">Supplement to report dated December 2, 2024.</p>
+      <div class="section-hdr"><span class="sn">1.</span> Buyout Strategy</div>
+      <p class="body-text">Two-stage: Phase 1 $5M + Phase 2 $5M.</p>
+      <div class="section-hdr"><span class="sn">2.</span> Proforma</div>
+      <p class="body-text">OPCC 20% contingency. Line-item bidding central.</p>
+      <div class="section-hdr"><span class="sn">3.</span> Environmental</div>
+      <div class="alert-box"><strong>LFG:</strong> No monitoring Dec 2024. TCEQ request not addressed.</div>
+      <ul class="bullet-list"><li>TPDES publication not made</li><li>Mining registration not approved</li></ul>
+      <div class="section-hdr"><span class="sn">4.</span> Capital Raise</div>
+      <table class="cap"><tr><th>Firm</th><th>Mandate</th><th>Status</th></tr><tr><td>CBRE</td><td>Debt</td><td>Unacceptable offer</td></tr><tr><td>Walker Dunlop</td><td>Eq+Debt</td><td>Hudson Bay soft; term sheet pending</td></tr><tr><td>Copper Beach</td><td>Eq+Debt</td><td>Pending proforma</td></tr><tr><td>Reed Smith</td><td>Equity</td><td>No production</td></tr><tr><td>Manvitte</td><td>Equity</td><td>No production</td></tr><tr><td>Zarche</td><td>Debt+Eq</td><td>Silver Arch term sheet</td></tr></table>
+      <div class="section-hdr"><span class="sn">5.</span> Sales</div>
+      <p class="body-text">13 parcels (60.02%). Starwood exploring 9%/4% deal.</p>
+      <div class="sig-block"><strong>Mark D. Lester</strong>Principal</div>
     </div>
 
+    <!-- SUPPLEMENTS 4, 3, 2 -->
     <div id="s4" class="panel">
-      <div class="letter-header"><div class="letter-meta">Supplement 4 &middot; December 2, 2024</div><div class="subject-line">Subject: Kirkwood Crossings — Development Status | Supplement 4</div></div>
-      <div class="arch-intro">Key events: Owner buyout desire formally stated; UBS stretch mortgage modeling initiated; COH approved MUD 584; new PCS comment letter November 2024; 60% parcels engaged; NY capital trip completed.</div>
-      <div class="arch-section"><h3>Ownership Shift — Buyout Formalized</h3><div class="arch-item"><div class="ib">Current property owner stated desire to be bought out. All financial modeling now structured around buyout. UBS / private credit being evaluated for stretch mortgage. Material shift from prior supplements.</div></div></div>
-      <div class="arch-section"><h3>Proforma — December 2024</h3><div class="arch-item"><div class="ib">$16.2M profit on $7.3M investment. Includes $10M buyout of landowner. Unlevered IRR: 34.4%. Investor multiple: 2.5x. Sponsor multiple: 9.1x. Hard + soft costs: $31.5M.</div></div></div>
-      <div class="arch-section"><h3>Environmental</h3><div class="arch-item"><div class="ih"><span class="it">MUD 584 — COH Approved</span><span class="pill green">Milestone</span></div><div class="ib">City of Houston approved MUD 584 December 2024. TCEQ staff recommends approval. PCS petition the only active impediment.</div></div><div class="arch-item"><div class="ih"><span class="it">New PCS Comment Letter — Nov 21, 2024</span><span class="pill amber">Action Needed</span></div><div class="ib">Comments focused on liners and geotechnical considerations. No rebuttal prepared. TPDES publication (~$7,500) required by December 12 — not yet authorized.</div></div></div>
-      <p class="body-text" style="margin-top:16px"><a class="drive-link" href="https://drive.google.com/drive/folders/1Et6HSuoiYidzdaTVGWct4ndli0zupdTI" target="_blank">&#128194; View Full Report in Google Drive</a></p>
+      <div class="letter-header"><div class="letter-meta">Supplement 4 &middot; December 2, 2024</div><div class="subject-line">Supplement 4</div></div>
+      <div class="arch-intro">Buyout formalized. COH approved MUD. PCS letter Nov 2024. IRR: 34.4%. $16.2M on $7.3M. Investor 2.5x. Sponsor 9.1x.</div>
+      <p class="body-text"><a class="drive-link" href="https://drive.google.com/drive/folders/1Et6HSuoiYidzdaTVGWct4ndli0zupdTI" target="_blank">&#128194; Full Report</a></p>
     </div>
-
     <div id="s3" class="panel">
-      <div class="letter-header"><div class="letter-meta">Supplement 3 &middot; November 1, 2024</div><div class="subject-line">Subject: Kirkwood Crossings — Development Status | Supplement 3</div></div>
-      <div class="arch-intro">Key events: October 14 PCS meeting held; county response awaited; bid results for utilities/paving unchanged; 5 intermediaries engaged; 58.52% parcels in LOI/contract; Copper Beach added.</div>
-      <div class="arch-section"><h3>Proforma — November 2024</h3><div class="arch-item"><div class="ib">$19M profit on $12.5M investment. Unlevered IRR: 27.9%. Investor multiple: 3.38x ($28.5M on $12.5M). Duration: 42 months remaining. Hard + soft costs: $31.5M.</div></div></div>
-      <div class="arch-section"><h3>PCS / MUD</h3><div class="arch-item"><div class="ih"><span class="it">Oct 14 Meeting Held</span><span class="pill blue">Complete</span></div><div class="ib">Amandes and Schultz presented concession proposal. Settlement offer made. County said they'd respond "in a few weeks" — no response received.</div></div><div class="arch-item"><div class="ih"><span class="it">Not Yet on SOAH Docket</span><span class="pill green">Positive</span></div><div class="ib">Per Allen Boone, PCS is not yet on the court docket. Court may refuse to admit the case.</div></div></div>
-      <div class="arch-section"><h3>Capital Raise</h3><div class="arch-item"><div class="ib">Copper Beach retained — five total intermediaries now active. Equity markets loosening; expected to strengthen through year-end. Monthly LFG monitoring October 2024 — no methane exceedances.</div></div></div>
-      <p class="body-text" style="margin-top:16px"><a class="drive-link" href="https://drive.google.com/drive/folders/1Et6HSuoiYidzdaTVGWct4ndli0zupdTI" target="_blank">&#128194; View Full Report in Google Drive</a></p>
+      <div class="letter-header"><div class="letter-meta">Supplement 3 &middot; November 1, 2024</div><div class="subject-line">Supplement 3</div></div>
+      <div class="arch-intro">PCS meeting Oct 14. 5 intermediaries. 58.52% parcels. IRR: 27.9%. $19M on $12.5M.</div>
+      <p class="body-text"><a class="drive-link" href="https://drive.google.com/drive/folders/1Et6HSuoiYidzdaTVGWct4ndli0zupdTI" target="_blank">&#128194; Full Report</a></p>
     </div>
-
     <div id="s2" class="panel">
-      <div class="letter-header"><div class="letter-meta">Supplement 2 &middot; October 10, 2024</div><div class="subject-line">Subject: Kirkwood Crossings — Development Status | Supplement 2</div></div>
-      <div class="arch-intro">First supplement after initial report. Key events: PCS filed formal petition opposing MUD 584; TPDES submitted; Medline contract terminated; Oct 14 PCS meeting scheduled; 62.11% parcels engaged.</div>
-      <div class="arch-section"><h3>Proforma — October 2024</h3><div class="arch-item"><div class="ib">$18.5M profit on $10M investment. Unlevered IRR: 40.2%. Investor multiple: 3.31x. Duration: 43 months remaining.</div></div></div>
-      <div class="arch-section"><h3>PCS Petition Filed</h3><div class="arch-item"><div class="ih"><span class="it">MUD 584 Opposition</span><span class="pill red">New</span></div><div class="ib">Harris County PCS filed petition opposing MUD formation. Oct 14 meeting scheduled with HCAO. Full concession list prepared by Amandes and Schultz.</div></div></div>
-      <div class="arch-section"><h3>Waste Strategy — Four Options</h3><div class="arch-item"><div class="ib">SKA analyzed: (1) Adjacent parcel ~$3–5M savings, (2) Pond reconfiguration — $7M savings (selected), (3) On-site landfill cell — $12M savings / highest risk, (4) Off-site disposal — $8.2M savings.</div></div></div>
-      <div class="arch-section"><h3>Sales</h3><div class="arch-item"><div class="ih"><span class="it">Medline Inc. — Terminated</span><span class="pill red">Terminated</span></div><div class="ib">Contract terminated citing building-on-landfill concerns. Re-approaching with alternative site.</div></div></div>
-      <p class="body-text" style="margin-top:16px"><a class="drive-link" href="https://drive.google.com/drive/folders/1Et6HSuoiYidzdaTVGWct4ndli0zupdTI" target="_blank">&#128194; View Full Report in Google Drive</a></p>
+      <div class="letter-header"><div class="letter-meta">Supplement 2 &middot; October 10, 2024</div><div class="subject-line">Supplement 2</div></div>
+      <div class="arch-intro">PCS petition. TPDES submitted. Medline terminated. Pond reconfig $7M savings. IRR: 40.2%. $18.5M on $10M.</div>
+      <p class="body-text"><a class="drive-link" href="https://drive.google.com/drive/folders/1Et6HSuoiYidzdaTVGWct4ndli0zupdTI" target="_blank">&#128194; Full Report</a></p>
     </div>
 
+    <!-- ARCHIVE -->
     <div id="archive" class="panel">
-      <div class="arch-intro">Complete timeline of all supplements. Supplements 5–7 contain full report text. Earlier supplements are summarized; originals in Google Drive.</div>
-      <table class="dash"><tr><th>Supplement</th><th>Period</th><th>Key Milestone</th><th>IRR</th><th>Parcels</th></tr><tr><td><span class="pill blue">Supp 7</span></td><td>April 2026</td><td>Full consolidation; Proposal A ($36M) active; 6 action items for Bissonnet 136</td><td>—</td><td>60.02%</td></tr><tr><td><span class="pill amber">Supp 6</span></td><td>Feb 2025</td><td>Proposal A presented; Starwood dropped; LFG lapse; TPDES missed</td><td>—</td><td>60.02%</td></tr><tr><td><span class="pill amber">Supp 5</span></td><td>Jan 2025</td><td>Two-stage buyout; Silver Arch term sheet; Hudson Bay soft offer</td><td>—</td><td>60.02%</td></tr><tr><td><span class="pill amber">Supp 4</span></td><td>Dec 2024</td><td>Owner buyout formalized; COH approved MUD 584; PCS comment letter</td><td>34.4%</td><td>60.02%</td></tr><tr><td><span class="pill gray">Supp 3</span></td><td>Nov 2024</td><td>Oct 14 PCS meeting; 5th intermediary; concession proposal</td><td>27.9%</td><td>58.52%</td></tr><tr><td><span class="pill gray">Supp 2</span></td><td>Oct 2024</td><td>PCS petition; TPDES submitted; Medline terminated; waste options</td><td>40.2%</td><td>62.11%</td></tr></table>
-      <div class="section-hdr" style="margin-top:24px">Persistent Items — Carried Every Supplement</div>
-      <ul class="bullet-list"><li>CC&amp;Rs — draft in progress since October 2024; not yet complete</li><li>Design Architect — identified since October 2024; not yet formally engaged</li><li>Standardized PSA — in customization since October 2024; not yet finalized</li><li>LoopNet Premium — active throughout all supplements</li><li>Goodheart change order — outstanding since May 2024; every supplement</li><li>Subchapter N mining registration — proposal since February 2024; still not approved</li><li>OPCC / hydrology study — blocked by engineering invoice arrears throughout</li></ul>
-      <p class="body-text" style="margin-top:16px"><a class="drive-link" href="https://drive.google.com/drive/folders/1Et6HSuoiYidzdaTVGWct4ndli0zupdTI" target="_blank">&#128194; Open Full Report Archive in Google Drive</a></p>
+      <div class="arch-intro">Supplements 5&ndash;7 have full content. Earlier summarized; originals in Drive.</div>
+      <table class="dash"><tr><th>#</th><th>Period</th><th>Milestone</th><th>IRR</th><th>Pipeline</th></tr><tr><td><span class="pill blue">7</span></td><td>Apr 2026</td><td>$25.8M pipeline; construction schedule; Stay-In vs Buyout</td><td>&mdash;</td><td>$25.8M</td></tr><tr><td><span class="pill amber">6</span></td><td>Feb 2025</td><td>Proposal A ($36M); Starwood dropped; LFG lapse</td><td>&mdash;</td><td>60.02%</td></tr><tr><td><span class="pill amber">5</span></td><td>Jan 2025</td><td>Two-stage buyout; Silver Arch; Hudson Bay</td><td>&mdash;</td><td>60.02%</td></tr><tr><td><span class="pill amber">4</span></td><td>Dec 2024</td><td>Buyout formalized; COH approved MUD</td><td>34.4%</td><td>60.02%</td></tr><tr><td><span class="pill gray">3</span></td><td>Nov 2024</td><td>PCS meeting; 5th intermediary</td><td>27.9%</td><td>58.52%</td></tr><tr><td><span class="pill gray">2</span></td><td>Oct 2024</td><td>PCS petition; Medline terminated</td><td>40.2%</td><td>62.11%</td></tr></table>
+      <p class="body-text"><a class="drive-link" href="https://drive.google.com/drive/folders/1Et6HSuoiYidzdaTVGWct4ndli0zupdTI" target="_blank">&#128194; Full Archive</a></p>
     </div>
   </div>
-  <div class="footer-brand">PLUSAdvantage™ 2026 — CONFIDENTIAL | ITP Houston JV Development Status Series | Data Vault</div>
+  <div class="footer-brand">PLUSAdvantage&trade; 2026 &mdash; CONFIDENTIAL | ITP Houston JV Development Status | Data Vault</div>
 </div>
 <script>
 document.getElementById('tabBar').addEventListener('click',function(e){var b=e.target.closest('.tab');if(!b)return;var p=b.getAttribute('data-panel');document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active')});document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});document.getElementById(p).classList.add('active');b.classList.add('active')});
+function toggleSection(el){var body=el.nextElementSibling;if(body.classList.contains('collapsed')){body.classList.remove('collapsed');el.classList.remove('collapsed')}else{body.classList.add('collapsed');el.classList.add('collapsed')}}
+document.querySelectorAll('.toc a').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});
 </script>
 </body>
 </html>
