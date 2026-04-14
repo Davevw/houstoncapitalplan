@@ -13,9 +13,9 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: "data-vault", icon: "📊", label: "Data Vault" },
   { id: "waterfall", icon: "💧", label: "Waterfall" },
   { id: "tax-dashboard", icon: "🏛️", label: "Tax Dashboard" },
+  { id: "data-vault", icon: "📊", label: "Data Vault" },
 ];
 
 interface AdminFooterNavProps {
