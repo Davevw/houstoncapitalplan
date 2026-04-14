@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ExternalLink, Download, FileText } from "lucide-react";
+import { ExternalLink, Download } from "lucide-react";
 import { jvReports } from "@/data/jvReports";
 
 const NAVY = "#1B2A4A";
@@ -7,9 +7,8 @@ const GOLD = "#C9A84C";
 const CREAM = "#F5F0E8";
 
 export default function JVReports() {
-  const [selectedId, setSelectedId] = useState(jvReports[0].id);
   const [htmlContent, setHtmlContent] = useState<string>("");
-  const selected = jvReports.find((r) => r.id === selectedId) || jvReports[0];
+  const selected = jvReports[0];
 
   const viewUrl = `https://drive.google.com/file/d/${selected.driveId}/view`;
   const downloadUrl = `https://drive.google.com/uc?export=download&id=${selected.driveId}`;
