@@ -14,8 +14,9 @@ const MODEL_TABS = [
   { name: "JV Waterfall", desc: "Partner equity, preferred return, profit split" },
   { name: "Cap Events", desc: "Buyout vs. development vs. partial sale scenarios" },
   { name: "Balance Sheet", desc: "Day 1 through full sellout" },
-  { name: "Sensitivity", desc: "Lot price × absorption × cost stress matrix" },
-  { name: "User Instructions", desc: "Copilot activation guide & quick-start prompts" },
+  { name: "Sensitivity", desc: "Lot price × loan rate stress matrix" },
+  { name: "Project P&L", desc: "Full project profit & loss — gross margin, net profit, per-lot breakdown" },
+  { name: "User Instructions", desc: "How to use the model, activate Copilot, quick-start prompts" },
 ];
 
 const COPILOT_PROMPTS = [
@@ -75,7 +76,7 @@ const COPILOT_PROMPTS = [
   {
     tab: "📈 Balance Sheet",
     prompts: [
-      "On the Balance Sheet tab, show me the equity position at Day 1 vs. 50% sellout vs. full buildout as a column chart.",
+      "On the Balance Sheet tab, show me the equity position at Day 1 vs. Month 27 vs. end as a column chart.",
       "What is the equity multiple from Day 1 to full sellout?",
       "How much of the net equity at full buildout belongs to the JV partner?",
     ],
@@ -83,10 +84,22 @@ const COPILOT_PROMPTS = [
   {
     tab: "🔬 Sensitivity",
     prompts: [
-      "On the Sensitivity tab, highlight all cells where the project return falls below 15%. What lot price and absorption rate combinations produce those results?",
-      "Create a heat map of the lot price vs. infrastructure cost sensitivity table — green for strong, yellow for borderline, red for below floor.",
+      "On the Sensitivity tab, highlight all cells where the project shows a loss. What lot price and rate combinations produce those results?",
+      "Create a heat map of the sensitivity table — green for strong, yellow for borderline, red for loss.",
       "What is the minimum lot price the project can absorb and still achieve a 1.5x equity multiple?",
-      "What is the maximum infrastructure cost overrun the project can handle before the funding gap exceeds available equity?",
+      "What is the maximum interest rate the project can handle before net profit turns negative?",
+    ],
+  },
+  {
+    tab: "💵 Project P&L",
+    prompts: [
+      "On the P&L tab, what is the total gross profit and gross margin percentage for the full project?",
+      "Show me the per-lot P&L: revenue, cost, gross margin, and net margin per lot.",
+      "What percentage of total project cost is financing costs vs. hard costs vs. soft costs?",
+      "If lot prices drop 10%, what happens to the net profit and per-lot margin? Update the P&L.",
+      "Create a waterfall chart showing Gross Revenue → Cost of Sales → Gross Profit → Financing Costs → Net Profit.",
+      "What is the breakeven lot price — the minimum price per lot needed to achieve a positive net margin?",
+      "Compare the developer fee to the net profit. What percentage of total profit is the developer fee?",
     ],
   },
   {
@@ -96,6 +109,7 @@ const COPILOT_PROMPTS = [
       "What are the three biggest risks to project returns based on the sensitivity tables? Rank them.",
       "Build an executive summary table pulling the top KPIs from each tab: TDC, LTC, LTV, funding gap, lot count, average lot price, JV partner total return, and equity multiple.",
       "Compare the Assumptions tab inputs to the Pro Forma outputs. Are there any assumptions that seem aggressive relative to market norms?",
+      "Compare the P&L net margin to the JV Waterfall returns. Is the profit distribution consistent with the project economics?",
     ],
   },
   {
@@ -157,7 +171,7 @@ export default function CapitalModelDownload() {
             International Freight Park Houston · HoustonITP_CapitalModel_v1
           </div>
           <div style={{ fontSize: 12, opacity: 0.6, marginTop: 2 }}>
-            10 tabs · live formulas · Copilot-ready
+            11 tabs · live formulas · Copilot-ready
           </div>
         </div>
         <button
@@ -172,7 +186,7 @@ export default function CapitalModelDownload() {
 
       {/* Metadata strip */}
       <div style={{ background: CREAM, padding: "10px 24px", fontSize: 12, color: "#6B7280", borderBottom: "1px solid #E0E4E8" }}>
-        📊 HoustonITP_CapitalModel_v1.xlsx &nbsp;·&nbsp; 10 Tabs &nbsp;·&nbsp; Live Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 14, 2026
+        📊 HoustonITP_CapitalModel_v1.xlsx &nbsp;·&nbsp; 11 Tabs &nbsp;·&nbsp; Live Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 14, 2026
         <br />
         <span style={{ opacity: 0.7 }}>Built by PLUSAdvantage™</span>
       </div>
