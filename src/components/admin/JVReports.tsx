@@ -29,7 +29,7 @@ export default function JVReports() {
   const [selectedId, setSelectedId] = useState(REPORTS[0].id);
   const selected = REPORTS.find((r) => r.id === selectedId) || REPORTS[0];
 
-  const previewUrl = `https://drive.google.com/file/d/${selected.driveFileId}/preview`;
+  const previewUrl = `https://docs.google.com/gview?embedded=true&url=https://drive.google.com/uc?export=download%26id=${selected.driveFileId}`;
   const viewUrl = `https://drive.google.com/file/d/${selected.driveFileId}/view`;
   const downloadUrl = `https://drive.google.com/uc?export=download&id=${selected.driveFileId}`;
 
