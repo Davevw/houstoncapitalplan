@@ -8,48 +8,51 @@ const CREAM = "#F5F0E8";
 const MODEL_TABS = [
   { name: "Cover", desc: "KPI tiles, navigation, color legend" },
   { name: "Assumptions", desc: "All hardcoded inputs — change to model scenarios" },
-  { name: "Dev Budget", desc: "Sources & Uses · Full cost by line item" },
-  { name: "Capital Stack", desc: "LIHTC structure · Bond test · Construction financing" },
-  { name: "Pro Forma", desc: "Unit mix · Revenue · NOI · Stabilized value" },
-  { name: "JV Waterfall", desc: "Land equity · 8% pref · 50/50 profit split" },
-  { name: "Cap Events", desc: "Refi Year 3 · Sale Year 10 · JV partner returns" },
-  { name: "Balance Sheet", desc: "Day 1 · Year 15 LIHTC exit · Net equity" },
-  { name: "Sensitivity", desc: "NOI × Cap rate · DSCR stress matrix" },
+  { name: "Dev Budget", desc: "Full cost by line item" },
+  { name: "Capital Stack", desc: "Sources & Uses, LTC/LTV tests, funding gap" },
+  { name: "Pro Forma", desc: "Lot sales revenue, absorption, cash flow" },
+  { name: "JV Waterfall", desc: "Partner equity, preferred return, profit split" },
+  { name: "Cap Events", desc: "Buyout vs. development vs. partial sale scenarios" },
+  { name: "Balance Sheet", desc: "Day 1 through full sellout" },
+  { name: "Sensitivity", desc: "Lot price × absorption × cost stress matrix" },
+  { name: "User Instructions", desc: "Copilot activation guide & quick-start prompts" },
 ];
 
 const COPILOT_PROMPTS = [
   {
     tab: "📋 Assumptions",
     prompts: [
-      "On the Assumptions tab, what are the key inputs that drive the permanent DSCR? Show me which cells I should change to stress test the debt coverage.",
-      "Walk me through the financing assumptions. What happens to the interest reserve if the bond rate increases to 6%?",
+      "On the Assumptions tab, what are the key inputs that drive the capital stack? Show me which cells I should change to stress test the deal.",
+      "Walk me through the financing assumptions. What happens to the interest reserve if the rate increases to 12%?",
       "List every blue input cell on the Assumptions tab and group them by category.",
+      "What is the total lot count and the average lot price across all phases?",
     ],
   },
   {
     tab: "💰 Dev Budget",
     prompts: [
       "On the Dev Budget tab, what are the top 3 line items by dollar amount? Show me as a bar chart.",
-      "What percentage of total project cost is hard construction costs? Include new construction, air-rights, horizontal, and retail pavilion.",
-      "Create a pie chart of the Sources of Funds showing Senior Loan, LIHTC Equity, JV Land, and City Contribution.",
+      "What percentage of total project cost is infrastructure vs. soft costs vs. financing?",
+      "What is the per-lot development cost? Break it down by horizontal, vertical, and soft costs.",
     ],
   },
   {
     tab: "🏗️ Capital Stack",
     prompts: [
-      "On the Capital Stack tab, does the project pass both the 80% LTC and 65% LTV tests? Explain which constraint governs and why.",
-      "Show me the LIHTC equity calculation step by step — eligible basis through final equity amount.",
-      "What is the monthly interest-only payment during construction? What does that annualize to over 36 months?",
-      "If the credit price drops from $0.92 to $0.88, how does that change the LIHTC equity? Update the Assumptions tab and show me the new number.",
+      "On the Capital Stack tab, what is the current funding gap? How much equity vs. debt is in the stack?",
+      "Does the project pass the 80% LTC and 65% LTV tests? Explain which constraint governs and why.",
+      "If the landfill permit value is reduced from $3M to $1.5M, how does the capital stack change?",
+      "Show me the sources of funds as a pie chart.",
+      "What is the debt-to-equity ratio? How does it compare to typical industrial development deals?",
     ],
   },
   {
     tab: "📊 Pro Forma",
     prompts: [
-      "On the Pro Forma tab, build a waterfall chart showing Gross Rent → Vacancy → Retail Income → EGI → OpEx → NOI.",
-      "What unit type generates the most annual revenue? Show me a comparison.",
-      "If vacancy increases from 5% to 8%, what happens to NOI and the stabilized value? Model it.",
-      "What cap rate would be needed for stabilized value to equal total development cost of $69.7M?",
+      "On the Pro Forma tab, build a waterfall chart showing Gross Revenue → Sales Costs → Development Costs → Net Margin.",
+      "What is the breakeven number of lot sales needed to cover all infrastructure costs?",
+      "If absorption slows from 3 lots/month to 1.5 lots/month, how does the cash flow timeline change?",
+      "What is the total gross revenue at full sellout?",
     ],
   },
   {
@@ -57,58 +60,58 @@ const COPILOT_PROMPTS = [
     prompts: [
       "On the JV Waterfall tab, walk me through the 4-step distribution priority in plain English.",
       "How much does the JV Partner need to receive before any profit split occurs? Include return of capital and accrued preferred.",
-      "If the land contribution were only $2M instead of $2.576M, how does that change the preferred return dollar amount?",
+      "If the partner's equity contribution were only $2M instead of current amount, how does the preferred return change?",
     ],
   },
   {
     tab: "📅 Cap Events",
     prompts: [
-      "On the Cap Events tab, compare the Year 3 refinance vs. Year 10 sale for the JV Partner. Which produces a better return and why?",
-      "Create a timeline chart showing JV Partner cumulative returns from Day 1 through Year 10.",
-      "What is the implied IRR for the JV Partner in the Year 10 sale scenario given a $2.576M land contribution and $16.06M total return?",
-      "If NOI growth is 2% instead of 2.5%, what does the Year 10 sale price become?",
+      "On the Capital Events tab, compare the JV Partner Buyout scenario vs. Full Development. Which produces a better return for the developer and why?",
+      "What is the total buyout cost including accrued preferred return?",
+      "If lot prices increase 15%, what happens to the Full Development scenario return?",
+      "Model a partial sale: sell 50% of lots at current pricing. What's the return to each party?",
     ],
   },
   {
     tab: "📈 Balance Sheet",
     prompts: [
-      "On the Balance Sheet tab, show me the JV Partner equity position at Day 1 vs. Year 15 as a column chart.",
-      "What is the equity multiple from Day 1 to Year 15 for the JV Partner?",
-      "If the permanent loan were paid down by $5M by Year 15, how does that change net equity?",
+      "On the Balance Sheet tab, show me the equity position at Day 1 vs. 50% sellout vs. full buildout as a column chart.",
+      "What is the equity multiple from Day 1 to full sellout?",
+      "How much of the net equity at full buildout belongs to the JV partner?",
     ],
   },
   {
     tab: "🔬 Sensitivity",
     prompts: [
-      "On the Sensitivity tab, highlight all cells where the stabilized value exceeds $65M. What NOI and cap rate combinations produce those results?",
-      "In the DSCR sensitivity table, which interest rate scenarios put the project below 1.15x coverage?",
-      "Create a heat map visualization of the DSCR table — green for strong, yellow for borderline, red for below floor.",
-      "What is the maximum permanent rate this project can absorb and still maintain 1.10x DSCR?",
+      "On the Sensitivity tab, highlight all cells where the project return falls below 15%. What lot price and absorption rate combinations produce those results?",
+      "Create a heat map of the lot price vs. infrastructure cost sensitivity table — green for strong, yellow for borderline, red for below floor.",
+      "What is the minimum lot price the project can absorb and still achieve a 1.5x equity multiple?",
+      "What is the maximum infrastructure cost overrun the project can handle before the funding gap exceeds available equity?",
     ],
   },
   {
     tab: "🔗 Cross-Sheet Analysis",
     prompts: [
-      "Looking across all tabs, summarize the complete capital story for the Houston project in 5 bullet points — suitable for an investor overview.",
+      "Looking across all tabs, summarize the complete capital story for Houston ITP in 5 bullet points — suitable for an investor overview.",
       "What are the three biggest risks to project returns based on the sensitivity tables? Rank them.",
-      "Build an executive summary table pulling the top KPIs from each tab: TDC, LTC, LTV, DSCR, NOI, stabilized value, JV partner total return, and equity multiple.",
+      "Build an executive summary table pulling the top KPIs from each tab: TDC, LTC, LTV, funding gap, lot count, average lot price, JV partner total return, and equity multiple.",
       "Compare the Assumptions tab inputs to the Pro Forma outputs. Are there any assumptions that seem aggressive relative to market norms?",
     ],
   },
   {
     tab: "🎯 Scenario Modeling",
     prompts: [
-      "Model a downside scenario: construction costs increase 10%, rents are 5% lower, and the cap rate is 4.75%. Show me the new DSCR and JV Partner return.",
-      "Model an upside scenario: rents increase 8%, exit cap rate is 4.25%, and NOI grows 3% annually. What does the Year 10 sale return look like?",
-      "Create a data table showing JV Partner Year 10 return across 5 NOI scenarios and 3 exit cap rates.",
+      "Model a downside scenario: infrastructure costs increase 20%, lot prices drop 10%, and absorption slows by 50%. Show me the impact on JV partner return and project IRR.",
+      "Model an upside scenario: lot prices increase 15%, absorption is 4 lots/month, and interest rate drops to 8%. What does the return look like?",
+      "Create a data table showing JV Partner return across 5 lot price scenarios and 3 absorption rate scenarios.",
     ],
   },
   {
     tab: "📊 Charts & Visualization",
     prompts: [
-      "Create a stacked bar chart showing Sources of Funds: Senior Loan, LIHTC Equity, JV Land, City Contribution.",
-      "Build a line chart showing project value growth from stabilization through Year 15 at 2.5% NOI growth.",
-      "Create a waterfall chart of the JV Partner Year 10 distribution: Return of Capital → Preferred Return → 50% Residual → Total.",
+      "Create a stacked bar chart showing Sources of Funds: Senior Loan, JV Equity, Permit Equity, Developer Equity.",
+      "Build a line chart showing cumulative lot sales revenue over the development timeline.",
+      "Create a waterfall chart of the JV Partner distribution: Return of Capital → Preferred Return → Profit Split → Total.",
       "Make a dashboard summary on a new sheet with the top 8 KPIs displayed as cards.",
     ],
   },
@@ -116,7 +119,7 @@ const COPILOT_PROMPTS = [
 
 const COPILOT_TIPS = [
   { tip: "Name the tab first", detail: '"On the Assumptions tab..." gets better results than generic prompts' },
-  { tip: "Reference blue cells", detail: '"Change the blue input in C30 to 6%" — Copilot understands color coding' },
+  { tip: "Reference blue cells", detail: '"Change the blue input in C30 to 12%" — Copilot understands color coding' },
   { tip: "Ask for explanations", detail: '"Explain why the LTV ceiling governs over LTC" — Copilot reads formulas' },
   { tip: "Request new sheets", detail: '"Create a new summary tab with..." — Copilot can build new content' },
   { tip: "Use plain English", detail: '"What\'s the monthly payment?" works as well as "=PMT(...)"' },
@@ -130,8 +133,8 @@ export default function CapitalModelDownload() {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/assets/ThePlaza_CapitalModel_v1.xlsx";
-    link.download = "ThePlaza_CapitalModel_v1.xlsx";
+    link.href = "/assets/HoustonITP_CapitalModel_v1.xlsx";
+    link.download = "HoustonITP_CapitalModel_v1.xlsx";
     link.click();
     console.log("Capital model downloaded at:", new Date().toISOString());
   };
@@ -151,10 +154,10 @@ export default function CapitalModelDownload() {
             <FileSpreadsheet size={22} /> CAPITAL MODEL
           </div>
           <div style={{ fontSize: 13, opacity: 0.8, marginTop: 4 }}>
-            ITP Houston Capital Plan · HoustonCapitalPlan_v1
+            International Freight Park Houston · HoustonITP_CapitalModel_v1
           </div>
           <div style={{ fontSize: 12, opacity: 0.6, marginTop: 2 }}>
-            9 tabs · 106 live formulas · Copilot-ready
+            10 tabs · live formulas · Copilot-ready
           </div>
         </div>
         <button
@@ -169,7 +172,7 @@ export default function CapitalModelDownload() {
 
       {/* Metadata strip */}
       <div style={{ background: CREAM, padding: "10px 24px", fontSize: 12, color: "#6B7280", borderBottom: "1px solid #E0E4E8" }}>
-        📊 HoustonCapitalPlan_v1.xlsx &nbsp;·&nbsp; 9 Tabs &nbsp;·&nbsp; 106 Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 12, 2026
+        📊 HoustonITP_CapitalModel_v1.xlsx &nbsp;·&nbsp; 10 Tabs &nbsp;·&nbsp; Live Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 14, 2026
         <br />
         <span style={{ opacity: 0.7 }}>Built by PLUSAdvantage™</span>
       </div>
