@@ -186,7 +186,7 @@ export default function CapitalModelDownload() {
 
       {/* Metadata strip */}
       <div style={{ background: CREAM, padding: "10px 24px", fontSize: 12, color: "#6B7280", borderBottom: "1px solid #E0E4E8" }}>
-        📊 HoustonITP_CapitalModel_v1.xlsx &nbsp;·&nbsp; 11 Tabs &nbsp;·&nbsp; Live Formulas &nbsp;·&nbsp; Zero Errors &nbsp;·&nbsp; April 14, 2026
+        📊 ITP_Houston_Capital_Model.xlsx &nbsp;·&nbsp; 9 Tabs &nbsp;·&nbsp; 106 Live Formulas &nbsp;·&nbsp; Copilot-Ready &nbsp;·&nbsp; April 14, 2026
         <br />
         <span style={{ opacity: 0.7 }}>Built by PLUSAdvantage™</span>
       </div>
