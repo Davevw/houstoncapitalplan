@@ -37,10 +37,6 @@ export default function JVReports() {
             <span style={{ fontSize: 13, fontWeight: 600, color: NAVY, flex: 1 }}>
               {selected.title} — {selected.month} {selected.year}
             </span>
-            <a href={viewUrl} target="_blank" rel="noopener noreferrer"
-              style={{ display: "inline-flex", alignItems: "center", gap: 6, background: NAVY, color: "white", padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, textDecoration: "none" }}>
-              <ExternalLink size={13} /> Open Full Screen
-            </a>
             <a href={downloadUrl}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: GOLD, color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, textDecoration: "none" }}>
               <Download size={13} /> Download
