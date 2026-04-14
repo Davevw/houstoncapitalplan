@@ -147,8 +147,8 @@ export default function CapitalModelDownload() {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/assets/HoustonITP_CapitalModel_v1.xlsx";
-    link.download = "HoustonITP_CapitalModel_v1.xlsx";
+    link.href = "/assets/ITP_Houston_Capital_Model.xlsx";
+    link.download = "ITP_Houston_Capital_Model.xlsx";
     link.click();
     console.log("Capital model downloaded at:", new Date().toISOString());
   };
