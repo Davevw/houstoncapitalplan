@@ -7,6 +7,7 @@ export interface JVReport {
   badge?: string;
   driveId: string;
   htmlFile: string;
+  subtitle?: string;
 }
 
 export const jvReports: JVReport[] = [
