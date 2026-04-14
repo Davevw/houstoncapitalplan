@@ -1159,8 +1159,18 @@ export default function App(){
           </div>
         </div>
       )}
+      {activeAdminTab === "jv-reports" && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,display:"flex",flexDirection:"column"}}>
+          <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
+            <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close JV Reports</button>
+          </div>
+          <div style={{flex:1,minHeight:0}}>
+            <JVReports/>
+          </div>
+        </div>
+      )}
 
-      {/* Investor Presentation Modal */}
+
       {showPresentation && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"rgba(0,0,0,0.7)",zIndex:9999,display:"flex",alignItems:"center",justifyContent:"center"}} onClick={()=>setShowPresentation(false)}>
           <div style={{background:"white",width:"90%",maxWidth:900,maxHeight:"85vh",borderRadius:16,overflow:"hidden",display:"flex",flexDirection:"column",boxShadow:"0 8px 32px rgba(0,0,0,0.3)"}} onClick={e=>e.stopPropagation()}>
