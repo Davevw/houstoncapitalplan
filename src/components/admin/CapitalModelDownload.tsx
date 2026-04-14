@@ -14,8 +14,6 @@ const MODEL_TABS = [
   { name: "JV Waterfall", desc: "Partner equity, preferred return, profit split" },
   { name: "Cap Events", desc: "Buyout vs. development vs. partial sale scenarios" },
   { name: "Balance Sheet", desc: "Day 1 through full sellout" },
-  { name: "Sensitivity", desc: "Lot price × loan rate stress matrix" },
-  { name: "Project P&L", desc: "Full project profit & loss — gross margin, net profit, per-lot breakdown" },
   { name: "User Instructions", desc: "How to use the model, activate Copilot, quick-start prompts" },
 ];
 
