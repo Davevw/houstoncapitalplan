@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ExternalLink, Download, FileText } from "lucide-react";
 import { jvReports } from "@/data/jvReports";
 
@@ -8,14 +8,21 @@ const CREAM = "#F5F0E8";
 
 export default function JVReports() {
   const [selectedId, setSelectedId] = useState(jvReports[0].id);
+  const [htmlContent, setHtmlContent] = useState<string>("");
   const selected = jvReports.find((r) => r.id === selectedId) || jvReports[0];
 
   const viewUrl = `https://drive.google.com/file/d/${selected.driveId}/view`;
   const downloadUrl = `https://drive.google.com/uc?export=download&id=${selected.driveId}`;
 
+  useEffect(() => {
+    fetch(selected.htmlFile)
+      .then((res) => res.text())
+      .then(setHtmlContent)
+      .catch(() => setHtmlContent("<p>Failed to load report.</p>"));
+  }, [selected.htmlFile]);
+
   return (
     <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
-      {/* Header */}
       <div style={{ background: NAVY, padding: "20px 28px", borderBottom: `3px solid ${GOLD}` }}>
         <h1 style={{ color: "white", fontSize: 22, fontWeight: 700, margin: 0, letterSpacing: 0.5 }}>
           📋 JV Reports
@@ -25,9 +32,7 @@ export default function JVReports() {
         </p>
       </div>
 
-      {/* Split pane */}
       <div style={{ display: "flex", flex: 1, minHeight: 0 }} className="jv-reports-pane">
-        {/* Left panel — report index */}
         <div
           style={{ width: "30%", minWidth: 220, maxWidth: 340, borderRight: "1px solid #E0E4E8", overflowY: "auto", padding: 12, background: "#FAFBFC" }}
           className="jv-reports-left"
@@ -68,9 +73,7 @@ export default function JVReports() {
           })}
         </div>
 
-        {/* Right panel — report viewer */}
         <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }} className="jv-reports-right">
-          {/* Action bar */}
           <div style={{ display: "flex", alignItems: "center", gap: 10, padding: "10px 20px", borderBottom: "1px solid #E0E4E8", background: "white" }}>
             <span style={{ fontSize: 13, fontWeight: 600, color: NAVY, flex: 1 }}>
               {selected.title} — {selected.month} {selected.year}
@@ -85,19 +88,15 @@ export default function JVReports() {
             </a>
           </div>
 
-          {/* Inline rendered report */}
-          <div
-            style={{ flex: 1, padding: 12, background: "#F0F2F5", minHeight: 500, overflowY: "auto" }}
-          >
+          <div style={{ flex: 1, padding: 12, background: "#F0F2F5", minHeight: 500, overflowY: "auto" }}>
             <div
               style={{ background: "white", borderRadius: 8, minHeight: 500, overflow: "hidden" }}
-              dangerouslySetInnerHTML={{ __html: selected.content }}
+              dangerouslySetInnerHTML={{ __html: htmlContent }}
             />
           </div>
         </div>
       </div>
 
-      {/* Footer */}
       <div style={{ padding: "10px 20px", textAlign: "center", fontSize: 10, fontWeight: 700, color: "#7A8B9A", letterSpacing: 1, borderTop: "1px solid #E0E4E8", background: "white" }}>
         PLUSAdvantage™ 2026 — CONFIDENTIAL
       </div>
