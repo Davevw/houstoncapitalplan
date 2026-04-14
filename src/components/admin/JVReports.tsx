@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { ExternalLink, Download } from "lucide-react";
 import { jvReports } from "@/data/jvReports";
 
@@ -47,10 +47,12 @@ export default function JVReports() {
             </a>
           </div>
 
-          <div style={{ flex: 1, padding: 12, background: "#F0F2F5", minHeight: 500, overflowY: "auto" }}>
-            <div
-              style={{ background: "white", borderRadius: 8, minHeight: 500, overflow: "hidden" }}
-              dangerouslySetInnerHTML={{ __html: htmlContent }}
+          <div style={{ flex: 1, background: "#F0F2F5", minHeight: 500 }}>
+            <iframe
+              srcDoc={htmlContent}
+              title={`${selected.title} — ${selected.month} ${selected.year}`}
+              sandbox="allow-scripts"
+              style={{ width: "100%", height: "100%", border: "none", background: "#f4f4f4" }}
             />
           </div>
         </div>
