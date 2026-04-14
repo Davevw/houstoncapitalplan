@@ -27,7 +27,7 @@ export default function JVReports() {
           📋 JV Reports
         </h1>
         <p style={{ color: "rgba(255,255,255,0.6)", fontSize: 12, margin: "4px 0 0", letterSpacing: 0.3 }}>
-          Joint Venture Partner Reports · ITP Houston Capital Plan
+          {selected.subtitle || `Joint Venture Partner Reports · ITP Houston Capital Plan`}
         </p>
       </div>
 
