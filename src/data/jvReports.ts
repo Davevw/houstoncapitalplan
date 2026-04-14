@@ -7,6 +7,7 @@ export interface JVReport {
   badge?: string;
   driveId: string;
   htmlFile: string;
+  subtitle?: string;
 }
 
 export const jvReports: JVReport[] = [
@@ -19,5 +20,6 @@ export const jvReports: JVReport[] = [
     badge: "NEW",
     driveId: "1aOPaPpN-4sjWtWcndmWs0ZLtTwTCwFI9",
     htmlFile: "/assets/jv-report-apr-2026.html",
+    subtitle: "Supplement 7 · $25.8M Pipeline · Kirkwood Crossings",
   },
 ];
