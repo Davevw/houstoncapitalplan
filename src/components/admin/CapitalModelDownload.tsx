@@ -168,7 +168,7 @@ export default function CapitalModelDownload() {
             <FileSpreadsheet size={22} /> CAPITAL MODEL
           </div>
           <div style={{ fontSize: 13, opacity: 0.8, marginTop: 4 }}>
-            International Freight Park Houston · HoustonITP_CapitalModel_v1
+            International Trade Park Houston · HoustonITP_CapitalModel_v1
           </div>
           <div style={{ fontSize: 12, opacity: 0.6, marginTop: 2 }}>
             11 tabs · live formulas · Copilot-ready
