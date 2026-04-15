@@ -61,7 +61,7 @@ export default function JVReports() {
             <iframe
               srcDoc={htmlContent}
               title={`${selected.title} — ${selected.month} ${selected.year}`}
-              sandbox="allow-scripts"
+              sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
               style={{ width: "100%", height: "100%", border: "none", background: "#f4f4f4" }}
             />
           </div>
