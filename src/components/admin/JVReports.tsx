@@ -45,9 +45,9 @@ export default function JVReports() {
               {selected.title} — {selected.month} {selected.year}
             </span>
             <button
-              onClick={handleDownloadDocx}
+              onClick={handleDownloadHtml}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: GOLD, color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
-              <Download size={13} /> Download .docx
+              <Download size={13} /> Download Report
             </button>
           </div>
 
