@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Download } from "lucide-react";
 import { jvReports } from "@/data/jvReports";
-import { asBlob } from "html-docx-js-typescript";
 
 const NAVY = "#1B2A4A";
 const GOLD = "#C9A84C";
@@ -17,20 +16,15 @@ export default function JVReports() {
       .catch(() => setHtmlContent("<p>Failed to load report.</p>"));
   }, [selected.htmlFile]);
 
-  const handleDownloadDocx = async () => {
+  const handleDownloadHtml = () => {
     if (!htmlContent) return;
-    try {
-      const wrapped = `<!DOCTYPE html><html><head><meta charset="utf-8"><style>body{font-family:Arial,sans-serif;}</style></head><body>${htmlContent}</body></html>`;
-      const blob = await asBlob(wrapped, { orientation: "portrait", margins: { top: 720, right: 720, bottom: 720, left: 720 } }) as Blob;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `ITP_Houston_JV_Report_${selected.month}_${selected.year}.docx`;
-      a.click();
-      URL.revokeObjectURL(url);
-    } catch (e) {
-      console.error("DOCX generation failed:", e);
-    }
+    const blob = new Blob([htmlContent], { type: "text/html" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `ITP_Houston_JV_Report_${selected.month}_${selected.year}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -51,9 +45,9 @@ export default function JVReports() {
               {selected.title} — {selected.month} {selected.year}
             </span>
             <button
-              onClick={handleDownloadDocx}
+              onClick={handleDownloadHtml}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: GOLD, color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
-              <Download size={13} /> Download .docx
+              <Download size={13} /> Download Report
             </button>
           </div>
 
