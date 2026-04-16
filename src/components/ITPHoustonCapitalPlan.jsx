@@ -1148,7 +1148,6 @@ export default function App(){
           </div>
         </div>
       )}
-      )}
       {activeAdminTab === "capital-model" && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
@@ -1843,9 +1842,6 @@ const VAULT_CATEGORIES = [
 const FILE_TYPE_COLORS = { pdf: "#E85D75", xlsx: "#2E8B57", docx: "#3D8EC9", pptx: "#C4703E", png: "#D4A84B", zip: "#7A8B9A", jpg: "#D4A84B" };
 
 function DataVaultTab() {
-  const [unlocked,setUnlocked]=useState(false);
-  const [code,setCode]=useState("");
-  const [codeError,setCodeError]=useState(false);
   const [documents, setDocuments] = useState([]);
   const [uploading, setUploading] = useState(null);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -1853,8 +1849,8 @@ function DataVaultTab() {
   const [uploadCategory, setUploadCategory] = useState(null);
 
   useEffect(() => {
-    if (unlocked) fetchDocuments();
-  }, [unlocked]);
+    fetchDocuments();
+  }, []);
 
   async function fetchDocuments() {
     const { data } = await supabase.from("vault_documents").select("*").order("uploaded_at", { ascending: false });
