@@ -1803,7 +1803,7 @@ const VAULT_CATEGORIES = [
   {
     name: "Engineering & Infrastructure", icon: "\ud83c\udfd7\ufe0f",
     docs: [
-      { name: "Site Plan.pdf", desc: "", type: "pdf", placeholder: true },
+      
       { name: "MUD Bond Documentation.pdf", desc: "", type: "pdf", placeholder: true },
       { name: "Environmental Reports.pdf", desc: "", type: "pdf", placeholder: true },
     ]
