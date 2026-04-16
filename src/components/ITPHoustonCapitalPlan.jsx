@@ -1893,6 +1893,13 @@ function DataVaultTab() {
     return data.publicUrl;
   }
 
+  async function handleDelete(doc) {
+    if (!window.confirm(`Delete "${doc.name}"? This cannot be undone.`)) return;
+    await supabase.storage.from("itph-data-vault").remove([doc.file_path]);
+    await supabase.from("vault_documents").delete().eq("id", doc.id);
+    await fetchDocuments();
+  }
+
   const totalDocs = documents.length;
   const totalCategories = VAULT_CATEGORIES.length;
 
