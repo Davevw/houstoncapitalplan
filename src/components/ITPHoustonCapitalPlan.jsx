@@ -1793,13 +1793,6 @@ function SSEWF({m,f,cs,ml,rng}){
 // ═══════════════════════════════════════════════════════════════
 const VAULT_CATEGORIES = [
   {
-    name: "Financial Models", icon: "\ud83d\udcca",
-    docs: [
-      { name: "ITPH Financial Model v9.xlsx", desc: "Complete working financial model with lot schedule, cash flows, equity waterfall", type: "xlsx", placeholder: false },
-      { name: "OPC Breakdown.xlsx", desc: "Opinion of Probable Cost by construction phase", type: "xlsx", placeholder: false },
-    ]
-  },
-  {
     name: "Project Documents", icon: "\ud83d\udccb",
     docs: [
       { name: "Equity Investment Presentation", desc: "Confidential investor presentation — ITP Houston equity opportunity", type: "pdf", placeholder: false },
