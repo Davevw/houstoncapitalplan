@@ -197,10 +197,9 @@ export default function SitePlanTab() {
             <div style={{ fontSize: 11, color: "#7A8B9A", fontWeight: 600, letterSpacing: 0.5, textTransform: "uppercase" }}>
               {zoom > 1 ? "Drag to pan • Scroll to zoom" : "Scroll to zoom in"}
             </div>
-            <div style={{ display: "flex", gap: 4 }}>
+            <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
               <button onClick={() => setZoom(z => Math.max(1, z - 0.25))} style={zoomBtn}>−</button>
-              <div style={{ minWidth: 50, textAlign: "center", padding: "4px 8px", fontSize: 12, fontWeight: 600, color: NAVY }}>{Math.round(zoom * 100)}%</button>
-              </div>
+              <div style={{ minWidth: 50, textAlign: "center", padding: "4px 8px", fontSize: 12, fontWeight: 600, color: NAVY }}>{Math.round(zoom * 100)}%</div>
               <button onClick={() => setZoom(z => Math.min(4, z + 0.25))} style={zoomBtn}>+</button>
               <button onClick={resetView} style={{ ...zoomBtn, fontSize: 11, width: "auto", padding: "4px 10px" }}>Reset</button>
             </div>
