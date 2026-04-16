@@ -1952,9 +1952,14 @@ function DataVaultTab() {
                       {doc.file_size && <span style={{ fontSize: 12, color: "#7A8B9A" }}>{(doc.file_size / 1024).toFixed(0)} KB</span>}
                     </div>
                   </div>
-                  <a href={getDocUrl(doc.file_path)} download style={{ display: "inline-flex", alignItems: "center", gap: 4, border: "1.5px solid " + STEEL, color: TEAL, background: "white", padding: "4px 10px", borderRadius: 6, fontSize: 11, fontWeight: 600, textDecoration: "none", cursor: "pointer" }}>
-                    <Download size={12} /> Download
-                  </a>
+                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+                    <a href={getDocUrl(doc.file_path)} download style={{ display: "inline-flex", alignItems: "center", gap: 4, border: "1.5px solid " + STEEL, color: TEAL, background: "white", padding: "4px 10px", borderRadius: 6, fontSize: 11, fontWeight: 600, textDecoration: "none", cursor: "pointer" }}>
+                      <Download size={12} /> Download
+                    </a>
+                    <button onClick={() => handleDelete(doc)} title="Delete" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1.5px solid #E85D75", color: "#E85D75", background: "white", padding: 4, borderRadius: 6, cursor: "pointer", height: 26, width: 26 }}>
+                      <X size={12} />
+                    </button>
+                  </div>
                 </div>
               ))}
 
