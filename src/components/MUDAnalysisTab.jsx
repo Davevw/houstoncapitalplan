@@ -282,7 +282,8 @@ export default function MUDAnalysisTab() {
           MUD bonds reimburse infrastructure costs based on each lot's share of eligible acreage within the district.
           The total MUD principal of $23.40M is allocated across {PROJECT.mudEligibleAcres} eligible acres. Each lot's
           MUD share is calculated as: (Lot Eligible Acres / {PROJECT.mudEligibleAcres}) × $23.40M. The first payout of
-          50% occurs at month 24. The remaining 50% is paid over subsequent months as bonds are issued and sold.
+          50% occurs at Month {PROJECT.mudFirstPayoutMonth}. The final payout of the remaining 50% occurs at Month {PROJECT.mudFinalPayoutMonth}.
+          The total payout window is {PROJECT.mudFinalPayoutMonth - PROJECT.mudFirstPayoutMonth} months.
         </NoteCard>
         <NoteCard title="Note 3 — MUD Bond Rate">
           MUD bonds carry an 8.0% interest rate. This rate is set by the bond market at the time of issuance and
