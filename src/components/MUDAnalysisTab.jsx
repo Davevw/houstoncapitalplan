@@ -88,10 +88,10 @@ const COLUMNS = [
   { key: "eligibleAcres", label: "Eligible Acres", numeric: true, w: 100, fmt: (v) => v.toFixed(2) },
   { key: "mudSharePct", label: "MUD Share %", numeric: true, w: 100, fmt: (v) => v.toFixed(2) + "%" },
   { key: "mudTotal", label: "Total MUD Allocation", numeric: true, w: 150, fmt: fmtMoney },
-  { key: "mudFirst", label: "First Payout (50%)", numeric: true, w: 140, fmt: fmtMoney },
-  { key: "mudRemaining", label: "Remaining (50%)", numeric: true, w: 140, fmt: fmtMoney },
+  { key: "mudFirst", label: "First Payout (50%) — Mo 24", numeric: true, w: 160, fmt: fmtMoney },
+  { key: "mudFinal", label: "Final Payout (50%) — Mo 36", numeric: true, w: 160, fmt: fmtMoney },
   { key: "saleMonth", label: "Sale Month", numeric: true, w: 100 },
-  { key: "status", label: "MUD Status", numeric: false, w: 130 },
+  { key: "status", label: "MUD Status", numeric: false, w: 150 },
 ];
 
 export default function MUDAnalysisTab() {
@@ -104,7 +104,10 @@ export default function MUDAnalysisTab() {
       // For MUD allocation, eligible acres = lot.acres (all 30 lots are allocated based on acreage)
       const eligibleAcres = lot.acres;
       const mudSharePct = (lot.acres / PROJECT.mudEligibleAcres) * 100;
-      const sellsAfter = lot.saleMonth >= PROJECT.mudFirstPayoutMonth;
+      const status =
+        c.mudStatus === "post-final" ? "Full payout available" :
+        c.mudStatus === "post-first" ? "Eligible — final Mo 36" :
+        "Eligible — first Mo 24";
       return {
         id: lot.id,
         type: lot.type,
@@ -113,10 +116,10 @@ export default function MUDAnalysisTab() {
         mudSharePct,
         mudTotal: c.mudShareTotal,
         mudFirst: c.mudInitialPayout,
-        mudRemaining: c.mudRemainingPayout,
+        mudFinal: c.mudFinalPayout,
         saleMonth: lot.saleMonth,
-        status: sellsAfter ? "Eligible" : "Pre-trigger",
-        sellsAfter,
+        status,
+        mudStatusKey: c.mudStatus,
       };
     });
   }, []);
@@ -142,9 +145,9 @@ export default function MUDAnalysisTab() {
         eligibleAcres: acc.eligibleAcres + r.eligibleAcres,
         mudTotal: acc.mudTotal + r.mudTotal,
         mudFirst: acc.mudFirst + r.mudFirst,
-        mudRemaining: acc.mudRemaining + r.mudRemaining,
+        mudFinal: acc.mudFinal + r.mudFinal,
       }),
-      { acres: 0, eligibleAcres: 0, mudTotal: 0, mudFirst: 0, mudRemaining: 0 }
+      { acres: 0, eligibleAcres: 0, mudTotal: 0, mudFirst: 0, mudFinal: 0 }
     );
   }, [rows]);
 
@@ -171,13 +174,14 @@ export default function MUDAnalysisTab() {
 
       {/* KPI Cards */}
       <div style={{
-        display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+        display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
         gap: 14, marginBottom: 28,
       }}>
         <KpiCard label="Total MUD Principal" value={fmtCompactM(PROJECT.mudReimbursement)} sub="potential up to $35M" />
         <KpiCard label="MUD Bond Rate" value={`${(PROJECT.mudBondRate * 100).toFixed(1)}%`} />
-        <KpiCard label="First Payout" value={`Month ${PROJECT.mudFirstPayoutMonth}`} />
-        <KpiCard label="Initial Payout" value={`${(PROJECT.mudInitialPayoutPct * 100).toFixed(0)}%`} sub="of eligible MUD share" />
+        <KpiCard label="First Payout" value={`Month ${PROJECT.mudFirstPayoutMonth}`} sub="50% of MUD share" />
+        <KpiCard label="Final Payout" value={`Month ${PROJECT.mudFinalPayoutMonth}`} sub="remaining 50%" />
+        <KpiCard label="Total Payout Window" value={`${PROJECT.mudFinalPayoutMonth - PROJECT.mudFirstPayoutMonth} months`} sub={`Month ${PROJECT.mudFirstPayoutMonth}–${PROJECT.mudFinalPayoutMonth}`} />
       </div>
 
       {/* Allocation Table */}
@@ -209,38 +213,44 @@ export default function MUDAnalysisTab() {
             </tr>
           </thead>
           <tbody>
-            {sortedRows.map((r, i) => (
-              <tr
-                key={r.id}
-                style={{
-                  background: i % 2 === 0 ? "white" : "#FAFAFA",
-                  borderLeft: r.sellsAfter ? `3px solid ${POS}` : "3px solid transparent",
-                }}
-              >
-                {COLUMNS.map((col) => {
-                  const raw = r[col.key];
-                  const display = col.fmt ? col.fmt(raw) : raw;
-                  const isStatus = col.key === "status";
-                  return (
-                    <td
-                      key={col.key}
-                      style={{
-                        padding: "9px 10px",
-                        textAlign: col.numeric ? "right" : "left",
-                        borderBottom: "1px solid #EEE",
-                        borderRight: "1px solid #F2F2F2",
-                        fontFamily: col.numeric ? "Georgia,serif" : "Arial,sans-serif",
-                        fontVariantNumeric: "tabular-nums",
-                        color: isStatus ? (r.sellsAfter ? POS : "#A87A2A") : NAVY,
-                        fontWeight: isStatus ? 700 : 500,
-                      }}
-                    >
-                      {display}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
+            {sortedRows.map((r, i) => {
+              const eligible = r.mudStatusKey !== "pre-first";
+              const statusColor =
+                r.mudStatusKey === "post-final" ? POS :
+                r.mudStatusKey === "post-first" ? "#3D8EC9" : "#A87A2A";
+              return (
+                <tr
+                  key={r.id}
+                  style={{
+                    background: i % 2 === 0 ? "white" : "#FAFAFA",
+                    borderLeft: eligible ? `3px solid ${POS}` : "3px solid transparent",
+                  }}
+                >
+                  {COLUMNS.map((col) => {
+                    const raw = r[col.key];
+                    const display = col.fmt ? col.fmt(raw) : raw;
+                    const isStatus = col.key === "status";
+                    return (
+                      <td
+                        key={col.key}
+                        style={{
+                          padding: "9px 10px",
+                          textAlign: col.numeric ? "right" : "left",
+                          borderBottom: "1px solid #EEE",
+                          borderRight: "1px solid #F2F2F2",
+                          fontFamily: col.numeric ? "Georgia,serif" : "Arial,sans-serif",
+                          fontVariantNumeric: "tabular-nums",
+                          color: isStatus ? statusColor : NAVY,
+                          fontWeight: isStatus ? 700 : 500,
+                        }}
+                      >
+                        {display}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
             {/* Totals row */}
             <tr style={{ background: CREAM, fontWeight: 800, borderTop: `2px solid ${NAVY}` }}>
               <td style={{ padding: "12px 10px", color: NAVY }}>TOTAL</td>
@@ -250,7 +260,7 @@ export default function MUDAnalysisTab() {
               <td style={{ padding: "12px 10px", textAlign: "right", fontFamily: "Georgia,serif" }}>100.00%</td>
               <td style={{ padding: "12px 10px", textAlign: "right", fontFamily: "Georgia,serif" }}>{fmtMoney(totals.mudTotal)}</td>
               <td style={{ padding: "12px 10px", textAlign: "right", fontFamily: "Georgia,serif" }}>{fmtMoney(totals.mudFirst)}</td>
-              <td style={{ padding: "12px 10px", textAlign: "right", fontFamily: "Georgia,serif" }}>{fmtMoney(totals.mudRemaining)}</td>
+              <td style={{ padding: "12px 10px", textAlign: "right", fontFamily: "Georgia,serif" }}>{fmtMoney(totals.mudFinal)}</td>
               <td colSpan={2}></td>
             </tr>
           </tbody>
@@ -272,7 +282,8 @@ export default function MUDAnalysisTab() {
           MUD bonds reimburse infrastructure costs based on each lot's share of eligible acreage within the district.
           The total MUD principal of $23.40M is allocated across {PROJECT.mudEligibleAcres} eligible acres. Each lot's
           MUD share is calculated as: (Lot Eligible Acres / {PROJECT.mudEligibleAcres}) × $23.40M. The first payout of
-          50% occurs at month 24. The remaining 50% is paid over subsequent months as bonds are issued and sold.
+          50% occurs at Month {PROJECT.mudFirstPayoutMonth}. The final payout of the remaining 50% occurs at Month {PROJECT.mudFinalPayoutMonth}.
+          The total payout window is {PROJECT.mudFinalPayoutMonth - PROJECT.mudFirstPayoutMonth} months.
         </NoteCard>
         <NoteCard title="Note 3 — MUD Bond Rate">
           MUD bonds carry an 8.0% interest rate. This rate is set by the bond market at the time of issuance and
