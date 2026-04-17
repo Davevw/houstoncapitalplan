@@ -7,24 +7,27 @@ const STEEL = "#E0E4E8";
 const POS = "#2E8B57";
 const NEG = "#CC0000";
 
-// ---------- Project constants (v4 spec) ----------
-const PROJECT = {
+// ---------- Project constants (v5 spec) ----------
+export const PROJECT = {
   totalLots: 30,
   totalSellableAcres: 99.58,
 
   // Capital stack (70/30 debt/equity on both layers)
-  acquisitionCost: 15_000_000, // $13M partner buyout + $2M fees/IR
-  horizontalCost: 24_991_700,  // Hard $23.59M + Soft $1.40M (model v9)
+  acquisitionCost: 15_000_000,
+  horizontalCost: 24_991_700,
   debtPct: 0.70,
   equityPct: 0.30,
 
-  // MUD
+  // MUD (updated v5)
   mudReimbursement: 23_400_000,
-  mudTriggerMonth: 12,
+  mudFirstPayoutMonth: 24,
+  mudInitialPayoutPct: 0.50,
+  mudBondRate: 0.08,
+  mudEligibleAcres: 44.08,
 
-  // Per-lot mechanics
+  // Per-lot mechanics (escrow now 3% of gross)
   sellingCostPct: 0.05,
-  buyerEscrowPerLot: 25_000,
+  escrowPctOfGross: 0.03,
 
   // Revolver
   revolverCapacity: 5_000_000,
@@ -59,14 +62,14 @@ const fmtCompact = (n) => {
   return `$${Math.round(n).toLocaleString()}`;
 };
 
-function computeLot(lot, allLots) {
+export function computeLot(lot, allLots) {
   const sf = Math.round(lot.acres * 43560);
   const grossValue = lot.grossValue ?? Math.round(sf * lot.asking);
   const share = lot.acres / PROJECT.totalSellableAcres;
 
   const sellingCosts = Math.round(grossValue * PROJECT.sellingCostPct);
   const netSaleProceeds = grossValue - sellingCosts;
-  const buyerEscrow = PROJECT.buyerEscrowPerLot;
+  const buyerEscrow = Math.round(grossValue * PROJECT.escrowPctOfGross);
 
   const acqDebtRelease = Math.round(PROJECT.acqDebt * share);
   const horizDebtRelease = Math.round(PROJECT.horizDebt * share);
@@ -74,22 +77,26 @@ function computeLot(lot, allLots) {
   const residualPreMud =
     netSaleProceeds + buyerEscrow - acqDebtRelease - horizDebtRelease;
 
-  const eligibleAcres = (allLots || [])
-    .filter((l) => l.saleMonth >= PROJECT.mudTriggerMonth)
-    .reduce((a, l) => a + l.acres, 0);
+  // MUD: every lot is allocated based on acreage share of total eligible acres
+  const eligibleAcres = PROJECT.mudEligibleAcres;
+  const mudShareTotal = Math.round(
+    PROJECT.mudReimbursement * (lot.acres / eligibleAcres)
+  );
+  const mudInitialPayout = Math.round(mudShareTotal * PROJECT.mudInitialPayoutPct);
+  const mudRemainingPayout = mudShareTotal - mudInitialPayout;
 
-  const mudEligible = lot.saleMonth >= PROJECT.mudTriggerMonth;
-  const mudShare = mudEligible && eligibleAcres > 0
-    ? Math.round(PROJECT.mudReimbursement * (lot.acres / eligibleAcres))
-    : 0;
+  // Status: lot sells before/after first MUD payout (Month 24)
+  const sellsAfterTrigger = lot.saleMonth >= PROJECT.mudFirstPayoutMonth;
 
-  const residualPostMud = residualPreMud + mudShare;
+  // Residual to equity uses initial payout (50%) only — remaining 50% follows later
+  const residualPostMud = residualPreMud + mudInitialPayout;
   const verticalContext = Math.round(PROJECT.horizontalCost * share);
 
   return {
     sf, grossValue, share, sellingCosts, netSaleProceeds, buyerEscrow,
     acqDebtRelease, horizDebtRelease, residualPreMud,
-    eligibleAcres, mudEligible, mudShare, residualPostMud, verticalContext,
+    eligibleAcres, mudShareTotal, mudInitialPayout, mudRemainingPayout,
+    sellsAfterTrigger, residualPostMud, verticalContext,
     marginPctPostMud: grossValue > 0 ? (residualPostMud / grossValue) * 100 : 0,
   };
 }
@@ -149,6 +156,12 @@ export default function LotDetailPanel({ lot, allLots, onClose }) {
   const preMudColor = c.residualPreMud >= 0 ? NAVY : NEG;
   const postMudColor = c.residualPostMud >= 0 ? POS : NEG;
 
+  const escrowPctLabel = `${(PROJECT.escrowPctOfGross * 100).toFixed(0)}% of gross`;
+  const mudStatusLabel = c.sellsAfterTrigger
+    ? "✓ Eligible — payout available"
+    : `⏳ Eligible — payout begins Month ${PROJECT.mudFirstPayoutMonth}`;
+  const mudStatusColor = c.sellsAfterTrigger ? POS : "#A87A2A";
+
   return (
     <div style={panelStyle}>
       <Header lot={lot} c={c} onClose={onClose} />
@@ -160,7 +173,7 @@ export default function LotDetailPanel({ lot, allLots, onClose }) {
           <Row label="Gross Sale Price" sub={`${c.sf.toLocaleString()} SF × $${lot.asking}/SF`} value={fmt(c.grossValue)} bold />
           <Row label="Less: Selling Costs (5%)" value={fmt(-c.sellingCosts)} color={NEG} />
           <Row label="Net Sale Proceeds" value={fmt(c.netSaleProceeds)} bold />
-          <Row label="Plus: Buyer Escrow ($25K)" value={fmt(c.buyerEscrow)} color={POS} divider />
+          <Row label={`Plus: Buyer Escrow (${escrowPctLabel})`} value={fmt(c.buyerEscrow)} color={POS} divider />
           <Row label="Less: Acquisition Debt Release" sub={`$10.5M × ${sharePct}%`} value={fmt(-c.acqDebtRelease)} color={NEG} />
           <Row label="Less: Horizontal Debt Release" sub={`$17.49M × ${sharePct}%`} value={fmt(-c.horizDebtRelease)} color={NEG} divider />
           <Row label="Residual (Pre-MUD)" value={fmt(c.residualPreMud)} color={preMudColor} bold big />
@@ -171,33 +184,46 @@ export default function LotDetailPanel({ lot, allLots, onClose }) {
             marginTop: 8, padding: "8px 10px", borderLeft: `3px solid ${NEG}`,
             background: "#FFF5F5", fontSize: 11, color: "#7A2A2A", lineHeight: 1.5,
           }}>
-            ⚠ Early-close lot — gap funded by revolver until MUD begins flowing (Month {PROJECT.mudTriggerMonth}).
+            ⚠ Early-close lot — gap funded by revolver until MUD begins flowing (Month {PROJECT.mudFirstPayoutMonth}).
           </div>
         )}
 
         {/* Section 2: MUD Timing & Post-MUD */}
-        <SectionHeader right={`Trigger: Month ${PROJECT.mudTriggerMonth}`}>MUD Reimbursement</SectionHeader>
+        <SectionHeader right={`First Payout: Month ${PROJECT.mudFirstPayoutMonth}`}>MUD Reimbursement</SectionHeader>
         <div style={{ borderTop: `1.5px solid ${NAVY}`, borderBottom: `1px solid ${STEEL}`, padding: "4px 0" }}>
           <Row label="Total MUD Principal" value={fmtCompact(PROJECT.mudReimbursement)} />
+          <Row label="Initial Payout" value={`${(PROJECT.mudInitialPayoutPct * 100).toFixed(0)}% of MUD Share`} />
+          <Row label="MUD Bond Rate" value={`${(PROJECT.mudBondRate * 100).toFixed(1)}%`} divider />
           <Row label="This lot's sale month" value={`Month ${lot.saleMonth}`} />
           <Row
             label="MUD Status"
-            value={c.mudEligible ? "✓ Eligible" : "⚠ Pre-trigger"}
-            color={c.mudEligible ? POS : "#A87A2A"}
+            value={mudStatusLabel}
+            color={mudStatusColor}
             divider
           />
           <Row
-            label="MUD Share"
-            sub={c.mudEligible ? `$23.4M × ${lot.acres} / ${c.eligibleAcres.toFixed(2)} eligible ac` : "Lot closes before MUD trigger"}
-            value={fmt(c.mudShare)}
-            color={c.mudEligible ? POS : "#94A3B0"}
+            label="Total MUD Share"
+            sub={`$23.4M × ${lot.acres} ac / ${PROJECT.mudEligibleAcres} eligible ac`}
+            value={fmt(c.mudShareTotal)}
+            color={POS}
+          />
+          <Row
+            label={`Initial Payout (${(PROJECT.mudInitialPayoutPct * 100).toFixed(0)}%)`}
+            sub={`Available Month ${PROJECT.mudFirstPayoutMonth}`}
+            value={fmt(c.mudInitialPayout)}
+            color={POS}
+          />
+          <Row
+            label="Remaining (over subsequent months)"
+            value={fmt(c.mudRemainingPayout)}
+            color="#7A8B9A"
             divider
           />
           <Row label="Residual (Pre-MUD)" value={fmt(c.residualPreMud)} color={preMudColor} />
-          <Row label="Plus: MUD Reimbursement" value={fmt(c.mudShare)} color={c.mudShare > 0 ? POS : "#94A3B0"} divider />
+          <Row label="Plus: MUD Initial Payout (50%)" value={fmt(c.mudInitialPayout)} color={POS} divider />
           <Row
             label="Residual to Equity + Partners"
-            sub={`${c.marginPctPostMud.toFixed(1)}% of gross`}
+            sub={`${c.marginPctPostMud.toFixed(1)}% of gross · excl. remaining 50% MUD`}
             value={fmt(c.residualPostMud)}
             color={postMudColor}
             bold big
@@ -236,7 +262,7 @@ export default function LotDetailPanel({ lot, allLots, onClose }) {
           </div>
           <Row label="Lot's pro-rata share of hard + soft" value={fmt(c.verticalContext)} bold />
           <div style={{ fontSize: 10.5, color: "#7A8B9A", marginTop: 6, lineHeight: 1.5 }}>
-            Buyer funds their own vertical build separately based on their program ($25K escrow partially offsets horizontal).
+            Buyer funds their own vertical build separately based on their program (3% escrow partially offsets horizontal).
           </div>
         </div>
       </div>
