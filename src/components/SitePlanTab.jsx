@@ -293,33 +293,16 @@ export default function SitePlanTab() {
 
         {/* Sidebar: details + stats */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {/* Selected parcel */}
+          {/* Selected parcel detail panel */}
           {selected ? (
-            <div style={{ background: "white", border: `1px solid ${STEEL}`, borderRadius: 12, padding: 18, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#7A8B9A", letterSpacing: 1, textTransform: "uppercase" }}>Parcel {selected.id}</div>
-                  <div style={{ fontSize: 20, fontWeight: 700, color: NAVY, fontFamily: "Georgia,serif", marginTop: 2 }}>{selected.label}</div>
-                </div>
-                <button onClick={() => setSelectedId(null)} style={{ background: "none", border: "none", cursor: "pointer", color: "#7A8B9A", fontSize: 18, padding: 0 }}>✕</button>
-              </div>
-              <div style={{ display: "inline-block", padding: "4px 10px", borderRadius: 999, background: USE_COLORS[selected.use].fill, color: selected.use === "Industrial" ? NAVY : "white", fontSize: 11, fontWeight: 700, marginBottom: 12 }}>
-                {USE_COLORS[selected.use].label}
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
-                <div>
-                  <div style={{ fontSize: 10, color: "#7A8B9A", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>Acres</div>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: NAVY }}>{selected.acres.toFixed(2)}</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: 10, color: "#7A8B9A", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>% of Site</div>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: NAVY }}>{((selected.acres / totalAcres) * 100).toFixed(1)}%</div>
-                </div>
-              </div>
-              <div style={{ fontSize: 13, color: "#5A6B7A", lineHeight: 1.5, paddingTop: 10, borderTop: `1px solid ${STEEL}` }}>
-                {selected.note}
-              </div>
-            </div>
+            <LotDetailPanel
+              lot={{
+                ...selected,
+                ...(LOT_BY_ID[selected.id] || {}),
+                use: selected.use,
+              }}
+              onClose={() => setSelectedId(null)}
+            />
           ) : (
             <div style={{ background: "white", border: `1px dashed ${STEEL}`, borderRadius: 12, padding: 24, textAlign: "center", color: "#7A8B9A", fontSize: 13 }}>
               Click any parcel marker on the map to see details
