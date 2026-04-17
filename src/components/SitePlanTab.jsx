@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import siteMapImg from "@/assets/itph-site-map.png";
 import LotDetailPanel from "./LotDetailPanel";
+import SiteCompositionTable from "./SiteCompositionTable";
 
 // Lot Schedule data — kept in sync with src/data/projectData.js LOTS
 const LOT_SCHEDULE = [
@@ -312,27 +313,11 @@ export default function SitePlanTab() {
 
           {/* Stats */}
           <div style={{ background: "white", border: `1px solid ${STEEL}`, borderRadius: 12, padding: 18, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: "#7A8B9A", letterSpacing: 1, textTransform: "uppercase", marginBottom: 12 }}>Site Composition</div>
-            <div style={{ fontSize: 28, fontWeight: 700, color: NAVY, fontFamily: "Georgia,serif", marginBottom: 4 }}>{totalAcres} <span style={{ fontSize: 14, color: "#7A8B9A", fontWeight: 500 }}>total acres</span></div>
-            <div style={{ display: "flex", height: 8, borderRadius: 4, overflow: "hidden", marginTop: 12, marginBottom: 14 }}>
-              {Object.entries(USE_COLORS).map(([key, cfg]) => (
-                <div key={key} style={{ width: `${(cfg.totalAcres / totalAcres) * 100}%`, background: cfg.fill }} title={`${cfg.label}: ${cfg.totalAcres} ac`} />
-              ))}
+            <div style={{ fontSize: 11, fontWeight: 700, color: "#7A8B9A", letterSpacing: 1, textTransform: "uppercase", marginBottom: 4 }}>Site Composition</div>
+            <div style={{ fontSize: 22, fontWeight: 700, color: NAVY, fontFamily: "Georgia,serif", marginBottom: 14 }}>
+              {totalAcres} <span style={{ fontSize: 13, color: "#7A8B9A", fontWeight: 500 }}>total acres · 30 lots</span>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-              {Object.entries(USE_COLORS).map(([key, cfg]) => (
-                <div key={key} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <span style={{ width: 12, height: 12, borderRadius: 2, background: cfg.fill, border: "1px solid rgba(0,0,0,0.1)" }} />
-                    <span style={{ color: NAVY, fontWeight: 600 }}>{cfg.label}</span>
-                  </div>
-                  <div style={{ color: "#5A6B7A", fontVariantNumeric: "tabular-nums" }}>
-                    <span style={{ fontWeight: 700, color: NAVY }}>{cfg.totalAcres}</span> ac
-                    <span style={{ marginLeft: 6, fontSize: 11, color: "#94A3B0" }}>({((cfg.totalAcres / totalAcres) * 100).toFixed(0)}%)</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            <SiteCompositionTable lots={LOT_SCHEDULE} compact />
           </div>
         </div>
       </div>
