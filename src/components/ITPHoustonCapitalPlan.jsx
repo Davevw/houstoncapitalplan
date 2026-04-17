@@ -1098,7 +1098,7 @@ export default function App(){
               </button>
               {showAdminMenu && isAdminUnlocked() && (
                 <div style={{position:"absolute",right:0,top:"100%",background:"white",borderRadius:"0 0 8px 8px",boxShadow:"0 8px 24px rgba(0,0,0,0.2)",minWidth:180,zIndex:9999,overflow:"hidden"}}>
-                  {[{id:"jv-reports",icon:"📋",label:"JV Reports"},{id:"waterfall",icon:"💧",label:"Waterfall"},{id:"tax-dashboard",icon:"🏛️",label:"Tax Dashboard"},{id:"capital-model",icon:"📈",label:"Capital Model"},{id:"data-vault",icon:"📊",label:"Data Vault"},{id:"legal-compliance",icon:"⚖️",label:"Legal & Compliance"}].map(item=>(
+                  {[{id:"jv-reports",icon:"📋",label:"JV Reports"},{id:"waterfall",icon:"💧",label:"Waterfall"},{id:"tax-dashboard",icon:"🏛️",label:"Tax Dashboard"},{id:"capital-model",icon:"📈",label:"Capital Model"},{id:"data-vault",icon:"📊",label:"Data Vault"}].map(item=>(
                     <button key={item.id} onClick={()=>{setActiveAdminTab(item.id); setShowAdminMenu(false);}} style={{display:"flex",alignItems:"center",gap:8,width:"100%",padding:"12px 16px",border:"none",background:activeAdminTab===item.id?"#F0F6F8":"white",color:NAVY,fontSize:13,fontWeight:activeAdminTab===item.id?700:500,cursor:"pointer",textAlign:"left",transition:"background 0.15s"}}
                       onMouseEnter={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="#F7F9FB"}}
                       onMouseLeave={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="white"}}
@@ -1170,16 +1170,6 @@ export default function App(){
           </div>
           <div style={{flex:1,minHeight:0}}>
             <JVReports/>
-          </div>
-        </div>
-      )}
-      {activeAdminTab === "legal-compliance" && (
-        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
-          <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
-            <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Legal & Compliance</button>
-          </div>
-          <div style={{maxWidth:1200,margin:"0 auto",padding:"24px 32px"}}>
-            <LegalComplianceTab/>
           </div>
         </div>
       )}
@@ -2019,6 +2009,11 @@ function DataVaultTab() {
           e.target.value = "";
         }}
       />
+
+      {/* Legal & Compliance section embedded in Data Vault */}
+      <div style={{ marginTop: 32, paddingTop: 24, borderTop: "2px solid #E0E4E8" }}>
+        <LegalComplianceTab />
+      </div>
 
       <div style={{ textAlign: "center", marginTop: 32, padding: 16, fontSize: 11, color: "#7A8B9A", borderTop: "1px solid #E0E4E8" }}>
         <div>Documents are confidential. Distribution requires written authorization.</div>
