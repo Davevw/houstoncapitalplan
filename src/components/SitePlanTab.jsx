@@ -1,5 +1,41 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import siteMapImg from "@/assets/itph-site-map.png";
+import LotDetailPanel from "./LotDetailPanel";
+
+// Lot Schedule data — kept in sync with src/data/projectData.js LOTS
+const LOT_SCHEDULE = [
+  {id:1,type:"Industrial",acres:3.88,asking:7.25,saleMonth:14},
+  {id:2,type:"Retail",acres:1.4,asking:15,saleMonth:13},
+  {id:3,type:"Retail",acres:1.2,asking:15,saleMonth:9},
+  {id:4,type:"Retail",acres:1.2,asking:15,saleMonth:14},
+  {id:5,type:"Industrial",acres:6.4,asking:6.5,saleMonth:8},
+  {id:6,type:"Industrial",acres:4.9,asking:6.5,saleMonth:11},
+  {id:7,type:"Industrial",acres:3.3,asking:15,saleMonth:8},
+  {id:8,type:"Retail",acres:1.3,asking:7,saleMonth:7},
+  {id:9,type:"Industrial",acres:3.1,asking:6.5,saleMonth:7},
+  {id:10,type:"Industrial",acres:2.4,asking:6.5,saleMonth:7},
+  {id:11,type:"Industrial",acres:1.8,asking:6.5,saleMonth:7},
+  {id:12,type:"Industrial",acres:1.8,asking:6.5,saleMonth:7},
+  {id:13,type:"Multifamily",acres:11.8,asking:6.5,saleMonth:7},
+  {id:14,type:"Multifamily",acres:13.2,asking:7.5,saleMonth:14},
+  {id:15,type:"Multifamily",acres:11.2,asking:7.5,saleMonth:5},
+  {id:16,type:"Multifamily",acres:12.3,asking:7.5,saleMonth:17},
+  {id:17,type:"Retail",acres:1.2,asking:15,saleMonth:7},
+  {id:18,type:"Retail",acres:1.2,asking:15,saleMonth:22},
+  {id:19,type:"Retail",acres:2.0,asking:15,saleMonth:12},
+  {id:20,type:"Retail",acres:1.4,asking:15,saleMonth:10},
+  {id:21,type:"Retail",acres:1.1,asking:15,saleMonth:15},
+  {id:22,type:"Retail",acres:1.2,asking:15,saleMonth:7},
+  {id:23,type:"Retail",acres:2.0,asking:15,saleMonth:16},
+  {id:24,type:"Retail",acres:1.2,asking:15,saleMonth:15},
+  {id:25,type:"Retail",acres:1.4,asking:15,saleMonth:16},
+  {id:26,type:"Retail",acres:1.2,asking:15,saleMonth:18},
+  {id:27,type:"Retail",acres:1.0,asking:15,saleMonth:19},
+  {id:28,type:"Retail",acres:1.0,asking:15,saleMonth:20},
+  {id:29,type:"Retail",acres:1.0,asking:15,saleMonth:7},
+  {id:30,type:"Retail",acres:1.5,asking:15,saleMonth:5},
+];
+const LOT_BY_ID = Object.fromEntries(LOT_SCHEDULE.map(l => [l.id, l]));
 
 const NAVY = "#0B3D5C";
 const TEAL = "#0B4C72";
@@ -257,33 +293,16 @@ export default function SitePlanTab() {
 
         {/* Sidebar: details + stats */}
         <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-          {/* Selected parcel */}
+          {/* Selected parcel detail panel */}
           {selected ? (
-            <div style={{ background: "white", border: `1px solid ${STEEL}`, borderRadius: 12, padding: 18, boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12 }}>
-                <div>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#7A8B9A", letterSpacing: 1, textTransform: "uppercase" }}>Parcel {selected.id}</div>
-                  <div style={{ fontSize: 20, fontWeight: 700, color: NAVY, fontFamily: "Georgia,serif", marginTop: 2 }}>{selected.label}</div>
-                </div>
-                <button onClick={() => setSelectedId(null)} style={{ background: "none", border: "none", cursor: "pointer", color: "#7A8B9A", fontSize: 18, padding: 0 }}>✕</button>
-              </div>
-              <div style={{ display: "inline-block", padding: "4px 10px", borderRadius: 999, background: USE_COLORS[selected.use].fill, color: selected.use === "Industrial" ? NAVY : "white", fontSize: 11, fontWeight: 700, marginBottom: 12 }}>
-                {USE_COLORS[selected.use].label}
-              </div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
-                <div>
-                  <div style={{ fontSize: 10, color: "#7A8B9A", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>Acres</div>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: NAVY }}>{selected.acres.toFixed(2)}</div>
-                </div>
-                <div>
-                  <div style={{ fontSize: 10, color: "#7A8B9A", fontWeight: 600, textTransform: "uppercase", letterSpacing: 0.5 }}>% of Site</div>
-                  <div style={{ fontSize: 18, fontWeight: 700, color: NAVY }}>{((selected.acres / totalAcres) * 100).toFixed(1)}%</div>
-                </div>
-              </div>
-              <div style={{ fontSize: 13, color: "#5A6B7A", lineHeight: 1.5, paddingTop: 10, borderTop: `1px solid ${STEEL}` }}>
-                {selected.note}
-              </div>
-            </div>
+            <LotDetailPanel
+              lot={{
+                ...selected,
+                ...(LOT_BY_ID[selected.id] || {}),
+                use: selected.use,
+              }}
+              onClose={() => setSelectedId(null)}
+            />
           ) : (
             <div style={{ background: "white", border: `1px dashed ${STEEL}`, borderRadius: 12, padding: 24, textAlign: "center", color: "#7A8B9A", fontSize: 13 }}>
               Click any parcel marker on the map to see details
