@@ -88,10 +88,10 @@ const COLUMNS = [
   { key: "eligibleAcres", label: "Eligible Acres", numeric: true, w: 100, fmt: (v) => v.toFixed(2) },
   { key: "mudSharePct", label: "MUD Share %", numeric: true, w: 100, fmt: (v) => v.toFixed(2) + "%" },
   { key: "mudTotal", label: "Total MUD Allocation", numeric: true, w: 150, fmt: fmtMoney },
-  { key: "mudFirst", label: "First Payout (50%)", numeric: true, w: 140, fmt: fmtMoney },
-  { key: "mudRemaining", label: "Remaining (50%)", numeric: true, w: 140, fmt: fmtMoney },
+  { key: "mudFirst", label: "First Payout (50%) — Mo 24", numeric: true, w: 160, fmt: fmtMoney },
+  { key: "mudFinal", label: "Final Payout (50%) — Mo 36", numeric: true, w: 160, fmt: fmtMoney },
   { key: "saleMonth", label: "Sale Month", numeric: true, w: 100 },
-  { key: "status", label: "MUD Status", numeric: false, w: 130 },
+  { key: "status", label: "MUD Status", numeric: false, w: 150 },
 ];
 
 export default function MUDAnalysisTab() {
@@ -104,7 +104,10 @@ export default function MUDAnalysisTab() {
       // For MUD allocation, eligible acres = lot.acres (all 30 lots are allocated based on acreage)
       const eligibleAcres = lot.acres;
       const mudSharePct = (lot.acres / PROJECT.mudEligibleAcres) * 100;
-      const sellsAfter = lot.saleMonth >= PROJECT.mudFirstPayoutMonth;
+      const status =
+        c.mudStatus === "post-final" ? "Full payout available" :
+        c.mudStatus === "post-first" ? "Eligible — final Mo 36" :
+        "Eligible — first Mo 24";
       return {
         id: lot.id,
         type: lot.type,
@@ -113,10 +116,10 @@ export default function MUDAnalysisTab() {
         mudSharePct,
         mudTotal: c.mudShareTotal,
         mudFirst: c.mudInitialPayout,
-        mudRemaining: c.mudRemainingPayout,
+        mudFinal: c.mudFinalPayout,
         saleMonth: lot.saleMonth,
-        status: sellsAfter ? "Eligible" : "Pre-trigger",
-        sellsAfter,
+        status,
+        mudStatusKey: c.mudStatus,
       };
     });
   }, []);
