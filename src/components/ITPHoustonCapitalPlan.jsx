@@ -1832,6 +1832,10 @@ const VAULT_CATEGORIES = [
       { name: "Marketing Presentation.pptx", desc: "", type: "pptx", placeholder: true },
     ]
   },
+  {
+    name: "Financial Models", icon: "\ud83d\udcb9",
+    docs: []
+  },
 ];
 
 const FILE_TYPE_COLORS = { pdf: "#E85D75", xlsx: "#2E8B57", docx: "#3D8EC9", pptx: "#C4703E", png: "#D4A84B", zip: "#7A8B9A", jpg: "#D4A84B" };
