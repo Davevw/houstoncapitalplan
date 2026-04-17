@@ -18,10 +18,12 @@ export const PROJECT = {
   debtPct: 0.70,
   equityPct: 0.30,
 
-  // MUD (updated v5)
+  // MUD (updated v6)
   mudReimbursement: 23_400_000,
   mudFirstPayoutMonth: 24,
+  mudFinalPayoutMonth: 36,
   mudInitialPayoutPct: 0.50,
+  mudFinalPayoutPct: 0.50,
   mudBondRate: 0.08,
   mudEligibleAcres: 44.08,
 
@@ -83,20 +85,29 @@ export function computeLot(lot, allLots) {
     PROJECT.mudReimbursement * (lot.acres / eligibleAcres)
   );
   const mudInitialPayout = Math.round(mudShareTotal * PROJECT.mudInitialPayoutPct);
-  const mudRemainingPayout = mudShareTotal - mudInitialPayout;
+  const mudFinalPayout = mudShareTotal - mudInitialPayout;
 
-  // Status: lot sells before/after first MUD payout (Month 24)
-  const sellsAfterTrigger = lot.saleMonth >= PROJECT.mudFirstPayoutMonth;
+  // Cumulative MUD received by lot's sale month (v6: tiered)
+  let mudReceivedBySaleMonth = 0;
+  let mudStatus = "pre-first";
+  if (lot.saleMonth >= PROJECT.mudFinalPayoutMonth) {
+    mudReceivedBySaleMonth = mudShareTotal;
+    mudStatus = "post-final";
+  } else if (lot.saleMonth >= PROJECT.mudFirstPayoutMonth) {
+    mudReceivedBySaleMonth = mudInitialPayout;
+    mudStatus = "post-first";
+  }
 
-  // Residual to equity uses initial payout (50%) only — remaining 50% follows later
-  const residualPostMud = residualPreMud + mudInitialPayout;
+  // Residual to equity uses cumulative MUD payouts received by sale month
+  const residualPostMud = residualPreMud + mudReceivedBySaleMonth;
   const verticalContext = Math.round(PROJECT.horizontalCost * share);
 
   return {
     sf, grossValue, share, sellingCosts, netSaleProceeds, buyerEscrow,
     acqDebtRelease, horizDebtRelease, residualPreMud,
-    eligibleAcres, mudShareTotal, mudInitialPayout, mudRemainingPayout,
-    sellsAfterTrigger, residualPostMud, verticalContext,
+    eligibleAcres, mudShareTotal, mudInitialPayout, mudFinalPayout,
+    mudReceivedBySaleMonth, mudStatus,
+    residualPostMud, verticalContext,
     marginPctPostMud: grossValue > 0 ? (residualPostMud / grossValue) * 100 : 0,
   };
 }
@@ -157,10 +168,14 @@ export default function LotDetailPanel({ lot, allLots, onClose }) {
   const postMudColor = c.residualPostMud >= 0 ? POS : NEG;
 
   const escrowPctLabel = `${(PROJECT.escrowPctOfGross * 100).toFixed(0)}% of gross`;
-  const mudStatusLabel = c.sellsAfterTrigger
-    ? "✓ Eligible — payout available"
-    : `⏳ Eligible — payout begins Month ${PROJECT.mudFirstPayoutMonth}`;
-  const mudStatusColor = c.sellsAfterTrigger ? POS : "#A87A2A";
+  const mudStatusLabel =
+    c.mudStatus === "post-final"
+      ? "✓ Eligible — full payout available"
+      : c.mudStatus === "post-first"
+      ? `◐ Eligible — final payout Month ${PROJECT.mudFinalPayoutMonth}`
+      : `⏳ Eligible — first payout Month ${PROJECT.mudFirstPayoutMonth}`;
+  const mudStatusColor =
+    c.mudStatus === "post-final" ? POS : c.mudStatus === "post-first" ? "#3D8EC9" : "#A87A2A";
 
   return (
     <div style={panelStyle}>
@@ -192,7 +207,8 @@ export default function LotDetailPanel({ lot, allLots, onClose }) {
         <SectionHeader right={`First Payout: Month ${PROJECT.mudFirstPayoutMonth}`}>MUD Reimbursement</SectionHeader>
         <div style={{ borderTop: `1.5px solid ${NAVY}`, borderBottom: `1px solid ${STEEL}`, padding: "4px 0" }}>
           <Row label="Total MUD Principal" value={fmtCompact(PROJECT.mudReimbursement)} />
-          <Row label="Initial Payout" value={`${(PROJECT.mudInitialPayoutPct * 100).toFixed(0)}% of MUD Share`} />
+          <Row label="Initial Payout" value={`${(PROJECT.mudInitialPayoutPct * 100).toFixed(0)}% of MUD Share — Month ${PROJECT.mudFirstPayoutMonth}`} />
+          <Row label="Final Payout" value={`Remaining ${(PROJECT.mudFinalPayoutPct * 100).toFixed(0)}% — Month ${PROJECT.mudFinalPayoutMonth}`} />
           <Row label="MUD Bond Rate" value={`${(PROJECT.mudBondRate * 100).toFixed(1)}%`} divider />
           <Row label="This lot's sale month" value={`Month ${lot.saleMonth}`} />
           <Row
@@ -208,22 +224,31 @@ export default function LotDetailPanel({ lot, allLots, onClose }) {
             color={POS}
           />
           <Row
-            label={`Initial Payout (${(PROJECT.mudInitialPayoutPct * 100).toFixed(0)}%)`}
-            sub={`Available Month ${PROJECT.mudFirstPayoutMonth}`}
+            label={`Initial Payout (${(PROJECT.mudInitialPayoutPct * 100).toFixed(0)}%) — Month ${PROJECT.mudFirstPayoutMonth}`}
             value={fmt(c.mudInitialPayout)}
             color={POS}
           />
           <Row
-            label="Remaining (over subsequent months)"
-            value={fmt(c.mudRemainingPayout)}
-            color="#7A8B9A"
+            label={`Final Payout (${(PROJECT.mudFinalPayoutPct * 100).toFixed(0)}%) — Month ${PROJECT.mudFinalPayoutMonth}`}
+            value={fmt(c.mudFinalPayout)}
+            color={POS}
             divider
           />
           <Row label="Residual (Pre-MUD)" value={fmt(c.residualPreMud)} color={preMudColor} />
-          <Row label="Plus: MUD Initial Payout (50%)" value={fmt(c.mudInitialPayout)} color={POS} divider />
+          <Row
+            label={`Plus: MUD Received by Month ${lot.saleMonth}`}
+            sub={
+              c.mudStatus === "post-final" ? "Full payout (initial + final)" :
+              c.mudStatus === "post-first" ? "Initial payout only — final follows Month 36" :
+              "None — sale precedes first payout"
+            }
+            value={fmt(c.mudReceivedBySaleMonth)}
+            color={c.mudReceivedBySaleMonth > 0 ? POS : "#94A3B0"}
+            divider
+          />
           <Row
             label="Residual to Equity + Partners"
-            sub={`${c.marginPctPostMud.toFixed(1)}% of gross · excl. remaining 50% MUD`}
+            sub={`${c.marginPctPostMud.toFixed(1)}% of gross · cumulative MUD by sale month`}
             value={fmt(c.residualPostMud)}
             color={postMudColor}
             bold big
