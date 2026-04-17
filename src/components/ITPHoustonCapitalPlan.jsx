@@ -1304,31 +1304,60 @@ function DashboardTab({model,params,updateParam}){
 // ═══════════════════════════════════════════════════════════════
 function LotTab({lots,model,updateLot}){
   const TC={Industrial:TEAL,Retail:TERRA,Multifamily:GOLD};
+  const [sortKey,setSortKey]=useState("id");
+  const [sortDir,setSortDir]=useState("asc");
+  const COLS=[
+    {key:"id",label:"Lot",numeric:true},
+    {key:"type",label:"Type",numeric:false},
+    {key:"acres",label:"Acres",numeric:true},
+    {key:"sf",label:"Net SF",numeric:true},
+    {key:"asking",label:"$/SF",numeric:true},
+    {key:"gross",label:"Gross Value",numeric:true},
+    {key:"net",label:"Net Value",numeric:true},
+    {key:"saleMonth",label:"Sale Mo.",numeric:true},
+  ];
+  function toggleSort(key){
+    if(sortKey===key){setSortDir(sortDir==="asc"?"desc":"asc");}
+    else{setSortKey(key);setSortDir("asc");}
+  }
+  const sortedLots=useMemo(()=>{
+    const arr=[...model.lotsCalc];
+    arr.sort((a,b)=>{
+      const av=a[sortKey],bv=b[sortKey];
+      if(typeof av==="number"&&typeof bv==="number")return sortDir==="asc"?av-bv:bv-av;
+      return sortDir==="asc"?String(av).localeCompare(String(bv)):String(bv).localeCompare(String(av));
+    });
+    return arr;
+  },[model.lotsCalc,sortKey,sortDir]);
   return(<div>
     <SectionTitle icon="\ud83d\udccb">Lot Value & Sales Schedule</SectionTitle>
-    <div style={{fontSize:12,color:"#7A8B9A",marginBottom:12}}>Adjust sale month for each lot. All downstream financials update in real time.</div>
+    <div style={{fontSize:12,color:"#7A8B9A",marginBottom:12}}>Adjust sale month for each lot. Click any column header to sort. All downstream financials update in real time.</div>
     <div style={{background:"white",borderRadius:12,boxShadow:"0 1px 3px rgba(0,0,0,0.08)",overflow:"auto"}}>
       <table style={{width:"100%",borderCollapse:"collapse",fontSize:12}}>
         <thead><tr style={{background:NAVY}}>
-          {["Lot","Type","Acres","Net SF","$/SF","Gross Value","Net Value","Sale Mo."].map(h=>(<th key={h} style={{padding:"10px 12px",color:"white",fontWeight:600,textAlign:"left",whiteSpace:"nowrap",fontSize:11}}>{h}</th>))}
+          {COLS.map(c=>(
+            <th key={c.key} onClick={()=>toggleSort(c.key)} style={{padding:"10px 12px",color:"white",fontWeight:600,textAlign:c.numeric?"right":"left",whiteSpace:"nowrap",fontSize:11,cursor:"pointer",background:sortKey===c.key?"#243760":NAVY,userSelect:"none"}}>
+              {c.label}{sortKey===c.key&&<span style={{marginLeft:4,opacity:0.8}}>{sortDir==="asc"?"▲":"▼"}</span>}
+            </th>
+          ))}
         </tr></thead>
         <tbody>
-          {model.lotsCalc.map((l,i)=>(<tr key={l.id} style={{background:i%2?"#FAFBFC":"white",borderBottom:"1px solid #F0F2F4"}}>
-            <td style={{padding:"8px 12px",fontWeight:600}}>{l.id}</td>
+          {sortedLots.map((l,i)=>(<tr key={l.id} style={{background:i%2?"#FAFBFC":"white",borderBottom:"1px solid #F0F2F4"}}>
+            <td style={{padding:"8px 12px",fontWeight:600,textAlign:"right"}}>{l.id}</td>
             <td style={{padding:"8px 12px"}}><span style={{background:TC[l.type]+"18",color:TC[l.type],padding:"2px 8px",borderRadius:4,fontWeight:600,fontSize:11}}>{l.type}</span></td>
-            <td style={{padding:"8px 12px"}}>{l.acres.toFixed(2)}</td>
-            <td style={{padding:"8px 12px"}}>{l.sf.toLocaleString("en-US",{maximumFractionDigits:0})}</td>
-            <td style={{padding:"8px 12px"}}>${l.asking.toFixed(2)}</td>
-            <td style={{padding:"8px 12px",fontFamily:"Georgia,serif"}}>{fmtFull(l.gross)}</td>
-            <td style={{padding:"8px 12px",fontWeight:700,color:NAVY,fontFamily:"Georgia,serif"}}>{fmtFull(l.net)}</td>
-            <td style={{padding:"4px 12px"}}><input type="number" value={l.saleMonth} min={1} max={NUM_MONTHS} onChange={e=>updateLot(l.id,parseInt(e.target.value)||1)} style={{width:52,padding:"4px 6px",border:`1.5px solid ${STEEL}`,borderRadius:4,fontSize:12,fontWeight:700,color:TEAL,textAlign:"center",outline:"none",background:"#FFFDE7"}}/></td>
+            <td style={{padding:"8px 12px",textAlign:"right"}}>{l.acres.toFixed(2)}</td>
+            <td style={{padding:"8px 12px",textAlign:"right"}}>{l.sf.toLocaleString("en-US",{maximumFractionDigits:0})}</td>
+            <td style={{padding:"8px 12px",textAlign:"right"}}>${l.asking.toFixed(2)}</td>
+            <td style={{padding:"8px 12px",fontFamily:"Georgia,serif",textAlign:"right"}}>{fmtFull(l.gross)}</td>
+            <td style={{padding:"8px 12px",fontWeight:700,color:NAVY,fontFamily:"Georgia,serif",textAlign:"right"}}>{fmtFull(l.net)}</td>
+            <td style={{padding:"4px 12px",textAlign:"right"}}><input type="number" value={l.saleMonth} min={1} max={NUM_MONTHS} onChange={e=>updateLot(l.id,parseInt(e.target.value)||1)} style={{width:52,padding:"4px 6px",border:`1.5px solid ${STEEL}`,borderRadius:4,fontSize:12,fontWeight:700,color:TEAL,textAlign:"center",outline:"none",background:"#FFFDE7"}}/></td>
           </tr>))}
           <tr style={{background:LIGHT,fontWeight:700}}>
-            <td style={{padding:"10px 12px"}}>Total</td><td style={{padding:"10px 12px"}}>{lots.length} lots</td>
-            <td style={{padding:"10px 12px"}}>{model.lotsCalc.reduce((a,l)=>a+l.acres,0).toFixed(2)}</td>
-            <td style={{padding:"10px 12px"}}>{model.lotsCalc.reduce((a,l)=>a+l.sf,0).toLocaleString("en-US",{maximumFractionDigits:0})}</td><td/>
-            <td style={{padding:"10px 12px",fontFamily:"Georgia,serif"}}>{fmtFull(model.lotsCalc.reduce((a,l)=>a+l.gross,0))}</td>
-            <td style={{padding:"10px 12px",color:NAVY,fontFamily:"Georgia,serif"}}>{fmtFull(model.totalLotRev)}</td><td/>
+            <td style={{padding:"10px 12px",textAlign:"right"}}>Total</td><td style={{padding:"10px 12px"}}>{lots.length} lots</td>
+            <td style={{padding:"10px 12px",textAlign:"right"}}>{model.lotsCalc.reduce((a,l)=>a+l.acres,0).toFixed(2)}</td>
+            <td style={{padding:"10px 12px",textAlign:"right"}}>{model.lotsCalc.reduce((a,l)=>a+l.sf,0).toLocaleString("en-US",{maximumFractionDigits:0})}</td><td/>
+            <td style={{padding:"10px 12px",fontFamily:"Georgia,serif",textAlign:"right"}}>{fmtFull(model.lotsCalc.reduce((a,l)=>a+l.gross,0))}</td>
+            <td style={{padding:"10px 12px",color:NAVY,fontFamily:"Georgia,serif",textAlign:"right"}}>{fmtFull(model.totalLotRev)}</td><td/>
           </tr>
         </tbody>
       </table>
