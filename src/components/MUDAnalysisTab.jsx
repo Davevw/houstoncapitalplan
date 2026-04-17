@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { PROJECT, computeLot } from "./LotDetailPanel";
+import SiteCompositionTable from "./SiteCompositionTable";
 
 const NAVY = "#1B2A4A";
 const GOLD = "#C9A84C";
@@ -265,6 +266,14 @@ export default function MUDAnalysisTab() {
             </tr>
           </tbody>
         </table>
+      </div>
+
+      {/* Site Composition */}
+      <div style={{ marginTop: 32 }}>
+        <h2 style={{ fontSize: 18, fontFamily: "Georgia,serif", fontWeight: 700, color: NAVY, margin: "0 0 14px 0" }}>
+          Site Composition — Acreage vs. Market Value
+        </h2>
+        <SiteCompositionTable lots={LOT_SCHEDULE} />
       </div>
 
       {/* Explanation Notes */}
