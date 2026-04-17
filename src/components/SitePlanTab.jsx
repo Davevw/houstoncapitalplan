@@ -301,6 +301,7 @@ export default function SitePlanTab() {
                 ...(LOT_BY_ID[selected.id] || {}),
                 use: selected.use,
               }}
+              allLots={LOT_SCHEDULE}
               onClose={() => setSelectedId(null)}
             />
           ) : (
