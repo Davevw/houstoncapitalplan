@@ -64,7 +64,7 @@ const fmtCompact = (n) => {
   return `$${Math.round(n).toLocaleString()}`;
 };
 
-export function computeLot(lot, allLots) {
+export function computeLot(lot, allLots, overrides = {}) {
   const sf = Math.round(lot.acres * 43560);
   const grossValue = lot.grossValue ?? Math.round(sf * lot.asking);
   const share = lot.acres / PROJECT.totalSellableAcres;
@@ -81,8 +81,9 @@ export function computeLot(lot, allLots) {
 
   // MUD: every lot is allocated based on acreage share of total eligible acres
   const eligibleAcres = PROJECT.mudEligibleAcres;
+  const mudReimbursement = overrides.mudReimbursement ?? PROJECT.mudReimbursement;
   const mudShareTotal = Math.round(
-    PROJECT.mudReimbursement * (lot.acres / eligibleAcres)
+    mudReimbursement * (lot.acres / eligibleAcres)
   );
   const mudInitialPayout = Math.round(mudShareTotal * PROJECT.mudInitialPayoutPct);
   const mudFinalPayout = mudShareTotal - mudInitialPayout;
