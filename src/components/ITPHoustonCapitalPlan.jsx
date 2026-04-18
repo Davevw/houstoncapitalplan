@@ -69,7 +69,7 @@ const SOFT_COSTS = [
 const DEEMED_CAPITAL_TOTAL = 11387288.56;
 const DEEMED_EXPENDITURES = 8225483.35;
 const DEEMED_PREF_RETURN = 3161805.21;
-const NUM_MONTHS = 54;
+const NUM_MONTHS = 62; // v13: extended Feb 2026 → Apr 2031 (was 54)
 
 // ── EXPENDITURE DATA (374 items, 2019-2026) ──
 const EXPENDITURES = [
@@ -1000,8 +1000,9 @@ export default function App(){
   const [activeTab,setActiveTab]=useState(0);
   const [lots,setLots]=useState(LOTS);
   const [params,setParams]=useState({
-    equity:DEEMED_CAPITAL_TOTAL,prefReturn:0.08,equityPct:0.50,devPct:0.50,
-    loanRate:0.11,mudTotal:23400000,mudMonth1:15,mudMonth2:21,devFee:0.05,
+    // v13 defaults: 70/30 equity/dev split, MUD issuances Mo 24 & Mo 36
+    equity:DEEMED_CAPITAL_TOTAL,prefReturn:0.08,equityPct:0.70,devPct:0.30,
+    loanRate:0.11,mudTotal:23400000,mudMonth1:24,mudMonth2:36,devFee:0.05,
   });
   const model=useMemo(()=>runModel(lots,params),[lots,params]);
   const updateParam=useCallback((key,val)=>setParams(p=>({...p,[key]:val})),[]);
