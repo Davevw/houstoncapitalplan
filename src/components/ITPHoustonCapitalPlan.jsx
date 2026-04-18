@@ -1066,7 +1066,7 @@ export default function App(){
               </div>
             </div>
             <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
-              <div>Last Update: April 13, 2026</div>
+              <div>Last Update: April 18, 2026</div>
               <div style={{display:"flex",gap:8,marginTop:8,flexWrap:"wrap",justifyContent:"flex-end"}}>
                 <button
                   onClick={() => setShowPresentation(true)}
