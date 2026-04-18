@@ -1734,7 +1734,7 @@ function SpreadsheetTab({model,params}){
             <ArrowDownToLine size={16}/> Download Excel Model (ITPH v9)
           </button>
         )}
-        <div style={{fontSize:11,color:"#7A8B9A",marginTop:4}}>Full working Excel model with all formulas — ITPH Financial Model v9</div>
+        <div style={{fontSize:11,color:"#7A8B9A",marginTop:4}}>Full working Excel model with all formulas — ITPH Financial Model V13</div>
         {modelUpdated && <div style={{fontSize:10,color:"#9AA5B0",marginTop:2}}>Last updated: {new Date(modelUpdated).toLocaleDateString()}</div>}
       </div>
       <div>
