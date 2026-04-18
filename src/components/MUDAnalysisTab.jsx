@@ -98,10 +98,19 @@ const COLUMNS = [
 export default function MUDAnalysisTab() {
   const [sortKey, setSortKey] = useState("id");
   const [sortDir, setSortDir] = useState("asc");
+  // MUD bond rate slider: 8.0% (baseline $23.4M) to 10.0% (scales toward $35M ceiling)
+  const [bondRate, setBondRate] = useState(PROJECT.mudBondRate * 100);
+
+  const mudReimbursement = useMemo(() => {
+    const minRate = 8.0, maxRate = 10.0;
+    const minVal = 23_400_000, maxVal = 35_000_000;
+    const t = (bondRate - minRate) / (maxRate - minRate);
+    return Math.round(minVal + t * (maxVal - minVal));
+  }, [bondRate]);
 
   const rows = useMemo(() => {
     return LOT_SCHEDULE.map((lot) => {
-      const c = computeLot(lot, LOT_SCHEDULE);
+      const c = computeLot(lot, LOT_SCHEDULE, { mudReimbursement });
       // For MUD allocation, eligible acres = lot.acres (all 30 lots are allocated based on acreage)
       const eligibleAcres = lot.acres;
       const mudSharePct = (lot.acres / PROJECT.mudEligibleAcres) * 100;
@@ -123,7 +132,7 @@ export default function MUDAnalysisTab() {
         mudStatusKey: c.mudStatus,
       };
     });
-  }, []);
+  }, [mudReimbursement]);
 
   const sortedRows = useMemo(() => {
     const sorted = [...rows].sort((a, b) => {
@@ -161,6 +170,8 @@ export default function MUDAnalysisTab() {
     }
   }
 
+  const isBaseline = Math.abs(bondRate - 8.0) < 0.01;
+
   return (
     <div style={{ fontFamily: "Arial, sans-serif", color: NAVY }}>
       {/* Header */}
@@ -176,13 +187,48 @@ export default function MUDAnalysisTab() {
       {/* KPI Cards */}
       <div style={{
         display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
-        gap: 14, marginBottom: 28,
+        gap: 14, marginBottom: 16,
       }}>
-        <KpiCard label="Total MUD Principal" value={fmtCompactM(PROJECT.mudReimbursement)} sub="potential up to $35M" />
-        <KpiCard label="MUD Bond Rate" value={`${(PROJECT.mudBondRate * 100).toFixed(1)}%`} />
+        <KpiCard
+          label="Total MUD Principal"
+          value={fmtCompactM(mudReimbursement)}
+          sub={isBaseline ? "baseline @ 8.0% · up to $35M" : `@ ${bondRate.toFixed(1)}% bond rate`}
+        />
+        <KpiCard label="MUD Bond Rate" value={`${bondRate.toFixed(1)}%`} sub="adjustable 8.0% – 10.0%" />
         <KpiCard label="First Payout" value={`Month ${PROJECT.mudFirstPayoutMonth}`} sub="50% of MUD share" />
         <KpiCard label="Final Payout" value={`Month ${PROJECT.mudFinalPayoutMonth}`} sub="remaining 50%" />
         <KpiCard label="Total Payout Window" value={`${PROJECT.mudFinalPayoutMonth - PROJECT.mudFirstPayoutMonth} months`} sub={`Month ${PROJECT.mudFirstPayoutMonth}–${PROJECT.mudFinalPayoutMonth}`} />
+      </div>
+
+      {/* Bond Rate Slider */}
+      <div style={{
+        background: CREAM, border: `1px solid ${STEEL}`, borderLeft: `3px solid ${GOLD}`,
+        borderRadius: 6, padding: "14px 18px", marginBottom: 28,
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 10, gap: 12, flexWrap: "wrap" }}>
+          <div style={{ fontSize: 11, fontWeight: 800, letterSpacing: 0.8, color: NAVY, textTransform: "uppercase" }}>
+            MUD Bond Rate Sensitivity
+          </div>
+          <div style={{ fontSize: 12, color: "#5A6B7A" }}>
+            Rate: <b style={{ color: NAVY, fontFamily: "Georgia,serif" }}>{bondRate.toFixed(1)}%</b>
+            <span style={{ margin: "0 8px", color: STEEL }}>·</span>
+            Principal: <b style={{ color: POS, fontFamily: "Georgia,serif" }}>{fmtCompactM(mudReimbursement)}</b>
+          </div>
+        </div>
+        <input
+          type="range"
+          min={8.0}
+          max={10.0}
+          step={0.1}
+          value={bondRate}
+          onChange={(e) => setBondRate(parseFloat(e.target.value))}
+          style={{ width: "100%", accentColor: NAVY, cursor: "pointer" }}
+        />
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 10.5, color: "#7A8B9A", marginTop: 4, fontWeight: 600 }}>
+          <span>8.0% · $23.40M</span>
+          <span>9.0% · $29.20M</span>
+          <span>10.0% · $35.00M</span>
+        </div>
       </div>
 
       {/* Allocation Table */}
