@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_requests: {
+        Row: {
+          approved_at: string | null
+          company: string
+          created_at: string
+          email: string
+          id: string
+          investor_type: string
+          name: string
+          status: string
+        }
+        Insert: {
+          approved_at?: string | null
+          company: string
+          created_at?: string
+          email: string
+          id?: string
+          investor_type: string
+          name: string
+          status?: string
+        }
+        Update: {
+          approved_at?: string | null
+          company?: string
+          created_at?: string
+          email?: string
+          id?: string
+          investor_type?: string
+          name?: string
+          status?: string
+        }
+        Relationships: []
+      }
       vault_documents: {
         Row: {
           category: string
