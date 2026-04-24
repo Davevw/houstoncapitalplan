@@ -69,7 +69,7 @@ export default function Landing() {
         }}
       >
         <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: 2, color: NAVY, textTransform: "uppercase" }}>
-          ITP Houston
+          Mixed Use Houston
         </div>
         <div style={{ fontSize: 12, color: MUTED, letterSpacing: 1, textTransform: "uppercase" }}>
           Confidential Offering
