@@ -392,12 +392,12 @@ export default function Landing() {
                     fontFamily: "Helvetica, Arial, sans-serif",
                   }}
                 >
-                  Investor Type
+                  Role
                 </label>
                 <select
-                  value={investorType}
+                  value={role}
                   onChange={(e) => {
-                    setInvestorType(e.target.value);
+                    setRole(e.target.value);
                     setError(null);
                   }}
                   style={{
@@ -410,11 +410,11 @@ export default function Landing() {
                     fontFamily: "Helvetica, Arial, sans-serif",
                     borderRadius: 2,
                     background: "white",
-                    color: investorType ? NAVY_DARK : MUTED,
+                    color: role ? NAVY_DARK : MUTED,
                   }}
                 >
-                  <option value="">Select investor type…</option>
-                  {INVESTOR_TYPES.map((t) => (
+                  <option value="">Select your role…</option>
+                  {ROLES.map((t) => (
                     <option key={t} value={t}>{t}</option>
                   ))}
                 </select>
