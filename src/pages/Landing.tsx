@@ -19,29 +19,46 @@ const INVESTOR_TYPES = [
 ];
 
 export default function Landing() {
-  const navigate = useNavigate();
-  const [code, setCode] = useState("");
-  const [error, setError] = useState(false);
-  const [unlocked, setUnlocked] = useState(() => {
-    try {
-      return sessionStorage.getItem(SESSION_KEY) === "true";
-    } catch {
-      return false;
-    }
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [investorType, setInvestorType] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e?: React.FormEvent) {
-    e?.preventDefault();
-    if (code.trim().toUpperCase() === ACCESS_CODE) {
-      try {
-        sessionStorage.setItem(SESSION_KEY, "true");
-      } catch {
-        /* ignore */
-      }
-      setUnlocked(true);
-      setError(false);
-    } else {
-      setError(true);
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedCompany = company.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedCompany || !investorType) {
+      setError("All fields are required.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const { error: insertError } = await supabase.from("access_requests").insert({
+        name: trimmedName.slice(0, 200),
+        email: trimmedEmail.toLowerCase().slice(0, 255),
+        company: trimmedCompany.slice(0, 200),
+        investor_type: investorType,
+      });
+      if (insertError) throw insertError;
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setError("Submission failed. Please try again or contact the advisor directly.");
+    } finally {
+      setSubmitting(false);
     }
   }
 
