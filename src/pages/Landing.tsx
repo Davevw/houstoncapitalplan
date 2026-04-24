@@ -119,7 +119,7 @@ export default function Landing() {
               fontWeight: 300,
             }}
           >
-            136-Acre Entitled Mixed-Use Commercial Park Houston
+            136-Acre Entitled Development Platform
           </div>
           <p
             style={{
