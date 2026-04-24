@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const NAVY = "#0B3D5C";
 const NAVY_DARK = "#072A40";
@@ -8,33 +8,57 @@ const LIGHT_GRAY = "#F5F7FA";
 const BORDER = "#E1E7ED";
 const MUTED = "#5A6B7A";
 
-const ACCESS_CODE = "ITPH2026";
-const SESSION_KEY = "itph_landing_unlocked";
+const INVESTOR_TYPES = [
+  "Developer",
+  "Institutional Investor",
+  "Family Office",
+  "Private Equity",
+  "Owner / Operator",
+  "Broker / Advisor",
+  "Other",
+];
 
 export default function Landing() {
-  const navigate = useNavigate();
-  const [code, setCode] = useState("");
-  const [error, setError] = useState(false);
-  const [unlocked, setUnlocked] = useState(() => {
-    try {
-      return sessionStorage.getItem(SESSION_KEY) === "true";
-    } catch {
-      return false;
-    }
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [investorType, setInvestorType] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSubmit(e?: React.FormEvent) {
-    e?.preventDefault();
-    if (code.trim().toUpperCase() === ACCESS_CODE) {
-      try {
-        sessionStorage.setItem(SESSION_KEY, "true");
-      } catch {
-        /* ignore */
-      }
-      setUnlocked(true);
-      setError(false);
-    } else {
-      setError(true);
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    const trimmedCompany = company.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedCompany || !investorType) {
+      setError("All fields are required.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      const { error: insertError } = await supabase.from("access_requests").insert({
+        name: trimmedName.slice(0, 200),
+        email: trimmedEmail.toLowerCase().slice(0, 255),
+        company: trimmedCompany.slice(0, 200),
+        investor_type: investorType,
+      });
+      if (insertError) throw insertError;
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+      setError("Submission failed. Please try again or contact the advisor directly.");
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -266,9 +290,9 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Access Gate */}
+      {/* Access Request Form */}
       <section id="access" style={{ padding: "80px 32px" }}>
-        <div style={{ maxWidth: 520, margin: "0 auto" }}>
+        <div style={{ maxWidth: 560, margin: "0 auto" }}>
           <div style={{ textAlign: "center", marginBottom: 40 }}>
             <div
               style={{
@@ -283,89 +307,169 @@ export default function Landing() {
               Qualified Access
             </div>
             <h2 style={{ fontSize: 28, fontWeight: 400, marginTop: 12, color: NAVY }}>
-              Enter Access Code
+              Request Information
             </h2>
+            <p
+              style={{
+                fontSize: 14,
+                color: MUTED,
+                fontFamily: "Helvetica, Arial, sans-serif",
+                fontWeight: 300,
+                marginTop: 12,
+                lineHeight: 1.6,
+              }}
+            >
+              Submit your information below. The advisor will review your request and follow up with access
+              credentials and offering materials.
+            </p>
           </div>
 
-          {!unlocked ? (
+          {!submitted ? (
             <form
               onSubmit={handleSubmit}
               style={{
                 background: "white",
                 border: `1px solid ${BORDER}`,
                 padding: 40,
+                display: "flex",
+                flexDirection: "column",
+                gap: 18,
               }}
             >
-              <label
-                style={{
-                  display: "block",
-                  fontSize: 11,
-                  letterSpacing: 2,
-                  textTransform: "uppercase",
-                  color: MUTED,
-                  fontWeight: 600,
-                  marginBottom: 10,
-                  fontFamily: "Helvetica, Arial, sans-serif",
-                }}
-              >
-                Access Code
-              </label>
-              <input
-                type="password"
-                value={code}
-                autoFocus
-                onChange={(e) => {
-                  setCode(e.target.value);
-                  setError(false);
-                }}
-                placeholder="Enter your access code"
-                style={{
-                  width: "100%",
-                  padding: "14px 16px",
-                  border: `1.5px solid ${error ? "#C0392B" : BORDER}`,
-                  fontSize: 16,
-                  letterSpacing: 4,
-                  textAlign: "center",
-                  outline: "none",
-                  boxSizing: "border-box",
-                  fontFamily: "Helvetica, Arial, sans-serif",
-                  marginBottom: 8,
-                  borderRadius: 2,
-                }}
-              />
+              {([
+                { label: "Full Name", value: name, set: setName, type: "text", placeholder: "Jane Smith" },
+                { label: "Email", value: email, set: setEmail, type: "email", placeholder: "jane@firm.com" },
+                { label: "Company / Firm", value: company, set: setCompany, type: "text", placeholder: "Smith Capital Partners" },
+              ] as const).map((field) => (
+                <div key={field.label}>
+                  <label
+                    style={{
+                      display: "block",
+                      fontSize: 11,
+                      letterSpacing: 2,
+                      textTransform: "uppercase",
+                      color: MUTED,
+                      fontWeight: 600,
+                      marginBottom: 8,
+                      fontFamily: "Helvetica, Arial, sans-serif",
+                    }}
+                  >
+                    {field.label}
+                  </label>
+                  <input
+                    type={field.type}
+                    value={field.value}
+                    onChange={(e) => {
+                      field.set(e.target.value);
+                      setError(null);
+                    }}
+                    placeholder={field.placeholder}
+                    maxLength={255}
+                    style={{
+                      width: "100%",
+                      padding: "12px 14px",
+                      border: `1.5px solid ${BORDER}`,
+                      fontSize: 15,
+                      outline: "none",
+                      boxSizing: "border-box",
+                      fontFamily: "Helvetica, Arial, sans-serif",
+                      borderRadius: 2,
+                      background: "white",
+                      color: NAVY_DARK,
+                    }}
+                  />
+                </div>
+              ))}
+
+              <div>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: 11,
+                    letterSpacing: 2,
+                    textTransform: "uppercase",
+                    color: MUTED,
+                    fontWeight: 600,
+                    marginBottom: 8,
+                    fontFamily: "Helvetica, Arial, sans-serif",
+                  }}
+                >
+                  Investor Type
+                </label>
+                <select
+                  value={investorType}
+                  onChange={(e) => {
+                    setInvestorType(e.target.value);
+                    setError(null);
+                  }}
+                  style={{
+                    width: "100%",
+                    padding: "12px 14px",
+                    border: `1.5px solid ${BORDER}`,
+                    fontSize: 15,
+                    outline: "none",
+                    boxSizing: "border-box",
+                    fontFamily: "Helvetica, Arial, sans-serif",
+                    borderRadius: 2,
+                    background: "white",
+                    color: investorType ? NAVY_DARK : MUTED,
+                  }}
+                >
+                  <option value="">Select investor type…</option>
+                  {INVESTOR_TYPES.map((t) => (
+                    <option key={t} value={t}>{t}</option>
+                  ))}
+                </select>
+              </div>
+
               {error && (
                 <div
                   style={{
                     fontSize: 13,
                     color: "#C0392B",
-                    marginBottom: 16,
                     fontFamily: "Helvetica, Arial, sans-serif",
                     textAlign: "center",
+                    padding: "8px 0",
                   }}
                 >
-                  Invalid access code. Please contact the advisor.
+                  {error}
                 </div>
               )}
+
               <button
                 type="submit"
+                disabled={submitting}
                 style={{
                   width: "100%",
                   padding: "14px",
-                  background: NAVY,
+                  background: submitting ? MUTED : NAVY,
                   color: "white",
                   fontSize: 13,
                   fontWeight: 700,
                   letterSpacing: 2,
                   textTransform: "uppercase",
                   border: "none",
-                  cursor: "pointer",
-                  marginTop: error ? 0 : 16,
+                  cursor: submitting ? "wait" : "pointer",
+                  marginTop: 8,
                   borderRadius: 2,
                   fontFamily: "Helvetica, Arial, sans-serif",
                 }}
               >
-                Submit
+                {submitting ? "Submitting…" : "Submit Request"}
               </button>
+
+              <p
+                style={{
+                  fontSize: 11,
+                  color: MUTED,
+                  fontFamily: "Helvetica, Arial, sans-serif",
+                  textAlign: "center",
+                  margin: 0,
+                  lineHeight: 1.5,
+                }}
+              >
+                Your information will be kept confidential and used solely for access review.
+              </p>
             </form>
           ) : (
             <div
@@ -373,7 +477,8 @@ export default function Landing() {
                 background: "white",
                 border: `1px solid ${BORDER}`,
                 borderTop: `3px solid ${GOLD}`,
-                padding: 40,
+                padding: 48,
+                textAlign: "center",
               }}
             >
               <div
@@ -383,80 +488,35 @@ export default function Landing() {
                   textTransform: "uppercase",
                   color: GOLD,
                   fontWeight: 700,
-                  marginBottom: 8,
+                  marginBottom: 12,
                   fontFamily: "Helvetica, Arial, sans-serif",
-                  textAlign: "center",
                 }}
               >
-                Access Granted
+                Request Received
               </div>
               <h3
                 style={{
-                  fontSize: 24,
+                  fontSize: 22,
                   fontWeight: 400,
                   color: NAVY,
-                  textAlign: "center",
-                  margin: "0 0 32px",
+                  margin: "0 0 16px",
                 }}
               >
-                Qualified Buyer Access
+                Thank you, {name.trim().split(" ")[0]}
               </h3>
-
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-                {protectedLinks.map((l) => (
-                  <a
-                    key={l.label}
-                    href={l.href}
-                    style={{
-                      padding: "14px 20px",
-                      border: `1px solid ${BORDER}`,
-                      color: NAVY_DARK,
-                      textDecoration: "none",
-                      fontSize: 14,
-                      fontWeight: 600,
-                      letterSpacing: 0.5,
-                      fontFamily: "Helvetica, Arial, sans-serif",
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      transition: "all 0.15s",
-                      borderRadius: 2,
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.borderColor = NAVY;
-                      e.currentTarget.style.background = LIGHT_GRAY;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = BORDER;
-                      e.currentTarget.style.background = "white";
-                    }}
-                  >
-                    <span>{l.label}</span>
-                    <span style={{ color: GOLD, fontSize: 18 }}>→</span>
-                  </a>
-                ))}
-              </div>
-
-              <button
-                onClick={() => navigate("/dashboard")}
+              <p
                 style={{
-                  width: "100%",
-                  marginTop: 24,
-                  padding: "14px",
-                  background: NAVY,
-                  color: "white",
-                  fontSize: 12,
-                  fontWeight: 700,
-                  letterSpacing: 2,
-                  textTransform: "uppercase",
-                  border: "none",
-                  cursor: "pointer",
-                  borderRadius: 2,
+                  fontSize: 15,
+                  color: NAVY_DARK,
                   fontFamily: "Helvetica, Arial, sans-serif",
+                  fontWeight: 300,
+                  lineHeight: 1.7,
+                  margin: 0,
                 }}
               >
-                Open Project Dashboard
-              </button>
+                Your access request has been submitted for review. The advisor will contact you at{" "}
+                <strong style={{ color: NAVY }}>{email.trim()}</strong> upon approval.
+              </p>
             </div>
           )}
         </div>
@@ -517,7 +577,7 @@ export default function Landing() {
       >
         Confidential offering. Information subject to change. Access restricted to qualified parties only.
         <div style={{ marginTop: 8, fontSize: 10, color: "#9AA8B5" }}>
-          © {new Date().getFullYear()} International Trade Park Houston
+          © {new Date().getFullYear()} Confidential Offering
         </div>
       </footer>
     </div>
