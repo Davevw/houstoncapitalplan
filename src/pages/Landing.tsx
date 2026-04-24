@@ -8,13 +8,11 @@ const LIGHT_GRAY = "#F5F7FA";
 const BORDER = "#E1E7ED";
 const MUTED = "#5A6B7A";
 
-const INVESTOR_TYPES = [
-  "Developer",
-  "Institutional Investor",
-  "Family Office",
-  "Private Equity",
-  "Owner / Operator",
-  "Broker / Advisor",
+const ROLES = [
+  "Buyer",
+  "Buyer Agent",
+  "Lender",
+  "Equity Partner",
   "Other",
 ];
 
@@ -22,7 +20,7 @@ export default function Landing() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [investorType, setInvestorType] = useState("");
+  const [role, setRole] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +33,7 @@ export default function Landing() {
     const trimmedEmail = email.trim();
     const trimmedCompany = company.trim();
 
-    if (!trimmedName || !trimmedEmail || !trimmedCompany || !investorType) {
+    if (!trimmedName || !trimmedEmail || !trimmedCompany || !role) {
       setError("All fields are required.");
       return;
     }
@@ -50,7 +48,7 @@ export default function Landing() {
         name: trimmedName.slice(0, 200),
         email: trimmedEmail.toLowerCase().slice(0, 255),
         company: trimmedCompany.slice(0, 200),
-        investor_type: investorType,
+        investor_type: role,
       });
       if (insertError) throw insertError;
       setSubmitted(true);
@@ -394,12 +392,12 @@ export default function Landing() {
                     fontFamily: "Helvetica, Arial, sans-serif",
                   }}
                 >
-                  Investor Type
+                  Role
                 </label>
                 <select
-                  value={investorType}
+                  value={role}
                   onChange={(e) => {
-                    setInvestorType(e.target.value);
+                    setRole(e.target.value);
                     setError(null);
                   }}
                   style={{
@@ -412,11 +410,11 @@ export default function Landing() {
                     fontFamily: "Helvetica, Arial, sans-serif",
                     borderRadius: 2,
                     background: "white",
-                    color: investorType ? NAVY_DARK : MUTED,
+                    color: role ? NAVY_DARK : MUTED,
                   }}
                 >
-                  <option value="">Select investor type…</option>
-                  {INVESTOR_TYPES.map((t) => (
+                  <option value="">Select your role…</option>
+                  {ROLES.map((t) => (
                     <option key={t} value={t}>{t}</option>
                   ))}
                 </select>
@@ -544,9 +542,21 @@ export default function Landing() {
         >
           Project Advisor
         </div>
-        <h2 style={{ fontSize: 28, fontWeight: 400, marginTop: 12, marginBottom: 28 }}>
-          Inquiries
+        <h2 style={{ fontSize: 28, fontWeight: 400, marginTop: 12, marginBottom: 8 }}>
+          David Van Waldick
         </h2>
+        <div
+          style={{
+            fontSize: 13,
+            letterSpacing: 2,
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.7)",
+            fontFamily: "Helvetica, Arial, sans-serif",
+            marginBottom: 28,
+          }}
+        >
+          Western Realty Finance
+        </div>
         <div style={{ fontSize: 16, lineHeight: 2, fontFamily: "Helvetica, Arial, sans-serif", color: "rgba(255,255,255,0.85)" }}>
           <div>
             <a href="mailto:dave@wrfco.com" style={{ color: "white", textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>
@@ -575,6 +585,12 @@ export default function Landing() {
           borderTop: `1px solid ${BORDER}`,
         }}
       >
+        <div style={{ fontSize: 12, color: NAVY_DARK, fontWeight: 600, marginBottom: 4 }}>
+          David Van Waldick · Project Advisor · Western Realty Finance
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          dave@wrfco.com · 760-672-0145
+        </div>
         Confidential offering. Information subject to change. Access restricted to qualified parties only.
         <div style={{ marginTop: 8, fontSize: 10, color: "#9AA8B5" }}>
           © {new Date().getFullYear()} Confidential Offering
