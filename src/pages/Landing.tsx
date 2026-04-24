@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { supabase } from "@/integrations/supabase/client";
 
 const NAVY = "#0B3D5C";
 const NAVY_DARK = "#072A40";
@@ -8,8 +8,15 @@ const LIGHT_GRAY = "#F5F7FA";
 const BORDER = "#E1E7ED";
 const MUTED = "#5A6B7A";
 
-const ACCESS_CODE = "ITPH2026";
-const SESSION_KEY = "itph_landing_unlocked";
+const INVESTOR_TYPES = [
+  "Developer",
+  "Institutional Investor",
+  "Family Office",
+  "Private Equity",
+  "Owner / Operator",
+  "Broker / Advisor",
+  "Other",
+];
 
 export default function Landing() {
   const navigate = useNavigate();
