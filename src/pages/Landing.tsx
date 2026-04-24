@@ -108,7 +108,7 @@ export default function Landing() {
               letterSpacing: -0.5,
             }}
           >
-            International Trade Park Houston
+            Institutional Development Opportunity — Houston
           </h1>
           <div
             style={{
