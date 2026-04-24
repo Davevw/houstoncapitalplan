@@ -176,22 +176,7 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* Location bar */}
-      <div
-        style={{
-          background: LIGHT_GRAY,
-          padding: "20px 32px",
-          textAlign: "center",
-          fontSize: 13,
-          letterSpacing: 2,
-          textTransform: "uppercase",
-          color: MUTED,
-          fontFamily: "Helvetica, Arial, sans-serif",
-          borderBottom: `1px solid ${BORDER}`,
-        }}
-      >
-        Bissonnet Street at Kirkwood &nbsp;·&nbsp; Houston, Texas
-      </div>
+      {/* Location bar removed for confidentiality */}
 
       {/* Teaser highlights */}
       <section style={{ padding: "80px 32px", maxWidth: 1180, margin: "0 auto" }}>
