@@ -317,8 +317,8 @@ export default function Landing() {
                 lineHeight: 1.6,
               }}
             >
-              Submit your information below. The advisor will review your request and follow up with access
-              credentials and offering materials.
+              Submit your information below. The advisor will review your request, circulate an NDA, and follow up
+              with access credentials and offering materials.
             </p>
           </div>
 
