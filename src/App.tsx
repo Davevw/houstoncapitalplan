@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import AppErrorBoundary from "@/components/AppErrorBoundary";
 import Index from "./pages/Index.tsx";
 import Landing from "./pages/Landing.tsx";
+import AccessRequests from "./pages/AccessRequests.tsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
