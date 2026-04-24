@@ -577,7 +577,7 @@ export default function Landing() {
       >
         Confidential offering. Information subject to change. Access restricted to qualified parties only.
         <div style={{ marginTop: 8, fontSize: 10, color: "#9AA8B5" }}>
-          © {new Date().getFullYear()} International Trade Park Houston
+          © {new Date().getFullYear()} Confidential Offering
         </div>
       </footer>
     </div>
