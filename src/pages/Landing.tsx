@@ -542,9 +542,21 @@ export default function Landing() {
         >
           Project Advisor
         </div>
-        <h2 style={{ fontSize: 28, fontWeight: 400, marginTop: 12, marginBottom: 28 }}>
-          Inquiries
+        <h2 style={{ fontSize: 28, fontWeight: 400, marginTop: 12, marginBottom: 8 }}>
+          David Van Waldick
         </h2>
+        <div
+          style={{
+            fontSize: 13,
+            letterSpacing: 2,
+            textTransform: "uppercase",
+            color: "rgba(255,255,255,0.7)",
+            fontFamily: "Helvetica, Arial, sans-serif",
+            marginBottom: 28,
+          }}
+        >
+          Western Realty Finance
+        </div>
         <div style={{ fontSize: 16, lineHeight: 2, fontFamily: "Helvetica, Arial, sans-serif", color: "rgba(255,255,255,0.85)" }}>
           <div>
             <a href="mailto:dave@wrfco.com" style={{ color: "white", textDecoration: "none", borderBottom: `1px solid ${GOLD}` }}>
@@ -573,6 +585,12 @@ export default function Landing() {
           borderTop: `1px solid ${BORDER}`,
         }}
       >
+        <div style={{ fontSize: 12, color: NAVY_DARK, fontWeight: 600, marginBottom: 4 }}>
+          David Van Waldick · Project Advisor · Western Realty Finance
+        </div>
+        <div style={{ marginBottom: 12 }}>
+          dave@wrfco.com · 760-672-0145
+        </div>
         Confidential offering. Information subject to change. Access restricted to qualified parties only.
         <div style={{ marginTop: 8, fontSize: 10, color: "#9AA8B5" }}>
           © {new Date().getFullYear()} Confidential Offering
