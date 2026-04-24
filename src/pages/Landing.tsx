@@ -282,8 +282,8 @@ export default function Landing() {
             }}
           >
             This opportunity is being marketed on a confidential basis. Access to the Offering Memorandum, financial
-            model, data room, and detailed due diligence materials is restricted to qualified parties following advisor
-            approval and receipt of an access code.
+            model, and due diligence materials is restricted to qualified parties following NDA review and advisor
+            approval.
           </p>
         </div>
       </section>
@@ -317,8 +317,8 @@ export default function Landing() {
                 lineHeight: 1.6,
               }}
             >
-              Submit your information below. The advisor will review your request and follow up with access
-              credentials and offering materials.
+              Submit your information below. The advisor will review your request, circulate an NDA, and follow up
+              with access credentials and offering materials.
             </p>
           </div>
 
