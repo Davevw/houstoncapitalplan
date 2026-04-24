@@ -8,13 +8,11 @@ const LIGHT_GRAY = "#F5F7FA";
 const BORDER = "#E1E7ED";
 const MUTED = "#5A6B7A";
 
-const INVESTOR_TYPES = [
-  "Developer",
-  "Institutional Investor",
-  "Family Office",
-  "Private Equity",
-  "Owner / Operator",
-  "Broker / Advisor",
+const ROLES = [
+  "Buyer",
+  "Buyer Agent",
+  "Lender",
+  "Equity Partner",
   "Other",
 ];
 
