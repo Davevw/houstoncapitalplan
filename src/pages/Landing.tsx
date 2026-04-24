@@ -33,7 +33,7 @@ export default function Landing() {
     const trimmedEmail = email.trim();
     const trimmedCompany = company.trim();
 
-    if (!trimmedName || !trimmedEmail || !trimmedCompany || !investorType) {
+    if (!trimmedName || !trimmedEmail || !trimmedCompany || !role) {
       setError("All fields are required.");
       return;
     }
@@ -48,7 +48,7 @@ export default function Landing() {
         name: trimmedName.slice(0, 200),
         email: trimmedEmail.toLowerCase().slice(0, 255),
         company: trimmedCompany.slice(0, 200),
-        investor_type: investorType,
+        investor_type: role,
       });
       if (insertError) throw insertError;
       setSubmitted(true);
