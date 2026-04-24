@@ -282,8 +282,8 @@ export default function Landing() {
             }}
           >
             This opportunity is being marketed on a confidential basis. Access to the Offering Memorandum, financial
-            model, data room, and detailed due diligence materials is restricted to qualified parties following advisor
-            approval and receipt of an access code.
+            model, and due diligence materials is restricted to qualified parties following NDA review and advisor
+            approval.
           </p>
         </div>
       </section>
