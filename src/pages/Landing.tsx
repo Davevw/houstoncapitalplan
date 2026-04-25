@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 const NAVY = "#0B3D5C";
@@ -17,6 +18,7 @@ const ROLES = [
 ];
 
 export default function Landing() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -24,6 +26,19 @@ export default function Landing() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [adminCode, setAdminCode] = useState("");
+  const [adminError, setAdminError] = useState<string | null>(null);
+
+  function handleAdminSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (adminCode.trim().toUpperCase() === "HC01") {
+      sessionStorage.setItem("itph_admin_unlocked", "1");
+      navigate("/dashboard");
+    } else {
+      setAdminError("Invalid passcode.");
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -93,10 +108,133 @@ export default function Landing() {
         <div style={{ fontSize: 14, fontWeight: 700, letterSpacing: 2, color: NAVY, textTransform: "uppercase" }}>
           Mixed Use Houston
         </div>
-        <div style={{ fontSize: 12, color: MUTED, letterSpacing: 1, textTransform: "uppercase" }}>
-          Confidential Offering
+        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+          <div style={{ fontSize: 12, color: MUTED, letterSpacing: 1, textTransform: "uppercase" }}>
+            Confidential Offering
+          </div>
+          <button
+            type="button"
+            onClick={() => { setAdminOpen(true); setAdminCode(""); setAdminError(null); }}
+            aria-label="Admin login"
+            title="Admin login"
+            style={{
+              background: "transparent",
+              border: `1px solid ${BORDER}`,
+              borderRadius: 4,
+              width: 28,
+              height: 28,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              color: MUTED,
+              padding: 0,
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </button>
         </div>
       </header>
+
+      {adminOpen && (
+        <div
+          onClick={() => setAdminOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(7, 42, 64, 0.55)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 1000,
+            padding: 16,
+          }}
+        >
+          <form
+            onClick={(e) => e.stopPropagation()}
+            onSubmit={handleAdminSubmit}
+            style={{
+              background: "white",
+              borderTop: `3px solid ${GOLD}`,
+              padding: 32,
+              width: "100%",
+              maxWidth: 380,
+              borderRadius: 2,
+              fontFamily: "Helvetica, Arial, sans-serif",
+            }}
+          >
+            <div style={{ fontSize: 11, letterSpacing: 3, textTransform: "uppercase", color: GOLD, fontWeight: 700, marginBottom: 8 }}>
+              Admin Access
+            </div>
+            <div style={{ fontSize: 18, color: NAVY, fontFamily: "Georgia, serif", marginBottom: 20 }}>
+              Enter passcode
+            </div>
+            <input
+              type="password"
+              autoFocus
+              value={adminCode}
+              onChange={(e) => { setAdminCode(e.target.value); setAdminError(null); }}
+              placeholder="Passcode"
+              style={{
+                width: "100%",
+                padding: "12px 14px",
+                border: `1.5px solid ${BORDER}`,
+                fontSize: 15,
+                outline: "none",
+                boxSizing: "border-box",
+                borderRadius: 2,
+                color: NAVY_DARK,
+                letterSpacing: 2,
+              }}
+            />
+            {adminError && (
+              <div style={{ fontSize: 13, color: "#C0392B", marginTop: 10 }}>{adminError}</div>
+            )}
+            <div style={{ display: "flex", gap: 8, marginTop: 20 }}>
+              <button
+                type="button"
+                onClick={() => setAdminOpen(false)}
+                style={{
+                  flex: 1,
+                  padding: "12px",
+                  background: "white",
+                  color: MUTED,
+                  fontSize: 12,
+                  fontWeight: 700,
+                  letterSpacing: 1.5,
+                  textTransform: "uppercase",
+                  border: `1px solid ${BORDER}`,
+                  cursor: "pointer",
+                  borderRadius: 2,
+                }}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                style={{
+                  flex: 1,
+                  padding: "12px",
+                  background: NAVY,
+                  color: "white",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  letterSpacing: 1.5,
+                  textTransform: "uppercase",
+                  border: "none",
+                  cursor: "pointer",
+                  borderRadius: 2,
+                }}
+              >
+                Unlock
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
 
       {/* Hero */}
       <section
