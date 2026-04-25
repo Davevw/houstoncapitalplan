@@ -18,6 +18,7 @@ const ROLES = [
 ];
 
 export default function Landing() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
@@ -25,6 +26,19 @@ export default function Landing() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [adminOpen, setAdminOpen] = useState(false);
+  const [adminCode, setAdminCode] = useState("");
+  const [adminError, setAdminError] = useState<string | null>(null);
+
+  function handleAdminSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (adminCode.trim().toUpperCase() === "HC01") {
+      sessionStorage.setItem("itph_admin_unlocked", "1");
+      navigate("/dashboard");
+    } else {
+      setAdminError("Invalid passcode.");
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
