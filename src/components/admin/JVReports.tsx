@@ -39,47 +39,33 @@ export default function JVReports() {
         </p>
       </div>
 
-      {/* Tab strip */}
-      <div style={{ display: "flex", gap: 4, padding: "10px 20px", background: "#F5F0E8", borderBottom: `1px solid #E0D8C5`, overflowX: "auto" }}>
-        {jvReports.map((r) => {
-          const isActive = r.id === selectedId;
-          return (
-            <button
-              key={r.id}
-              onClick={() => setSelectedId(r.id)}
-              style={{
-                position: "relative",
-                padding: "7px 14px",
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: 0.4,
-                borderRadius: 6,
-                cursor: "pointer",
-                border: isActive ? `1px solid ${NAVY}` : "1px solid transparent",
-                background: isActive ? NAVY : "rgba(27,42,74,0.06)",
-                color: isActive ? GOLD : NAVY,
-                whiteSpace: "nowrap",
-              }}
-            >
-              {r.month} {r.year}
-              {r.badge && (
-                <span style={{
-                  marginLeft: 6,
-                  background: GOLD,
-                  color: NAVY,
-                  fontSize: 8,
-                  padding: "1px 5px",
-                  borderRadius: 3,
-                  fontWeight: 800,
-                  letterSpacing: 0.5,
-                }}>
-                  {r.badge}
-                </span>
-              )}
-            </button>
-          );
-        })}
-      </div>
+      {jvReports.length > 1 && (
+        <div style={{ display: "flex", gap: 4, padding: "10px 20px", background: "#F5F0E8", borderBottom: `1px solid #E0D8C5`, overflowX: "auto" }}>
+          {jvReports.map((r) => {
+            const isActive = r.id === selectedId;
+            return (
+              <button
+                key={r.id}
+                onClick={() => setSelectedId(r.id)}
+                style={{
+                  padding: "7px 14px",
+                  fontSize: 11,
+                  fontWeight: 700,
+                  letterSpacing: 0.4,
+                  borderRadius: 6,
+                  cursor: "pointer",
+                  border: isActive ? `1px solid ${NAVY}` : "1px solid transparent",
+                  background: isActive ? NAVY : "rgba(27,42,74,0.06)",
+                  color: isActive ? GOLD : NAVY,
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {r.month} {r.year}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div style={{ display: "flex", flex: 1, minHeight: 0 }}>
         <div style={{ flex: 1, display: "flex", flexDirection: "column", minHeight: 0 }}>
