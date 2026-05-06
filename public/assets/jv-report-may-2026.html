@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITP Houston — JV Development Status | May 2026 | PLUSAdvantage™</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
+.shell{width:100%;max-width:960px;margin:0 auto}
+.top-bar{background:#1B2A4A;padding:18px 24px 0;border-radius:12px 12px 0 0}
+.top-bar-inner{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px}
+.top-bar-left h1{color:#C9A84C;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.top-bar-left p{color:rgba(255,255,255,.5);font-size:11px}
+.date-badge{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:8px;padding:8px 14px;text-align:right}
+.date-badge .month{color:#C9A84C;font-size:20px;font-weight:700;display:block;line-height:1.1}
+.date-badge .year{color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;display:block;margin-top:2px}
+.date-badge .supp{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.04em;display:block;margin-top:3px;text-transform:uppercase}
+.content{background:#fff;border:1px solid #ddd;border-radius:0 0 12px 12px;padding:28px 32px}
+.letter-header{border-bottom:1px solid #eee;padding-bottom:16px;margin-bottom:20px}
+.letter-meta{font-size:12px;color:#888;margin-bottom:4px}
+.addr{font-size:12px;color:#888;line-height:1.7;margin-bottom:10px}
+.subject-line{font-size:13px;font-weight:700;color:#1B2A4A;background:#F5F0E8;padding:9px 14px;border-radius:6px;border-left:3px solid #C9A84C}
+.section-hdr{font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 10px;padding-bottom:7px;border-bottom:2px solid #C9A84C}
+.sn{color:#C9A84C;margin-right:6px}
+.body-text{font-size:13px;line-height:1.75;color:#222;margin-bottom:10px}
+.bullet-list{margin:6px 0 12px;padding-left:0;list-style:none}
+.bullet-list li{font-size:13px;line-height:1.65;color:#222;padding:3px 0 3px 20px;position:relative}
+.bullet-list li::before{content:"\2014";position:absolute;left:0;color:#C9A84C;font-weight:700}
+.alert-box{background:#FCE4D6;border:1px solid #ED7D31;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#7B3000;line-height:1.6}
+.alert-box strong{color:#C00000}
+.confirm-box{background:#FFF8E1;border:1px dashed #C9A84C;border-radius:4px;padding:6px 10px;margin:6px 0;font-size:11px;color:#7B5A00;display:inline-block}
+.selected-box{background:#F1F8F4;border:2px solid #2E7D32;border-radius:8px;padding:18px 22px;margin:16px 0}
+.selected-box .badge{display:inline-block;background:#2E7D32;color:#fff;font-size:10px;font-weight:700;letter-spacing:.1em;padding:3px 10px;border-radius:4px;text-transform:uppercase;margin-bottom:10px}
+.selected-box h4{color:#2E7D32;font-size:15px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
+.selected-box .item{font-size:13px;line-height:1.7;color:#222;padding:4px 0}
+.selected-box .item strong{color:#1B2A4A}
+table.dash{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0 18px}
+table.dash th{background:#1B2A4A;color:#C9A84C;padding:8px 10px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+table.dash td{padding:7px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+table.cap{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+table.cap th{background:#F5F0E8;color:#1B2A4A;padding:7px 10px;font-weight:700;font-size:11px;text-align:left}
+table.cap td{padding:7px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+table.act{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
+table.act th{background:#1B2A4A;color:#fff;padding:7px 10px;text-align:left;font-size:11px}
+table.act td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+table.sales{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0}
+table.sales th{background:#1B2A4A;color:#C9A84C;padding:7px 8px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.03em}
+table.sales td{padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top}
+.pill{display:inline-block;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700}
+.pill.red{background:#FFC7CE;color:#9C0006}
+.pill.green{background:#C6EFCE;color:#276221}
+.pill.amber{background:#FFEB9C;color:#7D5C00}
+.pill.blue{background:#DCE6F1;color:#1B3A6B}
+.pill.gray{background:#D9D9D9;color:#444}
+.pri-high{background:#ED7D31;color:#fff;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap}
+.pri-med{background:#C9A84C;color:#1B2A4A;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
+.kpi{background:#f7f7f7;border-radius:8px;padding:14px;border:1px solid #eee}
+.kpi .label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.kpi .value{font-size:18px;font-weight:700;color:#1B2A4A}
+.kpi .note{font-size:11px;color:#888;margin-top:3px}
+.exec-summary{background:linear-gradient(135deg,#1B2A4A 0%,#2a3f6a 100%);color:#fff;padding:20px 24px;border-radius:8px;margin-bottom:24px}
+.exec-summary h3{color:#C9A84C;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.exec-summary p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.85);margin-bottom:8px}
+.toc{background:#F5F0E8;border-radius:6px;padding:14px 18px;margin-bottom:24px;border-left:3px solid #C9A84C}
+.toc-title{font-size:11px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+.toc a{display:block;font-size:12px;color:#1B2A4A;text-decoration:none;padding:3px 0;line-height:1.5}
+.toc a:hover{color:#C9A84C}
+.toc .tn{color:#C9A84C;font-weight:700;margin-right:4px}
+.footer-brand{text-align:center;padding:14px;font-size:10px;color:#888;letter-spacing:.05em;border-top:1px solid #eee;background:#fafafa;border-radius:0 0 12px 12px;margin-top:18px}
+.draft-banner{background:#FFF3CD;border:1px solid #C9A84C;color:#7B5A00;padding:10px 16px;border-radius:6px;margin-bottom:18px;font-size:12px;font-weight:600;text-align:center;letter-spacing:.04em}
+.value-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+.value-table th{background:#1B2A4A;color:#C9A84C;padding:9px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+.value-table td{padding:8px 12px;border-bottom:1px solid #eee}
+.value-table td:last-child{text-align:right;font-weight:700;color:#1B2A4A}
+.value-table tr.headline td{background:#F1F8F4;color:#2E7D32;font-weight:700}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <h1>ITP Houston &mdash; Development Status</h1>
+        <p>Bissonnet 136, LLC &middot; Houston, TX &middot; PLUSAdvantage&trade; Advisory</p>
+      </div>
+      <div style="flex-shrink:0;margin-left:16px">
+        <div class="date-badge">
+          <span class="month">May</span>
+          <span class="year">2026</span>
+          <span class="supp">Supplement 8</span>
+          <span class="supp" style="margin-top:4px;font-size:9px;color:rgba(255,255,255,.3)">Build: May 2026 — DRAFT</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="draft-banner">DRAFT &mdash; May 2026 Supplement &middot; Awaiting sponsor confirmation on items marked [CONFIRM]</div>
+
+    <div class="letter-header">
+      <div class="letter-meta">Via Email</div>
+      <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:12px">May 2026</div>
+      <div class="addr">Kirkwood Crossings &middot; Bissonnet 136, LLC &middot; Houston, TX</div>
+      <div class="subject-line">Subject: ITP Houston &mdash; Development Status &nbsp;|&nbsp; Supplement 8</div>
+    </div>
+
+    <div class="toc">
+      <div class="toc-title">Contents</div>
+      <a href="#x1"><span class="tn">1.</span> Executive Overview</a>
+      <a href="#x2"><span class="tn">2.</span> Sales Pipeline &amp; Contract Status</a>
+      <a href="#x3"><span class="tn">3.</span> Cost to Date &mdash; Reconciliation Pending</a>
+      <a href="#x4"><span class="tn">4.</span> Critical Path &mdash; Construction Schedule</a>
+      <a href="#x5"><span class="tn">5.</span> Strategic Direction &mdash; Buyout Path Selected</a>
+      <a href="#x6"><span class="tn">6.</span> Capital Structure &amp; Financing</a>
+      <a href="#x7"><span class="tn">7.</span> Project Status Dashboard</a>
+      <a href="#x9"><span class="tn">9.</span> MUD 584 Bond Structure</a>
+      <a href="#x11"><span class="tn">11.</span> Priority Action Items</a>
+    </div>
+
+    <!-- 1. EXEC -->
+    <div id="x1" class="exec-summary">
+      <h3><span class="sn">1.</span> Executive Overview</h3>
+      <p>The May supplement formalizes the strategic direction selected since April: the project will move forward as a clean buyout transaction mirrored on the 2023 PSA, with senior debt up to $36M targeted for a Q3 2026 close that aligns with construction start in July 2026.</p>
+      <p>The buyer-side valuation analysis supports a project valuation of <strong>$21.05M</strong> at a 25% levered equity IRR, with $11.14M of net project profit and a 1.81x equity multiple. MSW permit revocation is being structured as a sponsor in-kind contribution to the new venture.</p>
+      <p>Sales pipeline, infrastructure design, and MUD 584 status carry forward from April pending sponsor confirmation on the 29-item update list. Cost framing reconciliation between the v13 model ($24.99M) and external messaging ($31.5M) is the highest-priority open item.</p>
+    </div>
+
+    <!-- 2. SALES -->
+    <div class="section-hdr" id="x2"><span class="sn">2.</span> Sales Pipeline &amp; Contract Status</div>
+    <div class="four-col">
+      <div class="kpi"><div class="label">Total Brochures</div><div class="value">10,669</div><div class="note">[CONFIRM May number]</div></div>
+      <div class="kpi"><div class="label">LoopNet Views</div><div class="value">4,879</div><div class="note">[CONFIRM May number]</div></div>
+      <div class="kpi"><div class="label">Direct Contacts</div><div class="value">15</div><div class="note">Since Mar 24 &middot; [CONFIRM May]</div></div>
+      <div class="kpi"><div class="label">PSAs Executed</div><div class="value">[CONFIRM]</div><div class="note">New KPI for May</div></div>
+    </div>
+
+    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.1 Active Pipeline &mdash; May Status</p>
+    <table class="sales">
+      <tr><th>Lot(s)</th><th>Prospect</th><th>Type</th><th>April Status</th><th>May Update Needed</th></tr>
+      <tr><td>15</td><td><strong>Lincoln Ave Capital</strong></td><td>MF / Affordable</td><td><span class="pill amber">PSA Review</span></td><td>Non-profit partnership status; escrow status [CONFIRM]</td></tr>
+      <tr><td>17, 22</td><td><strong>Shazeb Ali</strong></td><td>Retail / Gas</td><td><span class="pill amber">PSA Review</span></td><td>DD progress [CONFIRM]</td></tr>
+      <tr><td>10</td><td><strong>083 Auto LLC</strong></td><td>Industrial / Auto</td><td><span class="pill amber">PSA Review</span></td><td>Business plan received? [CONFIRM]</td></tr>
+      <tr><td>12</td><td><strong>Paul Momoh</strong></td><td>Industrial / Auto</td><td><span class="pill amber">PSA Review</span></td><td>Business plan received? [CONFIRM]</td></tr>
+      <tr><td>30</td><td><strong>Streetwise Retail</strong></td><td>Retail Center</td><td><span class="pill amber">PSA Review</span></td><td>Document review status [CONFIRM]</td></tr>
+      <tr><td>1</td><td><strong>Revolution Soccer</strong></td><td>Flex / Entertainment</td><td><span class="pill amber">PSA Review</span></td><td>Q2 2027 timing confirmation [CONFIRM]</td></tr>
+      <tr><td>8, 29</td><td><strong>Nasir Ali</strong></td><td>Retail / Gas</td><td><span class="pill amber">PSA Review</span></td><td>PSA review progress [CONFIRM]</td></tr>
+      <tr><td>20, 21</td><td><strong>Vivian Phan</strong></td><td>Retail / Funeral</td><td><span class="pill blue">New</span></td><td>Call held? Move from "New" to ? [CONFIRM]</td></tr>
+      <tr><td>13, 14, 16</td><td><strong>Octa Homes</strong></td><td>SFH / Manufactured</td><td><span class="pill red">Unlikely</span></td><td>Whole-project status &mdash; alive or dead? [CONFIRM]</td></tr>
+    </table>
+
+    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.2 New Prospects &mdash; Vetting</p>
+    <ul class="bullet-list">
+      <li><strong>Wea Lee</strong> &mdash; [CONFIRM if moved off vetting]</li>
+      <li><strong>StorageCaves</strong> &mdash; [CONFIRM if moved off vetting]</li>
+      <li><strong>Hassan Aram</strong> &mdash; [CONFIRM if moved off vetting]</li>
+      <li><strong>Vicente Vargas</strong> &mdash; [CONFIRM if moved off vetting]</li>
+    </ul>
+
+    <!-- 3. COSTS -->
+    <div class="section-hdr" id="x3"><span class="sn">3.</span> Cost to Date &mdash; Reconciliation Pending</div>
+    <div class="alert-box">
+      <strong>PRIORITY ACTION ITEM:</strong> Two cost framings currently appear in project materials. Sponsor confirmation required to designate one as canonical before publishing externally.
+    </div>
+    <table class="cap">
+      <tr><th>Source</th><th>Hard + Soft Total</th><th>Detail</th></tr>
+      <tr><td>v13 Financial Model</td><td><strong>$24,991,700</strong></td><td>$23.59M hard + $1.40M soft</td></tr>
+      <tr><td>External / April Report Messaging</td><td><strong>$31,500,000</strong></td><td>Subject to OPCC revision</td></tr>
+    </table>
+
+    <!-- 4. CRITICAL PATH -->
+    <div class="section-hdr" id="x4"><span class="sn">4.</span> Critical Path</div>
+    <p class="body-text">Construction schedule carries forward unchanged from April: Jul 1, 2026 start &mdash; Jan 14, 2028 finish. Design teams must be secured by May 2026. See April supplement for full task-level Gantt detail.</p>
+
+    <!-- 5. STRATEGIC DIRECTION -->
+    <div class="section-hdr" id="x5"><span class="sn">5.</span> Strategic Direction &mdash; Buyout Path Selected</div>
+    <div class="selected-box">
+      <span class="badge">Selected</span>
+      <h4>Buyout Path</h4>
+      <div class="item"><strong>Structure:</strong> Clean cash transaction, mirrored on the 2023 PSA executed at $14,995,000 (historical valuation precedent).</div>
+      <div class="item"><strong>Debt Sources:</strong> Senior debt up to $36M from Walker Dunlop and Index Fund covering buyout plus infrastructure.</div>
+      <div class="item"><strong>Target Close:</strong> Q3 2026, aligned with July 2026 construction start to enable simultaneous infrastructure mobilization.</div>
+      <div class="item"><strong>Sponsor In-Kind Contribution:</strong> MSW permit revocation contributed to the new venture as a structuring lever.</div>
+      <div class="item"><strong>Rationale:</strong> Clean exit with certain proceeds, eliminating shared upside / execution risk and recurring capital-structure friction documented over the past three years (OZK Bank, LSM/Lionheart, Allegiant).</div>
+    </div>
+
+    <!-- 6. CAPITAL -->
+    <div class="section-hdr" id="x6"><span class="sn">6.</span> Capital Structure &amp; Financing</div>
+
+    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:6px">6.1 Buyer-Side Project Valuation Analysis</p>
+    <p class="body-text">Headline economics from the buyer IRR analysis (matches <em>ITPH_Project_Valuation_Final.pdf</em>):</p>
+    <table class="value-table">
+      <tr><th>Metric</th><th style="text-align:right;color:#C9A84C">Value</th></tr>
+      <tr class="headline"><td>Project Valuation supporting 25% levered equity IRR</td><td>$21.05M</td></tr>
+      <tr><td>Total Project Cost (acquisition + horizontal)</td><td>$46.04M</td></tr>
+      <tr><td>Senior Debt Interest (carry @ 11%)</td><td>$3.65M</td></tr>
+      <tr><td>All-In Cost</td><td>$49.68M</td></tr>
+      <tr><td>Total Revenue (net lot sales + MUD)</td><td>$60.82M</td></tr>
+      <tr class="headline"><td>Net Project Profit</td><td>$11.14M</td></tr>
+      <tr><td>Equity Multiple</td><td>1.81x</td></tr>
+      <tr class="headline"><td>Equity IRR</td><td>25.00%</td></tr>
+    </table>
+
+    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">6.2 Capital History</p>
+    <p class="body-text">Five capital sources engaged across three years (OZK Bank, LSM/Lionheart, Allegiant pattern). In each case the asset cleared underwriting, but partner structure friction blocked closing. The buyout solves this recurring problem by replacing the existing partner structure entirely.</p>
+
+    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">6.3 Active Sources</p>
+    <table class="cap">
+      <tr><th>Source</th><th>Type</th><th>Status</th></tr>
+      <tr><td>Walker Dunlop &middot; Jordan Casallas</td><td>Debt</td><td>[CONFIRM term sheet status]</td></tr>
+      <tr><td>Index Fund</td><td>Debt</td><td>[CONFIRM discussion progress]</td></tr>
+    </table>
+
+    <!-- 7. STATUS DASHBOARD -->
+    <div class="section-hdr" id="x7"><span class="sn">7.</span> Project Status Dashboard</div>
+    <table class="dash">
+      <tr><th>Topic</th><th>Status</th><th>Notes</th></tr>
+      <tr><td>Equity Buyout</td><td><span class="pill green">Active</span></td><td>Direction confirmed as Buyout-only path</td></tr>
+      <tr><td>MUD 584</td><td><span class="pill green">Cleared</span></td><td>[CONFIRM TCEQ final approval timing]</td></tr>
+      <tr><td>TPDES Permit</td><td><span class="pill amber">In Progress</span></td><td>[CONFIRM May 18 meeting outcome]</td></tr>
+      <tr><td>Infrastructure Design</td><td><span class="pill green">Back on Track</span></td><td>[CONFIRM KH advance payment status]</td></tr>
+      <tr><td>LFG Monitoring</td><td><span class="pill amber">Catching Up</span></td><td>July 2026 target</td></tr>
+      <tr><td>Sales Pipeline</td><td><span class="pill blue">$25.8M</span></td><td>[CONFIRM May number]</td></tr>
+    </table>
+
+    <!-- 9. MUD STRUCTURE -->
+    <div class="section-hdr" id="x9"><span class="sn">9.</span> MUD 584 Bond Structure</div>
+    <table class="cap">
+      <tr><th>Parameter</th><th>Value</th></tr>
+      <tr><td>Total MUD Principal (base case)</td><td><strong>$23,400,000</strong></td></tr>
+      <tr><td>MUD Bond Rate (base)</td><td>8.0%</td></tr>
+      <tr><td>Reimbursement Potential (10% scenario)</td><td>up to $35M</td></tr>
+      <tr><td>First Payout (50%)</td><td>Month 24</td></tr>
+      <tr><td>Final Payout (50%)</td><td>Month 36</td></tr>
+      <tr><td>Total Payout Window</td><td>12 months (Mo 24&ndash;36)</td></tr>
+      <tr><td>Eligible Acres (underwriting basis)</td><td>44.08 ac</td></tr>
+    </table>
+    <p class="body-text" style="font-size:12px;color:#666">See the live MUD Analysis page in the dashboard for parameter sensitivity.</p>
+
+    <!-- 11. PRIORITY ACTION ITEMS -->
+    <div class="section-hdr" id="x11"><span class="sn">11.</span> Priority Action Items</div>
+    <table class="act">
+      <tr><th>#</th><th>Priority</th><th>Item</th><th>Status</th></tr>
+      <tr><td>11.1</td><td><span class="pri-high">HIGH</span></td><td><strong>NEW</strong> &mdash; Reconcile hard + soft cost framing ($24.99M v13 vs. $31.5M external)</td><td>Open</td></tr>
+      <tr><td>11.2</td><td><span class="pri-high">HIGH</span></td><td><strong>NEW</strong> &mdash; Finalize Walker Dunlop term sheet for buyout + infrastructure debt</td><td>Open</td></tr>
+      <tr><td>11.3</td><td><span class="pri-high">HIGH</span></td><td><strong>NEW</strong> &mdash; Finalize buyout valuation and term sheet to JV partner</td><td>Open</td></tr>
+      <tr><td>11.4</td><td><span class="pri-med">MED</span></td><td>LFG monitoring progress</td><td>[CONFIRM if complete]</td></tr>
+      <tr><td>11.5</td><td><span class="pri-med">MED</span></td><td>TPDES public meeting (held May 18) &mdash; post-meeting follow-up</td><td>Carry forward</td></tr>
+      <tr><td>11.6</td><td><span class="pri-med">MED</span></td><td>KH advance payment</td><td>[CONFIRM if paid]</td></tr>
+      <tr><td>11.7</td><td><span class="pri-med">MED</span></td><td>Subchapter N mining</td><td>[CONFIRM if any movement]</td></tr>
+      <tr><td>11.8</td><td><span class="pri-med">MED</span></td><td>Market Study commission</td><td>[CONFIRM if commissioned]</td></tr>
+      <tr><td>11.9</td><td><span class="pri-med">MED</span></td><td>Lot owner design teams</td><td>[CONFIRM May progress]</td></tr>
+    </table>
+
+    <div class="footer-brand">PLUSAdvantage&trade; 2026 &mdash; CONFIDENTIAL &middot; Build: May 2026 &mdash; DRAFT (awaiting Lester input)</div>
+  </div>
+</div>
+</body>
+</html>
