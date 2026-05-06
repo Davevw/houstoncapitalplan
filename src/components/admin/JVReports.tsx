@@ -7,8 +7,8 @@ const GOLD = "#C9A84C";
 
 export default function JVReports() {
   const [htmlContent, setHtmlContent] = useState<string>("");
-  const [selectedId, setSelectedId] = useState<string>(jvReports[0].id);
-  const selected = jvReports.find((r) => r.id === selectedId) ?? jvReports[0];
+  const [selectedId, setSelectedId] = useState<string>(jvReports[jvReports.length - 1].id);
+  const selected = jvReports.find((r) => r.id === selectedId) ?? jvReports[jvReports.length - 1];
 
   useEffect(() => {
     fetch(selected.htmlFile)
