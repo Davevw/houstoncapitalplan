@@ -13,13 +13,13 @@ export interface JVReport {
 export const jvReports: JVReport[] = [
   {
     id: "supp-8-may-2026",
-    title: "ITP Houston JV Report",
+    title: "ITPH, Houston TX JV Report",
     supplement: 8,
     month: "May",
     year: 2026,
-    badge: "DRAFT",
-    driveId: "1aOPaPpN-4sjWtWcndmWs0ZLtTwTCwFI9",
+    badge: "Final v3",
+    driveId: "1ANBHkESoQZZe9NFOJVnY92N9BnBYmTuP",
     htmlFile: "/assets/jv-report-apr-2026.html",
-    subtitle: "Sequential Monthly Supplements · May 2026 active",
+    subtitle: "Sequential Monthly Supplements · May 2026 — Final v3 (post-Lester review)",
   },
 ];
