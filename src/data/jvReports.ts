@@ -20,6 +20,6 @@ export const jvReports: JVReport[] = [
     badge: "Final v3",
     driveId: "1ANBHkESoQZZe9NFOJVnY92N9BnBYmTuP",
     htmlFile: "/assets/jv-report-apr-2026.html",
-    subtitle: "Sequential Monthly Supplements · May 2026 — Final v3 (post-Lester review)",
+    subtitle: "Sequential Monthly Supplements · May 2026 — Final v3",
   },
 ];
