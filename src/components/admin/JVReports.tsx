@@ -110,12 +110,17 @@ export default function JVReports() {
             <button
               onClick={handleDownloadPdf}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "white", color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: `1px solid ${NAVY}`, cursor: "pointer" }}>
-              <FileText size={13} /> Download {selected.month} PDF
+              <FileText size={13} /> {selected.month} PDF
+            </button>
+            <button
+              onClick={handleDownloadWord}
+              style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#2B579A", color: "white", padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
+              <FileType2 size={13} /> {selected.month} Word
             </button>
             <button
               onClick={handleDownloadHtml}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: GOLD, color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
-              <Download size={13} /> Download HTML
+              <Download size={13} /> HTML
             </button>
           </div>
 
