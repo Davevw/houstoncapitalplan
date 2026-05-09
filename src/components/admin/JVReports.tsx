@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Download, FileText } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Download, FileText, FileType2 } from "lucide-react";
 import { jvReports } from "@/data/jvReports";
 
 const NAVY = "#1B2A4A";
@@ -9,7 +9,21 @@ export default function JVReports() {
   const [htmlContent, setHtmlContent] = useState<string>("");
   const [selectedId, setSelectedId] = useState<string>(jvReports[jvReports.length - 1].id);
   const selected = jvReports.find((r) => r.id === selectedId) ?? jvReports[jvReports.length - 1];
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const handleDownloadWord = () => {
+    if (!htmlContent) return;
+    const header = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>${selected.title} — ${selected.month} ${selected.year}</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]--></head><body>`;
+    const footer = `</body></html>`;
+    const stripped = htmlContent.replace(/<!DOCTYPE[^>]*>/i, "").replace(/<\/?html[^>]*>/gi, "").replace(/<head[\s\S]*?<\/head>/i, (m) => m).replace(/<body[^>]*>/i, "").replace(/<\/body>/i, "");
+    const source = header + stripped + footer;
+    const blob = new Blob(['\ufeff', source], { type: "application/msword" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `ITP_Houston_JV_Report_${selected.month}_${selected.year}.doc`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     fetch(selected.htmlFile)
@@ -96,12 +110,17 @@ export default function JVReports() {
             <button
               onClick={handleDownloadPdf}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "white", color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: `1px solid ${NAVY}`, cursor: "pointer" }}>
-              <FileText size={13} /> Download {selected.month} PDF
+              <FileText size={13} /> {selected.month} PDF
+            </button>
+            <button
+              onClick={handleDownloadWord}
+              style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#2B579A", color: "white", padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
+              <FileType2 size={13} /> {selected.month} Word
             </button>
             <button
               onClick={handleDownloadHtml}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: GOLD, color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
-              <Download size={13} /> Download HTML
+              <Download size={13} /> HTML
             </button>
           </div>
 
