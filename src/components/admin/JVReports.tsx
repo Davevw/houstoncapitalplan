@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Download } from "lucide-react";
+import React, { useState, useEffect, useRef } from "react";
+import { Download, FileText } from "lucide-react";
 import { jvReports } from "@/data/jvReports";
 
 const NAVY = "#1B2A4A";
@@ -9,6 +9,7 @@ export default function JVReports() {
   const [htmlContent, setHtmlContent] = useState<string>("");
   const [selectedId, setSelectedId] = useState<string>(jvReports[jvReports.length - 1].id);
   const selected = jvReports.find((r) => r.id === selectedId) ?? jvReports[jvReports.length - 1];
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     fetch(selected.htmlFile)
@@ -26,6 +27,25 @@ export default function JVReports() {
     a.download = `ITP_Houston_JV_Report_${selected.month}_${selected.year}.html`;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleDownloadPdf = () => {
+    if (!htmlContent) return;
+    const printWindow = window.open("", "_blank", "width=900,height=1000");
+    if (!printWindow) {
+      alert("Please allow popups to download the PDF.");
+      return;
+    }
+    const docTitle = `ITP_Houston_JV_Report_${selected.month}_${selected.year}`;
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    printWindow.document.title = docTitle;
+    printWindow.onload = () => {
+      setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+      }, 300);
+    };
   };
 
   return (
@@ -74,9 +94,14 @@ export default function JVReports() {
               {selected.title} — Supplement {selected.supplement} · {selected.month} {selected.year}
             </span>
             <button
+              onClick={handleDownloadPdf}
+              style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "white", color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: `1px solid ${NAVY}`, cursor: "pointer" }}>
+              <FileText size={13} /> Download {selected.month} PDF
+            </button>
+            <button
               onClick={handleDownloadHtml}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: GOLD, color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
-              <Download size={13} /> Download Report
+              <Download size={13} /> Download HTML
             </button>
           </div>
 
