@@ -9,7 +9,21 @@ export default function JVReports() {
   const [htmlContent, setHtmlContent] = useState<string>("");
   const [selectedId, setSelectedId] = useState<string>(jvReports[jvReports.length - 1].id);
   const selected = jvReports.find((r) => r.id === selectedId) ?? jvReports[jvReports.length - 1];
-  const iframeRef = useRef<HTMLIFrameElement>(null);
+
+  const handleDownloadWord = () => {
+    if (!htmlContent) return;
+    const header = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>${selected.title} — ${selected.month} ${selected.year}</title><!--[if gte mso 9]><xml><w:WordDocument><w:View>Print</w:View><w:Zoom>100</w:Zoom></w:WordDocument></xml><![endif]--></head><body>`;
+    const footer = `</body></html>`;
+    const stripped = htmlContent.replace(/<!DOCTYPE[^>]*>/i, "").replace(/<\/?html[^>]*>/gi, "").replace(/<head[\s\S]*?<\/head>/i, (m) => m).replace(/<body[^>]*>/i, "").replace(/<\/body>/i, "");
+    const source = header + stripped + footer;
+    const blob = new Blob(['\ufeff', source], { type: "application/msword" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `ITP_Houston_JV_Report_${selected.month}_${selected.year}.doc`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   useEffect(() => {
     fetch(selected.htmlFile)
