@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Download, FileText } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Download, FileText, FileType2 } from "lucide-react";
 import { jvReports } from "@/data/jvReports";
 
 const NAVY = "#1B2A4A";
