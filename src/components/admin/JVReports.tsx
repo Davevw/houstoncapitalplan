@@ -9,6 +9,7 @@ export default function JVReports() {
   const [htmlContent, setHtmlContent] = useState<string>("");
   const [selectedId, setSelectedId] = useState<string>(jvReports[jvReports.length - 1].id);
   const selected = jvReports.find((r) => r.id === selectedId) ?? jvReports[jvReports.length - 1];
+  const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {
     fetch(selected.htmlFile)
@@ -26,6 +27,25 @@ export default function JVReports() {
     a.download = `ITP_Houston_JV_Report_${selected.month}_${selected.year}.html`;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const handleDownloadPdf = () => {
+    if (!htmlContent) return;
+    const printWindow = window.open("", "_blank", "width=900,height=1000");
+    if (!printWindow) {
+      alert("Please allow popups to download the PDF.");
+      return;
+    }
+    const docTitle = `ITP_Houston_JV_Report_${selected.month}_${selected.year}`;
+    printWindow.document.write(htmlContent);
+    printWindow.document.close();
+    printWindow.document.title = docTitle;
+    printWindow.onload = () => {
+      setTimeout(() => {
+        printWindow.focus();
+        printWindow.print();
+      }, 300);
+    };
   };
 
   return (
