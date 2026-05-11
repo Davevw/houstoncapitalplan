@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ITP Houston — JV Development Status | May 2026 | PLUSAdvantage™</title>
+<title>ITPH, Houston TX — JV Development Status | PLUSAdvantage™ 2026</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
@@ -16,7 +16,14 @@ body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
 .date-badge .month{color:#C9A84C;font-size:20px;font-weight:700;display:block;line-height:1.1}
 .date-badge .year{color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;display:block;margin-top:2px}
 .date-badge .supp{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.04em;display:block;margin-top:3px;text-transform:uppercase}
-.content{background:#fff;border:1px solid #ddd;border-radius:0 0 12px 12px;padding:28px 32px}
+.tabs{display:flex;gap:2px;overflow-x:auto;padding-bottom:0;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:8px 16px;font-size:11px;font-weight:600;color:rgba(255,255,255,.5);border-radius:6px 6px 0 0;cursor:pointer;white-space:nowrap;border:none;background:rgba(255,255,255,.08);transition:all .15s;flex-shrink:0}
+.tab.active{background:#fff;color:#1B2A4A}
+.tab:hover:not(.active){background:rgba(255,255,255,.15);color:rgba(255,255,255,.85)}
+.content{background:#fff;border:1px solid #ddd;border-radius:0 0 12px 12px}
+.panel{display:none;padding:28px 32px}
+.panel.active{display:block}
 .letter-header{border-bottom:1px solid #eee;padding-bottom:16px;margin-bottom:20px}
 .letter-meta{font-size:12px;color:#888;margin-bottom:4px}
 .addr{font-size:12px;color:#888;line-height:1.7;margin-bottom:10px}
@@ -29,53 +36,51 @@ body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
 .bullet-list li::before{content:"\2014";position:absolute;left:0;color:#C9A84C;font-weight:700}
 .alert-box{background:#FCE4D6;border:1px solid #ED7D31;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#7B3000;line-height:1.6}
 .alert-box strong{color:#C00000}
-.confirm-box{background:#FFF8E1;border:1px dashed #C9A84C;border-radius:4px;padding:6px 10px;margin:6px 0;font-size:11px;color:#7B5A00;display:inline-block}
-.selected-box{background:#F1F8F4;border:2px solid #2E7D32;border-radius:8px;padding:18px 22px;margin:16px 0}
-.selected-box .badge{display:inline-block;background:#2E7D32;color:#fff;font-size:10px;font-weight:700;letter-spacing:.1em;padding:3px 10px;border-radius:4px;text-transform:uppercase;margin-bottom:10px}
-.selected-box h4{color:#2E7D32;font-size:15px;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.04em}
-.selected-box .item{font-size:13px;line-height:1.7;color:#222;padding:4px 0}
-.selected-box .item strong{color:#1B2A4A}
-table.dash{width:100%;border-collapse:collapse;font-size:12px;margin:12px 0 18px}
-table.dash th{background:#1B2A4A;color:#C9A84C;padding:8px 10px;text-align:left;font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
-table.dash td{padding:7px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
-table.cap{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
-table.cap th{background:#F5F0E8;color:#1B2A4A;padding:7px 10px;font-weight:700;font-size:11px;text-align:left}
-table.cap td{padding:7px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
-table.act{width:100%;border-collapse:collapse;font-size:12px;margin:10px 0}
-table.act th{background:#1B2A4A;color:#fff;padding:7px 10px;text-align:left;font-size:11px}
-table.act td{padding:8px 10px;border-bottom:1px solid #f0f0f0;vertical-align:top}
-table.sales{width:100%;border-collapse:collapse;font-size:11px;margin:10px 0}
-table.sales th{background:#1B2A4A;color:#C9A84C;padding:7px 8px;text-align:left;font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.03em}
-table.sales td{padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:top}
-.pill{display:inline-block;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700}
-.pill.red{background:#FFC7CE;color:#9C0006}
-.pill.green{background:#C6EFCE;color:#276221}
-.pill.amber{background:#FFEB9C;color:#7D5C00}
-.pill.blue{background:#DCE6F1;color:#1B3A6B}
-.pill.gray{background:#D9D9D9;color:#444}
-.pri-high{background:#ED7D31;color:#fff;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap}
-.pri-med{background:#C9A84C;color:#1B2A4A;padding:2px 9px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap}
-.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:12px 0}
-.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0}
-.kpi{background:#f7f7f7;border-radius:8px;padding:14px;border:1px solid #eee}
-.kpi .label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
-.kpi .value{font-size:18px;font-weight:700;color:#1B2A4A}
-.kpi .note{font-size:11px;color:#888;margin-top:3px}
-.exec-summary{background:linear-gradient(135deg,#1B2A4A 0%,#2a3f6a 100%);color:#fff;padding:20px 24px;border-radius:8px;margin-bottom:24px}
-.exec-summary h3{color:#C9A84C;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
-.exec-summary p{font-size:13px;line-height:1.7;color:rgba(255,255,255,.85);margin-bottom:8px}
-.toc{background:#F5F0E8;border-radius:6px;padding:14px 18px;margin-bottom:24px;border-left:3px solid #C9A84C}
-.toc-title{font-size:11px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
-.toc a{display:block;font-size:12px;color:#1B2A4A;text-decoration:none;padding:3px 0;line-height:1.5}
-.toc a:hover{color:#C9A84C}
-.toc .tn{color:#C9A84C;font-weight:700;margin-right:4px}
-.footer-brand{text-align:center;padding:14px;font-size:10px;color:#888;letter-spacing:.05em;border-top:1px solid #eee;background:#fafafa;border-radius:0 0 12px 12px;margin-top:18px}
-.draft-banner{background:#FFF3CD;border:1px solid #C9A84C;color:#7B5A00;padding:10px 16px;border-radius:6px;margin-bottom:18px;font-size:12px;font-weight:600;text-align:center;letter-spacing:.04em}
-.value-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
-.value-table th{background:#1B2A4A;color:#C9A84C;padding:9px 12px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em}
-.value-table td{padding:8px 12px;border-bottom:1px solid #eee}
-.value-table td:last-child{text-align:right;font-weight:700;color:#1B2A4A}
-.value-table tr.headline td{background:#F1F8F4;color:#2E7D32;font-weight:700}
+.milestone-box{background:#E8F5E9;border:1px solid #4CAF50;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#1B5E20;line-height:1.6}
+.milestone-box strong{color:#2E7D32}
+.toc-box{background:#FAFAFA;border:1px solid #E0E0E0;border-radius:6px;padding:14px 18px;margin:12px 0 20px;font-size:12px;line-height:1.85;color:#444}
+.toc-box .toc-title{font-size:11px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.toc-box ol{padding-left:18px;margin:0}
+.kpi-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+.kpi-card{flex:1;min-width:140px;background:#1B2A4A;color:#fff;padding:14px 16px;border-radius:8px;border-left:3px solid #C9A84C}
+.kpi-card .label{font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.65);text-transform:uppercase;display:block;margin-bottom:6px}
+.kpi-card .value{font-size:22px;font-weight:700;color:#C9A84C;display:block;line-height:1.1}
+.kpi-card .sub{font-size:10px;color:rgba(255,255,255,.55);display:block;margin-top:4px}
+table.data{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12px}
+table.data thead{background:#1B2A4A;color:#fff}
+table.data th{padding:9px 10px;text-align:left;font-size:10px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+table.data td{padding:8px 10px;border-bottom:1px solid #EEE;color:#333;line-height:1.45}
+table.data tbody tr:nth-child(even){background:#FAFAFA}
+table.data tbody tr.dropped{background:#F5F5F5;opacity:.7}
+table.data tbody tr.dropped td{color:#888;text-decoration:line-through}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.03em}
+.pill-contract{background:rgba(46,125,50,.18);color:#1B5E20;border:1px solid rgba(46,125,50,.4)}
+.pill-active{background:rgba(46,125,50,.15);color:#2E7D32;border:1px solid rgba(46,125,50,.4)}
+.pill-progress{background:rgba(201,168,76,.18);color:#7B5500;border:1px solid rgba(201,168,76,.4)}
+.pill-resolved{background:rgba(46,125,50,.15);color:#2E7D32;border:1px solid rgba(46,125,50,.4)}
+.pill-out{background:rgba(120,120,120,.15);color:#666;border:1px solid rgba(120,120,120,.4)}
+.scenario-box{background:#FAFAFA;border:1px solid #E0E0E0;border-radius:8px;padding:16px 20px;margin:12px 0}
+.scenario-box .scenario-title{font-size:13px;font-weight:700;color:#1B2A4A;margin-bottom:8px}
+.scenario-box ul{padding-left:20px;margin:0;font-size:12px;line-height:1.7}
+.action-grid{display:grid;grid-template-columns:50px 1fr 110px 70px;gap:8px 14px;margin:8px 0 14px;font-size:12px}
+.action-grid .hd{font-size:10px;font-weight:700;color:#1B2A4A;letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid #C9A84C;padding-bottom:6px}
+.action-grid .cell{padding:7px 0;border-bottom:1px solid #EEE;line-height:1.45}
+.priority-high{color:#C00000;font-weight:700;font-size:11px}
+.priority-medium{color:#7B5500;font-weight:700;font-size:11px}
+.footer-strip{background:#1B2A4A;color:rgba(255,255,255,.55);padding:14px 28px;border-radius:0 0 12px 12px;font-size:10px;display:flex;justify-content:space-between;letter-spacing:.04em;margin-top:0}
+.footer-strip .right{color:rgba(255,255,255,.4)}
+.signoff{font-size:13px;color:#222;margin-top:20px;line-height:1.7}
+.signoff strong{color:#1B2A4A}
+.partner-message{background:#F5F0E8;border-left:4px solid #C9A84C;padding:16px 20px;margin:16px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 6px 6px 0}
+.partner-message .pm-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.value-callout{background:#F1F8F4;border-left:4px solid #2E7D32;padding:12px 16px;margin:10px 0;font-size:12px;line-height:1.65;color:#1B5E20;border-radius:0 6px 6px 0}
+.value-callout strong{color:#2E7D32}
+.strategy-box{background:#FAF6ED;border-left:4px solid #C9A84C;padding:18px 22px;margin:14px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 8px 8px 0}
+.strategy-box .sb-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+@media (max-width:640px){
+.panel{padding:18px 16px}
+.kpi-card{min-width:130px}
+}
 </style>
 </head>
 <body>
@@ -83,178 +88,439 @@ table.sales td{padding:6px 8px;border-bottom:1px solid #f0f0f0;vertical-align:to
   <div class="top-bar">
     <div class="top-bar-inner">
       <div class="top-bar-left">
-        <h1>ITP Houston &mdash; Development Status</h1>
+        <h1>ITPH, Houston TX &mdash; Development Status</h1>
         <p>Bissonnet 136, LLC &middot; Houston, TX &middot; PLUSAdvantage&trade; Advisory</p>
       </div>
-      <div style="flex-shrink:0;margin-left:16px">
-        <div class="date-badge">
-          <span class="month">May</span>
-          <span class="year">2026</span>
-          <span class="supp">Supplement 8</span>
-          <span class="supp" style="margin-top:4px;font-size:9px;color:rgba(255,255,255,.3)">Build: May 2026 — DRAFT</span>
-        </div>
+      <div class="date-badge">
+        <span class="month">May</span>
+        <span class="year">2026</span>
+        <span class="supp">Supplement 8</span>
       </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active">May 2026</button>
+      <button class="tab">Apr 2026</button>
+      <button class="tab">Feb 2025</button>
+      <button class="tab">Jan 2025</button>
+      <button class="tab">Dec 2024</button>
+      <button class="tab">Nov 2024</button>
+      <button class="tab">Oct 2024</button>
+      <button class="tab">Full Archive</button>
+      <button class="tab">Via Email</button>
     </div>
   </div>
 
   <div class="content">
-    <div class="draft-banner">DRAFT &mdash; May 2026 Supplement &middot; Awaiting sponsor confirmation on items marked [CONFIRM]</div>
+    <div class="panel active">
 
-    <div class="letter-header">
-      <div class="letter-meta">Via Email</div>
-      <div style="font-size:13px;font-weight:600;color:#222;margin-bottom:12px">May 2026</div>
-      <div class="addr">Kirkwood Crossings &middot; Bissonnet 136, LLC &middot; Houston, TX</div>
-      <div class="subject-line">Subject: ITP Houston &mdash; Development Status &nbsp;|&nbsp; Supplement 8</div>
+      <div class="letter-header">
+        <p class="letter-meta">May 2026</p>
+        <p class="addr">ITPH &middot; Bissonnet 136, LLC &middot; Houston, TX</p>
+        <p class="subject-line">Subject: ITPH, Houston TX &mdash; Development Status &nbsp;|&nbsp; Supplement 8</p>
+      </div>
+
+      <div class="toc-box">
+        <div class="toc-title">Contents</div>
+        <ol>
+          <li>Executive Overview &mdash; Two-Pronged Approach</li>
+          <li>Sales Pipeline &amp; Contract Status</li>
+          <li>Cost to Date &amp; Anticipated Costs</li>
+          <li>Critical Path &mdash; Construction Schedule</li>
+          <li>Strategic Direction &mdash; Buyout + Total Sale Optionality</li>
+          <li>Capital Raise &amp; Buyout Financing</li>
+          <li>Project Status Dashboard</li>
+          <li>Environmental &mdash; SKA Update</li>
+          <li>PCS / Harris County &amp; MUD 584</li>
+          <li>Infrastructure, Engineering &amp; Construction</li>
+          <li>Priority Action Items</li>
+          <li>Ongoing &mdash; No Change</li>
+        </ol>
+      </div>
+
+      <div class="section-hdr"><span class="sn">1.</span>Executive Overview &mdash; Two-Pronged Approach</div>
+
+      <div class="strategy-box">
+        <div class="sb-title">May 2026 &mdash; Strategic Framing</div>
+        <p style="margin-bottom:8px"><strong>Three priorities anchor this month&rsquo;s report:</strong></p>
+        <ol style="padding-left:22px;margin:0">
+          <li style="margin-bottom:6px"><strong>Development progress.</strong> MUD 584 has been formally approved by TCEQ and is preparing for COH election. Infrastructure design is fully advancing under Kimley-Horn and Goodheart. Critical-path construction has been refined: clearing and grubbing now starts October 2026.</li>
+          <li style="margin-bottom:6px"><strong>Selling effort.</strong> The KET Enterprises sales team has converted multiple prospects to submitted contracts in May, with Lincoln Avenue Capital partnering with Pegasus to move forward, and a refined pipeline reflecting active deal momentum.</li>
+          <li><strong>Two-pronged exit optionality.</strong> The asset is being made more viable through both pathways simultaneously: a partner buyout structure to clean the capital stack, with parallel marketing through private channels for total sale. Both scenarios advance the project; the partner sees both being pursued.</li>
+        </ol>
+      </div>
+
+      <p class="body-text">
+        Continuing with development and lot sale efforts is what makes the project more viable for either exit path. Both efforts compound: development progress increases asset value, and lot sales convert that value into contractual proof. The buyout strategy and the total-sale exploration are not mutually exclusive &mdash; together they preserve maximum optionality for the project and for all stakeholders.
+      </p>
+
+      <div class="milestone-box">
+        <strong>May 2026 milestone &mdash; MUD 584 approved by TCEQ.</strong> Following PCS contested-case dismissal (November 2025) and TCEQ remand, formal approval has now been received. Preparation underway for COH (City of Houston) election. Bond issuance path is open and supports up to $23.4M base reimbursement on the full 136-acre project.
+      </div>
+
+      <div class="section-hdr"><span class="sn">2.</span>Sales Pipeline &amp; Contract Status</div>
+
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <span class="label">Contracts Submitted</span>
+          <span class="value">2</span>
+          <span class="sub">083 Auto + Paul Momoh</span>
+        </div>
+        <div class="kpi-card">
+          <span class="label">Active Pipeline</span>
+          <span class="value">$25.8M+</span>
+          <span class="sub">Multiple parties advancing</span>
+        </div>
+        <div class="kpi-card">
+          <span class="label">PSAs Executed</span>
+          <span class="value">$0M</span>
+          <span class="sub">Earnest money pending</span>
+        </div>
+        <div class="kpi-card">
+          <span class="label">Total Lot Inventory</span>
+          <span class="value">$39.4M</span>
+          <span class="sub">30 lots / 99.58 acres</span>
+        </div>
+      </div>
+
+      <p class="body-text"><strong>2.1 Active Deal Pipeline (May 2026)</strong></p>
+      <table class="data">
+        <thead>
+          <tr><th>Prospect</th><th>Lot(s)</th><th>Type</th><th>Status</th><th>May Update</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lincoln Avenue Capital</td><td>15</td><td>MF / Affordable</td><td><span class="pill pill-active">Moving Forward</span></td><td>Partnering with Pegasus out of Austin; deal moving forward</td></tr>
+          <tr><td>Shazeb Ali</td><td>17, 22</td><td>Retail / Gas</td><td><span class="pill pill-progress">Re-Engaging</span></td><td>Re-engaging on two corner lots for gas stations</td></tr>
+          <tr><td>083 Auto LLC</td><td>10</td><td>Industrial / Auto</td><td><span class="pill pill-contract">Contract Submitted</span></td><td>Contract submitted</td></tr>
+          <tr><td>Paul Momoh</td><td>12</td><td>Industrial / Auto</td><td><span class="pill pill-contract">Contract Submitted</span></td><td>Contract submitted</td></tr>
+          <tr><td>Revolution Soccer</td><td><strong>30</strong> + retention</td><td>Flex / Entertainment</td><td><span class="pill pill-active">Verbal Submitted</span></td><td>Verbal submitted; finalizing lot requirement on Lot 30 (not Lot 1) and part of retention area</td></tr>
+          <tr><td>Nasir Ali</td><td>8, 29</td><td>Retail / Gas</td><td><span class="pill pill-progress">Offers Submitted</span></td><td>Offers submitted; awaiting timing to submit contract</td></tr>
+          <tr><td>Octa Homes</td><td>Total tract</td><td>SFH / Manufactured</td><td><span class="pill pill-active">Active</span></td><td>Total tract purchase &mdash; active discussions; no contract submitted</td></tr>
+          <tr class="dropped"><td>Streetwise Retail</td><td>30</td><td>Retail Center</td><td><span class="pill pill-out">Out</span></td><td>Removed from active pipeline</td></tr>
+          <tr class="dropped"><td>Vivian Phan</td><td>20, 21</td><td>Retail / Funeral</td><td><span class="pill pill-out">Out</span></td><td>Removed from active pipeline</td></tr>
+        </tbody>
+      </table>
+
+      <div class="value-callout">
+        <strong>Revolution Soccer &mdash; capturing value from non-revenue land:</strong> The proposed structure on Lot 30 plus part of the retention area &mdash; otherwise unusable for sale &mdash; provides Revolution Soccer additional space for parking and athletic fields. The deal prices Lot 30 above its actuarial value while costing the project nothing in lost revenue inventory.
+      </div>
+
+      <p class="body-text"><strong>2.2 New Prospects &mdash; Vetting</strong></p>
+      <p class="body-text">
+        Multiple inquiries continue to flow through the KET pipeline but none has yet converted to active negotiation in May. The broker-prepared ITPH Offer Log workbook tracks the full inquiry funnel and is used to surface and rank top prospects each month.
+      </p>
+
+      <p class="body-text"><strong>2.3 Marketing &amp; Sales Team</strong></p>
+      <p class="body-text">
+        Sales response remains consolidated under KET Enterprises (Sylvia Coronado, Tom Wilkinson). KET handles all LoopNet inquiries and maintains advertising across multiple platforms with continued weekly inquiry generation.
+      </p>
+
+      <div class="section-hdr"><span class="sn">3.</span>Cost to Date &amp; Anticipated Costs</div>
+
+      <div class="kpi-row">
+        <div class="kpi-card">
+          <span class="label">Hard Costs (v13)</span>
+          <span class="value">$23.59M</span>
+          <span class="sub">Per current model</span>
+        </div>
+        <div class="kpi-card">
+          <span class="label">Soft Costs (v13)</span>
+          <span class="value">$1.40M</span>
+          <span class="sub">Per current model</span>
+        </div>
+        <div class="kpi-card">
+          <span class="label">Total Project Cost (v13)</span>
+          <span class="value">$24.99M</span>
+          <span class="sub">Hard + Soft, horizontal only</span>
+        </div>
+        <div class="kpi-card">
+          <span class="label">MUD Bond Reimbursement</span>
+          <span class="value">$23.4M</span>
+          <span class="sub">Base case; 136 acres total project</span>
+        </div>
+      </div>
+
+      <p class="body-text">
+        Cost reporting is anchored to <strong>v13 financial model figures</strong> with hard, soft, and total project cost separately captured and defined. Hard costs ($23.59M) cover horizontal infrastructure construction; soft costs ($1.40M) cover engineering, design, and project management overhead. Aggregate horizontal cost of $24.99M is used as the canonical figure in capital structure analysis and buyout pricing.
+      </p>
+      <p class="body-text">
+        Market study and appraisal RFPs have been issued to support MUD bond cap optimization and capital markets engagement. Selection and engagement pending RFP responses.
+      </p>
+
+      <div class="section-hdr"><span class="sn">4.</span>Critical Path &mdash; Construction Schedule</div>
+
+      <p class="body-text">
+        Updated critical path schedule reflects the <strong>October 2026 clearing and grubbing start</strong> &mdash; revised from prior July framing &mdash; with construction sequencing as outlined below. The updated schedule integrates the lot owner design team coordination period with infrastructure mobilization.
+      </p>
+
+      <table class="data">
+        <thead>
+          <tr><th>Task</th><th>Duration</th><th>Start</th><th>Finish</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Lot owners secure design team / CDs</td><td>21 weeks</td><td>May 2026</td><td>Sep 2026</td></tr>
+          <tr><td><strong>METRO clearing, grubbing &amp; site prep</strong></td><td><strong>8 weeks</strong></td><td><strong>Oct 1, 2026</strong></td><td>Nov 25, 2026</td></tr>
+          <tr><td>Lot owners secure building permit</td><td>21 weeks</td><td>Oct 2026</td><td>Mar 2027</td></tr>
+          <tr><td>Mass grading and detention</td><td>27 weeks</td><td>Feb 2027</td><td>Aug 2027</td></tr>
+          <tr><td>Water, sewer &amp; storm</td><td>19 weeks</td><td>May 2027</td><td>Oct 2027</td></tr>
+          <tr><td>Paving</td><td>10 weeks</td><td>Sep 2027</td><td>Nov 2027</td></tr>
+          <tr><td>Lot owners individual developments</td><td>39 weeks</td><td>Mar 2027</td><td>Dec 2027</td></tr>
+          <tr><td>Lot owners secure C of O</td><td>1 week</td><td>Dec 2027</td><td>Dec 2027</td></tr>
+        </tbody>
+      </table>
+
+      <p class="body-text">
+        Lot owner design teams must be secured during the May&ndash;September window to align with infrastructure mobilization in October. Kimley-Horn design work is fully advancing &mdash; advance payment has been made and engineering progressing on all fronts. Goodheart change order signed and road design moving forward. Metro Structures continues as construction manager and is now proposing broader construction services scope appropriate to the development.
+      </p>
+
+      <div class="section-hdr"><span class="sn">5.</span>Strategic Direction &mdash; Buyout + Total Sale Optionality</div>
+
+      <p class="body-text">
+        The project is being made more viable through two parallel exit pathways, each independently supportive of the partner&rsquo;s repatriation of invested capital with a reasonable return.
+      </p>
+
+      <div class="scenario-box">
+        <div class="scenario-title">Path A &mdash; Partner Buyout</div>
+        <ul>
+          <li><strong>Structure:</strong> Clean cash transaction acquiring 100% of partner&rsquo;s interest in Bissonnet 136, LLC; full mutual release of all obligations between the parties</li>
+          <li><strong>Pricing approach:</strong> Buyout sized close to land contribution and deemed capital amount &mdash; same economics partner would realize if remaining in the deal &mdash; not assumed at $14M</li>
+          <li><strong>Debt sources:</strong> Walker Dunlop and NEXA Advisory Services for senior debt covering buyout and forward infrastructure in single capitalization</li>
+          <li><strong>Sponsor in-kind contribution:</strong> MSW permit revocation contributed to the new venture as a structuring lever</li>
+          <li><strong>Target close:</strong> Q4 2026, aligning with October construction start</li>
+          <li><strong>Rationale:</strong> Move forward and exit partner desiring to repatriate invested dollars and receive reasonable return</li>
+        </ul>
+      </div>
+
+      <div class="scenario-box">
+        <div class="scenario-title">Path B &mdash; Total Project Sale (Parallel Track)</div>
+        <ul>
+          <li><strong>Structure:</strong> Marketing the project through private channels for total sale to a single bulk acquirer</li>
+          <li><strong>Audience:</strong> Institutional and strategic acquirers seeking a fully-entitled, MUD-approved, infrastructure-ready master-planned project</li>
+          <li><strong>Asset story:</strong> 136 acres, 30 lots, $39.4M gross inventory, MUD 584 approved, $23.4M reimbursement available, active sales pipeline already converting to contracts</li>
+          <li><strong>Coordination with Path A:</strong> Both paths advance in parallel; total sale would substitute for both buyout and forward development; either path repatriates partner capital</li>
+        </ul>
+      </div>
+
+      <div class="value-callout">
+        <strong>Why both paths in parallel:</strong> Continuing development and lot sales increases asset value, attracts more credible bulk-sale interest, and strengthens the buyout pricing case. The two-pronged approach is not contradictory &mdash; each path reinforces the other and preserves maximum optionality for all stakeholders.
+      </div>
+
+      <div class="section-hdr"><span class="sn">6.</span>Capital Raise &amp; Buyout Financing</div>
+
+      <p class="body-text">
+        <strong>Walker Dunlop</strong> (Jordan Casallas) and <strong>NEXA Advisory Services</strong> are the active capital sources for the buyout-and-infrastructure debt. Up to <strong>$36M in senior debt</strong> is the working target, structured to fund both partner buyout and forward horizontal infrastructure in a single capitalization.
+      </p>
+
+      <p class="body-text"><strong>6.1 Buyout Pricing &mdash; Conceptual Build</strong></p>
+      <p class="body-text">
+        Buyout consideration is sized to partner&rsquo;s land contribution and deemed capital position, plus the project&rsquo;s incurred costs as carried in the v13 model. The structure delivers the partner the economic outcome of remaining in the deal, in cash, at exit &mdash; without speculative valuation premiums or commitments to amounts that haven&rsquo;t been agreed.
+      </p>
+
+      <p class="body-text"><strong>6.2 Capital History &mdash; The Asset Is Financeable</strong></p>
+      <p class="body-text">
+        Over the prior 18 months, CBRE (John Fenoglio) circulated the project to three institutional lenders &mdash; <strong>OZK Bank, LSM (Lionheart), and Allegiant</strong> &mdash; all three of whom expressed firm interest. Each was blocked at closing by the <strong>JV&rsquo;s unwillingness to proceed with debt as a reasonable source for construction</strong>. Walker Dunlop and Zarche Group produced the same pattern. The previous overseas equity group (ARESC Holdings) did not materialize. The pattern across five capital sources and three years is consistent: <strong>the underlying asset clears underwriting; the JV&rsquo;s capital-structure preferences have been the gating constraint.</strong>
+      </p>
+
+      <div class="milestone-box">
+        <strong>The buyout (or total sale) resolves the recurring constraint.</strong> New capital is not being asked to take a risk no one else would take &mdash; it is being asked to close the deal that OZK, LSM, and Allegiant all wanted but could not reach. Either exit path removes the constraint that has historically prevented debt from being deployed, and unlocks capital that has already been identified.
+      </div>
+
+      <p class="body-text"><strong>6.3 Active Sources</strong></p>
+      <table class="data">
+        <thead><tr><th>Source</th><th>Type</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Walker Dunlop &mdash; Jordan Casallas</td><td>Senior Debt</td><td><span class="pill pill-progress">Active Discussions</span></td></tr>
+          <tr><td>NEXA Advisory Services</td><td>Senior Debt</td><td><span class="pill pill-progress">Active Discussions</span></td></tr>
+          <tr><td>Private Channel Total-Sale Inquiries</td><td>Bulk Acquisition</td><td><span class="pill pill-progress">Confidential Outreach</span></td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">7.</span>Project Status Dashboard</div>
+      <table class="data">
+        <thead><tr><th>Topic</th><th>Status</th><th>Key Note</th></tr></thead>
+        <tbody>
+          <tr><td>Equity Buyout</td><td><span class="pill pill-progress">Active</span></td><td>WD + NEXA discussions; structuring buyout + infrastructure debt</td></tr>
+          <tr><td>MUD 584</td><td><span class="pill pill-resolved">Approved</span></td><td>TCEQ approved; preparing for COH election</td></tr>
+          <tr><td>PCS / Harris County</td><td><span class="pill pill-resolved">Resolved</span></td><td>Settlement in place; non-material conditions added</td></tr>
+          <tr><td>TPDES Permit</td><td><span class="pill pill-progress">Public Meeting Scheduled</span></td><td>Required step (not discretionary approval); public meeting scheduled</td></tr>
+          <tr><td>Infrastructure Design</td><td><span class="pill pill-active">Advancing</span></td><td>KH advance payment made; design progressing on all fronts</td></tr>
+          <tr><td>MSW Permit Revocation</td><td><span class="pill pill-progress">Q3 2027 Target</span></td><td>TCEQ requires 8 quarters non-exceedance; working with TCEQ to reduce</td></tr>
+          <tr><td>Sales Pipeline</td><td><span class="pill pill-active">$25.8M+</span></td><td>Multiple in PSA review; 2 contracts submitted in May (per KET)</td></tr>
+          <tr><td>LoopNet / Marketing</td><td><span class="pill pill-active">Active</span></td><td>KET Enterprises; multi-platform; offer log maintained</td></tr>
+          <tr><td>Geotech / Pavement</td><td><span class="pill pill-resolved">Advancing</span></td><td>Goodheart change order signed; road design moving forward</td></tr>
+          <tr><td>Engineering / Civil</td><td><span class="pill pill-active">Advancing</span></td><td>Kimley-Horn fully engaged; advance payment made</td></tr>
+          <tr><td>Construction Mgmt</td><td><span class="pill pill-active">Engaged</span></td><td>Metro Structures: bids, scheduling; broader scope proposal pending</td></tr>
+          <tr><td>Subchapter N Mining</td><td><span class="pill pill-resolved">Proposal Signed</span></td><td>Signed proposal; ready to move forward</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">8.</span>Environmental &mdash; SKA Update</div>
+
+      <p class="body-text"><strong>8.1 MSW Permit Revocation &mdash; Q3 2027 Target</strong></p>
+      <p class="body-text">
+        TCEQ requires <strong>8 quarters of monitoring with no exceedances</strong> as the prerequisite to formal MSW permit revocation. The current target window for revocation is <strong>Q3 2027</strong>. We are working with TCEQ to reduce this requirement based on the existing data history: 5 years of monitoring already demonstrate clearly decreasing trends, and only 2 of 52 probes have shown any concerns.
+      </p>
+      <div class="alert-box">
+        <strong>Important:</strong> The continuing existence of the MSW permit does not affect development progress. It is an SKA workstream proceeding in parallel and poses no risk to the construction schedule, MUD bond issuance, sales execution, or buyout / total-sale exit pathways.
+      </div>
+
+      <p class="body-text"><strong>8.2 TPDES Permit</strong></p>
+      <p class="body-text">
+        Public meeting (distinct from a hearing) is scheduled. This is a <strong>required procedural step, not a discretionary approval</strong>. The meeting has to occur as part of the permit process; no substantive opposition is anticipated. The TPDES permit advances toward final approval for contaminated wastewater discharge as a normal regulatory checkbox.
+      </p>
+
+      <p class="body-text"><strong>8.3 Subchapter N Mining</strong></p>
+      <p class="body-text">
+        Signed proposal is in place and ready to move forward. PCS cannot demand a hearing on the registration. Half of waste material on site is suitable soil. Implementation is queued.
+      </p>
+
+      <div class="section-hdr"><span class="sn">9.</span>PCS / Harris County &amp; MUD 584</div>
+
+      <div class="milestone-box">
+        <strong>MUD 584 APPROVED BY TCEQ.</strong> Following PCS contested-case dismissal (November 2025) and remand to the TCEQ Executive Director, formal approval has now been issued. The path to bond issuance is open. Preparation underway for the COH (City of Houston) election as the next sequential milestone.
+      </div>
+
+      <p class="body-text">
+        The October 2025 PCS contested-case dismissal cleared the final substantive obstacle. PCS released its claim as part of the settlement; non-material conditions were added. Harris County had previously withdrawn its protest. Following remand and TCEQ approval, the project now proceeds toward COH election &mdash; the final step before bond issuance can commence.
+      </p>
+
+      <p class="body-text"><strong>9.1 MUD Bond Structure</strong></p>
+      <p class="body-text">
+        The MUD applies to the full <strong>136-acre project</strong>. Reimbursement parameters per the v13 model and current bond underwriting framework:
+      </p>
+      <table class="data">
+        <thead><tr><th>Parameter</th><th>Value</th></tr></thead>
+        <tbody>
+          <tr><td>Total Project Acreage (MUD applies to)</td><td>136 acres</td></tr>
+          <tr><td>Total MUD Principal (base case)</td><td>$23,400,000</td></tr>
+          <tr><td>MUD Bond Rate (base)</td><td>8.0%</td></tr>
+          <tr><td>Reimbursement Potential (upside scenario)</td><td>up to $35M</td></tr>
+          <tr><td>First Payout (50%)</td><td>Month 24</td></tr>
+          <tr><td>Final Payout (50%)</td><td>Month 36</td></tr>
+        </tbody>
+      </table>
+
+      <p class="body-text">
+        Bond underwriting and final sizing remain pending. Detailed Capital Plan analysis available at <a href="https://houstoncapitalplan.lovable.app" style="color:#1B2A4A;font-weight:600">houstoncapitalplan.lovable.app</a>.
+      </p>
+
+      <div class="section-hdr"><span class="sn">10.</span>Infrastructure, Engineering &amp; Construction</div>
+
+      <p class="body-text"><strong>10.1 Infrastructure Design</strong></p>
+      <p class="body-text">Design hold has been resolved; work fully back on track and progressing.</p>
+
+      <p class="body-text"><strong>10.2 Engineering / Project Civil</strong></p>
+      <p class="body-text">Kimley-Horn negotiations concluded. <strong>Advance payment has been made</strong> and design work is progressing. COH resubmission requirements (drainage report, retention pond layout, geotechnical report updates) are all underway.</p>
+
+      <p class="body-text"><strong>10.3 Geotechnical / Pavement</strong></p>
+      <p class="body-text">Goodheart change order signed; road design fully resumed. All elements moving forward.</p>
+
+      <p class="body-text"><strong>10.4 Construction Services &mdash; Metro Structures</strong></p>
+      <p class="body-text">
+        Metro Structures handles construction management, bid comparison, scheduling, and developer interface. Lot owner design team coordination with Metro Structures is ongoing. <strong>Metro Structures is proposing broader construction services</strong> required for the development at this time &mdash; an expanded scope appropriate to the project&rsquo;s phase, under review.
+      </p>
+
+      <p class="body-text"><strong>10.5 Cost Optimization</strong></p>
+      <ul class="bullet-list">
+        <li>Pond reconfiguration (90-ft MSL contours) could save $7M+ in waste removal</li>
+        <li>Line-item trade bidding to eliminate GC markup</li>
+        <li>Value engineering on revised design specifications</li>
+      </ul>
+
+      <div class="section-hdr"><span class="sn">11.</span>Priority Action Items</div>
+      <div class="action-grid">
+        <div class="hd">#</div><div class="hd">Action Item</div><div class="hd">Owner</div><div class="hd">Priority</div>
+
+        <div class="cell">11.1</div>
+        <div class="cell">Pursue Walker Dunlop and NEXA Advisory Services debt term sheets for buyout + infrastructure</div>
+        <div class="cell">Lester</div>
+        <div class="cell"><span class="priority-high">High</span></div>
+
+        <div class="cell">11.2</div>
+        <div class="cell">Continue private-channel total-sale outreach in parallel with buyout structuring</div>
+        <div class="cell">Lester</div>
+        <div class="cell"><span class="priority-high">High</span></div>
+
+        <div class="cell">11.3</div>
+        <div class="cell">COH election preparation for MUD 584</div>
+        <div class="cell">Bissonnet 136</div>
+        <div class="cell"><span class="priority-high">High</span></div>
+
+        <div class="cell">11.4</div>
+        <div class="cell">Work with TCEQ to reduce 8-quarter non-exceedance requirement for MSW revocation; MSW existence does not affect development progress</div>
+        <div class="cell">SKA / Lester</div>
+        <div class="cell"><span class="priority-high">High</span></div>
+
+        <div class="cell">11.5</div>
+        <div class="cell">Convert 083 Auto and Paul Momoh submitted contracts to executed PSAs</div>
+        <div class="cell">Lester / KET</div>
+        <div class="cell"><span class="priority-medium">Medium</span></div>
+
+        <div class="cell">11.6</div>
+        <div class="cell">Complete TPDES public meeting (required procedural step, not discretionary); confirmed working toward more flexible terms</div>
+        <div class="cell">SKA / Lester</div>
+        <div class="cell"><span class="priority-medium">Medium</span></div>
+
+        <div class="cell">11.7</div>
+        <div class="cell">Subchapter N mining &mdash; proposal signed; advance to implementation</div>
+        <div class="cell">Bissonnet 136</div>
+        <div class="cell"><span class="priority-medium">Medium</span></div>
+
+        <div class="cell">11.8</div>
+        <div class="cell">Appraisal and market study RFPs are out; review responses and engage</div>
+        <div class="cell">Bissonnet 136 / Lester</div>
+        <div class="cell"><span class="priority-medium">Medium</span></div>
+
+        <div class="cell">11.9</div>
+        <div class="cell">Metro Structures lot owner design team coordination ongoing; review broader construction services proposal</div>
+        <div class="cell">Lester / Metro</div>
+        <div class="cell"><span class="priority-medium">Medium</span></div>
+
+        <div class="cell">11.10</div>
+        <div class="cell">Finalize Revolution Soccer term sheet (Lot 30 + retention)</div>
+        <div class="cell">Lester / KET</div>
+        <div class="cell"><span class="priority-medium">Medium</span></div>
+
+        <div class="cell">11.11</div>
+        <div class="cell">Octa Homes total-tract purchase &mdash; advance from active discussions to written proposal</div>
+        <div class="cell">Lester</div>
+        <div class="cell"><span class="priority-medium">Medium</span></div>
+      </div>
+
+      <p class="body-text"><strong>Items completed since April:</strong></p>
+      <ul class="bullet-list">
+        <li><span style="color:#2E7D32;font-weight:700">&#10003;</span> Kimley-Horn advance payment made &mdash; design fully resumed</li>
+        <li><span style="color:#2E7D32;font-weight:700">&#10003;</span> MUD 584 TCEQ approval &mdash; received</li>
+        <li><span style="color:#2E7D32;font-weight:700">&#10003;</span> Subchapter N mining proposal &mdash; signed</li>
+        <li><span style="color:#2E7D32;font-weight:700">&#10003;</span> Hard + soft cost framing &mdash; reconciled to v13 ($24.99M)</li>
+        <li><span style="color:#2E7D32;font-weight:700">&#10003;</span> Two May contracts submitted (083 Auto, Paul Momoh)</li>
+        <li><span style="color:#2E7D32;font-weight:700">&#10003;</span> Lincoln Avenue Capital partnership with Pegasus &mdash; secured</li>
+      </ul>
+
+      <div class="partner-message">
+        <div class="pm-title">JV Partner Update</div>
+        Extraordinary development efforts have secured the MUD. Extraordinary construction management efforts have brought down costs and decreased the implementation timeline. Interim goals are being met or exceeded. Financial returns continue to be promising as demand for lots increases, driven by concentrated marketing efforts to sell project, lots, or raise capital for a replacement investment partner. The two-pronged approach &mdash; partner buyout structuring proceeding in parallel with private-channel outreach for total project sale &mdash; provides multiple pathways for partner capital repatriation with reasonable return.
+      </div>
+
+      <div class="section-hdr"><span class="sn">12.</span>Ongoing &mdash; No Change</div>
+      <ul class="bullet-list">
+        <li>CC&amp;Rs &mdash; Draft in progress</li>
+        <li>Design Architect &mdash; Identified; aligning builder-developers via CC&amp;R</li>
+        <li>Standardized PSA &mdash; In customization</li>
+        <li>LoopNet Premium &mdash; Active; KET managing multi-platform distribution and maintaining offer log</li>
+      </ul>
+
+      <p class="signoff">
+        <strong>Mark D. Lester</strong><br>
+        Principal &middot; LANDCO NEXA<br>
+        mlester@landconexa.com &middot; T: 650-638-0900
+      </p>
+
     </div>
+  </div>
 
-    <div class="toc">
-      <div class="toc-title">Contents</div>
-      <a href="#x1"><span class="tn">1.</span> Executive Overview</a>
-      <a href="#x2"><span class="tn">2.</span> Sales Pipeline &amp; Contract Status</a>
-      <a href="#x3"><span class="tn">3.</span> Cost to Date &mdash; Reconciliation Pending</a>
-      <a href="#x4"><span class="tn">4.</span> Critical Path &mdash; Construction Schedule</a>
-      <a href="#x5"><span class="tn">5.</span> Strategic Direction &mdash; Buyout Path Selected</a>
-      <a href="#x6"><span class="tn">6.</span> Capital Structure &amp; Financing</a>
-      <a href="#x7"><span class="tn">7.</span> Project Status Dashboard</a>
-      <a href="#x9"><span class="tn">9.</span> MUD 584 Bond Structure</a>
-      <a href="#x11"><span class="tn">11.</span> Priority Action Items</a>
-    </div>
-
-    <!-- 1. EXEC -->
-    <div id="x1" class="exec-summary">
-      <h3><span class="sn">1.</span> Executive Overview</h3>
-      <p>The May supplement formalizes the strategic direction selected since April: the project will move forward as a clean buyout transaction mirrored on the 2023 PSA, with senior debt up to $36M targeted for a Q3 2026 close that aligns with construction start in July 2026.</p>
-      <p>The buyer-side valuation analysis supports a project valuation of <strong>$21.05M</strong> at a 25% levered equity IRR, with $11.14M of net project profit and a 1.81x equity multiple. MSW permit revocation is being structured as a sponsor in-kind contribution to the new venture.</p>
-      <p>Sales pipeline, infrastructure design, and MUD 584 status carry forward from April pending sponsor confirmation on the 29-item update list. Cost framing reconciliation between the v13 model ($24.99M) and external messaging ($31.5M) is the highest-priority open item.</p>
-    </div>
-
-    <!-- 2. SALES -->
-    <div class="section-hdr" id="x2"><span class="sn">2.</span> Sales Pipeline &amp; Contract Status</div>
-    <div class="four-col">
-      <div class="kpi"><div class="label">Total Brochures</div><div class="value">10,669</div><div class="note">[CONFIRM May number]</div></div>
-      <div class="kpi"><div class="label">LoopNet Views</div><div class="value">4,879</div><div class="note">[CONFIRM May number]</div></div>
-      <div class="kpi"><div class="label">Direct Contacts</div><div class="value">15</div><div class="note">Since Mar 24 &middot; [CONFIRM May]</div></div>
-      <div class="kpi"><div class="label">PSAs Executed</div><div class="value">[CONFIRM]</div><div class="note">New KPI for May</div></div>
-    </div>
-
-    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.1 Active Pipeline &mdash; May Status</p>
-    <table class="sales">
-      <tr><th>Lot(s)</th><th>Prospect</th><th>Type</th><th>April Status</th><th>May Update Needed</th></tr>
-      <tr><td>15</td><td><strong>Lincoln Ave Capital</strong></td><td>MF / Affordable</td><td><span class="pill amber">PSA Review</span></td><td>Non-profit partnership status; escrow status [CONFIRM]</td></tr>
-      <tr><td>17, 22</td><td><strong>Shazeb Ali</strong></td><td>Retail / Gas</td><td><span class="pill amber">PSA Review</span></td><td>DD progress [CONFIRM]</td></tr>
-      <tr><td>10</td><td><strong>083 Auto LLC</strong></td><td>Industrial / Auto</td><td><span class="pill amber">PSA Review</span></td><td>Business plan received? [CONFIRM]</td></tr>
-      <tr><td>12</td><td><strong>Paul Momoh</strong></td><td>Industrial / Auto</td><td><span class="pill amber">PSA Review</span></td><td>Business plan received? [CONFIRM]</td></tr>
-      <tr><td>30</td><td><strong>Streetwise Retail</strong></td><td>Retail Center</td><td><span class="pill amber">PSA Review</span></td><td>Document review status [CONFIRM]</td></tr>
-      <tr><td>1</td><td><strong>Revolution Soccer</strong></td><td>Flex / Entertainment</td><td><span class="pill amber">PSA Review</span></td><td>Q2 2027 timing confirmation [CONFIRM]</td></tr>
-      <tr><td>8, 29</td><td><strong>Nasir Ali</strong></td><td>Retail / Gas</td><td><span class="pill amber">PSA Review</span></td><td>PSA review progress [CONFIRM]</td></tr>
-      <tr><td>20, 21</td><td><strong>Vivian Phan</strong></td><td>Retail / Funeral</td><td><span class="pill blue">New</span></td><td>Call held? Move from "New" to ? [CONFIRM]</td></tr>
-      <tr><td>13, 14, 16</td><td><strong>Octa Homes</strong></td><td>SFH / Manufactured</td><td><span class="pill red">Unlikely</span></td><td>Whole-project status &mdash; alive or dead? [CONFIRM]</td></tr>
-    </table>
-
-    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">2.2 New Prospects &mdash; Vetting</p>
-    <ul class="bullet-list">
-      <li><strong>Wea Lee</strong> &mdash; [CONFIRM if moved off vetting]</li>
-      <li><strong>StorageCaves</strong> &mdash; [CONFIRM if moved off vetting]</li>
-      <li><strong>Hassan Aram</strong> &mdash; [CONFIRM if moved off vetting]</li>
-      <li><strong>Vicente Vargas</strong> &mdash; [CONFIRM if moved off vetting]</li>
-    </ul>
-
-    <!-- 3. COSTS -->
-    <div class="section-hdr" id="x3"><span class="sn">3.</span> Cost to Date &mdash; Reconciliation Pending</div>
-    <div class="alert-box">
-      <strong>PRIORITY ACTION ITEM:</strong> Two cost framings currently appear in project materials. Sponsor confirmation required to designate one as canonical before publishing externally.
-    </div>
-    <table class="cap">
-      <tr><th>Source</th><th>Hard + Soft Total</th><th>Detail</th></tr>
-      <tr><td>v13 Financial Model</td><td><strong>$24,991,700</strong></td><td>$23.59M hard + $1.40M soft</td></tr>
-      <tr><td>External / April Report Messaging</td><td><strong>$31,500,000</strong></td><td>Subject to OPCC revision</td></tr>
-    </table>
-
-    <!-- 4. CRITICAL PATH -->
-    <div class="section-hdr" id="x4"><span class="sn">4.</span> Critical Path</div>
-    <p class="body-text">Construction schedule carries forward unchanged from April: Jul 1, 2026 start &mdash; Jan 14, 2028 finish. Design teams must be secured by May 2026. See April supplement for full task-level Gantt detail.</p>
-
-    <!-- 5. STRATEGIC DIRECTION -->
-    <div class="section-hdr" id="x5"><span class="sn">5.</span> Strategic Direction &mdash; Buyout Path Selected</div>
-    <div class="selected-box">
-      <span class="badge">Selected</span>
-      <h4>Buyout Path</h4>
-      <div class="item"><strong>Structure:</strong> Clean cash transaction, mirrored on the 2023 PSA executed at $14,995,000 (historical valuation precedent).</div>
-      <div class="item"><strong>Debt Sources:</strong> Senior debt up to $36M from Walker Dunlop and Index Fund covering buyout plus infrastructure.</div>
-      <div class="item"><strong>Target Close:</strong> Q3 2026, aligned with July 2026 construction start to enable simultaneous infrastructure mobilization.</div>
-      <div class="item"><strong>Sponsor In-Kind Contribution:</strong> MSW permit revocation contributed to the new venture as a structuring lever.</div>
-      <div class="item"><strong>Rationale:</strong> Clean exit with certain proceeds, eliminating shared upside / execution risk and recurring capital-structure friction documented over the past three years (OZK Bank, LSM/Lionheart, Allegiant).</div>
-    </div>
-
-    <!-- 6. CAPITAL -->
-    <div class="section-hdr" id="x6"><span class="sn">6.</span> Capital Structure &amp; Financing</div>
-
-    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:6px">6.1 Buyer-Side Project Valuation Analysis</p>
-    <p class="body-text">Headline economics from the buyer IRR analysis (matches <em>ITPH_Project_Valuation_Final.pdf</em>):</p>
-    <table class="value-table">
-      <tr><th>Metric</th><th style="text-align:right;color:#C9A84C">Value</th></tr>
-      <tr class="headline"><td>Project Valuation supporting 25% levered equity IRR</td><td>$21.05M</td></tr>
-      <tr><td>Total Project Cost (acquisition + horizontal)</td><td>$46.04M</td></tr>
-      <tr><td>Senior Debt Interest (carry @ 11%)</td><td>$3.65M</td></tr>
-      <tr><td>All-In Cost</td><td>$49.68M</td></tr>
-      <tr><td>Total Revenue (net lot sales + MUD)</td><td>$60.82M</td></tr>
-      <tr class="headline"><td>Net Project Profit</td><td>$11.14M</td></tr>
-      <tr><td>Equity Multiple</td><td>1.81x</td></tr>
-      <tr class="headline"><td>Equity IRR</td><td>25.00%</td></tr>
-    </table>
-
-    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">6.2 Capital History</p>
-    <p class="body-text">Five capital sources engaged across three years (OZK Bank, LSM/Lionheart, Allegiant pattern). In each case the asset cleared underwriting, but partner structure friction blocked closing. The buyout solves this recurring problem by replacing the existing partner structure entirely.</p>
-
-    <p class="body-text" style="font-weight:700;color:#1B2A4A;margin-top:14px">6.3 Active Sources</p>
-    <table class="cap">
-      <tr><th>Source</th><th>Type</th><th>Status</th></tr>
-      <tr><td>Walker Dunlop &middot; Jordan Casallas</td><td>Debt</td><td>[CONFIRM term sheet status]</td></tr>
-      <tr><td>Index Fund</td><td>Debt</td><td>[CONFIRM discussion progress]</td></tr>
-    </table>
-
-    <!-- 7. STATUS DASHBOARD -->
-    <div class="section-hdr" id="x7"><span class="sn">7.</span> Project Status Dashboard</div>
-    <table class="dash">
-      <tr><th>Topic</th><th>Status</th><th>Notes</th></tr>
-      <tr><td>Equity Buyout</td><td><span class="pill green">Active</span></td><td>Direction confirmed as Buyout-only path</td></tr>
-      <tr><td>MUD 584</td><td><span class="pill green">Cleared</span></td><td>[CONFIRM TCEQ final approval timing]</td></tr>
-      <tr><td>TPDES Permit</td><td><span class="pill amber">In Progress</span></td><td>[CONFIRM May 18 meeting outcome]</td></tr>
-      <tr><td>Infrastructure Design</td><td><span class="pill green">Back on Track</span></td><td>[CONFIRM KH advance payment status]</td></tr>
-      <tr><td>LFG Monitoring</td><td><span class="pill amber">Catching Up</span></td><td>July 2026 target</td></tr>
-      <tr><td>Sales Pipeline</td><td><span class="pill blue">$25.8M</span></td><td>[CONFIRM May number]</td></tr>
-    </table>
-
-    <!-- 9. MUD STRUCTURE -->
-    <div class="section-hdr" id="x9"><span class="sn">9.</span> MUD 584 Bond Structure</div>
-    <table class="cap">
-      <tr><th>Parameter</th><th>Value</th></tr>
-      <tr><td>Total MUD Principal (base case)</td><td><strong>$23,400,000</strong></td></tr>
-      <tr><td>MUD Bond Rate (base)</td><td>8.0%</td></tr>
-      <tr><td>Reimbursement Potential (10% scenario)</td><td>up to $35M</td></tr>
-      <tr><td>First Payout (50%)</td><td>Month 24</td></tr>
-      <tr><td>Final Payout (50%)</td><td>Month 36</td></tr>
-      <tr><td>Total Payout Window</td><td>12 months (Mo 24&ndash;36)</td></tr>
-      <tr><td>Eligible Acres (underwriting basis)</td><td>44.08 ac</td></tr>
-    </table>
-    <p class="body-text" style="font-size:12px;color:#666">See the live MUD Analysis page in the dashboard for parameter sensitivity.</p>
-
-    <!-- 11. PRIORITY ACTION ITEMS -->
-    <div class="section-hdr" id="x11"><span class="sn">11.</span> Priority Action Items</div>
-    <table class="act">
-      <tr><th>#</th><th>Priority</th><th>Item</th><th>Status</th></tr>
-      <tr><td>11.1</td><td><span class="pri-high">HIGH</span></td><td><strong>NEW</strong> &mdash; Reconcile hard + soft cost framing ($24.99M v13 vs. $31.5M external)</td><td>Open</td></tr>
-      <tr><td>11.2</td><td><span class="pri-high">HIGH</span></td><td><strong>NEW</strong> &mdash; Finalize Walker Dunlop term sheet for buyout + infrastructure debt</td><td>Open</td></tr>
-      <tr><td>11.3</td><td><span class="pri-high">HIGH</span></td><td><strong>NEW</strong> &mdash; Finalize buyout valuation and term sheet to JV partner</td><td>Open</td></tr>
-      <tr><td>11.4</td><td><span class="pri-med">MED</span></td><td>LFG monitoring progress</td><td>[CONFIRM if complete]</td></tr>
-      <tr><td>11.5</td><td><span class="pri-med">MED</span></td><td>TPDES public meeting (held May 18) &mdash; post-meeting follow-up</td><td>Carry forward</td></tr>
-      <tr><td>11.6</td><td><span class="pri-med">MED</span></td><td>KH advance payment</td><td>[CONFIRM if paid]</td></tr>
-      <tr><td>11.7</td><td><span class="pri-med">MED</span></td><td>Subchapter N mining</td><td>[CONFIRM if any movement]</td></tr>
-      <tr><td>11.8</td><td><span class="pri-med">MED</span></td><td>Market Study commission</td><td>[CONFIRM if commissioned]</td></tr>
-      <tr><td>11.9</td><td><span class="pri-med">MED</span></td><td>Lot owner design teams</td><td>[CONFIRM May progress]</td></tr>
-    </table>
-
-    <div class="footer-brand">PLUSAdvantage&trade; 2026 &mdash; CONFIDENTIAL &middot; Build: May 2026 &mdash; DRAFT (awaiting Lester input)</div>
+  <div class="footer-strip">
+    <div>PLUSAdvantage&trade; 2026 &mdash; CONFIDENTIAL</div>
+    <div class="right">Build: May 2026 &mdash; Final v3 (post-Lester review)</div>
   </div>
 </div>
 </body>
