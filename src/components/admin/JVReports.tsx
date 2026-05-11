@@ -26,7 +26,7 @@ export default function JVReports() {
   };
 
   useEffect(() => {
-    fetch(selected.htmlFile)
+    fetch(`${selected.htmlFile}?v=${Date.now()}`, { cache: "no-store" })
       .then((res) => res.text())
       .then(setHtmlContent)
       .catch(() => setHtmlContent("<p>Failed to load report.</p>"));
