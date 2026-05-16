@@ -1874,51 +1874,65 @@ const VAULT_CATEGORIES = [
 
 const FILE_TYPE_COLORS = { pdf: "#E85D75", xlsx: "#2E8B57", docx: "#3D8EC9", pptx: "#C4703E", png: "#D4A84B", zip: "#7A8B9A", jpg: "#D4A84B" };
 
+const SORT_OPTIONS = [
+  { id: "recent", label: "Most Recent" },
+  { id: "oldest", label: "Oldest First" },
+  { id: "az", label: "Name A–Z" },
+  { id: "za", label: "Name Z–A" },
+  { id: "largest", label: "Largest" },
+];
+
+function formatBytes(b) {
+  if (!b && b !== 0) return "";
+  if (b < 1024) return b + " B";
+  if (b < 1024 * 1024) return (b / 1024).toFixed(1) + " KB";
+  return (b / (1024 * 1024)).toFixed(1) + " MB";
+}
+
 function DataVaultTab() {
   const [documents, setDocuments] = useState([]);
-  const [uploading, setUploading] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("recent");
+  const [showFilters, setShowFilters] = useState(false);
+  const [typeFilter, setTypeFilter] = useState("all");
+  const [catFilter, setCatFilter] = useState("all");
   const fileInputRef = useRef(null);
-  const [uploadCategory, setUploadCategory] = useState(null);
+  const folderInputRef = useRef(null);
+  const zipInputRef = useRef(null);
 
-  useEffect(() => {
-    fetchDocuments();
-  }, []);
+  useEffect(() => { fetchDocuments(); }, []);
 
   async function fetchDocuments() {
     const { data } = await supabase.from("vault_documents").select("*").order("uploaded_at", { ascending: false });
     if (data) setDocuments(data);
   }
 
-
-
-
-  async function handleUpload(category, file) {
-    if (!file) return;
-    setUploading(category);
-    setUploadProgress(10);
-
-    const ext = file.name.split(".").pop().toLowerCase();
+  async function uploadOne(file, category = "General") {
+    const ext = (file.name.split(".").pop() || "").toLowerCase();
     const folderName = category.replace(/[^a-zA-Z0-9]/g, "_");
     const filePath = folderName + "/" + Date.now() + "_" + file.name;
-
-    setUploadProgress(30);
     const { error: storageError } = await supabase.storage.from("itph-data-vault").upload(filePath, file);
-    if (storageError) { console.error(storageError); setUploading(null); return; }
-
-    setUploadProgress(70);
+    if (storageError) { console.error(storageError); return false; }
     const { error: dbError } = await supabase.from("vault_documents").insert({
-      name: file.name,
-      description: "",
-      category: category,
-      file_path: filePath,
-      file_type: ext,
-      file_size: file.size,
+      name: file.name, description: "", category, file_path: filePath, file_type: ext, file_size: file.size,
     });
+    return !dbError;
+  }
 
-    setUploadProgress(100);
-    if (!dbError) await fetchDocuments();
-    setTimeout(() => { setUploading(null); setUploadProgress(0); }, 500);
+  async function handleFiles(fileList) {
+    const files = Array.from(fileList || []);
+    if (!files.length) return;
+    setUploading(true); setUploadProgress(5);
+    let done = 0;
+    for (const f of files) {
+      await uploadOne(f, "General");
+      done += 1;
+      setUploadProgress(Math.round((done / files.length) * 100));
+    }
+    await fetchDocuments();
+    setTimeout(() => { setUploading(false); setUploadProgress(0); }, 400);
   }
 
   function getDocUrl(filePath) {
@@ -1933,122 +1947,242 @@ function DataVaultTab() {
     await fetchDocuments();
   }
 
-  const totalDocs = documents.length;
-  const totalCategories = VAULT_CATEGORIES.length;
+  // Derive filter values from data
+  const allCategories = Array.from(new Set(documents.map(d => d.category).filter(Boolean)));
+  const allTypes = Array.from(new Set(documents.map(d => (d.file_type || "").toLowerCase()).filter(Boolean)));
+
+  const filtered = documents
+    .filter(d => {
+      const q = search.trim().toLowerCase();
+      if (q && !(`${d.name} ${d.category} ${d.file_type}`).toLowerCase().includes(q)) return false;
+      if (typeFilter !== "all" && (d.file_type || "").toLowerCase() !== typeFilter) return false;
+      if (catFilter !== "all" && d.category !== catFilter) return false;
+      return true;
+    })
+    .sort((a, b) => {
+      switch (sortBy) {
+        case "oldest": return new Date(a.uploaded_at) - new Date(b.uploaded_at);
+        case "az": return a.name.localeCompare(b.name);
+        case "za": return b.name.localeCompare(a.name);
+        case "largest": return (b.file_size || 0) - (a.file_size || 0);
+        default: return new Date(b.uploaded_at) - new Date(a.uploaded_at);
+      }
+    });
+
+  const PILL_NAVY = NAVY;
+  const PILL_GOLD = GOLD;
 
   return (
-    <div>
-      <SectionTitle icon={"\ud83d\udcc1"}>Project Data Vault</SectionTitle>
-      <div style={{ fontSize: 12, color: "#7A8B9A", marginBottom: 16 }}>
-        Secure document repository for ITP Houston project materials. All documents are confidential and for authorized recipients only.
-      </div>
-      <div style={{ display: "inline-flex", alignItems: "center", gap: 8, background: LIGHT, padding: "8px 16px", borderRadius: 8, fontSize: 12, color: NAVY, fontWeight: 600, marginBottom: 24 }}>
-        <FileText size={14} /> {totalDocs} documents across {totalCategories} categories
+    <div style={{ fontFamily: "Arial, sans-serif" }}>
+      {/* Header */}
+      <div style={{ textAlign: "center", marginBottom: 8 }}>
+        <div style={{ display: "inline-flex", alignItems: "center", gap: 12, justifyContent: "center" }}>
+          <span style={{ fontSize: 28 }}>🔐</span>
+          <h1 style={{ fontFamily: "Georgia,serif", fontSize: 30, fontWeight: 700, color: NAVY, margin: 0, letterSpacing: -0.3 }}>
+            Houston ITP Capital Plan — Data Vault
+          </h1>
+        </div>
+        <div style={{ fontSize: 13, color: "#5A6B7A", marginTop: 8, maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
+          Secure document repository — search, filter, upload, organize, view and download project documents.
+        </div>
+        <div style={{ height: 2, background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`, marginTop: 16, marginBottom: 24 }} />
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20 }}>
-        {VAULT_CATEGORIES.map(cat => {
-          const catDocs = documents.filter(d => d.category === cat.name);
-          return (
-            <div key={cat.name} style={{ background: "white", borderRadius: 12, padding: 20, boxShadow: "0 1px 3px rgba(0,0,0,0.08)" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <span style={{ fontSize: 20 }}>{cat.icon}</span>
-                  <span style={{ fontSize: 16, fontWeight: 700, color: NAVY }}>{cat.name}</span>
-                  <span style={{ background: STEEL + "30", color: TEAL, fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 10 }}>{catDocs.length}</span>
+      {/* Vault selector row */}
+      <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+        <span style={{ fontSize: 13, fontWeight: 700, color: NAVY }}>Vault:</span>
+        <div style={{ padding: "8px 16px", border: `1.5px solid ${NAVY}`, borderRadius: 8, fontSize: 13, fontWeight: 600, color: NAVY, background: "white", minWidth: 160 }}>
+          General ▾
+        </div>
+      </div>
+
+      {/* Search + Sort + Filters */}
+      <div style={{ display: "flex", gap: 12, marginBottom: 16, flexWrap: "wrap" }}>
+        <div style={{ flex: "1 1 320px", position: "relative" }}>
+          <span style={{ position: "absolute", left: 16, top: "50%", transform: "translateY(-50%)", fontSize: 16, color: "#7A8B9A" }}>🔍</span>
+          <input
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search documents by name, vendor, type, tags…"
+            style={{
+              width: "100%", padding: "12px 16px 12px 44px",
+              borderRadius: 999, border: `1.5px solid ${STEEL}`,
+              fontSize: 13, color: NAVY, outline: "none", background: "white",
+              boxSizing: "border-box",
+            }}
+          />
+        </div>
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          style={{
+            padding: "10px 16px", borderRadius: 999, border: `1.5px solid ${STEEL}`,
+            fontSize: 13, color: NAVY, fontWeight: 600, background: "white", cursor: "pointer",
+          }}
+        >
+          {SORT_OPTIONS.map(o => <option key={o.id} value={o.id}>{o.label}</option>)}
+        </select>
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          style={{
+            padding: "10px 18px", borderRadius: 999, border: `1.5px solid ${NAVY}`,
+            background: showFilters ? NAVY : "white", color: showFilters ? "white" : NAVY,
+            fontSize: 13, fontWeight: 700, cursor: "pointer",
+          }}
+        >
+          ▾ Filters
+        </button>
+      </div>
+
+      {showFilters && (
+        <div style={{ display: "flex", gap: 16, padding: 14, background: LIGHT, borderRadius: 10, marginBottom: 16, flexWrap: "wrap" }}>
+          <label style={{ fontSize: 12, color: NAVY, fontWeight: 700 }}>
+            Type:{" "}
+            <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} style={{ padding: "6px 10px", borderRadius: 6, border: `1px solid ${STEEL}`, fontSize: 12, marginLeft: 6 }}>
+              <option value="all">All</option>
+              {allTypes.map(t => <option key={t} value={t}>{t.toUpperCase()}</option>)}
+            </select>
+          </label>
+          <label style={{ fontSize: 12, color: NAVY, fontWeight: 700 }}>
+            Category:{" "}
+            <select value={catFilter} onChange={(e) => setCatFilter(e.target.value)} style={{ padding: "6px 10px", borderRadius: 6, border: `1px solid ${STEEL}`, fontSize: 12, marginLeft: 6 }}>
+              <option value="all">All</option>
+              {allCategories.map(c => <option key={c} value={c}>{c}</option>)}
+            </select>
+          </label>
+        </div>
+      )}
+
+      <div style={{ fontSize: 13, color: "#5A6B7A", marginBottom: 16 }}>
+        Showing <strong style={{ color: NAVY }}>{filtered.length}</strong> of <strong style={{ color: NAVY }}>{documents.length}</strong> documents in <strong style={{ color: NAVY }}>General</strong>
+      </div>
+
+      {/* Upload tiles */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 16, marginBottom: 24 }}>
+        {[
+          { ref: fileInputRef, label: "Upload Files", sub: "Click or drag — PDF, DOCX, XLSX, images", icon: "📄", multi: true, attrs: {} },
+          { ref: folderInputRef, label: "Upload Folder", sub: "Select an entire folder to upload", icon: "📁", multi: true, attrs: { webkitdirectory: "", directory: "" } },
+          { ref: zipInputRef, label: "Upload ZIP", sub: "Upload a zipped folder of documents", icon: "🗜️", multi: false, attrs: { accept: ".zip" } },
+        ].map(tile => (
+          <button
+            key={tile.label}
+            onClick={() => tile.ref.current && tile.ref.current.click()}
+            disabled={uploading}
+            style={{
+              background: "white", border: `2px dashed ${STEEL}`, borderRadius: 12,
+              padding: "28px 16px", cursor: uploading ? "wait" : "pointer",
+              display: "flex", flexDirection: "column", alignItems: "center", gap: 8,
+              transition: "all 0.2s", textAlign: "center",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.borderColor = GOLD; e.currentTarget.style.background = LIGHT; }}
+            onMouseLeave={(e) => { e.currentTarget.style.borderColor = STEEL; e.currentTarget.style.background = "white"; }}
+          >
+            <div style={{ fontSize: 32 }}>{tile.icon}</div>
+            <div style={{ fontSize: 14, fontWeight: 700, color: NAVY }}>{tile.label}</div>
+            <div style={{ fontSize: 11, color: "#7A8B9A" }}>{tile.sub}</div>
+          </button>
+        ))}
+      </div>
+
+      {uploading && (
+        <div style={{ marginBottom: 20 }}>
+          <div style={{ background: "#F0F2F4", borderRadius: 4, height: 6, overflow: "hidden" }}>
+            <div style={{ width: uploadProgress + "%", height: "100%", background: GOLD, transition: "width 0.3s" }} />
+          </div>
+          <div style={{ fontSize: 11, color: "#7A8B9A", marginTop: 4 }}>Uploading… {uploadProgress}%</div>
+        </div>
+      )}
+
+      <input ref={fileInputRef} type="file" multiple style={{ display: "none" }}
+        onChange={(e) => { handleFiles(e.target.files); e.target.value = ""; }} />
+      <input ref={folderInputRef} type="file" multiple webkitdirectory="" directory="" style={{ display: "none" }}
+        onChange={(e) => { handleFiles(e.target.files); e.target.value = ""; }} />
+      <input ref={zipInputRef} type="file" accept=".zip" style={{ display: "none" }}
+        onChange={(e) => { handleFiles(e.target.files); e.target.value = ""; }} />
+
+      {/* Document list */}
+      <div style={{ background: "white", borderRadius: 12, border: `1px solid ${STEEL}40`, overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.06)" }}>
+        <div style={{ padding: "14px 20px", borderBottom: `2px solid ${GOLD}`, background: NAVY, color: "white", fontSize: 13, fontWeight: 700, letterSpacing: 0.4 }}>
+          General — {filtered.length} {filtered.length === 1 ? "document" : "documents"}
+        </div>
+
+        {filtered.length === 0 ? (
+          <div style={{ padding: "40px 20px", textAlign: "center", color: "#9AA8B5", fontSize: 13, fontStyle: "italic" }}>
+            No documents match your search.
+          </div>
+        ) : (
+          filtered.map(doc => {
+            const ft = (doc.file_type || "").toLowerCase();
+            const ftColor = FILE_TYPE_COLORS[ft] || "#7A8B9A";
+            return (
+              <div key={doc.id} style={{
+                display: "flex", alignItems: "center", gap: 16,
+                padding: "14px 20px", borderBottom: `1px solid ${STEEL}30`,
+              }}>
+                <div style={{
+                  width: 38, height: 46, borderRadius: 6, background: ftColor + "20",
+                  color: ftColor, display: "flex", alignItems: "center", justifyContent: "center",
+                  fontWeight: 800, fontSize: 10, flexShrink: 0, border: `1px solid ${ftColor}40`,
+                }}>
+                  {ft.toUpperCase().slice(0, 4) || "FILE"}
                 </div>
-                <button
-                  onClick={() => { setUploadCategory(cat.name); fileInputRef.current && fileInputRef.current.click(); }}
-                  style={{ display: "inline-flex", alignItems: "center", gap: 4, background: TERRA, color: "white", border: "none", padding: "6px 12px", borderRadius: 6, fontSize: 11, fontWeight: 600, cursor: "pointer" }}
-                >
-                  <Upload size={12} /> Upload
-                </button>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: NAVY, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    {doc.name}
+                  </div>
+                  <div style={{ fontSize: 11, color: "#7A8B9A", marginTop: 3, display: "flex", gap: 10, flexWrap: "wrap" }}>
+                    <span>{new Date(doc.uploaded_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</span>
+                    {doc.file_size ? <span>· {formatBytes(doc.file_size)}</span> : null}
+                    {doc.category ? <span>· {doc.category}</span> : null}
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                  <a
+                    href={getDocUrl(doc.file_path)}
+                    target="_blank" rel="noopener noreferrer"
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: 5,
+                      padding: "8px 14px", borderRadius: 999,
+                      border: `1.5px solid ${PILL_NAVY}`, color: PILL_NAVY, background: "white",
+                      fontSize: 12, fontWeight: 700, textDecoration: "none", cursor: "pointer",
+                    }}
+                  >
+                    👁 View
+                  </a>
+                  <a
+                    href={getDocUrl(doc.file_path)}
+                    download={doc.name}
+                    style={{
+                      display: "inline-flex", alignItems: "center", gap: 5,
+                      padding: "8px 14px", borderRadius: 999,
+                      background: PILL_NAVY, color: "white", border: `1.5px solid ${PILL_NAVY}`,
+                      fontSize: 12, fontWeight: 700, textDecoration: "none", cursor: "pointer",
+                    }}
+                  >
+                    <Download size={12} /> Download
+                  </a>
+                  <button
+                    onClick={() => handleDelete(doc)}
+                    title="Delete"
+                    style={{
+                      display: "inline-flex", alignItems: "center", justifyContent: "center",
+                      padding: "8px 10px", borderRadius: 999,
+                      border: "1.5px solid #E85D75", color: "#E85D75", background: "white",
+                      fontSize: 12, fontWeight: 700, cursor: "pointer",
+                    }}
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
               </div>
-
-              {uploading === cat.name && (
-                <div style={{ marginBottom: 12 }}>
-                  <div style={{ background: "#F0F2F4", borderRadius: 4, height: 6, overflow: "hidden" }}>
-                    <div style={{ width: uploadProgress + "%", height: "100%", background: TEAL, borderRadius: 4, transition: "width 0.3s" }} />
-                  </div>
-                  <div style={{ fontSize: 10, color: "#7A8B9A", marginTop: 4 }}>Uploading... {uploadProgress}%</div>
-                </div>
-              )}
-
-              {/* Uploaded documents */}
-              {catDocs.map(doc => (
-                <div key={doc.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #F0F2F4" }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13, color: NAVY, fontWeight: 500, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{doc.name}</div>
-                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
-                      <span style={{ background: (FILE_TYPE_COLORS[doc.file_type] || "#7A8B9A") + "26", color: FILE_TYPE_COLORS[doc.file_type] || "#7A8B9A", fontSize: 10, padding: "3px 8px", borderRadius: 4, fontWeight: 700, textTransform: "uppercase" }}>{doc.file_type}</span>
-                      <span style={{ fontSize: 12, color: "#7A8B9A" }}>{new Date(doc.uploaded_at).toLocaleDateString()}</span>
-                      {doc.file_size && <span style={{ fontSize: 12, color: "#7A8B9A" }}>{(doc.file_size / 1024).toFixed(0)} KB</span>}
-                    </div>
-                  </div>
-                  <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                    <a href={getDocUrl(doc.file_path)} download style={{ display: "inline-flex", alignItems: "center", gap: 4, border: "1.5px solid " + STEEL, color: TEAL, background: "white", padding: "4px 10px", borderRadius: 6, fontSize: 11, fontWeight: 600, textDecoration: "none", cursor: "pointer" }}>
-                      <Download size={12} /> Download
-                    </a>
-                    <button onClick={() => handleDelete(doc)} title="Delete" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", border: "1.5px solid #E85D75", color: "#E85D75", background: "white", padding: 4, borderRadius: 6, cursor: "pointer", height: 26, width: 26 }}>
-                      <X size={12} />
-                    </button>
-                  </div>
-                </div>
-              ))}
-
-              {/* Placeholder documents */}
-              {cat.docs.filter(d => d.placeholder && !catDocs.find(cd => cd.name === d.name)).map(doc => (
-                <div key={doc.name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px dashed #E0E4E8" }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13, color: "#B0BEC5", fontWeight: 500 }}>{doc.name}</div>
-                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
-                      <span style={{ background: "#F0F2F4", color: "#B0BEC5", fontSize: 10, padding: "3px 8px", borderRadius: 4, fontWeight: 700, textTransform: "uppercase" }}>{doc.type}</span>
-                      <span style={{ fontSize: 12, color: "#B0BEC5" }}>Pending upload</span>
-                    </div>
-                  </div>
-                  <span style={{ fontSize: 11, color: "#B0BEC5", fontStyle: "italic" }}>Coming soon</span>
-                </div>
-              ))}
-
-              {/* Non-placeholder docs that haven't been uploaded yet */}
-              {cat.docs.filter(d => !d.placeholder && !catDocs.find(cd => cd.name === d.name)).map(doc => (
-                <div key={doc.name} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #F0F2F4" }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: 13, color: "#7A8B9A", fontWeight: 500 }}>{doc.name}</div>
-                    {doc.desc && <div style={{ fontSize: 11, color: "#9AA5B0", marginTop: 2 }}>{doc.desc}</div>}
-                    <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 4 }}>
-                      <span style={{ background: (FILE_TYPE_COLORS[doc.type] || "#7A8B9A") + "26", color: FILE_TYPE_COLORS[doc.type] || "#7A8B9A", fontSize: 10, padding: "3px 8px", borderRadius: 4, fontWeight: 700, textTransform: "uppercase" }}>{doc.type}</span>
-                      <span style={{ fontSize: 12, color: "#B0BEC5" }}>Not yet uploaded</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".pdf,.xlsx,.docx,.pptx,.png,.jpg,.zip"
-        style={{ display: "none" }}
-        onChange={(e) => {
-          if (e.target.files[0] && uploadCategory) {
-            handleUpload(uploadCategory, e.target.files[0]);
-          }
-          e.target.value = "";
-        }}
-      />
-
-      {/* Legal & Compliance section embedded in Data Vault */}
-      <div style={{ marginTop: 32, paddingTop: 24, borderTop: "2px solid #E0E4E8" }}>
-        <LegalComplianceTab />
-      </div>
-
-      <div style={{ textAlign: "center", marginTop: 32, padding: 16, fontSize: 11, color: "#7A8B9A", borderTop: "1px solid #E0E4E8" }}>
+      <div style={{ textAlign: "center", marginTop: 32, padding: 16, fontSize: 11, color: "#7A8B9A", borderTop: `1px solid ${STEEL}40` }}>
         <div>Documents are confidential. Distribution requires written authorization.</div>
-        <div style={{ marginTop: 6, opacity: 0.7 }}>Powered by PLUSAdvantage™</div>
+        <div style={{ marginTop: 6, opacity: 0.7 }}>Houston ITP Capital Plan · Secure Vault</div>
       </div>
     </div>
   );
