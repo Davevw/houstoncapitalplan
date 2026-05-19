@@ -7,6 +7,7 @@ import AppErrorBoundary from "@/components/AppErrorBoundary";
 import Index from "./pages/Index.tsx";
 import Landing from "./pages/Landing.tsx";
 import AccessRequests from "./pages/AccessRequests.tsx";
+import DesignStandards from "./pages/DesignStandards.jsx";
 import NotFound from "./pages/NotFound.tsx";
 
 const queryClient = new QueryClient();
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/" element={<Landing />} />
             <Route path="/dashboard" element={<Index />} />
             <Route path="/access-requests" element={<AccessRequests />} />
+            <Route path="/design-standards" element={<DesignStandards />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

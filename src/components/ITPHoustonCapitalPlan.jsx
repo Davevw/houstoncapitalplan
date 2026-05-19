@@ -1085,6 +1085,7 @@ export default function App(){
             {TABS.map((t,i)=>(
               <button key={t} onClick={()=>setActiveTab(i)} style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeTab===i?"white":"rgba(255,255,255,0.12)",color:activeTab===i?NAVY:"rgba(255,255,255,0.8)"}}>{t}</button>
             ))}
+            <a href="/design-standards" style={{padding:"9px 16px",borderRadius:"8px 8px 0 0",fontSize:12,fontWeight:600,letterSpacing:0.3,background:"rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.8)",textDecoration:"none"}}>Design Standards</a>
             <div style={{marginLeft:"auto",position:"relative"}} ref={adminMenuRef}>
               <button
                 onClick={()=>{
