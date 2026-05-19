@@ -1,5 +1,10 @@
 import { useState, useCallback } from "react";
 
+const VAULT_BASE = "https://tibxlixiqcfyljevkdib.supabase.co/storage/v1/object/public/itph-data-vault/";
+const DEV_STANDARDS_URL = VAULT_BASE + "General/1779216764005_ITPH_Development_Standards_v1.docx";
+const ENV_SUMMARY_URL = VAULT_BASE + "General/1779216764908_ITPH_Environmental_Status_Summary.docx";
+
+
 const NAVY = "#1B3A5C";
 const TEAL = "#0D7377";
 const TEAL_LIGHT = "#E1F5EE";
