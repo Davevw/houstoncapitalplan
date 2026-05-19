@@ -425,10 +425,13 @@ export default function App() {
 
         {/* Quick reference cards */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "12px", marginBottom: "24px" }}>
-          <div onClick={openEnv} style={{ background: WHITE, borderRadius: "8px", padding: "16px", cursor: "pointer", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", borderTop: `3px solid ${TEAL}` }}>
-            <div style={{ fontSize: "13px", fontWeight: 600, color: NAVY }}>Environmental status</div>
-            <div style={{ fontSize: "12px", color: TEXT_SEC, marginTop: "4px", lineHeight: 1.5 }}>MSW permit, MSD, geotechnical suitability, TCEQ regulatory path. Full summary document available in data vault.</div>
-            <div style={{ fontSize: "11px", color: TEAL, fontWeight: 600, marginTop: "8px" }}>View details →</div>
+          <div style={{ background: WHITE, borderRadius: "8px", padding: "16px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", borderTop: `3px solid ${TEAL}` }}>
+            <div onClick={openEnv} style={{ cursor: "pointer" }}>
+              <div style={{ fontSize: "13px", fontWeight: 600, color: NAVY }}>Environmental status</div>
+              <div style={{ fontSize: "12px", color: TEXT_SEC, marginTop: "4px", lineHeight: 1.5 }}>MSW permit, MSD, geotechnical suitability, TCEQ regulatory path.</div>
+              <div style={{ fontSize: "11px", color: TEAL, fontWeight: 600, marginTop: "8px" }}>View details →</div>
+            </div>
+            <a href={ENV_SUMMARY_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", marginTop: 10, padding: "6px 10px", background: TEAL, color: WHITE, borderRadius: 4, textDecoration: "none", fontSize: 11, fontWeight: 600 }}>↓ Download Summary</a>
           </div>
           <div onClick={openInfra} style={{ background: WHITE, borderRadius: "8px", padding: "16px", cursor: "pointer", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", borderTop: `3px solid ${NAVY}` }}>
             <div style={{ fontSize: "13px", fontWeight: 600, color: NAVY }}>Infrastructure & timeline</div>
@@ -437,8 +440,11 @@ export default function App() {
           </div>
           <div style={{ background: WHITE, borderRadius: "8px", padding: "16px", boxShadow: "0 1px 3px rgba(0,0,0,0.06)", borderTop: `3px solid ${AMBER}` }}>
             <div style={{ fontSize: "13px", fontWeight: 600, color: NAVY }}>Project documents</div>
-            <div style={{ fontSize: "12px", color: TEXT_SEC, marginTop: "4px", lineHeight: 1.5 }}>Development Standards v1.0 and Environmental Status Summary available in the project data vault for download.</div>
-            <div style={{ fontSize: "11px", color: AMBER, fontWeight: 600, marginTop: "8px" }}>Data vault →</div>
+            <div style={{ fontSize: "12px", color: TEXT_SEC, marginTop: "4px", lineHeight: 1.5 }}>Development Standards v1.0 and Environmental Status Summary.</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 6, marginTop: 10 }}>
+              <a href={DEV_STANDARDS_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", padding: "6px 10px", background: AMBER, color: NAVY, borderRadius: 4, textDecoration: "none", fontSize: 11, fontWeight: 700 }}>↓ Development Standards v1</a>
+              <a href={ENV_SUMMARY_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", padding: "6px 10px", background: AMBER, color: NAVY, borderRadius: 4, textDecoration: "none", fontSize: 11, fontWeight: 700 }}>↓ Environmental Status Summary</a>
+            </div>
           </div>
         </div>
 
