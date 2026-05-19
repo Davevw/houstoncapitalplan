@@ -298,7 +298,7 @@ export default function App() {
       </div>
 
       {/* Nav bar */}
-      <div style={{ display: "flex", gap: "8px", padding: "14px 32px", background: WHITE, borderBottom: `1px solid ${BORDER}`, flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: "8px", padding: "14px 32px", background: WHITE, borderBottom: `1px solid ${BORDER}`, flexWrap: "wrap", alignItems: "center" }}>
         {Object.entries(districts).map(([key, d]) => (
           <button key={key} onClick={() => openDistrict(key)} style={{ padding: "6px 14px", borderRadius: "6px", border: `1px solid ${d.color}40`, background: activeDistrict === key ? d.color + "18" : "transparent", color: d.color, fontSize: "12px", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif", transition: "all 0.15s" }}>
             {d.name}
@@ -310,6 +310,10 @@ export default function App() {
         <button onClick={openInfra} style={{ padding: "6px 14px", borderRadius: "6px", border: `1px solid ${NAVY}40`, background: activePanel === "infra" ? NAVY + "18" : "transparent", color: NAVY, fontSize: "12px", fontWeight: 600, cursor: "pointer", fontFamily: "'DM Sans', sans-serif" }}>
           Infrastructure
         </button>
+        <div style={{ marginLeft: "auto", display: "flex", gap: 8 }}>
+          <a href="/docs/ITPH_Development_Standards_v1.pdf" target="_blank" rel="noopener noreferrer" style={{ padding: "6px 14px", borderRadius: 6, background: NAVY, color: WHITE, fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}>📄 Master Design Document</a>
+          <a href="/docs/ITPH_Environmental_Status_Summary.pdf" target="_blank" rel="noopener noreferrer" style={{ padding: "6px 14px", borderRadius: 6, background: TEAL, color: WHITE, fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", letterSpacing: 0.3 }}>🌱 Land Remediation</a>
+        </div>
       </div>
 
       {/* Main content */}
