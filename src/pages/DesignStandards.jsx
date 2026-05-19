@@ -232,7 +232,10 @@ function EnvPanel({ onClose }) {
         </div>
       ))}
       <div style={{ marginTop: "20px", padding: "12px 16px", background: `${AMBER}10`, borderLeft: `3px solid ${AMBER}`, borderRadius: "0 6px 6px 0", fontSize: "12px", color: TEXT_SEC, lineHeight: 1.5 }}>
-        <strong style={{ color: NAVY }}>Document available:</strong> The full Environmental Status Summary (4 pages) is available in the project data vault for download and distribution to qualified prospects, brokers, and lenders.
+        <strong style={{ color: NAVY }}>Document available:</strong> The full Environmental Status Summary (4 pages) is available for download and distribution to qualified prospects, brokers, and lenders.
+        <div style={{ marginTop: 10 }}>
+          <a href={ENV_SUMMARY_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", padding: "6px 12px", background: TEAL, color: WHITE, borderRadius: 4, textDecoration: "none", fontSize: 11, fontWeight: 600, letterSpacing: 0.4 }}>↓ Download Environmental Status Summary</a>
+        </div>
       </div>
     </Panel>
   );
