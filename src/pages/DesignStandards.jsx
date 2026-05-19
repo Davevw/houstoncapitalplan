@@ -209,7 +209,10 @@ function DistrictPanel({ district, onClose }) {
       <div style={{ fontSize: "13px", color: TEXT, marginTop: "4px" }}>{d.parking}</div>
 
       <div style={{ marginTop: "24px", padding: "12px 16px", background: `${d.color}10`, borderLeft: `3px solid ${d.color}`, borderRadius: "0 6px 6px 0", fontSize: "12px", color: TEXT_SEC, lineHeight: 1.5 }}>
-        All development requires ARC approval prior to building permit submission. These standards supplement the recorded CC&Rs. Full Development Standards document available in project data vault.
+        All development requires ARC approval prior to building permit submission. These standards supplement the recorded CC&Rs.
+        <div style={{ marginTop: 10 }}>
+          <a href={DEV_STANDARDS_URL} target="_blank" rel="noopener noreferrer" style={{ display: "inline-block", padding: "6px 12px", background: d.color, color: WHITE, borderRadius: 4, textDecoration: "none", fontSize: 11, fontWeight: 600, letterSpacing: 0.4 }}>↓ Download Full Development Standards</a>
+        </div>
       </div>
     </Panel>
   );
