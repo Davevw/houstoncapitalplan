@@ -1,5 +1,8 @@
 import { useState, useCallback } from "react";
 
+const DEV_STANDARDS_PDF = "/docs/ITPH_Development_Standards_v1.pdf";
+const ENV_SUMMARY_PDF = "/docs/ITPH_Environmental_Status_Summary.pdf";
+
 const C = {
   navy: "#1B3A5C", teal: "#0D7377", tealLight: "#E1F5EE",
   amber: "#D4A843", amberLight: "#FAEEDA",
@@ -396,8 +399,8 @@ function ContactsTab() {
         <div style={{ fontSize: "13px", fontWeight: 700, color: C.navy, marginBottom: "8px" }}>Project team</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
           {[
-            { name: "Mark D. Lester", role: "Principal — LANDCO NEXA", phone: "650-638-0900", email: "mlester@landconexa.com" },
-            { name: "David Van Waldick", role: "CFO — Nexa Advisory Services", phone: "760-672-0145", email: "dave@wrfco.com" },
+            { name: "Mark D. Lester", role: "Principal — Houston ITP", phone: "650-638-0900", email: "mlester@houstonitp.com" },
+            { name: "David Van Waldick", role: "CFO — Houston ITP", phone: "760-672-0145", email: "dave@houstonitp.com" },
             { name: "Kimley-Horn", role: "Civil Engineering", phone: "—", email: "—" },
             { name: "Goodheart Engineering", role: "Road & Geotechnical", phone: "—", email: "—" },
             { name: "Metro Structures", role: "Construction Management", phone: "—", email: "—" },
@@ -418,8 +421,8 @@ function ContactsTab() {
 
 function DocumentsTab() {
   const docs = [
-    { name: "Development Standards v1.0", desc: "12-section design standards document covering all districts — materials, setbacks, signage, screening, landscape, parking.", pages: "13 pages", type: "PDF", color: C.navy },
-    { name: "Environmental Status Summary", desc: "MSW permit, MSD, geotechnical suitability, regulatory framework, and buyer takeaways.", pages: "4 pages", type: "PDF", color: C.teal },
+    { name: "Development Standards v1.0", desc: "12-section design standards document covering all districts — materials, setbacks, signage, screening, landscape, parking.", pages: "13 pages", type: "PDF", color: C.navy, href: DEV_STANDARDS_PDF },
+    { name: "Environmental Status Summary", desc: "MSW permit, MSD, geotechnical suitability, regulatory framework, and buyer takeaways.", pages: "4 pages", type: "PDF", color: C.teal, href: ENV_SUMMARY_PDF },
     { name: "CC&Rs — Full with Exhibits", desc: "Declaration of Covenants, Conditions, Restrictions and Easements including Signage Matrix (Exhibit B).", pages: "16 pages", type: "PDF", color: C.amber },
     { name: "Site Plan (PNG)", desc: "Full-resolution aerial site plan with lot overlay, color-coded by use type.", pages: "Image", type: "PNG", color: C.green },
     { name: "ITPH v.13 Financial Model", desc: "Project economics, capital stack, cash flows, and MUD reimbursement projections.", pages: "Spreadsheet", type: "XLSX", color: C.blue },
@@ -429,17 +432,23 @@ function DocumentsTab() {
     <>
       <SectionTitle sub="All project documents available in the data vault for qualified prospects">Project documents — data vault</SectionTitle>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
-        {docs.map((d, i) => (
-          <Card key={i} style={{ borderLeft: `3px solid ${d.color}`, cursor: "pointer" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
-              <div style={{ fontSize: "14px", fontWeight: 600, color: C.navy }}>{d.name}</div>
-              <Badge color={d.color}>{d.type}</Badge>
-            </div>
-            <div style={{ fontSize: "12px", color: C.textSec, marginTop: "6px", lineHeight: 1.4 }}>{d.desc}</div>
-            <div style={{ fontSize: "11px", color: C.textSec, marginTop: "6px" }}>{d.pages}</div>
-            <div style={{ fontSize: "11px", color: d.color, fontWeight: 600, marginTop: "8px" }}>Download →</div>
-          </Card>
-        ))}
+        {docs.map((d, i) => {
+          const Wrap = d.href ? "a" : "div";
+          const wrapProps = d.href ? { href: d.href, target: "_blank", rel: "noopener noreferrer", style: { textDecoration: "none" } } : {};
+          return (
+            <Wrap key={i} {...wrapProps}>
+              <Card style={{ borderLeft: `3px solid ${d.color}`, cursor: d.href ? "pointer" : "default" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
+                  <div style={{ fontSize: "14px", fontWeight: 600, color: C.navy }}>{d.name}</div>
+                  <Badge color={d.color}>{d.type}</Badge>
+                </div>
+                <div style={{ fontSize: "12px", color: C.textSec, marginTop: "6px", lineHeight: 1.4 }}>{d.desc}</div>
+                <div style={{ fontSize: "11px", color: C.textSec, marginTop: "6px" }}>{d.pages}</div>
+                <div style={{ fontSize: "11px", color: d.color, fontWeight: 600, marginTop: "8px" }}>{d.href ? "View / Download →" : "In data vault →"}</div>
+              </Card>
+            </Wrap>
+          );
+        })}
       </div>
     </>
   );
@@ -473,7 +482,7 @@ export default function App() {
       </div>
 
       {/* Tabs */}
-      <div style={{ display: "flex", gap: "2px", padding: "0 28px", background: C.white, borderBottom: `1px solid ${C.border}`, overflowX: "auto" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "2px", padding: "0 28px", background: C.white, borderBottom: `1px solid ${C.border}`, overflowX: "auto" }}>
         {tabs.map((t, i) => (
           <button key={i} onClick={() => setTab(i)} style={{
             padding: "10px 16px", fontSize: "12px", fontWeight: tab === i ? 600 : 400,
@@ -482,6 +491,16 @@ export default function App() {
             cursor: "pointer", whiteSpace: "nowrap", fontFamily: "'DM Sans', sans-serif"
           }}>{t}</button>
         ))}
+        <div style={{ marginLeft: "auto", display: "flex", gap: "8px", padding: "6px 0" }}>
+          <a href={DEV_STANDARDS_PDF} target="_blank" rel="noopener noreferrer" style={{
+            background: C.navy, color: C.white, padding: "6px 14px", borderRadius: "6px",
+            fontSize: "12px", fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap"
+          }}>📄 Master Design Document</a>
+          <a href={ENV_SUMMARY_PDF} target="_blank" rel="noopener noreferrer" style={{
+            background: C.teal, color: C.white, padding: "6px 14px", borderRadius: "6px",
+            fontSize: "12px", fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap"
+          }}>🌱 Land Remediation</a>
+        </div>
       </div>
 
       {/* Content */}
