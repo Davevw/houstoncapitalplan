@@ -404,8 +404,8 @@ function ContactsTab() {
         <div style={{ fontSize: "13px", fontWeight: 700, color: C.navy, marginBottom: "8px" }}>Project team</div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
           {[
-            { name: "Mark D. Lester", role: "Principal — Houston ITP", phone: "650-638-0900", email: "mlester@houstonitp.com" },
-            { name: "David Van Waldick", role: "CFO — Houston ITP", phone: "760-672-0145", email: "dave@houstonitp.com" },
+            { name: "Mark D. Lester", role: "Principal Developer / CEO — LANDCO Nexa", phone: "650-638-0900", email: "mlester@landconexa.com" },
+            { name: "David Van Waldick", role: "CFO — Nexa Advisory Services", phone: "760-672-0145", email: "dave@wrfco.com" },
             { name: "Kimley-Horn", role: "Civil Engineering", phone: "—", email: "—" },
             { name: "Goodheart Engineering", role: "Road & Geotechnical", phone: "—", email: "—" },
             { name: "Metro Structures", role: "Construction Management", phone: "—", email: "—" },
