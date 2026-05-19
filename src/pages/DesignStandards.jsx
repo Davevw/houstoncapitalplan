@@ -515,7 +515,7 @@ export default function App() {
 
       {/* Footer */}
       <div style={{ textAlign: "center", padding: "16px 28px 20px", borderTop: `1px solid ${C.border}` }}>
-        <div style={{ fontSize: "10px", color: C.textSec }}>Keystone™ 2026 · Bissonnet 136, LLC · Confidential</div>
+        <div style={{ fontSize: "10px", color: C.textSec }}>Keystone™ 2026 · Confidential</div>
         <div style={{ fontSize: "9px", color: C.textSec, opacity: 0.5, marginTop: "3px" }}>International Trade Park Houston · 12000 Bissonnet Street, Houston TX 77099</div>
       </div>
 
