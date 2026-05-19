@@ -499,7 +499,7 @@ export default function App() {
           <a href={ENV_SUMMARY_PDF} target="_blank" rel="noopener noreferrer" style={{
             background: C.teal, color: C.white, padding: "6px 14px", borderRadius: "6px",
             fontSize: "12px", fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap"
-          }}>🌱 Land Remediation</a>
+          }}>🌱 Environmental Status</a>
         </div>
       </div>
 
