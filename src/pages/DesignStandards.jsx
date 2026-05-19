@@ -1,7 +1,12 @@
 import { useState, useCallback } from "react";
 
+const VAULT = "https://tibxlixiqcfyljevkdib.supabase.co/storage/v1/object/public/itph-data-vault/";
 const DEV_STANDARDS_PDF = "/docs/ITPH_Development_Standards_v1.pdf";
 const ENV_SUMMARY_PDF = "/docs/ITPH_Environmental_Status_Summary.pdf";
+const CCRS_PDF = VAULT + "CCRs_HOA_Documents/1778879026557_ITP_Houston_CCRs_Full_with_Exhibits_final form.pdf";
+const SITE_PLAN_PNG = VAULT + "Maps___Plans/1776379030717_ITPH Site Map.png";
+const FINANCIAL_MODEL_XLSX = VAULT + "Financial_Models/1776522242769_ITPH v.13.xlsx";
+const EQUITY_PRESENTATION_PDF = VAULT + "Presentations/ITP_Houston_Investor_Presentation.pdf";
 
 const C = {
   navy: "#1B3A5C", teal: "#0D7377", tealLight: "#E1F5EE",
@@ -423,10 +428,10 @@ function DocumentsTab() {
   const docs = [
     { name: "Development Standards v1.0", desc: "12-section design standards document covering all districts — materials, setbacks, signage, screening, landscape, parking.", pages: "13 pages", type: "PDF", color: C.navy, href: DEV_STANDARDS_PDF },
     { name: "Environmental Status Summary", desc: "MSW permit, MSD, geotechnical suitability, regulatory framework, and buyer takeaways.", pages: "4 pages", type: "PDF", color: C.teal, href: ENV_SUMMARY_PDF },
-    { name: "CC&Rs — Full with Exhibits", desc: "Declaration of Covenants, Conditions, Restrictions and Easements including Signage Matrix (Exhibit B).", pages: "16 pages", type: "PDF", color: C.amber },
-    { name: "Site Plan (PNG)", desc: "Full-resolution aerial site plan with lot overlay, color-coded by use type.", pages: "Image", type: "PNG", color: C.green },
-    { name: "ITPH v.13 Financial Model", desc: "Project economics, capital stack, cash flows, and MUD reimbursement projections.", pages: "Spreadsheet", type: "XLSX", color: C.blue },
-    { name: "Equity Investment Presentation", desc: "Investor-facing presentation covering project overview, economics, and development timeline.", pages: "Deck", type: "PDF", color: C.red }
+    { name: "CC&Rs — Full with Exhibits", desc: "Declaration of Covenants, Conditions, Restrictions and Easements including Signage Matrix (Exhibit B).", pages: "16 pages", type: "PDF", color: C.amber, href: CCRS_PDF },
+    { name: "Site Plan (PNG)", desc: "Full-resolution aerial site plan with lot overlay, color-coded by use type.", pages: "Image", type: "PNG", color: C.green, href: SITE_PLAN_PNG },
+    { name: "ITPH v.13 Financial Model", desc: "Project economics, capital stack, cash flows, and MUD reimbursement projections.", pages: "Spreadsheet", type: "XLSX", color: C.blue, href: FINANCIAL_MODEL_XLSX },
+    { name: "Equity Investment Presentation", desc: "Investor-facing presentation covering project overview, economics, and development timeline.", pages: "Deck", type: "PDF", color: C.red, href: EQUITY_PRESENTATION_PDF }
   ];
   return (
     <>
