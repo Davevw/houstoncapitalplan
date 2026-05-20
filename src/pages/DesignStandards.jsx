@@ -259,6 +259,27 @@ function MasterPlanTab({ onDistrictClick }) {
           <div style={{ marginTop: "10px", fontSize: "10px", color: C.textSec }}>Total project cost: $24.99M (v13 model). Metro Structures managing all construction.</div>
         </Card>
       </div>
+
+      {/* Artist's Renderings */}
+      <div style={{ marginTop: "24px" }}>
+        <SectionTitle sub="Photorealistic architectural visualizations of the completed development">Artist's renderings</SectionTitle>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          {[
+            { src: "/renderings/01-aerial-perspective.jpg", title: "Rendering 1", sub: "Aerial Perspective — full site development concept" },
+            { src: "/renderings/02-streetscape.jpg", title: "Rendering 2", sub: "Streetscape — internal road with mixed-use buildings" },
+            { src: "/renderings/03-bissonnet-entrance.jpg", title: "Rendering 3", sub: "Bissonnet Entrance — monument and first buildings" },
+            { src: "/renderings/04-soccer-park-clubhouse.jpg", title: "Rendering 4", sub: "Soccer Park & Clubhouse — 5-acre community amenity" },
+          ].map((r, i) => (
+            <Card key={i} style={{ padding: 0, overflow: "hidden" }}>
+              <img src={r.src} alt={r.sub} style={{ width: "100%", height: "auto", display: "block" }} />
+              <div style={{ padding: "12px 14px" }}>
+                <div style={{ fontSize: "12px", fontWeight: 700, color: C.navy }}>{r.title}</div>
+                <div style={{ fontSize: "11px", color: C.textSec, marginTop: "2px" }}>{r.sub}</div>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
