@@ -436,6 +436,20 @@ export default function App() {
     <div style={{ fontFamily: "'DM Sans', sans-serif", background: C.bg, minHeight: "100vh" }}>
       <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
 
+      {/* Main-site nav strip (mirrors ITPHoustonCapitalPlan tabs) */}
+      <div style={{ background: `linear-gradient(135deg,${MAIN_NAVY} 0%,${MAIN_TEAL} 100%)`, padding: "10px 28px 0", display: "flex", flexWrap: "wrap", gap: 3, alignItems: "center", fontFamily: "Calibri,-apple-system,sans-serif" }}>
+        {MAIN_TABS.map((t, i) => (
+          <a key={t} href={`/dashboard?tab=${i}`} style={{
+            padding: "9px 16px", borderRadius: "8px 8px 0 0", fontSize: 12, fontWeight: 600, letterSpacing: 0.3,
+            background: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.85)", textDecoration: "none", whiteSpace: "nowrap"
+          }}>{t}</a>
+        ))}
+        <a href="/design-standards" style={{
+          padding: "9px 16px", borderRadius: "8px 8px 0 0", fontSize: 12, fontWeight: 700, letterSpacing: 0.3,
+          background: "white", color: MAIN_NAVY, textDecoration: "none", whiteSpace: "nowrap"
+        }}>Design Standards</a>
+      </div>
+
       {/* Header */}
       <div style={{ background: C.navy, padding: "24px 28px 20px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "start" }}>
@@ -451,7 +465,7 @@ export default function App() {
         </div>
       </div>
 
-      {/* Tabs */}
+      {/* Sub-tabs (Design Standards sections) */}
       <div style={{ display: "flex", alignItems: "center", gap: "2px", padding: "0 28px", background: C.white, borderBottom: `1px solid ${C.border}`, overflowX: "auto" }}>
         {tabs.map((t, i) => (
           <button key={i} onClick={() => setTab(i)} style={{
@@ -462,11 +476,6 @@ export default function App() {
           }}>{t}</button>
         ))}
         <div style={{ marginLeft: "auto", display: "flex", gap: "8px", padding: "6px 0" }}>
-          <a href="/" style={{
-            background: C.white, color: C.navy, padding: "6px 14px", borderRadius: "6px",
-            fontSize: "12px", fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap",
-            border: `1px solid ${C.border}`
-          }}>← Main site</a>
           <a href={DEV_STANDARDS_PDF} target="_blank" rel="noopener noreferrer" style={{
             background: C.navy, color: C.white, padding: "6px 14px", borderRadius: "6px",
             fontSize: "12px", fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap"
@@ -478,6 +487,7 @@ export default function App() {
         </div>
 
       </div>
+
 
       {/* Content */}
       <div style={{ padding: "20px 28px" }}>
