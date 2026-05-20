@@ -997,7 +997,12 @@ const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditure
 const BUILD_STAMP = "2026-03-30-1919";
 
 export default function App(){
-  const [activeTab,setActiveTab]=useState(0);
+  const [activeTab,setActiveTab]=useState(()=>{
+    if (typeof window === "undefined") return 0;
+    const p = new URLSearchParams(window.location.search).get("tab");
+    const n = p === null ? NaN : parseInt(p, 10);
+    return Number.isInteger(n) && n >= 0 && n < TABS.length ? n : 0;
+  });
   const [lots,setLots]=useState(LOTS);
   const [params,setParams]=useState({
     // v13 defaults: 70/30 equity/dev split, MUD issuances Mo 24 & Mo 36
