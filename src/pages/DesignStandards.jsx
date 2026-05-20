@@ -201,10 +201,33 @@ function MasterPlanTab({ onDistrictClick }) {
         ))}
       </div>
       <Card>
-        <div style={{ fontSize: "13px", fontWeight: 600, color: C.navy, marginBottom: "8px" }}>Interactive 3D site model — drag to rotate · scroll to zoom</div>
-        <Suspense fallback={<div style={{ height: 520, display: "flex", alignItems: "center", justifyContent: "center", color: C.textSec, fontSize: 12 }}>Loading 3D model…</div>}>
+        <div style={{ fontSize: "13px", fontWeight: 600, color: C.navy, marginBottom: "8px" }}>Interactive 3D site model — drag to rotate · click any building for investment detail</div>
+        <Suspense fallback={<div style={{ height: 560, display: "flex", alignItems: "center", justifyContent: "center", color: C.textSec, fontSize: 12 }}>Loading 3D model…</div>}>
           <ITPH3DSiteModel />
         </Suspense>
+      </Card>
+
+      <Card style={{ marginTop: "16px" }}>
+        <div style={{ fontSize: "13px", fontWeight: 700, color: C.navy, marginBottom: "12px", letterSpacing: 0.4 }}>Artist's Renderings</div>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px" }}>
+          {[
+            "Aerial Perspective — full site development concept",
+            "Streetscape — internal road with mixed-use buildings",
+            "Bissonnet Entrance — monument and first buildings",
+            "Soccer Park & Clubhouse — 5-acre community amenity",
+          ].map((cap, i) => (
+            <div key={i} style={{
+              height: 200, background: "#F1EFE8", borderRadius: 10,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.06)", padding: 16, textAlign: "center",
+            }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: C.textSec, lineHeight: 1.5 }}>
+                <div style={{ fontSize: 10, letterSpacing: 1.2, color: C.navy, opacity: 0.5, marginBottom: 6 }}>RENDERING {i + 1}</div>
+                {cap}
+              </div>
+            </div>
+          ))}
+        </div>
       </Card>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "16px" }}>
         <Card style={{ borderTop: `3px solid ${C.teal}` }}>
