@@ -22,6 +22,10 @@ const C = {
 
 const tabs = ["Master plan", "Districts", "Infrastructure", "Permitting", "Contacts", "Documents"];
 
+const MAIN_TABS = ["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model","Site Plan","MUD Analysis"];
+const MAIN_NAVY = "#0B3D5C";
+const MAIN_TEAL = "#0D7377";
+
 const districts = {
   multifamily: { name: "Multifamily", short: "MF", color: C.amber, light: C.amberLight, lots: "14, 15, 16", acres: "36.62", pct: "30.2%", lotCount: 3, uses: ["Market-rate & affordable apartments", "Workforce & senior housing", "Leasing offices, amenities, recreation"], materials: { good: ["Brick/stone veneer (min 65% primary)", "Cementitious fiber board secondary", "Standing seam metal roof", "Architectural metal accents"], bad: ["Vinyl/aluminum siding", "Unfinished CMU", "T-111 panels", "Corrugated metal"] }, setbacks: { front: "25'", side: "15'", adj: "15'", rear: "20'" }, height: "3–4 stories", landscape: "20%", parking: "1.5 sp/unit", signage: "Monument 100 SF / 8 ft. Building 120 SF/bldg." },
   retail: { name: "Retail / commercial", short: "RTL", color: C.green, light: C.greenLight, lots: "2–4, 8, 17, 19–30", acres: "23.48", pct: "19.4%", lotCount: 16, uses: ["Neighborhood retail & restaurant", "Professional & medical office", "Financial institutions", "Fuel stations (screened)"], materials: { good: ["Masonry, stone, precast", "Glass storefront systems", "Split-face CMU (secondary)", "EIFS accent only (max 15%)"], bad: ["EIFS below 8 ft", "Unfinished concrete block", "Vinyl siding", "Corrugated metal"] }, setbacks: { front: "15'", side: "10'", adj: "15'", rear: "15'" }, height: "1–2 stories", landscape: "15%", parking: "1 sp/250 SF", signage: "Monument 120 SF / 10 ft. Building 1.0 SF/LF." },
