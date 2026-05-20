@@ -1,4 +1,5 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, Suspense, lazy } from "react";
+const ITPH3DSiteModel = lazy(() => import("../components/ITPH3DSiteModel.jsx"));
 
 const VAULT = "https://tibxlixiqcfyljevkdib.supabase.co/storage/v1/object/public/itph-data-vault/";
 const DEV_STANDARDS_PDF = "/docs/ITPH_Development_Standards_v1.pdf";
@@ -196,50 +197,10 @@ function MasterPlanTab({ onDistrictClick }) {
         ))}
       </div>
       <Card>
-        <div style={{ fontSize: "13px", fontWeight: 600, color: C.navy, marginBottom: "4px" }}>Interactive site plan — click any lot to view design standards</div>
-        <svg width="100%" viewBox="0 0 620 460" style={{ display: "block" }}>
-          <rect x="30" y="16" width="460" height="430" rx="3" fill="none" stroke={C.border} strokeWidth={1.2} strokeDasharray="5 3"/>
-          <text x="12" y="230" textAnchor="middle" transform="rotate(-90 12 230)" style={{ fontSize: "9px", fill: C.textSec }}>Cook Rd</text>
-          <text x="506" y="230" textAnchor="middle" transform="rotate(90 506 230)" style={{ fontSize: "9px", fill: C.textSec }}>S Kirkwood Rd</text>
-          <text x="260" y="456" textAnchor="middle" style={{ fontSize: "9px", fill: C.textSec }}>Bissonnet Street</text>
-          <rect x="34" y="20" width="452" height="34" rx="3" fill={C.grayLight} opacity={0.4} stroke={C.border} strokeWidth={0.4}/>
-          <text x="260" y="41" textAnchor="middle" style={{ fontSize: "8px", fill: C.textSec }}>North detention — 10.89 ac</text>
-          <rect x="34" y="400" width="452" height="34" rx="3" fill={C.grayLight} opacity={0.4} stroke={C.border} strokeWidth={0.4}/>
-          <text x="260" y="421" textAnchor="middle" style={{ fontSize: "8px", fill: C.textSec }}>South detention — 13.38 ac</text>
-          <line x1="34" y1="250" x2="482" y2="250" stroke={C.border} strokeWidth={0.8} opacity={0.4}/>
-          <line x1="170" y1="58" x2="170" y2="396" stroke={C.border} strokeWidth={0.8} opacity={0.4}/>
-          <line x1="326" y1="58" x2="326" y2="396" stroke={C.border} strokeWidth={0.8} opacity={0.4}/>
-          <LotBlock x={38} y={60} w={126} h={75} lot="Lot 14" acres="13.2 ac" dk="multifamily" onClick={onDistrictClick}/>
-          <LotBlock x={38} y={142} w={126} h={68} lot="Lot 15" acres="11.2 ac" dk="multifamily" onClick={onDistrictClick}/>
-          <LotBlock x={38} y={258} w={126} h={68} lot="Lot 16" acres="12.3 ac" dk="multifamily" onClick={onDistrictClick}/>
-          <LotBlock x={178} y={60} w={66} h={52} lot="Lot 1" acres="3.88" dk="flex" onClick={onDistrictClick}/>
-          <LotBlock x={248} y={60} w={66} h={52} lot="Lot 5" acres="6.4" dk="flex" onClick={onDistrictClick}/>
-          <LotBlock x={178} y={118} w={66} h={48} lot="Lot 6" acres="4.9" dk="flex" onClick={onDistrictClick}/>
-          <LotBlock x={248} y={118} w={66} h={48} lot="Lot 7" acres="3.3" dk="flex" onClick={onDistrictClick}/>
-          <LotBlock x={178} y={172} w={66} h={44} lot="Lot 9" acres="2.1" dk="flex" onClick={onDistrictClick}/>
-          <LotBlock x={248} y={172} w={66} h={44} lot="Lot 13" acres="1.2" dk="flex" onClick={onDistrictClick}/>
-          <LotBlock x={178} y={258} w={44} h={56} lot="10" dk="industrial" onClick={onDistrictClick}/>
-          <LotBlock x={226} y={258} w={44} h={56} lot="11" dk="industrial" onClick={onDistrictClick}/>
-          <LotBlock x={274} y={258} w={44} h={56} lot="12" dk="industrial" onClick={onDistrictClick}/>
-          <LotBlock x={178} y={322} w={140} h={32} lot="Lot 18 · 1.2 ac" dk="industrial" onClick={onDistrictClick}/>
-          <LotBlock x={334} y={60} w={62} h={46} lot="Lot 2" acres="1.4" dk="retail" onClick={onDistrictClick}/>
-          <LotBlock x={402} y={60} w={62} h={46} lot="Lot 3" acres="1.2" dk="retail" onClick={onDistrictClick}/>
-          <LotBlock x={334} y={112} w={62} h={46} lot="Lot 4" acres="1.2" dk="retail" onClick={onDistrictClick}/>
-          <LotBlock x={402} y={112} w={62} h={46} lot="Lot 8" acres="1.3" dk="retail" onClick={onDistrictClick}/>
-          <LotBlock x={334} y={164} w={62} h={36} lot="17" dk="retail" onClick={onDistrictClick}/>
-          <LotBlock x={402} y={164} w={62} h={36} lot="19" dk="retail" onClick={onDistrictClick}/>
-          {[[334,258,"20"],[376,258,"21"],[418,258,"22"],[334,292,"23"],[376,292,"24"],[418,292,"25"],[334,326,"26"],[376,326,"27"],[418,326,"28"]].map(([x,y,l],i) => (
-            <LotBlock key={i} x={x} y={y} w={38} h={30} lot={l} dk="retail" onClick={onDistrictClick}/>
-          ))}
-          <LotBlock x={334} y={362} w={64} h={28} lot="29" dk="retail" onClick={onDistrictClick}/>
-          <LotBlock x={402} y={362} w={64} h={28} lot="30" dk="retail" onClick={onDistrictClick}/>
-          <rect x="520" y="60" width="92" height="160" rx="6" fill={C.white} stroke={C.border} strokeWidth={0.5}/>
-          <text x="566" y="78" textAnchor="middle" style={{ fontSize: "9px", fontWeight: 600, fill: C.navy }}>Legend</text>
-          {[[C.amber,"Multifamily",92],[C.green,"Retail",110],[C.teal,"Flex",128],[C.gray,"Industrial",146],[C.border,"Detention",164]].map(([c,l,y],i) => (
-            <g key={i}><rect x={528} y={y-5} width={10} height={10} rx={2} fill={c} opacity={0.7}/><text x={544} y={y+3} style={{ fontSize: "8px", fill: C.textSec }}>{l}</text></g>
-          ))}
-          <text x="566" y="206" textAnchor="middle" style={{ fontSize: "7px", fill: C.textSec, opacity: 0.5 }}>Keystone™ 2026</text>
-        </svg>
+        <div style={{ fontSize: "13px", fontWeight: 600, color: C.navy, marginBottom: "8px" }}>Interactive 3D site model — drag to rotate · scroll to zoom</div>
+        <Suspense fallback={<div style={{ height: 520, display: "flex", alignItems: "center", justifyContent: "center", color: C.textSec, fontSize: 12 }}>Loading 3D model…</div>}>
+          <ITPH3DSiteModel />
+        </Suspense>
       </Card>
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", marginTop: "16px" }}>
         <Card style={{ borderTop: `3px solid ${C.teal}` }}>
