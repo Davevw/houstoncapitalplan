@@ -458,6 +458,11 @@ export default function App() {
           }}>{t}</button>
         ))}
         <div style={{ marginLeft: "auto", display: "flex", gap: "8px", padding: "6px 0" }}>
+          <a href="/" style={{
+            background: C.white, color: C.navy, padding: "6px 14px", borderRadius: "6px",
+            fontSize: "12px", fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap",
+            border: `1px solid ${C.border}`
+          }}>← Main site</a>
           <a href={DEV_STANDARDS_PDF} target="_blank" rel="noopener noreferrer" style={{
             background: C.navy, color: C.white, padding: "6px 14px", borderRadius: "6px",
             fontSize: "12px", fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap"
@@ -467,6 +472,7 @@ export default function App() {
             fontSize: "12px", fontWeight: 700, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", whiteSpace: "nowrap"
           }}>🌱 Environmental Status</a>
         </div>
+
       </div>
 
       {/* Content */}
