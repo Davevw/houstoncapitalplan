@@ -1712,7 +1712,7 @@ function SpreadsheetTab({model,params}){
 
   useEffect(() => {
     async function checkFiles() {
-      const { data: modelDoc } = await supabase.from("vault_documents").select("file_path, uploaded_at").eq("name", "ITPH Financial Model v9.xlsx").maybeSingle();
+      const { data: modelDoc } = await supabase.from("vault_documents").select("file_path, uploaded_at").eq("name", "ITPH v.13.xlsx").maybeSingle();
       if (modelDoc) {
         const { data: urlData } = supabase.storage.from("itph-data-vault").getPublicUrl(modelDoc.file_path);
         setModelFileUrl(urlData.publicUrl);
