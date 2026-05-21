@@ -1733,11 +1733,11 @@ function SpreadsheetTab({model,params}){
       <div>
         {modelFileUrl ? (
           <a href={modelFileUrl} download style={{display:"inline-flex",alignItems:"center",gap:8,background:NAVY,color:"white",padding:"12px 24px",borderRadius:12,fontWeight:600,fontSize:13,textDecoration:"none",cursor:"pointer",border:"none"}}>
-            <ArrowDownToLine size={16}/> Download Excel Model (ITPH v9)
+            <ArrowDownToLine size={16}/> Download Excel Model (ITPH v13)
           </a>
         ) : (
           <button disabled title="File not yet uploaded — use Data Vault to upload" style={{display:"inline-flex",alignItems:"center",gap:8,background:"#B0BEC5",color:"white",padding:"12px 24px",borderRadius:12,fontWeight:600,fontSize:13,border:"none",cursor:"not-allowed",opacity:0.7}}>
-            <ArrowDownToLine size={16}/> Download Excel Model (ITPH v9)
+            <ArrowDownToLine size={16}/> Download Excel Model (ITPH v13)
           </button>
         )}
         <div style={{fontSize:11,color:"#7A8B9A",marginTop:4}}>Full working Excel model with all formulas — ITPH Financial Model V13</div>
