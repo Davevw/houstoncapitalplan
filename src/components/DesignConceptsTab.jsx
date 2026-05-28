@@ -108,12 +108,13 @@ function TearSheet({ scenario }) {
 
   return (
     <div id="tear-sheet" style={{ background: "white", padding: 36, border: `1px solid ${STEEL}`, borderRadius: 12 }}>
-      <div style={{ borderBottom: `3px solid ${NAVY}`, paddingBottom: 14, marginBottom: 18 }}>
-        <div style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8B9A", fontWeight: 700 }}>
-          ITPH Design Concept
+      <div style={{ position: "relative", marginBottom: 18, borderRadius: 10, overflow: "hidden", border: `1px solid ${STEEL}`, background: "#0e1e2c" }}>
+        <img src={siteMapImg} alt={`${scenario.name} aerial rendering`} style={{ width: "100%", display: "block" }} />
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "18px 22px", background: "linear-gradient(to top, rgba(11,61,92,0.92), rgba(11,61,92,0))", color: "white" }}>
+          <div style={{ fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", opacity: 0.85, fontWeight: 700 }}>ITPH Design Concept</div>
+          <h1 style={{ margin: "2px 0 4px", fontSize: 28, fontFamily: "Georgia,serif" }}>{scenario.name}</h1>
+          <div style={{ fontSize: 13, fontStyle: "italic", opacity: 0.92 }}>{scenario.tagline}</div>
         </div>
-        <h1 style={{ margin: "4px 0 6px", fontSize: 30, fontFamily: "Georgia,serif", color: NAVY }}>{scenario.name}</h1>
-        <div style={{ fontSize: 14, color: "#5A6B7A", fontStyle: "italic" }}>{scenario.tagline}</div>
       </div>
 
       <div style={{ display: "flex", gap: 24, marginBottom: 20, fontSize: 13, color: NAVY, fontWeight: 600 }}>
