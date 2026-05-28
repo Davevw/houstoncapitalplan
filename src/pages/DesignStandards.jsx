@@ -8,6 +8,7 @@ const CCRS_PDF = VAULT + "CCRs_HOA_Documents/1778879026557_ITP_Houston_CCRs_Full
 const SITE_PLAN_PNG = VAULT + "Maps___Plans/1776379030717_ITPH Site Map.png";
 const FINANCIAL_MODEL_XLSX = VAULT + "Financial_Models/1776522242769_ITPH v.13.xlsx";
 const EQUITY_PRESENTATION_PDF = VAULT + "Presentations/ITP_Houston_Investor_Presentation.pdf";
+const CAPITAL_PLAN_TEAR_SHEET = "/docs/ITPH_Capital_Plan_Tear_Sheet.pdf";
 
 const C = {
   navy: "#1B3A5C", teal: "#0D7377", tealLight: "#E1F5EE",
@@ -418,7 +419,8 @@ function DocumentsTab() {
     { name: "CC&Rs — Full with Exhibits", desc: "Declaration of Covenants, Conditions, Restrictions and Easements including Signage Matrix (Exhibit B).", pages: "16 pages", type: "PDF", color: C.amber, href: CCRS_PDF },
     { name: "Site Plan (PNG)", desc: "Full-resolution aerial site plan with lot overlay, color-coded by use type.", pages: "Image", type: "PNG", color: C.green, href: SITE_PLAN_PNG },
     { name: "ITPH v.13 Financial Model", desc: "Project economics, capital stack, cash flows, and MUD reimbursement projections.", pages: "Spreadsheet", type: "XLSX", color: C.blue, href: FINANCIAL_MODEL_XLSX },
-    { name: "Equity Investment Presentation", desc: "Investor-facing presentation covering project overview, economics, and development timeline.", pages: "Deck", type: "PDF", color: C.red, href: EQUITY_PRESENTATION_PDF }
+    { name: "Equity Investment Presentation", desc: "Investor-facing presentation covering project overview, economics, and development timeline.", pages: "Deck", type: "PDF", color: C.red, href: EQUITY_PRESENTATION_PDF },
+    { name: "Capital Plan — One-Page Tear Sheet", desc: "Investor-ready project summary: lot mix, revenue, capital structure, equity terms, MUD reimbursement, and key metrics.", pages: "1 page", type: "PDF", color: C.amber, href: CAPITAL_PLAN_TEAR_SHEET }
   ];
   return (
     <>
