@@ -450,7 +450,7 @@ function ScenarioDetail({ scenario, onBack }) {
           <ScenarioMap scenario={scenario} onSelect={setSelectedLot} selectedId={selectedLot} />
           <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
             {selectedLot ? (
-              <LotPanel lotId={selectedLot} scenario={scenario} onClose={() => setSelectedLot(null)} />
+              <LotPanel lotId={selectedLot} scenario={scenario} economicsByLot={economicsByLot} onClose={() => setSelectedLot(null)} />
             ) : (
               <div style={{ background: "white", border: `1px dashed ${STEEL}`, borderRadius: 12, padding: 24, textAlign: "center", color: "#7A8B9A", fontSize: 13 }}>
                 Click any lot marker on the map to see its district assignment, acreage, and permitted uses.
