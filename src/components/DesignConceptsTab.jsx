@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import siteMapImg from "@/assets/itph-site-map.png";
+import DesignRequestComposer from "./DesignRequestComposer";
 
 const NAVY = "#0B3D5C";
 const TEAL = "#0B4C72";
