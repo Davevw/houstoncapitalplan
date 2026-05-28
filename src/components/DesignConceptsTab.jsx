@@ -62,10 +62,11 @@ function DistrictBar({ summary }) {
   );
 }
 
-function ScenarioCard({ scenario, onOpen }) {
+function ScenarioCard({ scenario, onOpen, onDelete }) {
   return (
-    <div style={{ background: "white", border: `1px solid ${STEEL}`, borderRadius: 12, padding: 20, boxShadow: "0 2px 8px rgba(0,0,0,0.04)", display: "flex", flexDirection: "column", gap: 14 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+    <div style={{ position: "relative", background: "white", border: `1px solid ${STEEL}`, borderRadius: 12, padding: 20, boxShadow: "0 2px 8px rgba(0,0,0,0.04)", display: "flex", flexDirection: "column", gap: 14 }}>
+      <button onClick={onDelete} title="Delete concept" style={deleteBtn}>×</button>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, paddingRight: 24 }}>
         <div>
           <h3 style={{ margin: 0, fontSize: 20, fontFamily: "Georgia,serif", color: NAVY, fontWeight: 700 }}>{scenario.name}</h3>
           <div style={{ fontSize: 12, color: "#5A6B7A", marginTop: 4 }}>{scenario.tagline}</div>
@@ -93,6 +94,15 @@ function ScenarioCard({ scenario, onOpen }) {
     </div>
   );
 }
+
+const deleteBtn = {
+  position: "absolute", top: 10, right: 10,
+  width: 26, height: 26, borderRadius: "50%",
+  border: `1px solid ${STEEL}`, background: "white",
+  color: "#7A8B9A", fontSize: 16, lineHeight: 1, fontWeight: 600,
+  cursor: "pointer", display: "inline-flex", alignItems: "center", justifyContent: "center",
+  zIndex: 2,
+};
 
 function TearSheet({ scenario }) {
   const districts = Object.entries(scenario.district_summary || {});
@@ -342,9 +352,10 @@ function ScenarioDetail({ scenario, onBack }) {
   );
 }
 
-function ProcessingScenarioCard({ request }) {
+function ProcessingScenarioCard({ request, onDelete }) {
   return (
     <div style={{
+      position: "relative",
       background: "#FAFBFC",
       border: `1px dashed ${STEEL}`,
       borderRadius: 12,
@@ -360,7 +371,8 @@ function ProcessingScenarioCard({ request }) {
         @keyframes itph-pulse { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
         .itph-processing-dot { animation: itph-pulse 1.6s ease-in-out infinite; }
       `}</style>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+      <button onClick={onDelete} title="Delete request" style={deleteBtn}>×</button>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, paddingRight: 24 }}>
         <div>
           <h3 style={{ margin: 0, fontSize: 20, fontFamily: "Georgia,serif", color: NAVY, fontWeight: 700 }}>
             {request.concept_name}
@@ -454,10 +466,29 @@ export default function DesignConceptsTab() {
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 20 }}>
           {scenarios.map(s => (
-            <ScenarioCard key={s.id} scenario={s} onOpen={() => setOpenSlug(s.slug)} />
+            <ScenarioCard
+              key={s.id}
+              scenario={s}
+              onOpen={() => setOpenSlug(s.slug)}
+              onDelete={async () => {
+                if (!confirm(`Delete concept "${s.name}"? This cannot be undone.`)) return;
+                const { error } = await supabase.from("design_scenarios").delete().eq("id", s.id);
+                if (error) { alert(`Could not delete: ${error.message}`); return; }
+                setScenarios((prev) => prev.filter((x) => x.id !== s.id));
+              }}
+            />
           ))}
           {pendingRequests.map((r) => (
-            <ProcessingScenarioCard key={r.id} request={r} />
+            <ProcessingScenarioCard
+              key={r.id}
+              request={r}
+              onDelete={async () => {
+                if (!confirm(`Remove request "${r.concept_name}"?`)) return;
+                const { error } = await supabase.from("design_requests").update({ status: "archived" }).eq("id", r.id);
+                if (error) { alert(`Could not remove: ${error.message}`); return; }
+                setPendingRequests((prev) => prev.filter((x) => x.id !== r.id));
+              }}
+            />
           ))}
         </div>
       )}
