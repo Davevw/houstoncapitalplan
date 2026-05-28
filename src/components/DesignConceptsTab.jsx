@@ -108,12 +108,13 @@ function TearSheet({ scenario }) {
 
   return (
     <div id="tear-sheet" style={{ background: "white", padding: 36, border: `1px solid ${STEEL}`, borderRadius: 12 }}>
-      <div style={{ borderBottom: `3px solid ${NAVY}`, paddingBottom: 14, marginBottom: 18 }}>
-        <div style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8B9A", fontWeight: 700 }}>
-          ITPH Design Concept
+      <div style={{ position: "relative", marginBottom: 18, borderRadius: 10, overflow: "hidden", border: `1px solid ${STEEL}`, background: "#0e1e2c" }}>
+        <img src={siteMapImg} alt={`${scenario.name} aerial rendering`} style={{ width: "100%", display: "block" }} />
+        <div style={{ position: "absolute", left: 0, right: 0, bottom: 0, padding: "18px 22px", background: "linear-gradient(to top, rgba(11,61,92,0.92), rgba(11,61,92,0))", color: "white" }}>
+          <div style={{ fontSize: 10, letterSpacing: 1.5, textTransform: "uppercase", opacity: 0.85, fontWeight: 700 }}>ITPH Design Concept</div>
+          <h1 style={{ margin: "2px 0 4px", fontSize: 28, fontFamily: "Georgia,serif" }}>{scenario.name}</h1>
+          <div style={{ fontSize: 13, fontStyle: "italic", opacity: 0.92 }}>{scenario.tagline}</div>
         </div>
-        <h1 style={{ margin: "4px 0 6px", fontSize: 30, fontFamily: "Georgia,serif", color: NAVY }}>{scenario.name}</h1>
-        <div style={{ fontSize: 14, color: "#5A6B7A", fontStyle: "italic" }}>{scenario.tagline}</div>
       </div>
 
       <div style={{ display: "flex", gap: 24, marginBottom: 20, fontSize: 13, color: NAVY, fontWeight: 600 }}>
@@ -171,6 +172,7 @@ function ScenarioMap({ scenario, onSelect, selectedId }) {
   const [zoom, setZoom] = useState(1);
   const [pan, setPan] = useState({ x: 0, y: 0 });
   const [isPanning, setIsPanning] = useState(false);
+  const [hoverId, setHoverId] = useState(null);
   const panStart = useRef({ x: 0, y: 0, panX: 0, panY: 0 });
 
   const summary = scenario.district_summary || {};
@@ -187,6 +189,9 @@ function ScenarioMap({ scenario, onSelect, selectedId }) {
     el.addEventListener("wheel", handler, { passive: false });
     return () => el.removeEventListener("wheel", handler);
   }, []);
+
+  // Lot radius scales with acreage (sqrt for visual area ~ acres)
+  const radiusFor = (acres) => Math.max(1.4, Math.min(4.2, Math.sqrt(acres || 1) * 0.95));
 
   return (
     <div style={{ background: "white", border: `1px solid ${STEEL}`, borderRadius: 12, overflow: "hidden", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}>
@@ -207,21 +212,31 @@ function ScenarioMap({ scenario, onSelect, selectedId }) {
         onMouseMove={(e) => { if (!isPanning) return; setPan({ x: panStart.current.panX + (e.clientX - panStart.current.x), y: panStart.current.panY + (e.clientY - panStart.current.y) }); }}
         onMouseUp={() => setIsPanning(false)}
         onMouseLeave={() => setIsPanning(false)}
-        style={{ position: "relative", overflow: "hidden", cursor: zoom > 1 ? (isPanning ? "grabbing" : "grab") : "default", background: "#0e1e2c", aspectRatio: "1470 / 834" }}
+        style={{ position: "relative", overflow: "hidden", cursor: zoom > 1 ? (isPanning ? "grabbing" : "grab") : "default", background: "#F7F9FB", aspectRatio: "1470 / 834" }}
       >
         <div style={{ position: "absolute", inset: 0, transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: isPanning ? "none" : "transform 0.15s ease-out" }}>
-          <img src={siteMapImg} alt="ITPH site plan" draggable={false} style={{ width: "100%", height: "100%", display: "block", userSelect: "none", pointerEvents: "none" }} />
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
+            {/* Site boundary outline */}
+            <rect x="10" y="10" width="50" height="80" fill="white" stroke={STEEL} strokeWidth="0.3" />
+            {/* Street labels */}
+            <text x="8" y="50" fontSize="1.4" fill="#7A8B9A" transform="rotate(-90 8 50)" textAnchor="middle">Cook Road</text>
+            <text x="62" y="50" fontSize="1.4" fill="#7A8B9A" transform="rotate(90 62 50)" textAnchor="middle">S Kirkwood Rd</text>
+            <text x="35" y="94" fontSize="1.4" fill="#7A8B9A" textAnchor="middle">Bissonnet Street</text>
+
             {Object.entries(PARCEL_COORDS).map(([id, p]) => {
               const dist = assignments[id];
-              const color = (summary[dist] && summary[dist].color) || "#999";
+              const color = (summary[dist] && summary[dist].color) || "#C8CFD6";
               const isSelected = String(selectedId) === String(id);
-              const r = isSelected ? 2.4 : 1.6;
+              const isHovered = String(hoverId) === String(id);
+              const r = radiusFor(p.acres) * (isSelected ? 1.25 : isHovered ? 1.1 : 1);
               return (
-                <g key={id} style={{ cursor: "pointer" }} onClick={(e) => { e.stopPropagation(); onSelect(Number(id)); }}>
-                  <circle cx={p.cx} cy={p.cy} r={r + 1.2} fill="white" opacity={isSelected ? 0.9 : 0} />
-                  <circle cx={p.cx} cy={p.cy} r={r} fill={color} stroke="white" strokeWidth={isSelected ? 0.6 : 0.3} />
-                  <text x={p.cx} y={p.cy + 0.5} textAnchor="middle" fontSize="1.4" fill="white" fontWeight="700" style={{ pointerEvents: "none" }}>{id}</text>
+                <g key={id} style={{ cursor: "pointer" }}
+                  onClick={(e) => { e.stopPropagation(); onSelect(Number(id)); }}
+                  onMouseEnter={() => setHoverId(Number(id))}
+                  onMouseLeave={() => setHoverId(null)}
+                >
+                  <circle cx={p.cx} cy={p.cy} r={r} fill={color} stroke={isSelected ? NAVY : "white"} strokeWidth={isSelected ? 0.6 : 0.3} opacity={0.92} />
+                  <text x={p.cx} y={p.cy + 0.6} textAnchor="middle" fontSize={Math.max(1.3, r * 0.7)} fill="white" fontWeight="700" style={{ pointerEvents: "none" }}>{id}</text>
                 </g>
               );
             })}
