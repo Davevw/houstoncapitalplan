@@ -4,8 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 const NAVY = "#0B3D5C";
 const STEEL = "#E5E7EB";
 const AMBER = "#C58A1A";
-const SESSION_KEY = "design_composer_unlocked";
-const PASSPHRASE = "ML";
 
 const CLIENT_TYPES = [
   "Retail Developer",
@@ -18,87 +16,6 @@ const CLIENT_TYPES = [
   "Family Office",
   "Other",
 ];
-
-function isUnlocked() {
-  try { return sessionStorage.getItem(SESSION_KEY) === "true"; } catch { return false; }
-}
-
-function LockedCard({ onUnlock }) {
-  const [code, setCode] = useState("");
-  const [error, setError] = useState(false);
-
-  function submit() {
-    if (code.trim().toUpperCase() === PASSPHRASE) {
-      try { sessionStorage.setItem(SESSION_KEY, "true"); } catch {}
-      onUnlock();
-    } else {
-      setError(true);
-      setCode("");
-    }
-  }
-
-  return (
-    <div style={{
-      background: "white",
-      border: `1px solid ${STEEL}`,
-      borderRadius: 14,
-      padding: "32px 36px",
-      boxShadow: "0 2px 10px rgba(11,61,92,0.05)",
-      marginBottom: 28,
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
-        <div style={{ flex: "1 1 320px", minWidth: 280 }}>
-          <div style={{ fontSize: 11, letterSpacing: 1.5, textTransform: "uppercase", color: "#7A8B9A", fontWeight: 700, marginBottom: 6 }}>
-            Restricted Design Composer Access
-          </div>
-          <h3 style={{ margin: "0 0 8px", fontFamily: "Georgia,serif", fontSize: 22, color: NAVY, fontWeight: 700 }}>
-            Request New Design Concept
-          </h3>
-          <div style={{ fontSize: 13, color: "#5A6B7A", lineHeight: 1.6, maxWidth: 560 }}>
-            This tool is reserved for approved planning and capital strategy collaborators.
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-          <input
-            type="password"
-            value={code}
-            onChange={(e) => { setCode(e.target.value); setError(false); }}
-            onKeyDown={(e) => e.key === "Enter" && submit()}
-            placeholder="Passphrase"
-            style={{
-              padding: "11px 14px",
-              border: `1.5px solid ${error ? "#E85D75" : STEEL}`,
-              borderRadius: 8,
-              fontSize: 14,
-              letterSpacing: 3,
-              textAlign: "center",
-              width: 160,
-              outline: "none",
-            }}
-          />
-          <button onClick={submit} style={{
-            background: NAVY,
-            color: "white",
-            border: "none",
-            padding: "11px 22px",
-            borderRadius: 8,
-            fontSize: 13,
-            fontWeight: 600,
-            cursor: "pointer",
-            letterSpacing: 0.3,
-          }}>
-            Unlock
-          </button>
-        </div>
-      </div>
-      {error && (
-        <div style={{ marginTop: 12, fontSize: 12, color: "#E85D75", fontWeight: 600 }}>
-          Invalid passphrase.
-        </div>
-      )}
-    </div>
-  );
-}
 
 function Field({ label, children, hint }) {
   return (
@@ -127,8 +44,6 @@ const inputBase = {
 };
 
 export default function DesignRequestComposer({ onSubmitted }) {
-  const [unlocked, setUnlocked] = useState(isUnlocked());
-
   // step: form -> clarify -> submitting -> success
   const [step, setStep] = useState("form");
 
@@ -215,10 +130,6 @@ export default function DesignRequestComposer({ onSubmitted }) {
     if (onSubmitted) {
       onSubmitted({ concept_name: conceptName, target_client_type: clientType });
     }
-  }
-
-  if (!unlocked) {
-    return <LockedCard onUnlock={() => setUnlocked(true)} />;
   }
 
   return (
