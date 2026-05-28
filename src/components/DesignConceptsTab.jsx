@@ -400,10 +400,28 @@ function LotPanel({ lotId, scenario, economicsByLot, onClose }) {
 
 function ScenarioDetail({ scenario, onBack }) {
   const [selectedLot, setSelectedLot] = useState(null);
+  const [economicsByLot, setEconomicsByLot] = useState({});
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data, error } = await supabase
+        .from("lot_economics")
+        .select("*")
+        .eq("scenario_id", scenario.id);
+      if (cancelled) return;
+      if (error) { console.error("lot_economics load failed:", error); setEconomicsByLot({}); return; }
+      const map = {};
+      (data || []).forEach((row) => { map[row.lot_number] = row; });
+      setEconomicsByLot(map);
+    })();
+    return () => { cancelled = true; };
+  }, [scenario.id]);
 
   function handlePrint() {
     window.print();
   }
+
 
   return (
     <div>
