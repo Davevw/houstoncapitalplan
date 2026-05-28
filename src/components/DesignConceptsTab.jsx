@@ -471,6 +471,7 @@ export default function DesignConceptsTab() {
   const [openSlug, setOpenSlug] = useState(null);
 
   async function loadAll() {
+    setError(null);
     const [scenRes, reqRes] = await Promise.all([
       supabase
         .from("design_scenarios")
@@ -480,13 +481,15 @@ export default function DesignConceptsTab() {
       supabase
         .from("design_requests")
         .select("*")
-        .in("status", ["submitted", "processing"])
+        .in("status", ["submitted", "processing", "ready"])
         .order("created_at", { ascending: true }),
     ]);
     if (scenRes.error) { setError(scenRes.error.message); setLoading(false); return; }
     if (reqRes.error) { setError(reqRes.error.message); setLoading(false); return; }
-    setScenarios(scenRes.data || []);
-    setPendingRequests(reqRes.data || []);
+    // Dedupe by canonical Supabase row id
+    const dedupe = (rows) => Array.from(new Map((rows || []).map(r => [r.id, r])).values());
+    setScenarios(dedupe(scenRes.data));
+    setPendingRequests(dedupe(reqRes.data));
     setLoading(false);
   }
 
@@ -495,7 +498,15 @@ export default function DesignConceptsTab() {
   const openScenario = openSlug ? scenarios.find(s => s.slug === openSlug) : null;
 
   if (loading) return <div style={{ padding: 40, textAlign: "center", color: "#7A8B9A" }}>Loading concepts…</div>;
-  if (error) return <div style={{ padding: 40, color: "#B33" }}>Could not load design concepts: {error}</div>;
+  if (error) return (
+    <div style={{ padding: 24, background: "#FDECEE", border: "1px solid #F5B5BD", borderLeft: "4px solid #C0392B", borderRadius: 10, color: "#7A1F1F" }}>
+      <div style={{ fontWeight: 700, marginBottom: 6 }}>Could not load Design Concepts</div>
+      <div style={{ fontSize: 13, marginBottom: 12 }}>{error}</div>
+      <button onClick={() => { setLoading(true); loadAll(); }} style={{ background: NAVY, color: "white", border: "none", padding: "8px 14px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+        Retry
+      </button>
+    </div>
+  );
 
   if (openScenario) {
     return <ScenarioDetail scenario={openScenario} onBack={() => setOpenSlug(null)} />;
