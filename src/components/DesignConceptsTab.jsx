@@ -466,10 +466,29 @@ export default function DesignConceptsTab() {
       ) : (
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 20 }}>
           {scenarios.map(s => (
-            <ScenarioCard key={s.id} scenario={s} onOpen={() => setOpenSlug(s.slug)} />
+            <ScenarioCard
+              key={s.id}
+              scenario={s}
+              onOpen={() => setOpenSlug(s.slug)}
+              onDelete={async () => {
+                if (!confirm(`Delete concept "${s.name}"? This cannot be undone.`)) return;
+                const { error } = await supabase.from("design_scenarios").delete().eq("id", s.id);
+                if (error) { alert(`Could not delete: ${error.message}`); return; }
+                setScenarios((prev) => prev.filter((x) => x.id !== s.id));
+              }}
+            />
           ))}
           {pendingRequests.map((r) => (
-            <ProcessingScenarioCard key={r.id} request={r} />
+            <ProcessingScenarioCard
+              key={r.id}
+              request={r}
+              onDelete={async () => {
+                if (!confirm(`Remove request "${r.concept_name}"?`)) return;
+                const { error } = await supabase.from("design_requests").update({ status: "archived" }).eq("id", r.id);
+                if (error) { alert(`Could not remove: ${error.message}`); return; }
+                setPendingRequests((prev) => prev.filter((x) => x.id !== r.id));
+              }}
+            />
           ))}
         </div>
       )}
