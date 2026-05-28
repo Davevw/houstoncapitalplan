@@ -132,10 +132,6 @@ export default function DesignRequestComposer({ onSubmitted }) {
     }
   }
 
-  if (!unlocked) {
-    return <LockedCard onUnlock={() => setUnlocked(true)} />;
-  }
-
   return (
     <div style={{
       background: "white",
