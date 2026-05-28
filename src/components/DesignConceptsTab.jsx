@@ -371,7 +371,8 @@ function ProcessingScenarioCard({ request, onDelete }) {
         @keyframes itph-pulse { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
         .itph-processing-dot { animation: itph-pulse 1.6s ease-in-out infinite; }
       `}</style>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+      <button onClick={onDelete} title="Delete request" style={deleteBtn}>×</button>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, paddingRight: 24 }}>
         <div>
           <h3 style={{ margin: 0, fontSize: 20, fontFamily: "Georgia,serif", color: NAVY, fontWeight: 700 }}>
             {request.concept_name}
