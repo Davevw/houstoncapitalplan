@@ -993,7 +993,7 @@ function SectionTitle({children,icon}){
 // MAIN APP
 // ═══════════════════════════════════════════════════════════════
 
-const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model","Site Plan","MUD Analysis"];
+const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model","Site Plan","MUD Analysis","Design Concepts"];
 const BUILD_STAMP = "2026-03-30-1919";
 
 export default function App(){
