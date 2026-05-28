@@ -352,9 +352,10 @@ function ScenarioDetail({ scenario, onBack }) {
   );
 }
 
-function ProcessingScenarioCard({ request }) {
+function ProcessingScenarioCard({ request, onDelete }) {
   return (
     <div style={{
+      position: "relative",
       background: "#FAFBFC",
       border: `1px dashed ${STEEL}`,
       borderRadius: 12,
