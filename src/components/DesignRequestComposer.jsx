@@ -44,8 +44,6 @@ const inputBase = {
 };
 
 export default function DesignRequestComposer({ onSubmitted }) {
-  const [unlocked, setUnlocked] = useState(isUnlocked());
-
   // step: form -> clarify -> submitting -> success
   const [step, setStep] = useState("form");
 
