@@ -47,6 +47,48 @@ export type Database = {
         }
         Relationships: []
       }
+      design_scenarios: {
+        Row: {
+          created_at: string
+          description: string | null
+          district_summary: Json
+          id: string
+          lot_assignments: Json
+          name: string
+          slug: string
+          status: string
+          tagline: string | null
+          target_profile: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          district_summary?: Json
+          id?: string
+          lot_assignments?: Json
+          name: string
+          slug: string
+          status?: string
+          tagline?: string | null
+          target_profile?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          district_summary?: Json
+          id?: string
+          lot_assignments?: Json
+          name?: string
+          slug?: string
+          status?: string
+          tagline?: string | null
+          target_profile?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       vault_documents: {
         Row: {
           category: string
