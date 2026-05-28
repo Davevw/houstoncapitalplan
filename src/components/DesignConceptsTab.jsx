@@ -327,11 +327,70 @@ function ScenarioDetail({ scenario, onBack }) {
   );
 }
 
+function ProcessingScenarioCard({ request }) {
+  return (
+    <div style={{
+      background: "#FAFBFC",
+      border: `1px dashed ${STEEL}`,
+      borderRadius: 12,
+      padding: 20,
+      display: "flex",
+      flexDirection: "column",
+      gap: 14,
+      opacity: 0.85,
+      position: "relative",
+      overflow: "hidden",
+    }}>
+      <style>{`
+        @keyframes itph-pulse { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+        .itph-processing-dot { animation: itph-pulse 1.6s ease-in-out infinite; }
+      `}</style>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10 }}>
+        <div>
+          <h3 style={{ margin: 0, fontSize: 20, fontFamily: "Georgia,serif", color: NAVY, fontWeight: 700 }}>
+            {request.concept_name}
+          </h3>
+          <div style={{ fontSize: 12, color: "#7A8B9A", marginTop: 4 }}>
+            {request.target_client_type}
+          </div>
+        </div>
+        <span style={{
+          fontSize: 10, fontWeight: 700, letterSpacing: 0.5, textTransform: "uppercase",
+          padding: "4px 10px", borderRadius: 999,
+          background: "#FFF4E0", color: "#8A6A1F",
+          display: "inline-flex", alignItems: "center", gap: 6,
+        }}>
+          <span className="itph-processing-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#8A6A1F" }} />
+          Processing…
+        </span>
+      </div>
+      <div style={{ fontSize: 12, color: "#7A8B9A", lineHeight: 1.55, fontStyle: "italic" }}>
+        Generating lot assignments and district composition. The new concept will appear here once the
+        planning pipeline completes processing.
+      </div>
+      <button disabled style={{
+        marginTop: "auto",
+        background: "#E5E7EB",
+        color: "#7A8B9A",
+        border: "none",
+        padding: "10px 16px",
+        borderRadius: 8,
+        fontSize: 13,
+        fontWeight: 600,
+        cursor: "not-allowed",
+      }}>
+        Pending Generation
+      </button>
+    </div>
+  );
+}
+
 export default function DesignConceptsTab() {
   const [scenarios, setScenarios] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openSlug, setOpenSlug] = useState(null);
+  const [pendingRequests, setPendingRequests] = useState([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -359,12 +418,16 @@ export default function DesignConceptsTab() {
 
   return (
     <div>
+      <DesignRequestComposer
+        onSubmitted={(req) => setPendingRequests((prev) => [...prev, { ...req, _ts: Date.now() }])}
+      />
+
       <SectionTitle icon="🏗️">Design Concepts — Master Plan Scenario Library</SectionTitle>
       <div style={{ fontSize: 13, color: "#5A6B7A", marginBottom: 24, lineHeight: 1.6, maxWidth: 800 }}>
         Alternative land-use configurations across the 30-lot, 136-acre ITPH site. Each scenario presents a different
         district assignment for brokers, buyers, and internal stakeholders to evaluate.
       </div>
-      {scenarios.length === 0 ? (
+      {scenarios.length === 0 && pendingRequests.length === 0 ? (
         <div style={{ padding: 40, textAlign: "center", color: "#7A8B9A", border: `1px dashed ${STEEL}`, borderRadius: 12 }}>
           No concepts published yet.
         </div>
@@ -372,6 +435,9 @@ export default function DesignConceptsTab() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))", gap: 20 }}>
           {scenarios.map(s => (
             <ScenarioCard key={s.id} scenario={s} onOpen={() => setOpenSlug(s.slug)} />
+          ))}
+          {pendingRequests.map((r) => (
+            <ProcessingScenarioCard key={r._ts} request={r} />
           ))}
         </div>
       )}
