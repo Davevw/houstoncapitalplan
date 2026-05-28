@@ -8,6 +8,7 @@ import CapitalModelDownload from "./admin/CapitalModelDownload";
 import JVReports from "./admin/JVReports";
 import SitePlanTab from "./SitePlanTab";
 import MUDAnalysisTab from "./MUDAnalysisTab";
+import DesignConceptsTab from "./DesignConceptsTab";
 import LegalComplianceTab from "./admin/LegalComplianceTab";
 import itpLogo from "@/assets/itp-houston-logo.png";
 // Data and engine are also kept inline below for Lovable compatibility
@@ -993,7 +994,7 @@ function SectionTitle({children,icon}){
 // MAIN APP
 // ═══════════════════════════════════════════════════════════════
 
-const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model","Site Plan","MUD Analysis"];
+const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model","Site Plan","MUD Analysis","Design Concepts"];
 const BUILD_STAMP = "2026-03-30-1919";
 
 export default function App(){
@@ -1130,6 +1131,7 @@ export default function App(){
         {activeTab===6&&<SpreadsheetTab model={model} params={params}/>}
         {activeTab===7&&<SitePlanTab/>}
         {activeTab===8&&<MUDAnalysisTab/>}
+        {activeTab===9&&<DesignConceptsTab/>}
       </div>
 
       {/* Admin overlay panels (footer nav tabs) */}
