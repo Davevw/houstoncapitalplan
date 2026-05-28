@@ -352,61 +352,112 @@ function ScenarioDetail({ scenario, onBack }) {
   );
 }
 
+const PROGRESS_STEPS = ["Submitted", "Processing", "Generating Lots", "Ready for Review"];
+
+function stepForStatus(status) {
+  if (status === "processing") return 2;
+  if (status === "ready") return 3;
+  return 1;
+}
+
+function formatDate(iso) {
+  if (!iso) return "";
+  try {
+    return new Date(iso).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  } catch { return ""; }
+}
+
 function ProcessingScenarioCard({ request, onDelete }) {
+  const currentStep = stepForStatus(request.status);
   return (
     <div style={{
       position: "relative",
       background: "#FAFBFC",
-      border: `1px dashed ${STEEL}`,
+      border: `1.5px dashed #D9C28A`,
       borderRadius: 12,
       padding: 20,
       display: "flex",
       flexDirection: "column",
-      gap: 14,
-      opacity: 0.85,
-      position: "relative",
+      gap: 12,
+      opacity: 0.95,
       overflow: "hidden",
+      boxShadow: "0 0 0 4px rgba(197,138,26,0.05), 0 2px 8px rgba(197,138,26,0.08)",
     }}>
       <style>{`
-        @keyframes itph-pulse { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+        @keyframes itph-pulse { 0%,100% { opacity: 0.5; transform: scale(1); } 50% { opacity: 1; transform: scale(1.25); } }
         .itph-processing-dot { animation: itph-pulse 1.6s ease-in-out infinite; }
+        @keyframes itph-bar { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .itph-bar-fill { animation: itph-bar 1.8s ease-in-out infinite; }
       `}</style>
-      <button onClick={onDelete} title="Delete request" style={deleteBtn}>×</button>
+      <button onClick={onDelete} title="Remove request" style={deleteBtn}>×</button>
+
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 10, paddingRight: 24 }}>
-        <div>
-          <h3 style={{ margin: 0, fontSize: 20, fontFamily: "Georgia,serif", color: NAVY, fontWeight: 700 }}>
-            {request.concept_name}
-          </h3>
-          <div style={{ fontSize: 12, color: "#7A8B9A", marginTop: 4 }}>
-            {request.target_client_type}
-          </div>
-        </div>
+        <h3 style={{ margin: 0, fontSize: 19, fontFamily: "Georgia,serif", color: NAVY, fontWeight: 700, lineHeight: 1.2 }}>
+          {request.concept_name}
+        </h3>
         <span style={{
-          fontSize: 10, fontWeight: 700, letterSpacing: 0.5, textTransform: "uppercase",
-          padding: "4px 10px", borderRadius: 999,
+          fontSize: 9.5, fontWeight: 700, letterSpacing: 0.6, textTransform: "uppercase",
+          padding: "4px 9px", borderRadius: 999,
           background: "#FFF4E0", color: "#8A6A1F",
-          display: "inline-flex", alignItems: "center", gap: 6,
+          display: "inline-flex", alignItems: "center", gap: 6, whiteSpace: "nowrap",
         }}>
-          <span className="itph-processing-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#8A6A1F" }} />
-          Processing…
+          <span className="itph-processing-dot" style={{ width: 6, height: 6, borderRadius: "50%", background: "#C58A1A" }} />
+          In Pipeline
         </span>
       </div>
-      <div style={{ fontSize: 12, color: "#7A8B9A", lineHeight: 1.55, fontStyle: "italic" }}>
-        Generating lot assignments and district composition. The new concept will appear here once the
-        planning pipeline completes processing.
+
+      <div style={{ fontSize: 12, color: "#5A6B7A", lineHeight: 1.5 }}>
+        <div style={{ fontWeight: 600, color: NAVY }}>{request.target_client_type}</div>
+        <div style={{ fontSize: 11, color: "#8A99A8", marginTop: 2 }}>
+          {request.submitted_by ? `Submitted by ${request.submitted_by} · ` : ""}{formatDate(request.created_at)}
+        </div>
       </div>
+
+      <div style={{ fontSize: 12, color: "#5A6B7A", lineHeight: 1.55, fontStyle: "italic", borderTop: `1px solid ${STEEL}`, paddingTop: 10 }}>
+        Generating district assignments, land-use allocation, and scenario composition for review.
+      </div>
+
+      <div style={{ display: "flex", gap: 4, marginTop: 2 }}>
+        {PROGRESS_STEPS.map((label, i) => {
+          const active = i < currentStep;
+          const isCurrent = i === currentStep - 1;
+          return (
+            <div key={label} style={{ flex: 1 }}>
+              <div style={{
+                height: 4, borderRadius: 2,
+                background: active ? "#C58A1A" : "#E5E7EB",
+                position: "relative", overflow: "hidden",
+              }}>
+                {isCurrent && (
+                  <div className="itph-bar-fill" style={{
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.65), transparent)",
+                  }} />
+                )}
+              </div>
+              <div style={{
+                fontSize: 8.5, marginTop: 4, textAlign: "center",
+                color: active ? NAVY : "#A8B3BD",
+                fontWeight: isCurrent ? 700 : 500,
+                letterSpacing: 0.3, textTransform: "uppercase",
+              }}>{label}</div>
+            </div>
+          );
+        })}
+      </div>
+
       <button disabled style={{
-        marginTop: "auto",
-        background: "#E5E7EB",
-        color: "#7A8B9A",
-        border: "none",
-        padding: "10px 16px",
+        marginTop: 6,
+        background: "transparent",
+        color: "#A8B3BD",
+        border: `1px dashed ${STEEL}`,
+        padding: "9px 16px",
         borderRadius: 8,
-        fontSize: 13,
+        fontSize: 12,
         fontWeight: 600,
         cursor: "not-allowed",
       }}>
-        Pending Generation
+        Awaiting Generation
       </button>
     </div>
   );
@@ -420,6 +471,7 @@ export default function DesignConceptsTab() {
   const [openSlug, setOpenSlug] = useState(null);
 
   async function loadAll() {
+    setError(null);
     const [scenRes, reqRes] = await Promise.all([
       supabase
         .from("design_scenarios")
@@ -429,13 +481,15 @@ export default function DesignConceptsTab() {
       supabase
         .from("design_requests")
         .select("*")
-        .in("status", ["submitted", "processing"])
+        .in("status", ["submitted", "processing", "ready"])
         .order("created_at", { ascending: true }),
     ]);
     if (scenRes.error) { setError(scenRes.error.message); setLoading(false); return; }
     if (reqRes.error) { setError(reqRes.error.message); setLoading(false); return; }
-    setScenarios(scenRes.data || []);
-    setPendingRequests(reqRes.data || []);
+    // Dedupe by canonical Supabase row id
+    const dedupe = (rows) => Array.from(new Map((rows || []).map(r => [r.id, r])).values());
+    setScenarios(dedupe(scenRes.data));
+    setPendingRequests(dedupe(reqRes.data));
     setLoading(false);
   }
 
@@ -444,7 +498,15 @@ export default function DesignConceptsTab() {
   const openScenario = openSlug ? scenarios.find(s => s.slug === openSlug) : null;
 
   if (loading) return <div style={{ padding: 40, textAlign: "center", color: "#7A8B9A" }}>Loading concepts…</div>;
-  if (error) return <div style={{ padding: 40, color: "#B33" }}>Could not load design concepts: {error}</div>;
+  if (error) return (
+    <div style={{ padding: 24, background: "#FDECEE", border: "1px solid #F5B5BD", borderLeft: "4px solid #C0392B", borderRadius: 10, color: "#7A1F1F" }}>
+      <div style={{ fontWeight: 700, marginBottom: 6 }}>Could not load Design Concepts</div>
+      <div style={{ fontSize: 13, marginBottom: 12 }}>{error}</div>
+      <button onClick={() => { setLoading(true); loadAll(); }} style={{ background: NAVY, color: "white", border: "none", padding: "8px 14px", borderRadius: 6, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
+        Retry
+      </button>
+    </div>
+  );
 
   if (openScenario) {
     return <ScenarioDetail scenario={openScenario} onBack={() => setOpenSlug(null)} />;
