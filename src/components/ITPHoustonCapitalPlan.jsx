@@ -8,6 +8,7 @@ import CapitalModelDownload from "./admin/CapitalModelDownload";
 import JVReports from "./admin/JVReports";
 import SitePlanTab from "./SitePlanTab";
 import MUDAnalysisTab from "./MUDAnalysisTab";
+import DesignConceptsTab from "./DesignConceptsTab";
 import LegalComplianceTab from "./admin/LegalComplianceTab";
 import itpLogo from "@/assets/itp-houston-logo.png";
 // Data and engine are also kept inline below for Lovable compatibility
