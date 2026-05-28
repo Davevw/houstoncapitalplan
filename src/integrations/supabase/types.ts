@@ -125,6 +125,83 @@ export type Database = {
         }
         Relationships: []
       }
+      lot_economics: {
+        Row: {
+          acreage: number | null
+          adjusted_price_per_acre: number | null
+          assumptions: Json
+          base_price_per_acre: number | null
+          capital_paydown_forecast: number | null
+          created_at: string
+          disposition: string | null
+          district: string | null
+          estimated_development_cost: number | null
+          estimated_lot_value: number | null
+          id: string
+          lot_number: number
+          position: string | null
+          position_premium: number | null
+          projected_net_proceeds: number | null
+          projected_noi: number | null
+          projected_revenue: number | null
+          scenario_id: string
+          simple_roi: number | null
+          updated_at: string
+        }
+        Insert: {
+          acreage?: number | null
+          adjusted_price_per_acre?: number | null
+          assumptions?: Json
+          base_price_per_acre?: number | null
+          capital_paydown_forecast?: number | null
+          created_at?: string
+          disposition?: string | null
+          district?: string | null
+          estimated_development_cost?: number | null
+          estimated_lot_value?: number | null
+          id?: string
+          lot_number: number
+          position?: string | null
+          position_premium?: number | null
+          projected_net_proceeds?: number | null
+          projected_noi?: number | null
+          projected_revenue?: number | null
+          scenario_id: string
+          simple_roi?: number | null
+          updated_at?: string
+        }
+        Update: {
+          acreage?: number | null
+          adjusted_price_per_acre?: number | null
+          assumptions?: Json
+          base_price_per_acre?: number | null
+          capital_paydown_forecast?: number | null
+          created_at?: string
+          disposition?: string | null
+          district?: string | null
+          estimated_development_cost?: number | null
+          estimated_lot_value?: number | null
+          id?: string
+          lot_number?: number
+          position?: string | null
+          position_premium?: number | null
+          projected_net_proceeds?: number | null
+          projected_noi?: number | null
+          projected_revenue?: number | null
+          scenario_id?: string
+          simple_roi?: number | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lot_economics_scenario_id_fkey"
+            columns: ["scenario_id"]
+            isOneToOne: false
+            referencedRelation: "design_scenarios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       vault_documents: {
         Row: {
           category: string
