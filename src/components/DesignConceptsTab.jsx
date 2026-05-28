@@ -259,12 +259,66 @@ function ScenarioMap({ scenario, onSelect, selectedId }) {
 
 const zoomBtn = { width: 28, height: 28, border: `1px solid ${STEEL}`, background: "white", color: NAVY, cursor: "pointer", borderRadius: 6, fontSize: 16, fontWeight: 700, display: "inline-flex", alignItems: "center", justifyContent: "center" };
 
-function LotPanel({ lotId, scenario, onClose }) {
+// Fallback baseline assumptions (used only when no Supabase row exists)
+const DISTRICT_PRICING = {
+  retail:       { label: "Retail / Commercial",      base: 1200000 },
+  multifamily:  { label: "Multifamily",              base:  650000 },
+  flex:         { label: "Flex / Office-Warehouse",  base:  550000 },
+  industrial:   { label: "Light Industrial",         base:  450000 },
+  common:       { label: "Infrastructure / Common",  base:       0 },
+};
+const POSITION_PREMIUM = { Corner: 0.20, Frontage: 0.10, Interior: 0 };
+
+const fmtCurrency = (n) => (n == null || isNaN(n)) ? "—" : `$${Number(n).toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+const fmtPct = (n) => (n == null || isNaN(n)) ? "—" : `${(Number(n) * 100).toFixed(1)}%`;
+const fmtPlus = (n) => (n == null || isNaN(n)) ? "—" : `${n >= 0 ? "+" : ""}${(Number(n) * 100).toFixed(0)}%`;
+const fmtAcres = (n) => (n == null || isNaN(n)) ? "—" : `${Number(n).toFixed(2)} ac`;
+
+function deriveEconomicsFallback({ district, position, acreage }) {
+  const districtMeta = DISTRICT_PRICING[district] || { label: district || "—", base: 0 };
+  const premium = POSITION_PREMIUM[position] ?? 0;
+  const base = districtMeta.base;
+  const adjusted = base * (1 + premium);
+  const value = adjusted * (acreage || 0);
+  return {
+    district_label: districtMeta.label,
+    base_price_per_acre: base,
+    position_premium: premium,
+    adjusted_price_per_acre: adjusted,
+    estimated_lot_value: value,
+    isFallback: true,
+  };
+}
+
+function DataRow({ label, value, strong }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", fontSize: 12, padding: "5px 0", borderBottom: "1px dashed #EEF1F4" }}>
+      <span style={{ color: "#5A6B7A" }}>{label}</span>
+      <span style={{ color: strong ? NAVY : "#1F2937", fontWeight: strong ? 700 : 500, fontFamily: "Georgia,serif" }}>{value}</span>
+    </div>
+  );
+}
+
+function LotPanel({ lotId, scenario, economicsByLot, onClose }) {
   if (!lotId) return null;
   const dist = scenario.lot_assignments[String(lotId)];
   const district = scenario.district_summary[dist];
   const coords = PARCEL_COORDS[lotId];
   const permitted = PERMITTED_USES[dist] || [];
+  const position = LOT_POSITION[lotId];
+  const acreage = coords?.acres;
+
+  const dbEcon = economicsByLot?.[Number(lotId)];
+  const fallback = deriveEconomicsFallback({ district: dist, position, acreage });
+  const econ = dbEcon || fallback;
+  const hasProForma = dbEcon && (
+    dbEcon.estimated_development_cost != null ||
+    dbEcon.projected_revenue != null ||
+    dbEcon.projected_net_proceeds != null ||
+    dbEcon.simple_roi != null
+  );
+  const districtLabel = district?.label || fallback.district_label;
+
   return (
     <div style={{ background: "white", border: `1px solid ${STEEL}`, borderRadius: 12, padding: 18, boxShadow: "0 4px 16px rgba(0,0,0,0.08)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
@@ -281,8 +335,8 @@ function LotPanel({ lotId, scenario, onClose }) {
         </div>
       )}
       <div style={{ marginTop: 14, fontSize: 13, color: "#3A4A5A", display: "flex", flexDirection: "column", gap: 6 }}>
-        <div><strong style={{ color: NAVY }}>Acreage:</strong> {coords?.acres ?? "—"} ac</div>
-        <div><strong style={{ color: NAVY }}>Position:</strong> {LOT_POSITION[lotId] || "—"}</div>
+        <div><strong style={{ color: NAVY }}>Acreage:</strong> {fmtAcres(acreage)}</div>
+        <div><strong style={{ color: NAVY }}>Position:</strong> {position || "—"}</div>
       </div>
       <div style={{ marginTop: 14 }}>
         <div style={{ fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: "#7A8B9A", fontWeight: 700, marginBottom: 6 }}>Permitted Uses</div>
@@ -290,6 +344,55 @@ function LotPanel({ lotId, scenario, onClose }) {
           {permitted.map(u => <li key={u}>{u}</li>)}
         </ul>
         <div style={{ marginTop: 8, fontSize: 10, color: "#8A99A8", fontStyle: "italic" }}>Per Development Standards v1</div>
+      </div>
+
+      {/* Section A — Lot Economics */}
+      <div style={{ marginTop: 18, paddingTop: 14, borderTop: `1px solid ${STEEL}` }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <div style={{ fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: "#7A8B9A", fontWeight: 700 }}>Lot Economics</div>
+          {econ.isFallback && (
+            <span style={{ fontSize: 9, padding: "2px 6px", borderRadius: 4, background: "#FFF4E0", color: "#8A6A1F", fontWeight: 700, letterSpacing: 0.3 }}>BASELINE</span>
+          )}
+        </div>
+        <DataRow label="District Category" value={districtLabel} />
+        <DataRow label="Price per Acre" value={fmtCurrency(econ.base_price_per_acre)} />
+        <DataRow label={`Position Premium (${position || "—"})`} value={fmtPlus(econ.position_premium)} />
+        <DataRow label="Adjusted Price per Acre" value={fmtCurrency(econ.adjusted_price_per_acre)} />
+        <DataRow label="Estimated Lot Value" value={fmtCurrency(econ.estimated_lot_value)} strong />
+        <div style={{ marginTop: 6, fontSize: 10, color: "#8A99A8", fontStyle: "italic", lineHeight: 1.5 }}>
+          Adj. Price/Ac = Base × (1 + Position Premium). Lot Value = Adj. Price/Ac × Acreage.
+        </div>
+      </div>
+
+      {/* Section B — Pro Forma Summary */}
+      <div style={{ marginTop: 18, paddingTop: 14, borderTop: `1px solid ${STEEL}` }}>
+        <div style={{ fontSize: 11, letterSpacing: 1, textTransform: "uppercase", color: "#7A8B9A", fontWeight: 700, marginBottom: 8 }}>Pro Forma Summary</div>
+        {hasProForma ? (
+          <>
+            {dbEcon.disposition === "sold" ? (
+              <>
+                <DataRow label="Estimated Sale Proceeds" value={fmtCurrency(dbEcon.projected_revenue)} />
+                <DataRow label="Capital Paydown Forecast" value={fmtCurrency(dbEcon.capital_paydown_forecast)} />
+                <DataRow label="Net Capital Release" value={fmtCurrency(dbEcon.projected_net_proceeds)} strong />
+              </>
+            ) : (
+              <>
+                <DataRow label="Estimated Development Cost" value={fmtCurrency(dbEcon.estimated_development_cost)} />
+                <DataRow label="Projected Revenue / Stabilized Value" value={fmtCurrency(dbEcon.projected_revenue)} />
+                <DataRow label="NOI / Net Proceeds" value={fmtCurrency(dbEcon.projected_noi ?? dbEcon.projected_net_proceeds)} />
+                <DataRow label="Capital Paydown Forecast" value={fmtCurrency(dbEcon.capital_paydown_forecast)} />
+                <DataRow label="Simple ROI" value={fmtPct(dbEcon.simple_roi)} strong />
+              </>
+            )}
+            <div style={{ marginTop: 6, fontSize: 10, color: "#8A99A8", fontStyle: "italic", lineHeight: 1.5 }}>
+              Simple ROI = (Revenue − Dev Cost) / Dev Cost. Net Release = Sale Proceeds − Allocated Carry.
+            </div>
+          </>
+        ) : (
+          <div style={{ fontSize: 12, color: "#7A8B9A", fontStyle: "italic", lineHeight: 1.55, padding: "10px 12px", background: "#F7F9FB", borderRadius: 8, borderLeft: `3px solid #C58A1A` }}>
+            Financial projections pending. Baseline assumptions will appear once Beast processes this scenario.
+          </div>
+        )}
       </div>
     </div>
   );
