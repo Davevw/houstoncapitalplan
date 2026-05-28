@@ -402,25 +402,32 @@ function ProcessingScenarioCard({ request }) {
 
 export default function DesignConceptsTab() {
   const [scenarios, setScenarios] = useState([]);
+  const [pendingRequests, setPendingRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [openSlug, setOpenSlug] = useState(null);
-  const [pendingRequests, setPendingRequests] = useState([]);
 
-  useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      const { data, error } = await supabase
+  async function loadAll() {
+    const [scenRes, reqRes] = await Promise.all([
+      supabase
         .from("design_scenarios")
         .select("*")
-        .order("created_at", { ascending: true });
-      if (cancelled) return;
-      if (error) setError(error.message);
-      else setScenarios(data || []);
-      setLoading(false);
-    })();
-    return () => { cancelled = true; };
-  }, []);
+        .eq("status", "published")
+        .order("created_at", { ascending: true }),
+      supabase
+        .from("design_requests")
+        .select("*")
+        .in("status", ["submitted", "processing"])
+        .order("created_at", { ascending: true }),
+    ]);
+    if (scenRes.error) { setError(scenRes.error.message); setLoading(false); return; }
+    if (reqRes.error) { setError(reqRes.error.message); setLoading(false); return; }
+    setScenarios(scenRes.data || []);
+    setPendingRequests(reqRes.data || []);
+    setLoading(false);
+  }
+
+  useEffect(() => { loadAll(); }, []);
 
   const openScenario = openSlug ? scenarios.find(s => s.slug === openSlug) : null;
 
@@ -433,9 +440,7 @@ export default function DesignConceptsTab() {
 
   return (
     <div>
-      <DesignRequestComposer
-        onSubmitted={(req) => setPendingRequests((prev) => [...prev, { ...req, _ts: Date.now() }])}
-      />
+      <DesignRequestComposer onSubmitted={() => loadAll()} />
 
       <SectionTitle icon="🏗️">Design Concepts — Master Plan Scenario Library</SectionTitle>
       <div style={{ fontSize: 13, color: "#5A6B7A", marginBottom: 24, lineHeight: 1.6, maxWidth: 800 }}>
@@ -452,7 +457,7 @@ export default function DesignConceptsTab() {
             <ScenarioCard key={s.id} scenario={s} onOpen={() => setOpenSlug(s.slug)} />
           ))}
           {pendingRequests.map((r) => (
-            <ProcessingScenarioCard key={r._ts} request={r} />
+            <ProcessingScenarioCard key={r.id} request={r} />
           ))}
         </div>
       )}
