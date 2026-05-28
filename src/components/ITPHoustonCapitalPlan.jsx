@@ -1130,6 +1130,7 @@ export default function App(){
         {activeTab===6&&<SpreadsheetTab model={model} params={params}/>}
         {activeTab===7&&<SitePlanTab/>}
         {activeTab===8&&<MUDAnalysisTab/>}
+        {activeTab===9&&<DesignConceptsTab/>}
       </div>
 
       {/* Admin overlay panels (footer nav tabs) */}
