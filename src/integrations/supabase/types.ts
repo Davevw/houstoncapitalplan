@@ -47,6 +47,42 @@ export type Database = {
         }
         Relationships: []
       }
+      design_requests: {
+        Row: {
+          clarifications: Json
+          concept_name: string
+          created_at: string
+          description: string
+          id: string
+          priority_lots: string | null
+          status: string
+          submitted_by: string | null
+          target_client_type: string
+        }
+        Insert: {
+          clarifications?: Json
+          concept_name: string
+          created_at?: string
+          description: string
+          id?: string
+          priority_lots?: string | null
+          status?: string
+          submitted_by?: string | null
+          target_client_type: string
+        }
+        Update: {
+          clarifications?: Json
+          concept_name?: string
+          created_at?: string
+          description?: string
+          id?: string
+          priority_lots?: string | null
+          status?: string
+          submitted_by?: string | null
+          target_client_type?: string
+        }
+        Relationships: []
+      }
       design_scenarios: {
         Row: {
           created_at: string
