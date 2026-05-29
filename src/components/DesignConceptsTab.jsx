@@ -89,10 +89,18 @@ function ScenarioCard({ scenario, onOpen, onDelete }) {
           </div>
         ))}
       </div>
-      <button onClick={onOpen}
-        style={{ marginTop: "auto", background: NAVY, color: "white", border: "none", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
-        Open Concept →
-      </button>
+      <div style={{ marginTop: "auto", display: "flex", gap: 8 }}>
+        <button onClick={onOpen}
+          style={{ flex: 1, background: NAVY, color: "white", border: "none", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
+          Open Concept →
+        </button>
+        {scenario.slug && (
+          <a href={`/assets/tearsheet-${scenario.slug}.html`} target="_blank" rel="noopener noreferrer"
+            style={{ background: "#C9A84C", color: NAVY, border: "none", padding: "10px 12px", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "pointer", textDecoration: "none", display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
+            📄 Tear Sheet
+          </a>
+        )}
+      </div>
     </div>
   );
 }
