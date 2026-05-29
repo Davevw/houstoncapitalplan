@@ -94,12 +94,16 @@ function ScenarioCard({ scenario, onOpen, onDelete }) {
           style={{ flex: 1, background: NAVY, color: "white", border: "none", padding: "10px 16px", borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>
           Open Concept →
         </button>
-        {scenario.slug && (
+        {scenario.slug && (<>
           <a href={`/assets/tearsheet-${scenario.slug}.html`} target="_blank" rel="noopener noreferrer"
             style={{ background: "#C9A84C", color: NAVY, border: "none", padding: "10px 12px", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "pointer", textDecoration: "none", display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
-            📄 Tear Sheet
+            📄 View
           </a>
-        )}
+          <a href={`/assets/tearsheet-${scenario.slug}.pdf`} download
+            style={{ background: NAVY, color: "#C9A84C", border: `1px solid #C9A84C`, padding: "10px 10px", borderRadius: 8, fontSize: 11, fontWeight: 700, cursor: "pointer", textDecoration: "none", display: "flex", alignItems: "center", whiteSpace: "nowrap" }}>
+            ⬇ PDF
+          </a>
+        </>)}
       </div>
     </div>
   );
