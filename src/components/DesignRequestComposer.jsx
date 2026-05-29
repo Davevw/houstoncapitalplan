@@ -112,7 +112,9 @@ export default function DesignRequestComposer({ onSubmitted }) {
       response: answers[i] || "",
       timestamp: ts,
     }));
-    const { error } = await supabase.from("design_requests").insert({
+    // Try design_requests first, fall back to operational_requests (G-Connect pipeline)
+    let submitError = null;
+    const { error: drError } = await supabase.from("design_requests").insert({
       concept_name: conceptName,
       description,
       priority_lots: priorityLots || null,
@@ -120,9 +122,31 @@ export default function DesignRequestComposer({ onSubmitted }) {
       clarifications,
       submitted_by: submittedBy,
     });
-    if (error) {
-      console.error(error);
-      setErrorMsg(error.message);
+    if (drError) {
+      // Fallback: write to operational_requests (G-Connect pipeline)
+      const { error: orError } = await supabase.from("operational_requests").insert({
+        request_type: "design_concept",
+        category: "houston-itph",
+        title: `Design Concept: ${conceptName}`,
+        request_text: description,
+        body: JSON.stringify({
+          source: "text_window",
+          concept_name: conceptName,
+          priority_lots: priorityLots || null,
+          target_client_type: clientType,
+          clarifications,
+          timestamp: ts,
+        }),
+        status: "submitted",
+        priority: "high",
+        submitted_by: submittedBy,
+        connector_targets: "{beast,claude,gpt}",
+      });
+      submitError = orError;
+    }
+    if (submitError) {
+      console.error(submitError);
+      setErrorMsg(submitError.message);
       setStep("clarify");
       return;
     }
