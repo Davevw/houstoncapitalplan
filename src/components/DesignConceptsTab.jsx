@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import siteMapImg from "@/assets/itph-site-map.png";
 import DesignRequestComposer from "./DesignRequestComposer";
+import BUNDLED_SCENARIOS from "@/data/scenarios.json";
 
 const NAVY = "#0B3D5C";
 const TEAL = "#0B4C72";
@@ -167,8 +168,32 @@ function TearSheet({ scenario }) {
       <h3 style={{ fontSize: 13, letterSpacing: 1, textTransform: "uppercase", color: "#7A8B9A", margin: "20px 0 8px" }}>Target Profile</h3>
       <p style={{ fontSize: 13, lineHeight: 1.6, color: "#3A4A5A", fontStyle: "italic" }}>{scenario.target_profile}</p>
 
+      {scenario.economics && (
+        <>
+          <h3 style={{ fontSize: 13, letterSpacing: 1, textTransform: "uppercase", color: "#7A8B9A", margin: "20px 0 10px" }}>Scenario Economics</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12, marginBottom: 20 }}>
+            {[
+              ["Total Revenue", `$${(scenario.economics.total_revenue/1e6).toFixed(1)}M`],
+              ["Net Profit", `$${(scenario.economics.net_profit/1e6).toFixed(1)}M`],
+              ["Dev Budget", `$${(scenario.economics.dev_budget/1e6).toFixed(1)}M`],
+              ["Equity Multiple", `${scenario.economics.equity_multiple}x`],
+              ["Equity IRR", `${scenario.economics.equity_irr}%`],
+              ["Project IRR", `${scenario.economics.project_irr}%`],
+              ["MUD Bond", `$${(scenario.economics.mud_reimbursement/1e6).toFixed(1)}M`],
+              ["Pref Return", `${(scenario.economics.pref_return*100).toFixed(0)}%`],
+              ["Split", scenario.economics.promote_split],
+            ].map(([label, value]) => (
+              <div key={label} style={{ background: "#F7F9FB", borderRadius: 8, padding: "10px 14px", textAlign: "center", border: `1px solid ${STEEL}` }}>
+                <div style={{ fontSize: 18, fontWeight: 800, color: NAVY, fontFamily: "Georgia,serif" }}>{value}</div>
+                <div style={{ fontSize: 10, color: "#7A8B9A", marginTop: 2, textTransform: "uppercase", letterSpacing: 0.5 }}>{label}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
       <div style={{ marginTop: 28, paddingTop: 14, borderTop: `1px solid ${STEEL}`, fontSize: 10, color: "#7A8B9A", textAlign: "center", letterSpacing: 0.5 }}>
-        LANDCO NEXA &nbsp;|&nbsp; Bissonnet 136, LLC &nbsp;|&nbsp; Confidential
+        LANDCO NEXA &nbsp;|&nbsp; Bissonnet 136, LLC &nbsp;|&nbsp; Confidential &nbsp;|&nbsp; Keystone™ 2026
       </div>
     </div>
   );
@@ -405,15 +430,26 @@ function ScenarioDetail({ scenario, onBack }) {
   useEffect(() => {
     let cancelled = false;
     (async () => {
+      // Try Supabase first
       const { data, error } = await supabase
         .from("lot_economics")
         .select("*")
         .eq("scenario_id", scenario.id);
       if (cancelled) return;
-      if (error) { console.error("lot_economics load failed:", error); setEconomicsByLot({}); return; }
-      const map = {};
-      (data || []).forEach((row) => { map[row.lot_number] = row; });
-      setEconomicsByLot(map);
+      if (!error && data?.length > 0) {
+        const map = {};
+        data.forEach((row) => { map[row.lot_number] = row; });
+        setEconomicsByLot(map);
+      } else if (scenario.lot_economics_data) {
+        // Fallback to bundled lot economics data
+        const map = {};
+        Object.entries(scenario.lot_economics_data).forEach(([lotId, info]) => {
+          map[parseInt(lotId)] = info;
+        });
+        setEconomicsByLot(map);
+      } else {
+        setEconomicsByLot({});
+      }
     })();
     return () => { cancelled = true; };
   }, [scenario.id]);
@@ -593,24 +629,35 @@ export default function DesignConceptsTab() {
 
   async function loadAll() {
     setError(null);
-    const [scenRes, reqRes] = await Promise.all([
-      supabase
-        .from("design_scenarios")
-        .select("*")
-        .eq("status", "published")
-        .order("created_at", { ascending: true }),
-      supabase
-        .from("design_requests")
-        .select("*")
-        .in("status", ["submitted", "processing", "ready"])
-        .order("created_at", { ascending: true }),
-    ]);
-    if (scenRes.error) { setError(scenRes.error.message); setLoading(false); return; }
-    if (reqRes.error) { setError(reqRes.error.message); setLoading(false); return; }
-    // Dedupe by canonical Supabase row id
-    const dedupe = (rows) => Array.from(new Map((rows || []).map(r => [r.id, r])).values());
-    setScenarios(dedupe(scenRes.data));
-    setPendingRequests(dedupe(reqRes.data));
+    try {
+      // Try Supabase first for live data
+      const [scenRes, reqRes] = await Promise.all([
+        supabase
+          .from("design_scenarios")
+          .select("*")
+          .eq("status", "published")
+          .order("created_at", { ascending: true }),
+        supabase
+          .from("design_requests")
+          .select("*")
+          .in("status", ["submitted", "processing", "ready"])
+          .order("created_at", { ascending: true }),
+      ]);
+      const dedupe = (rows) => Array.from(new Map((rows || []).map(r => [r.id, r])).values());
+      if (!scenRes.error && scenRes.data?.length > 0) {
+        setScenarios(dedupe(scenRes.data));
+      } else {
+        // Fallback to bundled scenario data
+        setScenarios(BUNDLED_SCENARIOS);
+      }
+      if (!reqRes.error) {
+        setPendingRequests(dedupe(reqRes.data || []));
+      }
+    } catch (e) {
+      // On any error, use bundled data
+      setScenarios(BUNDLED_SCENARIOS);
+      setPendingRequests([]);
+    }
     setLoading(false);
   }
 
