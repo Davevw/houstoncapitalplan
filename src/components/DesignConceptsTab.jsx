@@ -8,18 +8,19 @@ const NAVY = "#0B3D5C";
 const TEAL = "#0B4C72";
 const STEEL = "#E0E4E8";
 
-// Parcel coordinates (matches SitePlanTab) — used to color lots per scenario
+// Parcel coordinates — calibrated to itph-site-map.png (1470×834)
+// x,y as percentage of image (0-100 viewBox)
 const PARCEL_COORDS = {
-  1:{cx:43,cy:18,acres:3.88},  2:{cx:53,cy:35,acres:1.37},  3:{cx:53,cy:39,acres:1.20},
-  4:{cx:53,cy:43,acres:1.20},  5:{cx:47,cy:30,acres:6.38},  6:{cx:46,cy:41,acres:4.88},
-  7:{cx:42,cy:36,acres:3.28},  8:{cx:53,cy:50,acres:1.26},  9:{cx:47,cy:50,acres:3.13},
-  10:{cx:43,cy:60,acres:2.44}, 11:{cx:44,cy:67,acres:1.78}, 12:{cx:45,cy:72,acres:1.78},
-  13:{cx:38,cy:27,acres:11.77},14:{cx:22,cy:32,acres:13.20},15:{cx:22,cy:60,acres:11.16},
-  16:{cx:35,cy:53,acres:12.26},17:{cx:16,cy:49,acres:1.20}, 18:{cx:19,cy:47,acres:1.18},
-  19:{cx:50,cy:60,acres:1.96}, 20:{cx:53,cy:32,acres:1.38}, 21:{cx:53,cy:28,acres:1.14},
-  22:{cx:53,cy:25,acres:1.16}, 23:{cx:52,cy:17,acres:2.03}, 24:{cx:16,cy:44,acres:1.21},
-  25:{cx:16,cy:41,acres:1.38}, 26:{cx:16,cy:35,acres:1.21}, 27:{cx:16,cy:29,acres:1.03},
-  28:{cx:16,cy:27,acres:1.03}, 29:{cx:16,cy:24,acres:1.04}, 30:{cx:39,cy:85,acres:1.50},
+  1:{cx:67,cy:22,acres:3.88},  2:{cx:79,cy:47,acres:1.37},  3:{cx:79,cy:54,acres:1.20},
+  4:{cx:79,cy:61,acres:1.20},  5:{cx:68,cy:36,acres:6.38},  6:{cx:71,cy:50,acres:4.88},
+  7:{cx:60,cy:45,acres:3.28},  8:{cx:79,cy:68,acres:1.26},  9:{cx:71,cy:65,acres:3.13},
+  10:{cx:62,cy:69,acres:2.44}, 11:{cx:62,cy:77,acres:1.78}, 12:{cx:62,cy:85,acres:1.78},
+  13:{cx:47,cy:32,acres:11.77},14:{cx:27,cy:34,acres:13.20},15:{cx:28,cy:69,acres:11.16},
+  16:{cx:44,cy:56,acres:12.26},17:{cx:16,cy:62,acres:1.20}, 18:{cx:20,cy:53,acres:1.18},
+  19:{cx:78,cy:80,acres:1.96}, 20:{cx:79,cy:40,acres:1.38}, 21:{cx:79,cy:34,acres:1.14},
+  22:{cx:79,cy:27,acres:1.16}, 23:{cx:79,cy:18,acres:2.03}, 24:{cx:16,cy:53,acres:1.21},
+  25:{cx:16,cy:47,acres:1.38}, 26:{cx:16,cy:40,acres:1.21}, 27:{cx:16,cy:34,acres:1.03},
+  28:{cx:16,cy:28,acres:1.03}, 29:{cx:16,cy:21,acres:1.04}, 30:{cx:52,cy:92,acres:1.50},
 };
 
 // Position classification (corner / interior / frontage) per lot
@@ -250,13 +251,9 @@ function ScenarioMap({ scenario, onSelect, selectedId }) {
         style={{ position: "relative", overflow: "hidden", cursor: zoom > 1 ? (isPanning ? "grabbing" : "grab") : "default", background: "#F7F9FB", aspectRatio: "1470 / 834" }}
       >
         <div style={{ position: "absolute", inset: 0, transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`, transformOrigin: "center center", transition: isPanning ? "none" : "transform 0.15s ease-out" }}>
+          {/* Site plan aerial image as background */}
+          <img src={siteMapImg} alt="ITPH Site Plan" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "fill", pointerEvents: "none" }} />
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}>
-            {/* Site boundary outline */}
-            <rect x="10" y="10" width="50" height="80" fill="white" stroke={STEEL} strokeWidth="0.3" />
-            {/* Street labels */}
-            <text x="8" y="50" fontSize="1.4" fill="#7A8B9A" transform="rotate(-90 8 50)" textAnchor="middle">Cook Road</text>
-            <text x="62" y="50" fontSize="1.4" fill="#7A8B9A" transform="rotate(90 62 50)" textAnchor="middle">S Kirkwood Rd</text>
-            <text x="35" y="94" fontSize="1.4" fill="#7A8B9A" textAnchor="middle">Bissonnet Street</text>
 
             {Object.entries(PARCEL_COORDS).map(([id, p]) => {
               const dist = assignments[id];
