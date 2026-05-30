@@ -482,9 +482,16 @@ function ScenarioDetail({ scenario, onBack }) {
         <button onClick={onBack} style={{ background: "none", border: `1px solid ${STEEL}`, color: NAVY, padding: "8px 14px", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
           ← Back to Concept Library
         </button>
-        <button onClick={handlePrint} style={{ background: NAVY, color: "white", border: "none", padding: "10px 18px", borderRadius: 8, fontSize: 12, fontWeight: 600, cursor: "pointer" }}>
-          Download Tear Sheet as PDF
-        </button>
+        <div style={{ display: "flex", gap: 8 }}>
+          <a href={`/assets/tearsheet-${scenario.slug}.html`} target="_blank" rel="noopener noreferrer"
+            style={{ background: "#C9A84C", color: NAVY, border: "none", padding: "10px 16px", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}>
+            📄 View Tear Sheet
+          </a>
+          <a href={`/assets/tearsheet-${scenario.slug}.pdf`} download
+            style={{ background: NAVY, color: "#C9A84C", border: "1px solid #C9A84C", padding: "10px 16px", borderRadius: 8, fontSize: 12, fontWeight: 700, cursor: "pointer", textDecoration: "none", display: "flex", alignItems: "center", gap: 6 }}>
+            ⬇ Download PDF
+          </a>
+        </div>
       </div>
 
       <TearSheet scenario={scenario} />
