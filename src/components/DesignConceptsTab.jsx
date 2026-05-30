@@ -570,7 +570,7 @@ function ProcessingScenarioCard({ request, onDelete }) {
       <div style={{ fontSize: 12, color: "#5A6B7A", lineHeight: 1.5 }}>
         <div style={{ fontWeight: 600, color: NAVY }}>{request.target_client_type}</div>
         <div style={{ fontSize: 11, color: "#8A99A8", marginTop: 2 }}>
-          {request.submitted_by ? `Submitted by ${request.submitted_by} · ` : ""}{formatDate(request.created_at)}
+          {request.submitted_by ? `Submitted by ${request.submitted_by === "Mark" ? "Investor" : request.submitted_by === "David" ? "Designer" : request.submitted_by} · ` : ""}{formatDate(request.created_at)}
         </div>
       </div>
 

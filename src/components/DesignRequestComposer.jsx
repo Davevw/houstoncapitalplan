@@ -51,7 +51,7 @@ export default function DesignRequestComposer({ onSubmitted }) {
   const [description, setDescription] = useState("");
   const [priorityLots, setPriorityLots] = useState("");
   const [clientType, setClientType] = useState(CLIENT_TYPES[0]);
-  const [submittedBy, setSubmittedBy] = useState("Mark");
+  const [submittedBy, setSubmittedBy] = useState("Investor");
 
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
@@ -179,8 +179,8 @@ export default function DesignRequestComposer({ onSubmitted }) {
           onChange={(e) => setSubmittedBy(e.target.value)}
           style={{ ...inputBase, width: "auto", padding: "8px 14px", fontSize: 12 }}
         >
-          <option value="Mark">Submitted by: Mark</option>
-          <option value="David">Submitted by: David</option>
+          <option value="Investor">Submitted by: Investor</option>
+          <option value="Designer">Submitted by: Designer</option>
         </select>
       </div>
       <p style={{ fontSize: 13, color: "#5A6B7A", lineHeight: 1.65, marginTop: 8, marginBottom: 28, maxWidth: 760 }}>
