@@ -51,7 +51,7 @@ export default function DesignRequestComposer({ onSubmitted }) {
   const [description, setDescription] = useState("");
   const [priorityLots, setPriorityLots] = useState("");
   const [clientType, setClientType] = useState(CLIENT_TYPES[0]);
-  const [submittedBy, setSubmittedBy] = useState("Mark");
+  const [submittedBy, setSubmittedBy] = useState("Investor");
 
   const [questions, setQuestions] = useState([]);
   const [answers, setAnswers] = useState({});
