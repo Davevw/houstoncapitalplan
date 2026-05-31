@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { gcSupabase } from "@/integrations/supabase/gc-client";
 
 const NAVY = "#0B3D5C";
 const STEEL = "#E5E7EB";
@@ -150,6 +151,24 @@ export default function DesignRequestComposer({ onSubmitted }) {
       setStep("clarify");
       return;
     }
+    // Bridge to G-Connect instructions pipeline
+    try {
+      await gcSupabase.from("instructions").insert({
+        title: `Design Concept: ${conceptName}`,
+        body: `${description}\n\nClient Type: ${clientType}\nPriority Lots: ${priorityLots || "none specified"}\n\nClarifications:\n${clarifications.map(c => `Q: ${c.question}\nA: ${c.response}`).join("\n")}`,
+        request_type: "scenario",
+        target_system: "houston-app",
+        project: "houston",
+        assigned_agent: "auto-route",
+        priority: "high",
+        requires_approval: true,
+        source: "houston-design",
+        submitted_by: submittedBy,
+      });
+    } catch (e) {
+      console.warn("[G-Connect bridge] Could not sync to instructions pipeline:", e);
+    }
+
     setStep("success");
     if (onSubmitted) {
       onSubmitted({ concept_name: conceptName, target_client_type: clientType });

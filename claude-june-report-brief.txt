@@ -1,0 +1,124 @@
+Claude,
+
+Please produce a professional, detailed ITP Houston Monthly Project Report dated June 1, 2026 (reporting on May 2026 activity). This will go to Mark for distribution to investors. Same format and quality as the Hillcrest report you just produced. No personal names or lender names — use role titles only ("Principal," "Retail Specialist," "Broker," "Capital Advisor," etc.).
+
+Use the data below to build each section. Make it comprehensive, detailed, and investor-ready.
+
+PROJECT IDENTITY
+- Project: ITP Houston (ITPH)
+- Address: 12000 Bissonnet Street, Houston, TX 77099
+- Scale: ~136 acres, 30-lot master-planned development
+- Entity: Bissonet 136 LLC
+- MUD: Municipal Utility District 584
+- Strategy: Master-planned land development with lot sales across multifamily, industrial, retail, and flex uses
+
+1. EXECUTIVE SUMMARY
+May was a significant month for ITPH. Several new land sale contracts are pending with active negotiations for both multifamily and industrial tracts. TIRZ discussions advanced as a potential second public-finance lever alongside the existing $23.4M MUD bond. Harvey fund applications were submitted for retention and storm-related infrastructure costs. A retail marketing consolidation is underway to reconfigure development parcels into optimal configurations based on broker market feedback. Five design concept tear sheets were delivered to the capital plan platform, with two additional scenarios added later in the month.
+
+2. CONTRACTS AND NEGOTIATIONS
+- Several new land sale contracts are pending
+- Active negotiations underway for multifamily tracts
+- Active negotiations underway for industrial tracts
+- Retail parcels being reconfigured based on broker feedback before marketing
+- Multiple use types attracting buyer interest simultaneously
+
+3. PUBLIC FINANCE — MUD AND TIRZ
+MUD 584:
+- $23.4M Municipal Utility District bond — active, in place
+- Covers water, sewer, and drainage infrastructure
+- Repaid through district property taxes
+- Baked into all five design scenarios as base infrastructure finance
+
+TIRZ (Tax Increment Reinvestment Zone):
+- Discussions underway for TIRZ designation
+- Purpose: offset costs that benefit the community outside the MUD boundary
+- The 24.27-acre detention/retention system and associated environmental infrastructure are potential qualifying elements
+- If approved, TIRZ creates a second public-finance lever that stacks with MUD
+- Combined capital recovery could substantially offset the total development budget
+- Fundamentally improves the project risk-return profile for capital partners
+- A formal TIRZ 20 strategic proposal has been prepared with analysis
+
+Harvey Funds:
+- Application submitted seeking Harvey-related funds
+- Targeting retention pond and storm infrastructure cost recovery
+- These costs serve both the development and the broader community watershed
+
+4. RETAIL RECONFIGURATION
+- Retail specialist confirmed several lots along the main corridor (S Kirkwood and Cook) would be less enthusiastically received by the market
+- Strongest demand is at key intersections where ITPH roads meet
+- Team is clustering retail sites at high-traffic intersection corners
+- Creating deeper pad-ready lots suitable for national tenants and QSR operators
+- Converting less-marketable interior corridor lots to flex, industrial, or multifamily use
+- Consolidating the retail marketing plan into an optimized parcel strategy
+- Strategy: concentrate retail value at highest-traffic corners, convert weaker positions to uses with stronger demand
+
+5. DESIGN CONCEPTS AND CAPITAL PLAN PLATFORM
+Five core design concepts delivered as professional tear sheets:
+All modeled on same 136-acre / 30-lot footprint, same capital base ($23.4M MUD bond, $36.2M budget, $11.4M equity, 8% pref, 70/30 split). Only lot mix changes.
+
+- Scenario 1: Balanced Mixed-Use — $39.7M revenue, diversified across all four uses, best risk-adjusted balance
+- Scenario 2: Town Center — $43.3M revenue, retail-dominant, highest revenue scenario
+- Scenario 3: Logistics Corridor — $38.5M revenue, industrial/flex-dominant, lowest absorption risk
+- Scenario 4: Workforce Village — $36.8M revenue, multifamily-anchor, EB-5/LIHTC eligible
+- Scenario 5: Premium Pad Strategy — $41.2M revenue, two-tier pricing (corner premium, interior discount)
+- Scenario 6: Retail Intersection Clustering — $42.6M revenue (added later in May)
+- Scenario 7: Walking Nature Retail — $52.5M revenue (added later in May)
+
+Interactive design request system deployed — authorized users can submit custom configurations with automatic lot economics and tear sheet generation.
+
+6. MARKET DATA
+Demographics (12000 Bissonnet center point):
+- 1-mile: 26,900 population, 8,589 households, median income $53,732
+- 2-mile: 101,901 population, 32,840 households, median income $58,740
+- 3-mile: 192,662 population, 64,817 households, median income $61,695
+- Median age: 33.3 — young workforce demographic
+- 840 businesses / 4,340 employees within 1 mile
+
+Apartment Rental Comps (Alief Submarket, May 2026):
+- Subject property (172 units): 91.3% leased, $928/mo avg, $1.27/SF
+- 24-comp set (5,632 units): 92.0% leased, $1,020/mo, $1.23/SF
+- Submarket (115 communities, 28,040 units): 91.8% leased, $1,058/mo
+- Houston metro (797,290 units): 90.6% leased, $1,252/mo
+- 1BR: $824/mo (630 SF), 2BR: $1,142/mo (939 SF), 3BR: $1,322/mo (1,264 SF)
+
+Demand projections validated by third-party market study for all product types (multifamily, SFR rental, retail, industrial, flex).
+
+7. CAPITAL STRUCTURE
+- MUD 584 Bond (Infrastructure): $23,400,000 — water/sewer/drainage, repaid by district taxes
+- Development Budget: $36,200,000 — total project cost basis
+- JV Equity: $11,400,000 — 8% preferred return, 70/30 profit split
+- TIRZ Recovery (Potential): TBD — under evaluation, could offset infrastructure costs beyond MUD boundary
+- Harvey Funds (Applied): TBD — application submitted for retention/storm infrastructure
+
+8. OPERATIONS AND INFRASTRUCTURE
+- MUD 584 Bond: Active, $23.4M infrastructure financing in place
+- TIRZ Evaluation: In progress — discussions underway
+- Harvey Fund Application: Submitted — retention and storm cost recovery
+- Detention System (24.27 acres): Designed — serves development and community watershed
+- Capital Plan Platform: Live — interactive scenarios, design requests, lot economics
+- Development Standards v1: Published — constitutional document governing all scenarios
+- CRM / Investor Tracking: In development — tracking capital plan distribution and engagement
+- Capital plan being distributed to prospective investors on ongoing basis
+
+9. JUNE OUTLOOK
+- Close pending land sale contracts — advance multifamily and industrial negotiations toward execution
+- TIRZ determination — complete qualification analysis and quantify combined MUD+TIRZ capital recovery impact
+- Harvey fund follow-up — track application status for retention/storm cost recovery
+- Retail reconfiguration — finalize consolidated retail plan with optimized parcel configurations
+- JV financing focus — shift capital markets attention to ITPH financing structure
+- Market report — produce consolidated investor-ready PDF from demographics, rental comps, and demand projections
+- Continue capital plan distribution to prospective investors and capital partners
+
+FORMAT INSTRUCTIONS
+- Professional investor report format — clean, polished, institutional quality
+- Same format, styling, and quality level as the Hillcrest report
+- NO personal names anywhere — use role titles only
+- Footer: Keystone(TM) 2026 (nothing else)
+- Header: LANDCO NEXA — ITP Houston Monthly Project Report
+- Date badge: June 2026
+- Tone: confident but factual, not promotional
+- Output: Single HTML file with embedded CSS, matching the capital plan design system (navy #1B2A4A, gold #C9A84C, white panels, pill badges)
+
+This report will be sent directly to investors alongside the Hillcrest report. Make it equally exceptional.
+
+— Beast
