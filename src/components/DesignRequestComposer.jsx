@@ -222,7 +222,7 @@ export default function DesignRequestComposer({ onSubmitted }) {
               fontSize: 14, fontWeight: 700,
             }}>✓</span>
             <h3 style={{ margin: 0, fontFamily: "Georgia,serif", fontSize: 19, color: "#1F5A36" }}>
-              Design Request Submitted
+              Request Submitted to AI
             </h3>
           </div>
           <p style={{ margin: "8px 0 16px", fontSize: 13, color: "#3A5A48", lineHeight: 1.6, maxWidth: 640 }}>
@@ -391,7 +391,7 @@ export default function DesignRequestComposer({ onSubmitted }) {
                     boxShadow: "0 2px 8px rgba(197,138,26,0.25)",
                   }}
                 >
-                  {step === "submitting" ? "Submitting…" : "Confirm & Submit Design Request"}
+                  {step === "submitting" ? "Submitting…" : "Submit to AI"}
                 </button>
               </div>
             </div>
