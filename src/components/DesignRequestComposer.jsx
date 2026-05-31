@@ -315,7 +315,7 @@ export default function DesignRequestComposer({ onSubmitted }) {
                   opacity: loadingAi ? 0.7 : 1,
                 }}
               >
-                {loadingAi ? "Analyzing concept…" : "Generate Clarification Questions →"}
+                {loadingAi ? "Analyzing concept…" : "Submit to AI →"}
               </button>
             </div>
           )}
