@@ -136,7 +136,7 @@ export default function JVReports() {
       </div>
 
       <div style={{ padding: "10px 20px", textAlign: "center", fontSize: 10, fontWeight: 700, color: "#7A8B9A", letterSpacing: 1, borderTop: "1px solid #E0E4E8", background: "white" }}>
-        PLUSAdvantage™ 2026 — CONFIDENTIAL
+        Keystone™ 2026
       </div>
     </div>
   );

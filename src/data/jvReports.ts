@@ -12,14 +12,35 @@ export interface JVReport {
 
 export const jvReports: JVReport[] = [
   {
-    id: "supp-8-may-2026",
-    title: "ITPH, Houston TX JV Report",
+    id: "apr-2026",
+    title: "ITPH, Houston TX — Monthly Report",
+    supplement: 0,
+    month: "April",
+    year: 2026,
+    driveId: "",
+    htmlFile: "/assets/jv-report-apr-2026.html",
+    subtitle: "April 2026 Monthly Project Report",
+  },
+  {
+    id: "may-2026",
+    title: "ITPH, Houston TX — Monthly Report",
     supplement: 8,
     month: "May",
     year: 2026,
     badge: "Final v3",
     driveId: "1ANBHkESoQZZe9NFOJVnY92N9BnBYmTuP",
     htmlFile: "/assets/jv-report-may-2026.html",
-    subtitle: "Sequential Monthly Supplements · May 2026 — Final v3",
+    subtitle: "May 2026 — JV Development Status",
+  },
+  {
+    id: "jun-2026",
+    title: "ITPH, Houston TX — Monthly Report",
+    supplement: 9,
+    month: "June",
+    year: 2026,
+    badge: "Current",
+    driveId: "",
+    htmlFile: "/assets/jv-report-jun-2026.html",
+    subtitle: "June 2026 Monthly Project Report",
   },
 ];

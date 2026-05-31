@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITPH, Houston TX — Monthly Project Report | June 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
+.shell{width:100%;max-width:960px;margin:0 auto}
+.top-bar{background:#1B2A4A;padding:18px 24px 0;border-radius:12px 12px 0 0}
+.top-bar-inner{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:16px}
+.top-bar-left h1{color:#C9A84C;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.top-bar-left p{color:rgba(255,255,255,.5);font-size:11px}
+.date-badge{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:8px;padding:8px 14px;text-align:right}
+.date-badge .month{color:#C9A84C;font-size:20px;font-weight:700;display:block;line-height:1.1}
+.date-badge .year{color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;display:block;margin-top:2px}
+.date-badge .supp{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.04em;display:block;margin-top:3px;text-transform:uppercase}
+.content{background:#fff;border:1px solid #ddd;border-radius:0 0 12px 12px}
+.panel{padding:28px 32px}
+.letter-header{border-bottom:1px solid #eee;padding-bottom:16px;margin-bottom:20px}
+.letter-meta{font-size:12px;color:#888;margin-bottom:4px}
+.addr{font-size:12px;color:#888;line-height:1.7;margin-bottom:10px}
+.subject-line{font-size:13px;font-weight:700;color:#1B2A4A;background:#F5F0E8;padding:9px 14px;border-radius:6px;border-left:3px solid #C9A84C}
+.section-hdr{font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 10px;padding-bottom:7px;border-bottom:2px solid #C9A84C}
+.sn{color:#C9A84C;margin-right:6px}
+.body-text{font-size:13px;line-height:1.75;color:#222;margin-bottom:10px}
+.bullet-list{margin:6px 0 12px;padding-left:0;list-style:none}
+.bullet-list li{font-size:13px;line-height:1.65;color:#222;padding:3px 0 3px 20px;position:relative}
+.bullet-list li::before{content:"\2014";position:absolute;left:0;color:#C9A84C;font-weight:700}
+.kpi-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+.kpi-card{flex:1;min-width:140px;background:#1B2A4A;color:#fff;padding:14px 16px;border-radius:8px;border-left:3px solid #C9A84C}
+.kpi-card .label{font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.65);text-transform:uppercase;display:block;margin-bottom:6px}
+.kpi-card .value{font-size:22px;font-weight:700;color:#C9A84C;display:block;line-height:1.1}
+.kpi-card .sub{font-size:10px;color:rgba(255,255,255,.55);display:block;margin-top:4px}
+table.data{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12px}
+table.data thead{background:#1B2A4A;color:#fff}
+table.data th{padding:9px 10px;text-align:left;font-size:10px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+table.data td{padding:8px 10px;border-bottom:1px solid #EEE;color:#333;line-height:1.45;vertical-align:top}
+table.data tbody tr:nth-child(even){background:#FAFAFA}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.03em}
+.pill-active{background:rgba(46,125,50,.15);color:#2E7D32;border:1px solid rgba(46,125,50,.4)}
+.pill-progress{background:rgba(201,168,76,.18);color:#7B5500;border:1px solid rgba(201,168,76,.4)}
+.pill-out{background:rgba(120,120,120,.15);color:#666;border:1px solid rgba(120,120,120,.4)}
+.pill-new{background:rgba(33,150,243,.15);color:#0D47A1;border:1px solid rgba(33,150,243,.4)}
+.milestone-box{background:#E8F5E9;border:1px solid #4CAF50;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#1B5E20;line-height:1.6}
+.milestone-box strong{color:#2E7D32}
+.strategy-box{background:#FAF6ED;border-left:4px solid #C9A84C;padding:18px 22px;margin:14px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 8px 8px 0}
+.strategy-box .sb-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.partner-message{background:#F5F0E8;border-left:4px solid #C9A84C;padding:16px 20px;margin:16px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 6px 6px 0}
+.partner-message .pm-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.value-callout{background:#F1F8F4;border-left:4px solid #2E7D32;padding:12px 16px;margin:10px 0;font-size:12px;line-height:1.65;color:#1B5E20;border-radius:0 6px 6px 0}
+.value-callout strong{color:#2E7D32}
+.signoff{font-size:13px;color:#222;margin-top:20px;line-height:1.7}
+.signoff strong{color:#1B2A4A}
+.small{font-size:11px;color:#777}
+.footer-strip{background:#1B2A4A;color:rgba(255,255,255,.55);padding:14px 28px;border-radius:0 0 12px 12px;font-size:10px;text-align:center;letter-spacing:.04em;margin-top:0}
+@media (max-width:640px){.panel{padding:18px 16px}.kpi-card{min-width:130px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <h1>LANDCO NEXA</h1>
+        <p>ITP Houston — Monthly Project Report</p>
+      </div>
+      <div>
+        <div class="date-badge">
+          <span class="month">June</span>
+          <span class="year">2026</span>
+          <span class="supp">Monthly Report</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="panel">
+      <div class="letter-header">
+        <p class="letter-meta">Reporting Period: May 1–31, 2026</p>
+        <p class="addr">ITP Houston · 12000 Bissonnet Street · Houston, TX 77099<br>~136 Acres · 30-Lot Master-Planned Development · MUD 584</p>
+        <p class="subject-line">Monthly Project Report — June 1, 2026</p>
+      </div>
+
+      <!-- EXECUTIVE SUMMARY -->
+      <div class="section-hdr"><span class="sn">1.</span>Executive Summary</div>
+      <p class="body-text">May was a significant month for ITPH across multiple fronts. Several new land sale contracts are pending, with active negotiations underway for both multifamily and industrial tracts. TIRZ discussions advanced as a potential second public-finance lever alongside the existing MUD bond. Harvey fund applications were submitted for retention and storm-related infrastructure costs. A retail marketing consolidation is underway to reconfigure development parcels into optimal configurations based on broker feedback.</p>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">Total Acreage</span><span class="value">~136</span><span class="sub">Largest undeveloped parcel in area</span></div>
+        <div class="kpi-card"><span class="label">Development Lots</span><span class="value">30</span><span class="sub">Master plan footprint</span></div>
+        <div class="kpi-card"><span class="label">MUD Bond</span><span class="value">$23.4M</span><span class="sub">MUD 584 — infrastructure finance</span></div>
+        <div class="kpi-card"><span class="label">Design Concepts</span><span class="value">5</span><span class="sub">Scenario portfolio delivered</span></div>
+      </div>
+
+      <!-- KEY DEVELOPMENTS -->
+      <div class="section-hdr"><span class="sn">2.</span>Key Developments</div>
+      <ul class="bullet-list">
+        <li><strong>New contracts pending</strong> — several land sale contracts in process; negotiations active for multifamily and industrial tracts</li>
+        <li><strong>TIRZ discussions underway</strong> — Tax Increment Reinvestment Zone being evaluated for MUD offset potential on costs that benefit the community outside the MUD boundary</li>
+        <li><strong>Harvey funds applied for</strong> — application submitted for retention and storm-related infrastructure cost recovery</li>
+        <li><strong>Retail reconfiguration</strong> — consolidating the retail marketing plan; reconfiguring retail into optimal development parcels based on broker market feedback</li>
+        <li><strong>Five design concepts delivered</strong> — complete tear sheet portfolio with lot economics for each scenario, available on the capital plan platform</li>
+        <li><strong>TIRZ 20 strategic proposal</strong> — formal analysis prepared showing potential for TIRZ to stack with MUD bond, significantly improving project economics</li>
+        <li><strong>Market data package assembled</strong> — demographics, apartment rent comps, and demand study consolidated into investor-ready format</li>
+      </ul>
+
+      <!-- CONTRACTS & NEGOTIATIONS -->
+      <div class="section-hdr"><span class="sn">3.</span>Contracts &amp; Negotiations</div>
+      <table class="data">
+        <thead><tr><th>Use Type</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Multifamily Tracts</td><td><span class="pill pill-progress">In Negotiation</span></td><td>Active discussions with prospective buyers for multifamily-designated parcels</td></tr>
+          <tr><td>Industrial Tracts</td><td><span class="pill pill-progress">In Negotiation</span></td><td>Interest from industrial/flex users for designated lots</td></tr>
+          <tr><td>Retail Parcels</td><td><span class="pill pill-new">Reconfiguring</span></td><td>Broker feedback driving lot reconfiguration for optimal market positioning (see §5)</td></tr>
+          <tr><td>Additional Contracts</td><td><span class="pill pill-progress">Pending</span></td><td>Several additional land sale contracts in various stages of execution</td></tr>
+        </tbody>
+      </table>
+
+      <!-- PUBLIC FINANCE -->
+      <div class="section-hdr"><span class="sn">4.</span>Public Finance — MUD &amp; TIRZ</div>
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">MUD 584 Bond</span><span class="value">$23.4M</span><span class="sub">Water / sewer / drainage — active</span></div>
+        <div class="kpi-card"><span class="label">TIRZ Potential</span><span class="value">TBD</span><span class="sub">Under evaluation — could stack with MUD</span></div>
+        <div class="kpi-card"><span class="label">Harvey Funds</span><span class="value">Applied</span><span class="sub">Retention &amp; storm infrastructure</span></div>
+        <div class="kpi-card"><span class="label">Detention System</span><span class="value">24.27 ac</span><span class="sub">May qualify for TIRZ designation</span></div>
+      </div>
+
+      <p class="body-text"><strong>MUD 584:</strong> The $23.4M Municipal Utility District bond remains the primary infrastructure financing mechanism, covering water, sewer, and drainage development. This is baked into all five design scenarios and repaid through district property taxes.</p>
+
+      <p class="body-text"><strong>TIRZ (Tax Increment Reinvestment Zone):</strong> Discussions are underway to establish TIRZ designation for ITPH infrastructure that benefits the community outside the MUD boundary. The 24.27-acre detention/retention system and associated environmental infrastructure are potential qualifying elements. If approved, TIRZ could provide a second public-finance lever that stacks with the MUD bond, creating offsets for costs that extend beyond the district perimeter.</p>
+
+      <div class="value-callout"><strong>Strategic significance:</strong> If TIRZ stacks with the existing MUD bond, combined capital recovery could substantially offset the total development budget — fundamentally improving the project's risk-return profile for capital partners. Analysis is in progress.</div>
+
+      <p class="body-text"><strong>Harvey Funds:</strong> An application has been submitted seeking Harvey-related funds for retention pond and storm infrastructure costs. These costs are directly tied to the detention system that serves both the development and the broader community watershed.</p>
+
+      <!-- RETAIL RECONFIGURATION -->
+      <div class="section-hdr"><span class="sn">5.</span>Retail Marketing &amp; Reconfiguration</div>
+      <p class="body-text">A retail specialist confirmed that several lots along the main corridor would be less enthusiastically received by the market than those at key intersections where project roads meet. Based on this feedback, the team is:</p>
+      <ul class="bullet-list">
+        <li><strong>Clustering retail sites</strong> at high-traffic intersection corners where demand is strongest</li>
+        <li><strong>Creating deeper pad-ready lots</strong> suitable for national tenants and quick-service restaurant operators</li>
+        <li><strong>Reconfiguring interior corridor lots</strong> — converting less-marketable retail positions to flex, industrial, or multifamily use where demand exists</li>
+        <li><strong>Consolidating the retail marketing plan</strong> into an optimized parcel strategy aligned with broker recommendations</li>
+      </ul>
+
+      <div class="strategy-box">
+        <div class="sb-title">Retail Strategy Shift</div>
+        <p>The reconfiguration concentrates retail value at the highest-traffic intersections while converting weaker retail positions into uses with stronger market demand. This approach maximizes per-acre revenue while reducing absorption risk on less-marketable retail parcels.</p>
+      </div>
+
+      <!-- DESIGN CONCEPTS -->
+      <div class="section-hdr"><span class="sn">6.</span>Design Concepts &amp; Capital Plan Platform</div>
+      <p class="body-text">Five design concepts were developed and delivered as professional tear sheets, each modeled on the same 136-acre / 30-lot footprint with the same capital base ($23.4M MUD bond, $36.2M budget, $11.4M equity, 8% pref, 70/30 split). Only the lot mix changes, making all five directly comparable.</p>
+
+      <table class="data">
+        <thead><tr><th>Scenario</th><th>Revenue</th><th>Positioning</th></tr></thead>
+        <tbody>
+          <tr><td>1. Balanced Mixed-Use</td><td>$39.7M</td><td>Diversified across all four uses; best risk-adjusted balance</td></tr>
+          <tr><td>2. Town Center</td><td>$43.3M</td><td>Retail-dominant; highest revenue scenario</td></tr>
+          <tr><td>3. Logistics Corridor</td><td>$38.5M</td><td>Industrial/flex-dominant; lowest absorption risk</td></tr>
+          <tr><td>4. Workforce Village</td><td>$36.8M</td><td>Multifamily-anchor; EB-5/LIHTC eligible</td></tr>
+          <tr><td>5. Premium Pad Strategy</td><td>$41.2M</td><td>Two-tier pricing: corner premium, interior discount</td></tr>
+        </tbody>
+      </table>
+
+      <p class="body-text">Two additional scenarios were added later in the month (Retail Intersection Clustering at $42.6M and Walking Nature Retail at $52.5M), bringing the total active design portfolio to seven configurations.</p>
+
+      <div class="milestone-box"><strong>Platform feature:</strong> An interactive design request system was deployed on the capital plan website, allowing authorized users to submit custom scenario configurations. Requests are automatically processed with lot economics and tear sheet generation.</div>
+
+      <!-- MARKET DATA -->
+      <div class="section-hdr"><span class="sn">7.</span>Market Data</div>
+      <p class="body-text">A comprehensive market data package was assembled from three source documents covering the ITPH trade area (12000 Bissonnet center point):</p>
+
+      <table class="data">
+        <thead><tr><th>Metric</th><th>1-Mile</th><th>2-Mile</th><th>3-Mile</th></tr></thead>
+        <tbody>
+          <tr><td>Population</td><td>26,900</td><td>101,901</td><td>192,662</td></tr>
+          <tr><td>Households</td><td>8,589</td><td>32,840</td><td>64,817</td></tr>
+          <tr><td>Median Income</td><td>$53,732</td><td>$58,740</td><td>$61,695</td></tr>
+          <tr><td>Median Age</td><td colspan="3">33.3 — young workforce demographic</td></tr>
+          <tr><td>Businesses / Employees (1-mi)</td><td colspan="3">840 businesses / 4,340 employees</td></tr>
+        </tbody>
+      </table>
+
+      <table class="data">
+        <thead><tr><th>Apartment Rental Comps</th><th>Occupancy</th><th>Avg Rent</th><th>$/SF</th></tr></thead>
+        <tbody>
+          <tr><td>Subject Property (172 units)</td><td>91.3%</td><td>$928/mo</td><td>$1.27</td></tr>
+          <tr><td>24-Comp Set (5,632 units)</td><td>92.0%</td><td>$1,020/mo</td><td>$1.23</td></tr>
+          <tr><td>Submarket (28,040 units)</td><td>91.8%</td><td>$1,058/mo</td><td>—</td></tr>
+          <tr><td>Houston Metro (797,290 units)</td><td>90.6%</td><td>$1,252/mo</td><td>—</td></tr>
+        </tbody>
+      </table>
+
+      <!-- CAPITAL STRUCTURE -->
+      <div class="section-hdr"><span class="sn">8.</span>Capital Structure</div>
+      <table class="data">
+        <thead><tr><th>Layer</th><th>Amount</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MUD 584 Bond (Infrastructure)</td><td>$23,400,000</td><td>Water / sewer / drainage; repaid by district taxes</td></tr>
+          <tr><td>Development Budget</td><td>$36,200,000</td><td>Total project cost basis</td></tr>
+          <tr><td>JV Equity</td><td>$11,400,000</td><td>8% preferred return; 70/30 profit split</td></tr>
+          <tr><td>TIRZ Recovery (Potential)</td><td>TBD</td><td>Under evaluation — could offset infrastructure costs beyond MUD boundary</td></tr>
+          <tr><td>Harvey Funds (Applied)</td><td>TBD</td><td>Application submitted for retention/storm infrastructure</td></tr>
+        </tbody>
+      </table>
+
+      <!-- OPERATIONS -->
+      <div class="section-hdr"><span class="sn">9.</span>Operations &amp; Infrastructure</div>
+      <table class="data">
+        <thead><tr><th>Item</th><th>Status</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MUD 584 Bond</td><td><span class="pill pill-active">Active</span></td><td>$23.4M infrastructure financing in place</td></tr>
+          <tr><td>TIRZ Evaluation</td><td><span class="pill pill-progress">In Progress</span></td><td>Discussions underway for MUD cost offset designation</td></tr>
+          <tr><td>Harvey Fund Application</td><td><span class="pill pill-progress">Submitted</span></td><td>Retention &amp; storm-related cost recovery</td></tr>
+          <tr><td>Detention System (24.27 ac)</td><td><span class="pill pill-active">Designed</span></td><td>Serves development and community watershed</td></tr>
+          <tr><td>Capital Plan Platform</td><td><span class="pill pill-active">Live</span></td><td>Interactive scenarios, design requests, lot economics</td></tr>
+          <tr><td>Development Standards v1</td><td><span class="pill pill-active">Published</span></td><td>Constitutional document governing all scenarios</td></tr>
+          <tr><td>CRM / Investor Tracking</td><td><span class="pill pill-progress">In Development</span></td><td>Tracking capital plan distribution and investor engagement</td></tr>
+        </tbody>
+      </table>
+
+      <!-- OUTLOOK -->
+      <div class="section-hdr"><span class="sn">10.</span>June Outlook</div>
+      <ul class="bullet-list">
+        <li><strong>Close pending contracts</strong> — advance multifamily and industrial tract negotiations toward executed agreements</li>
+        <li><strong>TIRZ determination</strong> — complete analysis of TIRZ qualification and potential stacking with MUD bond; quantify combined capital recovery impact</li>
+        <li><strong>Harvey fund follow-up</strong> — track application status for retention and storm infrastructure cost recovery</li>
+        <li><strong>Retail reconfiguration</strong> — finalize consolidated retail plan with optimized parcel configurations per broker recommendations</li>
+        <li><strong>JV financing focus</strong> — with Hillcrest advance expected, shift capital markets attention to ITPH financing structure</li>
+        <li><strong>Market report</strong> — produce consolidated investor-ready PDF from demographics, rental comps, and demand projections</li>
+        <li><strong>Continue capital plan distribution</strong> — maintain outreach cadence to prospective investors and capital partners</li>
+      </ul>
+
+      <div class="partner-message">
+        <div class="pm-title">Summary</div>
+        <p>ITPH continues to gain momentum across all fronts. The combination of pending contracts, TIRZ potential stacking with the existing MUD bond, Harvey fund applications, and the retail reconfiguration represents a materially improving project profile. The five-scenario design portfolio provides capital partners with clear optionality, and the addition of TIRZ as a second public-finance lever could fundamentally change the deal's risk-return economics.</p>
+        <p style="margin-top:10px">The project benefits from strong demographic fundamentals (young workforce, growing population, high occupancy rates) and a diversified development program that can flex across multifamily, industrial, retail, and flex uses based on market demand.</p>
+      </div>
+
+      <p class="signoff"><strong>LANDCO NEXA</strong><br>ITP Houston Monthly Project Report<br><span class="small">Prepared June 1, 2026 — Confidential</span></p>
+    </div>
+  </div>
+
+  <div class="footer-strip">Keystone&#8482; 2026</div>
+</div>
+</body></html>
