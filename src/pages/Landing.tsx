@@ -32,7 +32,7 @@ export default function Landing() {
 
   function handleAdminSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (adminCode.trim().toUpperCase() === "HC01") {
+    if (adminCode.trim().toUpperCase() === "HC01" || adminCode.trim().toUpperCase() === "ROY01") {
       sessionStorage.setItem("itph_admin_unlocked", "1");
       navigate("/dashboard");
     } else {
