@@ -483,7 +483,7 @@ export default function App() {
             <div style={{ fontSize: "12px", color: "#9c9a92", marginTop: "4px" }}>Mixed-use master-planned development · 136 acres · 30 lots</div>
           </div>
           <div style={{ textAlign: "right" }}>
-            <div style={{ fontSize: "10px", color: "#9c9a92" }}>Last update: May 2026</div>
+            <div style={{ fontSize: "10px", color: "#9c9a92" }}>Last update: July 1, 2026</div>
             <div style={{ fontSize: "10px", color: "#9c9a92" }}>12000 Bissonnet St, Houston TX</div>
           </div>
         </div>

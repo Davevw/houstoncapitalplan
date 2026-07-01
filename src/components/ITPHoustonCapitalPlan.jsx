@@ -1072,9 +1072,9 @@ export default function App(){
                 <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
               </div>
             </div>
-            <div style={{textAlign:"right",fontSize:12,opacity:0.6}}>
-              <div>Last Update: May 2026</div>
-              <div style={{marginTop:2,fontWeight:600,color:"#0B5563"}}>Last JV Report: June 2026 — Monthly Report</div>
+            <div style={{textAlign:"right",fontSize:12,opacity:0.88}}>
+              <div>Last Update: July 1, 2026</div>
+              <div style={{marginTop:2,fontWeight:600,color:"rgba(255,255,255,0.92)"}}>Last JV Report: June 2026 — Issued July 1, 2026</div>
               <div style={{display:"flex",gap:8,marginTop:8,flexWrap:"wrap",justifyContent:"flex-end"}}>
                 <button
                   onClick={() => setShowPresentation(true)}
