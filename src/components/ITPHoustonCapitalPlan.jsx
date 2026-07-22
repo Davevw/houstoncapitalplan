@@ -1068,6 +1068,7 @@ export default function App(){
             <div style={{display:"flex",alignItems:"center",gap:16}}>
               <img src={itpLogo} alt="ITP Houston" width={70} height={70} style={{cursor:"pointer"}} onClick={()=>{setActiveTab(0);setActiveAdminTab(null);setShowAdminMenu(false);}} title="Go to Dashboard" />
               <div>
+                <div style={{fontSize:11,fontWeight:800,letterSpacing:2.4,color:GOLD,textTransform:"uppercase",marginBottom:4}}>LANDCO NEXA</div>
                 <h1 style={{margin:0,fontSize:28,fontFamily:"Georgia,serif",fontWeight:700,letterSpacing:0.5}}>ITP Houston Capital Plan</h1>
                 <div style={{fontSize:14,opacity:0.8,marginTop:4}}>136-Acre Master-Planned Development &nbsp;|&nbsp; 12000 Bissonnet Street, Houston TX</div>
               </div>

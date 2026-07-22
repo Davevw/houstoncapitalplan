@@ -90,17 +90,19 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
   // Header band
   const drawHeader = () => {
     doc.setFillColor(27, 42, 74);
-    doc.rect(0, 0, pageW, 56, "F");
+    doc.rect(0, 0, pageW, 68, "F");
     doc.setTextColor(201, 168, 76);
     doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text("LANDCO NEXA", marginX, 18, { charSpace: 2 });
     doc.setFontSize(14);
-    doc.text("MUD 584 — Bond Reimbursement Analysis", marginX, 24);
+    doc.text("MUD 584 — Bond Reimbursement Analysis", marginX, 36);
     doc.setTextColor(240, 235, 220);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
-    doc.text("International Trade Park Houston  ·  12000 Bissonnet Street  ·  Houston, TX 77099", marginX, 40);
+    doc.text("International Trade Park Houston  ·  12000 Bissonnet Street  ·  Houston, TX 77099", marginX, 52);
     doc.setFontSize(8);
-    doc.text(today, pageW - marginX, 40, { align: "right" });
+    doc.text(today, pageW - marginX, 52, { align: "right" });
   };
 
   const drawFooter = (pageNum, pageTotal) => {
@@ -116,7 +118,7 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
 
   // ===== Page 1 =====
   drawHeader();
-  let y = 78;
+  let y = 90;
 
   // KPI grid
   const kpis = [
@@ -179,7 +181,7 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
   // ===== Page 2 =====
   doc.addPage();
   drawHeader();
-  y = 78;
+  y = 90;
 
   doc.setFont("times", "bold");
   doc.setFontSize(14);
@@ -234,7 +236,7 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
     if (y + blockH > pageH - 50) {
       doc.addPage();
       drawHeader();
-      y = 78;
+      y = 90;
     }
 
     doc.setFillColor(245, 240, 232);
@@ -498,8 +500,10 @@ export async function downloadMUDDocx({ rows, totals, bondRate, mudReimbursement
           children: [new Paragraph({
             spacing: { after: 60 },
             children: [
+              new TextRun({ text: "LANDCO NEXA", bold: true, color: GOLD_HEX, size: 18, font: "Calibri", characterSpacing: 40 }),
+              new TextRun({ text: "   |   ", color: "7A8B9A", size: 18, font: "Calibri" }),
               new TextRun({ text: "MUD 584 — Bond Reimbursement Analysis", bold: true, color: NAVY_HEX, size: 22, font: "Georgia" }),
-              new TextRun({ text: "   |   International Trade Park Houston", color: "7A8B9A", size: 18, font: "Calibri" }),
+              new TextRun({ text: "   ·   International Trade Park Houston", color: "7A8B9A", size: 18, font: "Calibri" }),
             ],
           })],
         }),
@@ -518,6 +522,10 @@ export async function downloadMUDDocx({ rows, totals, bondRate, mudReimbursement
         }),
       },
       children: [
+        new Paragraph({
+          spacing: { after: 80 },
+          children: [new TextRun({ text: "LANDCO NEXA", bold: true, color: GOLD_HEX, size: 20, font: "Calibri", characterSpacing: 60 })],
+        }),
         heading("MUD 584 — Bond Reimbursement Analysis", 1),
         paragraph(`International Trade Park Houston  ·  12000 Bissonnet Street  ·  Houston, TX 77099  ·  ${today}`, { color: "5A6B7A", size: 20 }),
         paragraph(" "),
