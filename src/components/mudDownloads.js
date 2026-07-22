@@ -90,17 +90,19 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
   // Header band
   const drawHeader = () => {
     doc.setFillColor(27, 42, 74);
-    doc.rect(0, 0, pageW, 56, "F");
+    doc.rect(0, 0, pageW, 68, "F");
     doc.setTextColor(201, 168, 76);
     doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text("LANDCO NEXA", marginX, 18, { charSpace: 2 });
     doc.setFontSize(14);
-    doc.text("MUD 584 — Bond Reimbursement Analysis", marginX, 24);
+    doc.text("MUD 584 — Bond Reimbursement Analysis", marginX, 36);
     doc.setTextColor(240, 235, 220);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(9);
-    doc.text("International Trade Park Houston  ·  12000 Bissonnet Street  ·  Houston, TX 77099", marginX, 40);
+    doc.text("International Trade Park Houston  ·  12000 Bissonnet Street  ·  Houston, TX 77099", marginX, 52);
     doc.setFontSize(8);
-    doc.text(today, pageW - marginX, 40, { align: "right" });
+    doc.text(today, pageW - marginX, 52, { align: "right" });
   };
 
   const drawFooter = (pageNum, pageTotal) => {
