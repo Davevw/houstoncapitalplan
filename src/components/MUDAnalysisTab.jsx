@@ -101,6 +101,7 @@ export default function MUDAnalysisTab() {
   const [sortDir, setSortDir] = useState("asc");
   // MUD bond rate slider: 8.0% (baseline $23.4M) to 10.0% (scales toward $35M ceiling)
   const [bondRate, setBondRate] = useState(PROJECT.mudBondRate * 100);
+  const [dlBusy, setDlBusy] = useState(null); // 'pdf' | 'docx' | null
 
   const mudReimbursement = useMemo(() => {
     const minRate = 8.0, maxRate = 10.0;
