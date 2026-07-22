@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { PROJECT, computeLot } from "./LotDetailPanel";
 import SiteCompositionTable from "./SiteCompositionTable";
+import { downloadMUDPdf, downloadMUDDocx } from "./mudDownloads";
 
 const NAVY = "#1B2A4A";
 const GOLD = "#C9A84C";
@@ -100,6 +101,7 @@ export default function MUDAnalysisTab() {
   const [sortDir, setSortDir] = useState("asc");
   // MUD bond rate slider: 8.0% (baseline $23.4M) to 10.0% (scales toward $35M ceiling)
   const [bondRate, setBondRate] = useState(PROJECT.mudBondRate * 100);
+  const [dlBusy, setDlBusy] = useState(null); // 'pdf' | 'docx' | null
 
   const mudReimbursement = useMemo(() => {
     const minRate = 8.0, maxRate = 10.0;
@@ -172,15 +174,73 @@ export default function MUDAnalysisTab() {
 
   const isBaseline = Math.abs(bondRate - 8.0) < 0.01;
 
+  const handleDownload = async (kind) => {
+    if (dlBusy) return;
+    setDlBusy(kind);
+    try {
+      const args = { rows, totals, bondRate, mudReimbursement, lots: LOT_SCHEDULE, project: PROJECT };
+      if (kind === "pdf") downloadMUDPdf(args);
+      else await downloadMUDDocx(args);
+    } catch (e) {
+      console.error("MUD download failed:", e);
+      alert("Download failed. Please try again.");
+    } finally {
+      setDlBusy(null);
+    }
+  };
+
+  const dlBtn = (kind, label) => {
+    const active = dlBusy === kind;
+    const disabled = dlBusy && !active;
+    return (
+      <button
+        onClick={() => handleDownload(kind)}
+        disabled={!!dlBusy}
+        style={{
+          background: kind === "pdf" ? NAVY : "white",
+          color: kind === "pdf" ? GOLD : NAVY,
+          border: `1.5px solid ${NAVY}`,
+          padding: "9px 16px",
+          borderRadius: 6,
+          fontSize: 12,
+          fontWeight: 700,
+          letterSpacing: 0.6,
+          textTransform: "uppercase",
+          cursor: dlBusy ? "wait" : "pointer",
+          opacity: disabled ? 0.5 : 1,
+          transition: "transform 120ms ease",
+          fontFamily: "Arial, sans-serif",
+        }}
+        title={`Download the MUD 584 analysis as ${kind.toUpperCase()}`}
+      >
+        {active ? "Preparing…" : label}
+      </button>
+    );
+  };
+
   return (
     <div style={{ fontFamily: "Arial, sans-serif", color: NAVY }}>
-      {/* Header */}
-      <div style={{ marginBottom: 24 }}>
-        <h1 style={{ fontSize: 26, fontFamily: "Georgia,serif", fontWeight: 700, margin: 0, color: NAVY }}>
-          MUD 584 — Bond Reimbursement Analysis
-        </h1>
-        <div style={{ fontSize: 13, color: "#5A6B7A", marginTop: 6 }}>
-          International Trade Park Houston — Bissonnet 136, LLC
+      {/* Header + Download bar */}
+      <div style={{
+        marginBottom: 24, display: "flex", alignItems: "flex-start",
+        justifyContent: "space-between", gap: 16, flexWrap: "wrap",
+      }}>
+        <div>
+          <h1 style={{ fontSize: 26, fontFamily: "Georgia,serif", fontWeight: 700, margin: 0, color: NAVY }}>
+            MUD 584 — Bond Reimbursement Analysis
+          </h1>
+          <div style={{ fontSize: 13, color: "#5A6B7A", marginTop: 6 }}>
+            International Trade Park Houston
+          </div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+          <div style={{ fontSize: 10, fontWeight: 800, letterSpacing: 0.8, color: "#7A8B9A", textTransform: "uppercase" }}>
+            Download Analysis
+          </div>
+          <div style={{ display: "flex", gap: 8 }}>
+            {dlBtn("pdf", "Download PDF")}
+            {dlBtn("docx", "Download Word")}
+          </div>
         </div>
       </div>
 
