@@ -51,32 +51,34 @@ function buildCompositionRows(lots) {
   return { rows, totalAcres, totalValue };
 }
 
-const NOTES = [
-  {
-    title: "Note 1 — What is a MUD?",
-    body: "A Municipal Utility District (MUD) is a political subdivision of the State of Texas that provides water, sewage, drainage, and other infrastructure services. MUD 584 was created to finance the horizontal infrastructure for International Trade Park Houston. The district issues bonds to reimburse the developer for eligible infrastructure costs after construction is complete.",
-  },
-  {
-    title: "Note 2 — How Reimbursement Works",
-    body: "MUD bonds reimburse infrastructure costs based on each lot's share of eligible acreage within the district. The total MUD principal of $23.40M is allocated across eligible acres. Each lot's MUD share is calculated as: (Lot Eligible Acres / Total Eligible Acres) × Total MUD Principal. The first payout of 50% occurs at Month 24. The final payout of the remaining 50% occurs at Month 36.",
-  },
-  {
-    title: "Note 3 — MUD Bond Rate",
-    body: "MUD bonds carry an 8.0% interest rate. This rate is set by the bond market at the time of issuance and reflects the credit quality of the district, the tax base, and prevailing interest rates.",
-  },
-  {
-    title: "Note 4 — Reimbursement Potential: Up to $35M",
-    body: "The current MUD reimbursement estimate of $23.40M is conservative. The cost of land being used for the retention basin is not yet included in the reimbursement calculation. Applying the standard MUD underwriting benchmark of 8–10% of real estate valuations to anticipated building values on the site supports reimbursement as high as $35 million. This gap continues to narrow as additional eligible items are negotiated.",
-  },
-  {
-    title: "Note 5 — MUD Status: Cleared",
-    body: "The PCS contested case against MUD 584 was dismissed on November 6, 2025. Harris County withdrew its protest, and the State Office of Administrative Hearings (SOAH) dismissed the matter (Docket No. 582-25-23304). MUD 584 is now clear to proceed to final TCEQ approval with no remaining opposition.",
-  },
-  {
-    title: "Note 6 — Lincoln Ave Capital MUD Contribution",
-    body: "Lincoln Avenue Capital is already contributing its fair share to offset its portion of MUD costs, reducing the net infrastructure burden on the project.",
-  },
-];
+function makeNotes(project) {
+  return [
+    {
+      title: "Note 1 — What is a MUD?",
+      body: "A Municipal Utility District (MUD) is a political subdivision of the State of Texas that provides water, sewage, drainage, and other infrastructure services. MUD 584 was created to finance the horizontal infrastructure for International Trade Park Houston. The district issues bonds to reimburse the developer for eligible infrastructure costs after construction is complete.",
+    },
+    {
+      title: "Note 2 — How Reimbursement Works",
+      body: `MUD bonds reimburse infrastructure costs based on each lot's share of eligible acreage within the district. The total MUD principal of $23.40M is allocated across ${project.mudEligibleAcres} eligible acres. Each lot's MUD share is calculated as: (Lot Eligible Acres / ${project.mudEligibleAcres}) × $23.40M. The first payout of 50% occurs at Month ${project.mudFirstPayoutMonth}. The final payout of the remaining 50% occurs at Month ${project.mudFinalPayoutMonth}. The total payout window is ${project.mudFinalPayoutMonth - project.mudFirstPayoutMonth} months.`,
+    },
+    {
+      title: "Note 3 — MUD Bond Rate",
+      body: "MUD bonds carry an 8.0% interest rate. This rate is set by the bond market at the time of issuance and reflects the credit quality of the district, the tax base, and prevailing interest rates.",
+    },
+    {
+      title: "Note 4 — Reimbursement Potential: Up to $35M",
+      body: "The current MUD reimbursement estimate of $23.40M is conservative. The cost of land being used for the retention basin is not yet included in the reimbursement calculation. Applying the standard MUD underwriting benchmark of 8–10% of real estate valuations to anticipated building values on the site supports reimbursement as high as $35 million. This gap continues to narrow as additional eligible items are negotiated.",
+    },
+    {
+      title: "Note 5 — MUD Status: Cleared",
+      body: "The PCS contested case against MUD 584 was dismissed on November 6, 2025. Harris County withdrew its protest, and the State Office of Administrative Hearings (SOAH) dismissed the matter (Docket No. 582-25-23304). MUD 584 is now clear to proceed to final TCEQ approval with no remaining opposition.",
+    },
+    {
+      title: "Note 6 — Lincoln Ave Capital MUD Contribution",
+      body: "Lincoln Avenue Capital is already contributing its fair share to offset its portion of MUD costs, reducing the net infrastructure burden on the project.",
+    },
+  ];
+}
 
 // ---------- PDF ----------
 export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots, project }) {
@@ -220,7 +222,7 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
 
   const pageH = doc.internal.pageSize.getHeight();
   const usableW = pageW - marginX * 2;
-  NOTES.forEach((note) => {
+  makeNotes(project).forEach((note) => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9);
     const titleLines = doc.splitTextToSize(note.title, usableW - 16);
@@ -532,7 +534,7 @@ export async function downloadMUDDocx({ rows, totals, bondRate, mudReimbursement
         paragraph(" "),
 
         heading("How MUD Reimbursement Works", 2),
-        ...NOTES.flatMap((n) => [noteBlock(n.title, n.body), paragraph(" ")]),
+        ...makeNotes(project).flatMap((n) => [noteBlock(n.title, n.body), paragraph(" ")]),
       ],
     }],
   });
