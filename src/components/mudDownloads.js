@@ -222,7 +222,7 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
 
   const pageH = doc.internal.pageSize.getHeight();
   const usableW = pageW - marginX * 2;
-  NOTES.forEach((note) => {
+  makeNotes(project).forEach((note) => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9);
     const titleLines = doc.splitTextToSize(note.title, usableW - 16);
