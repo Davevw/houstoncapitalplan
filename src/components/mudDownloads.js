@@ -500,8 +500,10 @@ export async function downloadMUDDocx({ rows, totals, bondRate, mudReimbursement
           children: [new Paragraph({
             spacing: { after: 60 },
             children: [
+              new TextRun({ text: "LANDCO NEXA", bold: true, color: GOLD_HEX, size: 18, font: "Calibri", characterSpacing: 40 }),
+              new TextRun({ text: "   |   ", color: "7A8B9A", size: 18, font: "Calibri" }),
               new TextRun({ text: "MUD 584 — Bond Reimbursement Analysis", bold: true, color: NAVY_HEX, size: 22, font: "Georgia" }),
-              new TextRun({ text: "   |   International Trade Park Houston", color: "7A8B9A", size: 18, font: "Calibri" }),
+              new TextRun({ text: "   ·   International Trade Park Houston", color: "7A8B9A", size: 18, font: "Calibri" }),
             ],
           })],
         }),
