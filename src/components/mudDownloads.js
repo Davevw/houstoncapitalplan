@@ -534,7 +534,7 @@ export async function downloadMUDDocx({ rows, totals, bondRate, mudReimbursement
         paragraph(" "),
 
         heading("How MUD Reimbursement Works", 2),
-        ...NOTES.flatMap((n) => [noteBlock(n.title, n.body), paragraph(" ")]),
+        ...makeNotes(project).flatMap((n) => [noteBlock(n.title, n.body), paragraph(" ")]),
       ],
     }],
   });
