@@ -522,6 +522,10 @@ export async function downloadMUDDocx({ rows, totals, bondRate, mudReimbursement
         }),
       },
       children: [
+        new Paragraph({
+          spacing: { after: 80 },
+          children: [new TextRun({ text: "LANDCO NEXA", bold: true, color: GOLD_HEX, size: 20, font: "Calibri", characterSpacing: 60 })],
+        }),
         heading("MUD 584 — Bond Reimbursement Analysis", 1),
         paragraph(`International Trade Park Houston  ·  12000 Bissonnet Street  ·  Houston, TX 77099  ·  ${today}`, { color: "5A6B7A", size: 20 }),
         paragraph(" "),
