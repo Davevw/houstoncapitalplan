@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { PROJECT, computeLot } from "./LotDetailPanel";
 import SiteCompositionTable from "./SiteCompositionTable";
+import { downloadMUDPdf, downloadMUDDocx } from "./mudDownloads";
 
 const NAVY = "#1B2A4A";
 const GOLD = "#C9A84C";
