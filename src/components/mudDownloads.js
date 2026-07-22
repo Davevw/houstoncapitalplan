@@ -118,7 +118,7 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
 
   // ===== Page 1 =====
   drawHeader();
-  let y = 78;
+  let y = 90;
 
   // KPI grid
   const kpis = [
@@ -181,7 +181,7 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
   // ===== Page 2 =====
   doc.addPage();
   drawHeader();
-  y = 78;
+  y = 90;
 
   doc.setFont("times", "bold");
   doc.setFontSize(14);
@@ -236,7 +236,7 @@ export function downloadMUDPdf({ rows, totals, bondRate, mudReimbursement, lots,
     if (y + blockH > pageH - 50) {
       doc.addPage();
       drawHeader();
-      y = 78;
+      y = 90;
     }
 
     doc.setFillColor(245, 240, 232);
