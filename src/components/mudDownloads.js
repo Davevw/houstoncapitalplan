@@ -4,7 +4,7 @@ import autoTable from "jspdf-autotable";
 import {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
   AlignmentType, WidthType, ShadingType, BorderStyle, HeadingLevel, PageBreak,
-  Header, Footer, PageNumber,
+  Header, Footer, PageNumber, PageOrientation,
 } from "docx";
 import { saveAs } from "file-saver";
 
