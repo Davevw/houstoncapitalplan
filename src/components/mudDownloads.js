@@ -486,7 +486,7 @@ export async function downloadMUDDocx({ rows, totals, bondRate, mudReimbursement
         page: {
           size: {
             width: 15840, height: 12240,
-            orientation: "landscape",
+            orientation: PageOrientation.LANDSCAPE,
           },
           margin: { top: 720, right: 720, bottom: 720, left: 720 },
         },
