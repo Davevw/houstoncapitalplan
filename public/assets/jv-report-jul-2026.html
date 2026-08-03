@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITPH, Houston TX - Monthly Project Report | July 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
+.shell{width:100%;max-width:960px;margin:0 auto}
+.top-bar{background:#1B2A4A;padding:18px 24px 0;border-radius:12px 12px 0 0}
+.top-bar-inner{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:16px}
+.top-bar-left h1{color:#C9A84C;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.top-bar-left p{color:rgba(255,255,255,.5);font-size:11px}
+.date-badge{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:8px;padding:8px 14px;text-align:right}
+.date-badge .month{color:#C9A84C;font-size:20px;font-weight:700;display:block;line-height:1.1}
+.date-badge .year{color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;display:block;margin-top:2px}
+.date-badge .supp{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.04em;display:block;margin-top:3px;text-transform:uppercase}
+.content{background:#fff;border:1px solid #ddd;border-radius:0 0 12px 12px}
+.panel{padding:28px 32px}
+.letter-header{border-bottom:1px solid #eee;padding-bottom:16px;margin-bottom:20px}
+.letter-meta{font-size:12px;color:#888;margin-bottom:4px}
+.addr{font-size:12px;color:#888;line-height:1.7;margin-bottom:10px}
+.subject-line{font-size:13px;font-weight:700;color:#1B2A4A;background:#F5F0E8;padding:9px 14px;border-radius:6px;border-left:3px solid #C9A84C}
+.section-hdr{font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 10px;padding-bottom:7px;border-bottom:2px solid #C9A84C}
+.sn{color:#C9A84C;margin-right:6px}
+.body-text{font-size:13px;line-height:1.75;color:#222;margin-bottom:10px}
+.bullet-list{margin:6px 0 12px;padding-left:0;list-style:none}
+.bullet-list li{font-size:13px;line-height:1.65;color:#222;padding:3px 0 3px 20px;position:relative}
+.bullet-list li::before{content:"\2014";position:absolute;left:0;color:#C9A84C;font-weight:700}
+.kpi-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+.kpi-card{flex:1;min-width:140px;background:#1B2A4A;color:#fff;padding:14px 16px;border-radius:8px;border-left:3px solid #C9A84C}
+.kpi-card .label{font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.65);text-transform:uppercase;display:block;margin-bottom:6px}
+.kpi-card .value{font-size:22px;font-weight:700;color:#C9A84C;display:block;line-height:1.1}
+.kpi-card .sub{font-size:10px;color:rgba(255,255,255,.55);display:block;margin-top:4px}
+table.data{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12px}
+table.data thead{background:#1B2A4A;color:#fff}
+table.data th{padding:9px 10px;text-align:left;font-size:10px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+table.data td{padding:8px 10px;border-bottom:1px solid #EEE;color:#333;line-height:1.45;vertical-align:top}
+table.data tbody tr:nth-child(even){background:#FAFAFA}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.03em}
+.pill-active{background:rgba(46,125,50,.15);color:#2E7D32;border:1px solid rgba(46,125,50,.4)}
+.pill-progress{background:rgba(201,168,76,.18);color:#7B5500;border:1px solid rgba(201,168,76,.4)}
+.pill-out{background:rgba(120,120,120,.15);color:#666;border:1px solid rgba(120,120,120,.4)}
+.pill-new{background:rgba(33,150,243,.15);color:#0D47A1;border:1px solid rgba(33,150,243,.4)}
+.milestone-box{background:#E8F5E9;border:1px solid #4CAF50;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#1B5E20;line-height:1.6}
+.milestone-box strong{color:#2E7D32}
+.strategy-box{background:#FAF6ED;border-left:4px solid #C9A84C;padding:18px 22px;margin:14px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 8px 8px 0}
+.strategy-box .sb-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.partner-message{background:#F5F0E8;border-left:4px solid #C9A84C;padding:16px 20px;margin:16px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 6px 6px 0}
+.partner-message .pm-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.value-callout{background:#F1F8F4;border-left:4px solid #2E7D32;padding:12px 16px;margin:10px 0;font-size:12px;line-height:1.65;color:#1B5E20;border-radius:0 6px 6px 0}
+.value-callout strong{color:#2E7D32}
+.signoff{font-size:13px;color:#222;margin-top:20px;line-height:1.7}
+.signoff strong{color:#1B2A4A}
+.small{font-size:11px;color:#777}
+.footer-strip{background:#1B2A4A;color:rgba(255,255,255,.55);padding:14px 28px;border-radius:0 0 12px 12px;font-size:10px;text-align:center;letter-spacing:.04em;margin-top:0}
+@media (max-width:640px){.panel{padding:18px 16px}.kpi-card{min-width:130px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <h1>LANDCO NEXA</h1>
+        <p>ITP Houston - Monthly Project Report</p>
+      </div>
+      <div>
+        <div class="date-badge">
+          <span class="month">July</span>
+          <span class="year">2026</span>
+          <span class="supp">Monthly Report</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="panel">
+      <div class="letter-header">
+        <p class="letter-meta">Reporting Period: July 1-31, 2026</p>
+        <p class="addr">ITP Houston · 12000 Bissonnet Street · Houston, TX 77099<br>~136 Acres · 30-Lot Master-Planned Development · MUD 584</p>
+        <p class="subject-line">Monthly Project Report - August 1, 2026</p>
+      </div>
+
+      <div class="section-hdr"><span class="sn">1.</span>Executive Summary</div>
+      <p class="body-text">July was an execution and capitalization month for ITPH. The project advanced from presentation and planning work into active capital-market outreach, lender diligence, Quinlan buyout documentation, and construction/environmental readiness coordination. The July work centered on converting the approved project platform into the materials needed to refinance or recapitalize the property, resolve the existing JV position, preserve the landfill permit strategy, and keep MUD/environmental work moving.</p>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">Total Acreage</span><span class="value">~136</span><span class="sub">12000 Bissonnet Street</span></div>
+        <div class="kpi-card"><span class="label">MUD 584</span><span class="value">Nov.</span><span class="sub">Election vote targeted for 2026</span></div>
+        <div class="kpi-card"><span class="label">Senior Facility</span><span class="value">$36M</span><span class="sub">A&D lender outreach package</span></div>
+        <div class="kpi-card"><span class="label">Lender Outreach</span><span class="value">25</span><span class="sub">Senior-debt first pass completed</span></div>
+      </div>
+
+      <div class="section-hdr"><span class="sn">2.</span>Key Developments</div>
+      <ul class="bullet-list">
+        <li><strong>Capital-market outreach completed</strong> - David completed a first-pass senior-secured lender outreach for a roughly $36 million acquisition and development facility, distributing the project summary to 25 senior-debt lenders across banks, debt funds, and CRE debt brokers.</li>
+        <li><strong>Kennedy Funding LOI received</strong> - Kennedy Funding transmitted a letter of interest package for Bissonnet 136, LLC on July 29, with Mark and David included in the correspondence and Lester.Bissonnet.pdf attached for review.</li>
+        <li><strong>Quinlan buyout negotiations escalated</strong> - Mark transmitted revised buyout documentation on July 22 and continued direct negotiations with John Quinlan through month-end around return structure, loan treatment, permit control, and security release.</li>
+        <li><strong>MUD milestone remains central</strong> - July correspondence continued to treat the MUD 584 November vote as a real progress point and a key trigger for financing, buyer confidence, and infrastructure execution.</li>
+        <li><strong>Construction readiness advanced</strong> - Metro Structures was engaged for pre-construction, construction management, and general contracting proposal support, while SKA Consulting identified unsigned environmental/LFG proposals needed for continued work.</li>
+        <li><strong>Data center positioning added</strong> - A Houston Data Center Site package was circulated on July 10, including a data-center concept readiness summary for the 136-acre Bissonnet parcel.</li>
+        <li><strong>Planning technology reviewed</strong> - David identified TestFit as a possible AI-enabled early site planning tool for rapid yield, parking, density, massing, and feasibility analysis.</li>
+      </ul>
+
+      <div class="section-hdr"><span class="sn">3.</span>Contracts &amp; Negotiations</div>
+      <table class="data">
+        <thead><tr><th>Workstream</th><th>Status</th><th>July Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Quinlan Buyout</td><td><span class="pill pill-progress">Active</span></td><td>Revised buyout agreement, redline, clean version, and loan repayment agreement were circulated July 22. Month-end negotiation centered on John Quinlan's return, permit ownership/control, loan repayment, and release of personal home security.</td></tr>
+          <tr><td>Capital / Refinance Facility</td><td><span class="pill pill-progress">In Market</span></td><td>$36M acquisition and development facility outreach completed to 25 lenders; additional lender list work continued after initial turndowns and limited early response.</td></tr>
+          <tr><td>Kennedy Funding</td><td><span class="pill pill-new">LOI Received</span></td><td>Kennedy Funding sent a Bissonnet 136, LLC letter of interest package on July 29 for Mark/David review.</td></tr>
+          <tr><td>Buyer / Parcel Interest</td><td><span class="pill pill-progress">Continuing</span></td><td>July outreach positioned ITP as parcels or a project for sale. One multifamily parcel inquiry was received from a known prior-project contact with potential capacity to move forward if interest holds.</td></tr>
+          <tr><td>Metro Structures</td><td><span class="pill pill-active">Engaged</span></td><td>Mark asked for an RFP structured for Metro Structures to respond on pre-construction services, construction management, and general contracting.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">4.</span>Public Finance - MUD &amp; TIRZ</div>
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">MUD 584</span><span class="value">Active</span><span class="sub">Formation/approval workstream</span></div>
+        <div class="kpi-card"><span class="label">Election</span><span class="value">Nov.</span><span class="sub">2026 vote referenced in July talks</span></div>
+        <div class="kpi-card"><span class="label">TIRZ Potential</span><span class="value">TBD</span><span class="sub">Still credit-enhancement workstream</span></div>
+        <div class="kpi-card"><span class="label">Harvey / FEMA</span><span class="value">Open</span><span class="sub">Eligibility support pursued</span></div>
+      </div>
+
+      <p class="body-text"><strong>MUD 584:</strong> July correspondence repeatedly treated the MUD as a key project advancement, with the November 2026 vote now framed as a material milestone for the project. The MUD remains the primary infrastructure finance foundation for water, sewer, drainage, and related public improvements.</p>
+
+      <p class="body-text"><strong>FEMA / Harvey-related funding:</strong> On July 8, Mark pursued support from Houston District F / Council Member Tiffany Thomas's office for using FEMA or related recovery funds to support ITPH flood-control and detention efforts. The purpose was to frame the project around Alief-area flood mitigation and community benefit, while confirming whether earlier concerns about fund availability were accurate.</p>
+
+      <div class="value-callout"><strong>Public record / public-source review:</strong> July web and project-record review did not identify a contradictory public change to the project status. The report therefore carries forward the prior MUD/TIRZ/Harvey framework and updates it only for July correspondence and the November 2026 vote focus.</div>
+
+      <div class="section-hdr"><span class="sn">5.</span>Retail Marketing &amp; Reconfiguration</div>
+      <p class="body-text">The retail reconfiguration strategy from June remains in place. July did not change the core premise: concentrate retail at stronger intersection locations and avoid over-allocating weaker internal frontage to retail uses. The continued capital and buyer outreach in July supports keeping the site plan flexible across multifamily, industrial/flex, retail pads, and mixed-use alternatives.</p>
+      <ul class="bullet-list">
+        <li><strong>Retail remains intersection-led</strong> - strongest value still belongs at visible corner/intersection pad locations.</li>
+        <li><strong>Interior locations remain flexible</strong> - internal corridor parcels can shift toward multifamily, flex, light industrial, or other uses with stronger demand.</li>
+        <li><strong>Buyer feedback drives absorption</strong> - the July outreach process should continue to inform lot configuration and pricing assumptions.</li>
+      </ul>
+
+      <div class="strategy-box">
+        <div class="sb-title">July Positioning</div>
+        <p>July did not require a format change to the retail strategy. The project should continue presenting a flexible master plan that allows capital partners and purchasers to underwrite several use mixes while preserving the highest-value retail pads for the most visible frontage and intersection locations.</p>
+      </div>
+
+      <div class="section-hdr"><span class="sn">6.</span>Design Concepts &amp; Capital Plan Platform</div>
+      <p class="body-text">The capital plan platform remained the operating presentation layer for July, with prior design concepts, lot economics, and tear sheets available for capital partners, lenders, and prospective purchasers. July's incremental design work was less about producing a new concept set and more about improving the team's ability to test configurations quickly as capital, buyer, and construction feedback came in.</p>
+
+      <table class="data">
+        <thead><tr><th>Scenario / Tool</th><th>Status</th><th>July Treatment</th></tr></thead>
+        <tbody>
+          <tr><td>Balanced Mixed-Use</td><td><span class="pill pill-active">Available</span></td><td>Continues as the baseline diversified site strategy.</td></tr>
+          <tr><td>Town Center</td><td><span class="pill pill-active">Available</span></td><td>Retail-dominant alternative remains a high-revenue presentation case.</td></tr>
+          <tr><td>Logistics Corridor</td><td><span class="pill pill-active">Available</span></td><td>Industrial/flex-dominant option remains relevant to absorption and Beltway access positioning.</td></tr>
+          <tr><td>Workforce Village</td><td><span class="pill pill-active">Available</span></td><td>Multifamily/workforce housing framework remains relevant to the known multifamily inquiry.</td></tr>
+          <tr><td>Premium Pad Strategy</td><td><span class="pill pill-active">Available</span></td><td>Two-tier pricing structure remains useful for corner/interior parcel differentiation.</td></tr>
+          <tr><td>TestFit</td><td><span class="pill pill-new">Under Review</span></td><td>David flagged TestFit as a possible AI-enabled site-planning tool for rapid unit mix, yield, parking, density, massing, and feasibility checks.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="milestone-box"><strong>Platform note:</strong> Existing prior-month report tabs should remain unchanged. July should be added as the current monthly report, preserving April, May, and June as historical tabs.</div>
+
+      <div class="section-hdr"><span class="sn">7.</span>Market Data</div>
+      <p class="body-text">The previously assembled trade-area market package remains the baseline for ITPH. July added capital-market and use-case refinement rather than a full replacement of the demographic package. The data center concept summary and the continued multifamily inquiry both reinforce the need to present ITPH as a mixed-use asset with multiple demand channels rather than a single-use land play.</p>
+
+      <table class="data">
+        <thead><tr><th>Metric</th><th>1-Mile</th><th>2-Mile</th><th>3-Mile</th></tr></thead>
+        <tbody>
+          <tr><td>Population</td><td>26,900</td><td>101,901</td><td>192,662</td></tr>
+          <tr><td>Households</td><td>8,589</td><td>32,840</td><td>64,817</td></tr>
+          <tr><td>Median Income</td><td>$53,732</td><td>$58,740</td><td>$61,695</td></tr>
+          <tr><td>Median Age</td><td colspan="3">33.3 - young workforce demographic</td></tr>
+          <tr><td>Businesses / Employees (1-mi)</td><td colspan="3">840 businesses / 4,340 employees</td></tr>
+        </tbody>
+      </table>
+
+      <table class="data">
+        <thead><tr><th>July Demand Signal</th><th>Status</th><th>Investor Relevance</th></tr></thead>
+        <tbody>
+          <tr><td>Multifamily parcel inquiry</td><td><span class="pill pill-progress">Follow-up</span></td><td>Supports continued emphasis on multifamily/workforce residential configurations.</td></tr>
+          <tr><td>Data center site package</td><td><span class="pill pill-new">Circulated</span></td><td>Expands the buyer/lender narrative beyond residential-only development.</td></tr>
+          <tr><td>Lender responses</td><td><span class="pill pill-progress">Tracking</span></td><td>Initial pass is complete; additional lender outreach remains necessary.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">8.</span>Capital Structure</div>
+      <table class="data">
+        <thead><tr><th>Layer</th><th>Amount / Status</th><th>July Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MUD 584 Bond / Public Infrastructure</td><td>$23.4M prior framework</td><td>Remains the primary infrastructure finance layer; November 2026 vote referenced as a meaningful milestone.</td></tr>
+          <tr><td>Acquisition &amp; Development Facility</td><td>~$36M</td><td>Senior-secured lender outreach first pass completed to 25 lenders on July 15.</td></tr>
+          <tr><td>Kennedy Funding LOI</td><td>Received July 29</td><td>Letter of interest package received for Bissonnet 136, LLC and under review.</td></tr>
+          <tr><td>Quinlan Capital / Return</td><td>Under negotiation</td><td>Mark's July 22 proposal returned capital with an 8% simple preferred return, handled loans separately, and proposed 50/50 go-forward economics after John is made whole; John pushed for at least 10% compounded return and permit-transfer controls.</td></tr>
+          <tr><td>Permit Contribution / Sponsor Equity</td><td>Open issue</td><td>Mark's month-end position was that the permit must remain available as his sponsor equity contribution into the new entity; John disputed that characterization and sought assignment rights if an outright buyer emerges.</td></tr>
+          <tr><td>Harvey / FEMA / TIRZ</td><td>TBD</td><td>Public finance enhancement work remains active but unquantified in July.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">9.</span>Operations &amp; Infrastructure</div>
+      <table class="data">
+        <thead><tr><th>Item</th><th>Status</th><th>July Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MUD 584</td><td><span class="pill pill-active">Active</span></td><td>November 2026 vote remains the central public-finance milestone.</td></tr>
+          <tr><td>FEMA / Harvey Support</td><td><span class="pill pill-progress">In Process</span></td><td>Mark sought city support to evaluate FEMA or recovery-fund eligibility for flood-control infrastructure.</td></tr>
+          <tr><td>SKA Environmental / LFG Work</td><td><span class="pill pill-progress">Needs Authorization</span></td><td>Unsigned proposals identified for gas monitoring probes, waste delineation borings, Authorization to Disturb Final Cover, Q3/Q4 LFG monitoring, and additional LFG ventilators.</td></tr>
+          <tr><td>Metro Structures RFP</td><td><span class="pill pill-progress">Drafting / Coordination</span></td><td>RFP requested for pre-construction, construction management, and general contracting services at ITPH.</td></tr>
+          <tr><td>Open Invoices / Proposals</td><td><span class="pill pill-progress">Action Required</span></td><td>Mark identified signed proposals and payment of open invoices as necessary to keep environmental and MUD work on schedule.</td></tr>
+          <tr><td>Capital Plan Platform</td><td><span class="pill pill-active">Live</span></td><td>Project presentation, investor materials, design scenarios, and JV report tabs remain operational.</td></tr>
+          <tr><td>Data Center Readiness</td><td><span class="pill pill-new">Positioning</span></td><td>Data-center concept readiness summary was circulated July 10 for the 136-acre parcel.</td></tr>
+        </tbody>
+      </table>
+
+      <p class="body-text"><strong>Construction/environmental execution:</strong> July made the dependency chain more visible. The buyout/refinance work needs to align with signed engineering/environmental authorizations, invoice payment, Metro's role, and the MUD calendar so that documentation does not outrun field readiness.</p>
+
+      <p class="body-text"><strong>Capital-market execution:</strong> Initial lender outreach is complete but remains early stage. The next step is to track Kennedy Funding, Cascade/Gordon Wibbens, and additional lenders against the same project package, with a consistent answer on loan proceeds, permit control, public-finance reimbursements, and John Quinlan's takeout mechanics.</p>
+
+      <div class="section-hdr"><span class="sn">10.</span>August Outlook</div>
+      <ul class="bullet-list">
+        <li><strong>Resolve Quinlan terms</strong> - narrow the open issues around permit treatment, loan repayment, security release, and return calculation.</li>
+        <li><strong>Review Kennedy LOI</strong> - evaluate the July 29 Kennedy Funding package and determine whether it can support the desired refinance/buyout path.</li>
+        <li><strong>Continue lender follow-up</strong> - keep weekly rhythm with the first 25 lenders and expand outreach to the verified additional lender list.</li>
+        <li><strong>Advance public-finance support</strong> - continue MUD 584 election preparation and pursue city/FEMA/Harvey support for detention and flood-control infrastructure.</li>
+        <li><strong>Authorize priority SKA work</strong> - clarify which unsigned SKA proposals must be executed first to protect environmental and MUD schedule.</li>
+        <li><strong>Send Metro RFP</strong> - move Metro Structures from concept coordination into a structured proposal process for pre-construction, CM, and GC services.</li>
+        <li><strong>Evaluate TestFit</strong> - determine whether the tool is worth using for rapid site planning iterations before making a paid commitment.</li>
+        <li><strong>Maintain prior report tabs</strong> - preserve April, May, and June JV report tabs while publishing July as the current report.</li>
+      </ul>
+
+      <div class="partner-message">
+        <div class="pm-title">Summary</div>
+        <p>ITPH's July status is defined by active refinancing and partner-resolution work. The project has not merely remained in planning mode; it now has a live lender package, an LOI from Kennedy Funding, a concrete Quinlan buyout negotiation, and construction/environmental workstreams that must be coordinated with the public-finance calendar.</p>
+        <p style="margin-top:10px">The key risk is sequencing. The MUD vote, permit/control structure, John Quinlan economics, SKA environmental authorizations, Metro delivery planning, and lender proceeds must be aligned into one executable capitalization path. If those pieces are coordinated in August, the July work materially improves the project's readiness for refinance, buyout, and horizontal development execution.</p>
+      </div>
+
+      <p class="signoff"><strong>LANDCO NEXA</strong><br>ITP Houston Monthly Project Report<br><span class="small">Prepared August 1, 2026 - Confidential</span></p>
+    </div>
+  </div>
+
+  <div class="footer-strip">Keystone&#8482; 2026</div>
+</div>
+</body></html>

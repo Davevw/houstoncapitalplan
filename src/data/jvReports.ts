@@ -7,6 +7,8 @@ export interface JVReport {
   badge?: string;
   driveId: string;
   htmlFile: string;
+  pdfFile?: string;
+  docFile?: string;
   subtitle?: string;
 }
 
@@ -38,9 +40,22 @@ export const jvReports: JVReport[] = [
     supplement: 9,
     month: "June",
     year: 2026,
-    badge: "Current",
+    badge: "Final",
     driveId: "",
     htmlFile: "/assets/jv-report-jun-2026.html",
     subtitle: "June 2026 Monthly Project Report",
+  },
+  {
+    id: "jul-2026",
+    title: "ITPH, Houston TX — Monthly Report",
+    supplement: 10,
+    month: "July",
+    year: 2026,
+    badge: "Current",
+    driveId: "",
+    htmlFile: "/assets/jv-report-jul-2026.html",
+    pdfFile: "/downloads/ITP_Houston_JV_Report_July_2026.pdf",
+    docFile: "/downloads/ITP_Houston_JV_Report_July_2026.doc",
+    subtitle: "July 2026 Monthly Project Report",
   },
 ];

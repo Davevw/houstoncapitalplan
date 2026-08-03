@@ -107,16 +107,34 @@ export default function JVReports() {
             <span style={{ fontSize: 13, fontWeight: 600, color: NAVY, flex: 1 }}>
               {selected.title} — Supplement {selected.supplement} · {selected.month} {selected.year}
             </span>
-            <button
-              onClick={handleDownloadPdf}
-              style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "white", color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: `1px solid ${NAVY}`, cursor: "pointer" }}>
-              <FileText size={13} /> {selected.month} PDF
-            </button>
-            <button
-              onClick={handleDownloadWord}
-              style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#2B579A", color: "white", padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
-              <FileType2 size={13} /> {selected.month} Word
-            </button>
+            {selected.pdfFile ? (
+              <a
+                href={selected.pdfFile}
+                download
+                style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "white", color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: `1px solid ${NAVY}`, cursor: "pointer", textDecoration: "none" }}>
+                <FileText size={13} /> {selected.month} PDF
+              </a>
+            ) : (
+              <button
+                onClick={handleDownloadPdf}
+                style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "white", color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: `1px solid ${NAVY}`, cursor: "pointer" }}>
+                <FileText size={13} /> {selected.month} PDF
+              </button>
+            )}
+            {selected.docFile ? (
+              <a
+                href={selected.docFile}
+                download
+                style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#2B579A", color: "white", padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer", textDecoration: "none" }}>
+                <FileType2 size={13} /> {selected.month} Word
+              </a>
+            ) : (
+              <button
+                onClick={handleDownloadWord}
+                style={{ display: "inline-flex", alignItems: "center", gap: 6, background: "#2B579A", color: "white", padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
+                <FileType2 size={13} /> {selected.month} Word
+              </button>
+            )}
             <button
               onClick={handleDownloadHtml}
               style={{ display: "inline-flex", alignItems: "center", gap: 6, background: GOLD, color: NAVY, padding: "7px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700, border: "none", cursor: "pointer" }}>
