@@ -2,7 +2,7 @@ import React, { useState, useMemo, useCallback, useEffect, useRef } from "react"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Area, AreaChart, Legend, ComposedChart, Line } from "recharts";
 import { supabase } from "@/integrations/supabase/client";
 import { Download, ArrowDownToLine, Upload, FileText, FolderOpen, X, Presentation } from "lucide-react";
-import AdminPasscodeGate, { isAdminUnlocked } from "./AdminPasscodeGate";
+import AdminPasscodeGate, { isAdminUnlocked, getAccessRole } from "./AdminPasscodeGate";
 import TaxDashboard from "./TaxDashboard";
 import CapitalModelDownload from "./admin/CapitalModelDownload";
 import JVReports from "./admin/JVReports";
@@ -995,6 +995,9 @@ function SectionTitle({children,icon}){
 // ═══════════════════════════════════════════════════════════════
 
 const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model","Site Plan","MUD Analysis","Design Concepts"];
+// Viewer ("user" passcode) sees ONLY these tabs — no Expenditures, no Deemed
+// Capital, no Admin menu (Data Vault / Waterfall / Tax Dashboard / JV Reports).
+const VIEWER_TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Financial Model","Site Plan","MUD Analysis","Design Concepts"];
 const BUILD_STAMP = "2026-03-30-1919";
 
 export default function App(){
@@ -1020,7 +1023,24 @@ export default function App(){
   const [showAdminMenu, setShowAdminMenu] = useState(false);
   const [showAdminGate, setShowAdminGate] = useState(false);
   const [pendingAdminTab, setPendingAdminTab] = useState(null);
+  const [accessRole, setAccessRole] = useState(() => getAccessRole());
   const adminMenuRef = useRef(null);
+
+  const isViewer = accessRole === "user";
+  // Viewer sessions only ever see the safe tab subset.
+  const visibleTabs = isViewer
+    ? TABS.map((t, i) => ({ t, i })).filter(({ t }) => VIEWER_TABS.includes(t))
+    : TABS.map((t, i) => ({ t, i }));
+
+  // If a viewer session lands on (or was on) a restricted tab, snap to Dashboard.
+  useEffect(() => {
+    if (isViewer && !VIEWER_TABS.includes(TABS[activeTab])) {
+      setActiveTab(0);
+    }
+    if (isViewer && activeAdminTab) {
+      setActiveAdminTab(null);
+    }
+  }, [isViewer, activeTab, activeAdminTab]);
 
   // Close admin dropdown on outside click
   useEffect(() => {
@@ -1051,13 +1071,20 @@ export default function App(){
 
   function handleAdminUnlocked() {
     setShowAdminGate(false);
-    setShowAdminMenu(true);
+    const role = getAccessRole();
+    setAccessRole(role);
+    if (role === "admin") {
+      setShowAdminMenu(true);
+    }
   }
 
   return(
     <div data-build={BUILD_STAMP} style={{minHeight:"100vh",background:"#F7F9FB",fontFamily:"Calibri,-apple-system,sans-serif"}}>
       {showAdminGate && (
         <AdminPasscodeGate
+          allowUserRole
+          title="Restricted Access"
+          subtitle="Enter your access code to continue."
           onSuccess={handleAdminUnlocked}
           onClose={() => { setShowAdminGate(false); setPendingAdminTab(null); }}
         />
@@ -1089,10 +1116,14 @@ export default function App(){
             </div>
           </div>
           <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap",alignItems:"center"}}>
-            {TABS.map((t,i)=>(
+            {visibleTabs.map(({t,i})=>(
               <button key={t} onClick={()=>setActiveTab(i)} style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeTab===i?"white":"rgba(255,255,255,0.12)",color:activeTab===i?NAVY:"rgba(255,255,255,0.8)"}}>{t}</button>
             ))}
             <a href="/design-standards" style={{padding:"9px 16px",borderRadius:"8px 8px 0 0",fontSize:12,fontWeight:600,letterSpacing:0.3,background:"rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.8)",textDecoration:"none"}}>Design Standards</a>
+            {isViewer && (
+              <div style={{marginLeft:"auto",padding:"9px 16px",fontSize:11,fontWeight:600,letterSpacing:1,color:"rgba(255,255,255,0.55)",textTransform:"uppercase"}}>Viewer Access</div>
+            )}
+            {!isViewer && (
             <div style={{marginLeft:"auto",position:"relative"}} ref={adminMenuRef}>
               <button
                 onClick={()=>{
@@ -1119,6 +1150,7 @@ export default function App(){
                 </div>
               )}
             </div>
+            )}
           </div>
         </div>
       </div>
@@ -1127,16 +1159,16 @@ export default function App(){
         {activeTab===1&&<LotTab lots={lots} model={model} updateLot={updateLot}/>}
         {activeTab===2&&<CashFlowTab model={model}/>}
         {activeTab===3&&<CapitalStackTab model={model} params={params}/>}
-        {activeTab===4&&<ExpendituresTab/>}
-        {activeTab===5&&<DeemedCapitalTab/>}
+        {activeTab===4&&!isViewer&&<ExpendituresTab/>}
+        {activeTab===5&&!isViewer&&<DeemedCapitalTab/>}
         {activeTab===6&&<SpreadsheetTab model={model} params={params}/>}
         {activeTab===7&&<SitePlanTab/>}
         {activeTab===8&&<MUDAnalysisTab/>}
         {activeTab===9&&<DesignConceptsTab/>}
       </div>
 
-      {/* Admin overlay panels (footer nav tabs) */}
-      {activeAdminTab === "tax-dashboard" && (
+      {/* Admin overlay panels (footer nav tabs) — never rendered for viewer sessions */}
+      {!isViewer && activeAdminTab === "tax-dashboard" && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Dashboard</button>
@@ -1144,7 +1176,7 @@ export default function App(){
           <TaxDashboard/>
         </div>
       )}
-      {activeAdminTab === "waterfall" && (
+      {!isViewer && activeAdminTab === "waterfall" && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Waterfall</button>
@@ -1154,7 +1186,7 @@ export default function App(){
           </div>
         </div>
       )}
-      {activeAdminTab === "data-vault" && (
+      {!isViewer && activeAdminTab === "data-vault" && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Data Vault</button>
@@ -1164,7 +1196,7 @@ export default function App(){
           </div>
         </div>
       )}
-      {activeAdminTab === "capital-model" && (
+      {!isViewer && activeAdminTab === "capital-model" && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,overflowY:"auto"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close Capital Model</button>
@@ -1174,7 +1206,7 @@ export default function App(){
           </div>
         </div>
       )}
-      {activeAdminTab === "jv-reports" && (
+      {!isViewer && activeAdminTab === "jv-reports" && (
         <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,display:"flex",flexDirection:"column"}}>
           <div style={{position:"sticky",top:0,zIndex:1,background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
             <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close JV Reports</button>

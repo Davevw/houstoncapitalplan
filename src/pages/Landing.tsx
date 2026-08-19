@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { resolveRole, unlockRole } from "@/components/AdminPasscodeGate";
 
 const NAVY = "#0B3D5C";
 const NAVY_DARK = "#072A40";
@@ -32,8 +33,12 @@ export default function Landing() {
 
   function handleAdminSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (adminCode.trim().toUpperCase() === "HC01" || adminCode.trim().toUpperCase() === "ROY01" || adminCode.trim().toUpperCase() === "ML01") {
-      sessionStorage.setItem("itph_admin_unlocked", "1");
+    const role = resolveRole(adminCode);
+    if (role) {
+      unlockRole(role);
+      if (role === "admin") {
+        sessionStorage.setItem("itph_admin_unlocked", "1");
+      }
       navigate("/dashboard");
     } else {
       setAdminError("Invalid passcode.");

@@ -1,4 +1,5 @@
 import { useState, useCallback, Suspense, lazy } from "react";
+import { isAdminUnlocked } from "../components/AdminPasscodeGate";
 const ITPH3DSiteModel = lazy(() => import("../components/ITPH3DSiteModel.jsx"));
 
 const VAULT = "https://tibxlixiqcfyljevkdib.supabase.co/storage/v1/object/public/itph-data-vault/";
@@ -418,7 +419,8 @@ function DocumentsTab() {
     { name: "Environmental Status Summary", desc: "MSW permit, MSD, geotechnical suitability, regulatory framework, and buyer takeaways.", pages: "4 pages", type: "PDF", color: C.teal, href: ENV_SUMMARY_PDF },
     { name: "CC&Rs — Full with Exhibits", desc: "Declaration of Covenants, Conditions, Restrictions and Easements including Signage Matrix (Exhibit B).", pages: "16 pages", type: "PDF", color: C.amber, href: CCRS_PDF },
     { name: "Site Plan (PNG)", desc: "Full-resolution aerial site plan with lot overlay, color-coded by use type.", pages: "Image", type: "PNG", color: C.green, href: SITE_PLAN_PNG },
-    { name: "ITPH v.13 Financial Model", desc: "Project economics, capital stack, cash flows, and MUD reimbursement projections.", pages: "Spreadsheet", type: "XLSX", color: C.blue, href: FINANCIAL_MODEL_XLSX },
+    // v13 xlsx contains full historical expenditure detail — admin sessions only.
+    ...(isAdminUnlocked() ? [{ name: "ITPH v.13 Financial Model", desc: "Project economics, capital stack, cash flows, and MUD reimbursement projections.", pages: "Spreadsheet", type: "XLSX", color: C.blue, href: FINANCIAL_MODEL_XLSX }] : []),
     { name: "Equity Investment Presentation", desc: "Investor-facing presentation covering project overview, economics, and development timeline.", pages: "Deck", type: "PDF", color: C.red, href: EQUITY_PRESENTATION_PDF },
     { name: "Capital Plan — One-Page Tear Sheet", desc: "Investor-ready project summary: lot mix, revenue, capital structure, equity terms, MUD reimbursement, and key metrics.", pages: "1 page", type: "PDF", color: C.amber, href: CAPITAL_PLAN_TEAR_SHEET }
   ];
