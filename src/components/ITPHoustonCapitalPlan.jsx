@@ -1309,21 +1309,10 @@ function DashboardTab({model,params,updateParam}){
             <SliderInput label="MUD Principal" value={params.mudTotal} onChange={v=>updateParam("mudTotal",v)} min={15000000} max={30000000} step={500000} format={v=>fmt(v)}/>
             <SliderInput label="Loan Rate" value={params.loanRate} onChange={v=>updateParam("loanRate",v)} min={0.06} max={0.15} step={0.005} format={v=>pct(v)}/>
           </div>
-          <SectionTitle>Lot Mix by Type</SectionTitle>
-          <div style={{background:"white",borderRadius:12,padding:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart><Pie data={lotTypeData} cx="50%" cy="50%" outerRadius={75} innerRadius={40} dataKey="value" paddingAngle={3}>
-                {lotTypeData.map((_,i)=><Cell key={i} fill={PIE_COLORS[i%PIE_COLORS.length]}/>)}
-              </Pie><Tooltip formatter={v=>fmtFull(v)}/></PieChart>
-            </ResponsiveContainer>
-            <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
-              {lotTypeData.map((d,i)=>(<div key={d.name} style={{display:"flex",alignItems:"center",gap:6,fontSize:11}}><div style={{width:10,height:10,borderRadius:2,background:PIE_COLORS[i]}}/><span style={{color:"#555"}}>{d.name} ({d.count})</span></div>))}
-            </div>
-          </div>
           <div style={{background:"white",borderRadius:12,padding:16,marginTop:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <div style={{fontSize:12,fontWeight:600,color:NAVY,marginBottom:8}}>Returns Summary</div>
             {[
-              {l:"Preferred Return (8%)",v:fmtFull(Math.round(m.eqTotalPref)),sub:"Accrued on equity capital deployed"},
+              {l:"Preferred Return ("+pct(params.prefReturn)+")",v:fmtFull(Math.round(m.eqTotalPref)),sub:"Accrued on equity capital deployed"},
               {l:"Equity Profit Share",v:fmtFull(Math.round(m.eqTotalFinal)),sub:pct(m.equityPct)+" of residual after capital + pref returned"},
               {l:"Developer Profit Share",v:fmtFull(Math.round(m.devNetProfit)),sub:pct(m.devPct)+" of residual after capital + pref returned"},
               {l:"Equity Total Profit",v:fmtFull(Math.round(m.eqTotalPref+m.eqTotalFinal)),sub:"Pref return + equity profit share"},
@@ -1335,6 +1324,17 @@ function DashboardTab({model,params,updateParam}){
                 </div>
                 {item.sub&&<div style={{fontSize:10,color:"#9AA5B0",marginTop:2}}>{item.sub}</div>}
               </div>))}
+          </div>
+          <SectionTitle>Lot Mix by Type</SectionTitle>
+          <div style={{background:"white",borderRadius:12,padding:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
+            <ResponsiveContainer width="100%" height={200}>
+              <PieChart><Pie data={lotTypeData} cx="50%" cy="50%" outerRadius={75} innerRadius={40} dataKey="value" paddingAngle={3}>
+                {lotTypeData.map((_,i)=><Cell key={i} fill={PIE_COLORS[i%PIE_COLORS.length]}/>)}
+              </Pie><Tooltip formatter={v=>fmtFull(v)}/></PieChart>
+            </ResponsiveContainer>
+            <div style={{display:"flex",justifyContent:"center",gap:16,flexWrap:"wrap"}}>
+              {lotTypeData.map((d,i)=>(<div key={d.name} style={{display:"flex",alignItems:"center",gap:6,fontSize:11}}><div style={{width:10,height:10,borderRadius:2,background:PIE_COLORS[i]}}/><span style={{color:"#555"}}>{d.name} ({d.count})</span></div>))}
+            </div>
           </div>
         </div>
       </div>
