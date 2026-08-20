@@ -1303,11 +1303,12 @@ function DashboardTab({model,params,updateParam}){
         <div>
           <SectionTitle>Scenario Controls</SectionTitle>
           <div style={{background:"white",borderRadius:12,padding:20,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
-            <SliderInput label="Equity / Deemed Capital" value={params.equity} onChange={v=>updateParam("equity",v)} min={5000000} max={20000000} step={100000} format={v=>fmt(v)}/>
+            <SliderInput label="Equity / Deemed Capital" value={params.equity} onChange={v=>{const d=v-params.equity;updateParam("equity",v);updateParam("mudTotal",Math.min(30000000,Math.max(15000000,params.mudTotal-d)));}} min={5000000} max={20000000} step={100000} format={v=>fmt(v)}/>
             <SliderInput label="Preferred Return" value={params.prefReturn} onChange={v=>updateParam("prefReturn",v)} min={0.04} max={0.15} step={0.005} format={v=>pct(v)}/>
             <SliderInput label="Equity / Developer Split" value={params.equityPct} onChange={v=>{updateParam("equityPct",v);updateParam("devPct",+(1-v).toFixed(2));}} min={0.3} max={0.8} step={0.05} format={v=>`${pct(v)} / ${pct(1-v)}`}/>
-            <SliderInput label="MUD Principal" value={params.mudTotal} onChange={v=>updateParam("mudTotal",v)} min={15000000} max={30000000} step={500000} format={v=>fmt(v)}/>
+            <SliderInput label="MUD Principal" value={params.mudTotal} onChange={v=>{const d=v-params.mudTotal;updateParam("mudTotal",v);updateParam("equity",Math.min(20000000,Math.max(5000000,params.equity-d)));}} min={15000000} max={30000000} step={500000} format={v=>fmt(v)}/>
             <SliderInput label="Loan Rate" value={params.loanRate} onChange={v=>updateParam("loanRate",v)} min={0.06} max={0.15} step={0.005} format={v=>pct(v)}/>
+            <div style={{fontSize:10,color:"#9AA5B0",marginTop:4,lineHeight:1.5}}>Equity and MUD Principal offset each other dollar-for-dollar (total sources held constant). Preferred Return and Split redistribute profit in the waterfall — see Returns Summary below.</div>
           </div>
           <div style={{background:"white",borderRadius:12,padding:16,marginTop:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <div style={{fontSize:12,fontWeight:600,color:NAVY,marginBottom:8}}>Returns Summary</div>
