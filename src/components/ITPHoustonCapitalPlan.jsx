@@ -1008,13 +1008,15 @@ export default function App(){
     return Number.isInteger(n) && n >= 0 && n < TABS.length ? n : 0;
   });
   const [lots,setLots]=useState(LOTS);
-  const [params,setParams]=useState({
-    // v13 defaults: 70/30 equity/dev split, MUD issuances Mo 24 & Mo 36
+  // v13 defaults: 70/30 equity/dev split, MUD issuances Mo 24 & Mo 36
+  const DEFAULT_PARAMS={
     equity:DEEMED_CAPITAL_TOTAL,prefReturn:0.08,equityPct:0.70,devPct:0.30,
     loanRate:0.11,mudTotal:23400000,mudMonth1:24,mudMonth2:36,devFee:0.05,
-  });
+  };
+  const [params,setParams]=useState(DEFAULT_PARAMS);
   const model=useMemo(()=>runModel(lots,params),[lots,params]);
   const updateParam=useCallback((key,val)=>setParams(p=>({...p,[key]:val})),[]);
+  const resetParams=useCallback(()=>setParams(DEFAULT_PARAMS),[]);
   const updateLot=useCallback((id,month)=>setLots(prev=>prev.map(l=>l.id===id?{...l,saleMonth:month}:l)),[]);
 
   const [showPresentation, setShowPresentation] = useState(false);
@@ -1155,7 +1157,7 @@ export default function App(){
         </div>
       </div>
       <div style={{maxWidth:1200,margin:"0 auto",padding:"24px 32px 60px"}}>
-        {activeTab===0&&<DashboardTab model={model} params={params} updateParam={updateParam}/>}
+        {activeTab===0&&<DashboardTab model={model} params={params} updateParam={updateParam} resetParams={resetParams}/>}
         {activeTab===1&&<LotTab lots={lots} model={model} updateLot={updateLot}/>}
         {activeTab===2&&<CashFlowTab model={model}/>}
         {activeTab===3&&<CapitalStackTab model={model} params={params}/>}
@@ -1254,7 +1256,7 @@ export default function App(){
 // ═══════════════════════════════════════════════════════════════
 // TAB 1: DASHBOARD
 // ═══════════════════════════════════════════════════════════════
-function DashboardTab({model,params,updateParam}){
+function DashboardTab({model,params,updateParam,resetParams}){
   const m=model;
   const lotTypeData=Object.entries(m.lotSummary).map(([type,d])=>({name:type,value:d.value,acres:d.acres,count:d.count}));
   const PIE_COLORS=[TEAL,TERRA,GOLD];
@@ -1309,6 +1311,9 @@ function DashboardTab({model,params,updateParam}){
             <SliderInput label="MUD Principal" value={params.mudTotal} onChange={v=>{const d=v-params.mudTotal;updateParam("mudTotal",v);updateParam("equity",Math.min(20000000,Math.max(5000000,params.equity-d)));}} min={15000000} max={30000000} step={500000} format={v=>fmt(v)}/>
             <SliderInput label="Loan Rate" value={params.loanRate} onChange={v=>updateParam("loanRate",v)} min={0.06} max={0.15} step={0.005} format={v=>pct(v)}/>
             <div style={{fontSize:10,color:"#9AA5B0",marginTop:4,lineHeight:1.5}}>Equity and MUD Principal offset each other dollar-for-dollar (total sources held constant). Preferred Return and Split redistribute profit in the waterfall — see Returns Summary below.</div>
+            {resetParams&&(
+              <button onClick={resetParams} style={{marginTop:12,width:"100%",padding:"9px 0",border:`1px solid ${STEEL}`,borderRadius:8,background:LIGHT,color:NAVY,fontSize:12,fontWeight:700,letterSpacing:0.3,cursor:"pointer"}}>↺ Reset to Capital Model Base Case</button>
+            )}
           </div>
           <div style={{background:"white",borderRadius:12,padding:16,marginTop:16,boxShadow:"0 1px 3px rgba(0,0,0,0.08)"}}>
             <div style={{fontSize:12,fontWeight:600,color:NAVY,marginBottom:8}}>Returns Summary</div>
