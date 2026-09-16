@@ -12,7 +12,7 @@ const ROLE_KEY = "itph_access_role";
 //            no Deemed Capital, no Admin menu.
 export type AccessRole = "admin" | "user" | null;
 
-const ADMIN_CODES = ["HC01", "ROY01", "ML01"];
+const ADMIN_CODES = ["HC01", "ML01"];
 const USER_CODES = ["USER"];
 
 export function resolveRole(code: string): AccessRole {
