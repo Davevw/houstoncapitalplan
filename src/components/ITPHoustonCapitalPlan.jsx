@@ -1118,10 +1118,13 @@ export default function App(){
             </div>
           </div>
           <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap",alignItems:"center"}}>
-            {visibleTabs.map(({t,i})=>(
+            {visibleTabs.filter(({t})=>t!=="JV Reports").map(({t,i})=>(
               <button key={t} onClick={()=>setActiveTab(i)} style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeTab===i?"white":"rgba(255,255,255,0.12)",color:activeTab===i?NAVY:"rgba(255,255,255,0.8)"}}>{t}</button>
             ))}
             <a href="/design-standards" style={{padding:"9px 16px",borderRadius:"8px 8px 0 0",fontSize:12,fontWeight:600,letterSpacing:0.3,background:"rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.8)",textDecoration:"none"}}>Design Standards</a>
+            {visibleTabs.filter(({t})=>t==="JV Reports").map(({t,i})=>(
+              <button key={t} onClick={()=>setActiveTab(i)} style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeTab===i?"white":"rgba(255,255,255,0.12)",color:activeTab===i?NAVY:"rgba(255,255,255,0.8)"}}>{t}</button>
+            ))}
             {isViewer && (
               <div style={{marginLeft:"auto",padding:"9px 16px",fontSize:11,fontWeight:600,letterSpacing:1,color:"rgba(255,255,255,0.55)",textTransform:"uppercase"}}>Viewer Access</div>
             )}
