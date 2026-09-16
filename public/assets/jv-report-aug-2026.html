@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITPH, Houston TX - Monthly Project Report | August 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
+.shell{width:100%;max-width:960px;margin:0 auto}
+.top-bar{background:#1B2A4A;padding:18px 24px 0;border-radius:12px 12px 0 0}
+.top-bar-inner{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:16px}
+.top-bar-left h1{color:#C9A84C;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.top-bar-left p{color:rgba(255,255,255,.5);font-size:11px}
+.date-badge{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:8px;padding:8px 14px;text-align:right}
+.date-badge .month{color:#C9A84C;font-size:20px;font-weight:700;display:block;line-height:1.1}
+.date-badge .year{color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;display:block;margin-top:2px}
+.date-badge .supp{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.04em;display:block;margin-top:3px;text-transform:uppercase}
+.content{background:#fff;border:1px solid #ddd;border-radius:0 0 12px 12px}
+.panel{padding:28px 32px}
+.letter-header{border-bottom:1px solid #eee;padding-bottom:16px;margin-bottom:20px}
+.letter-meta{font-size:12px;color:#888;margin-bottom:4px}
+.addr{font-size:12px;color:#888;line-height:1.7;margin-bottom:10px}
+.subject-line{font-size:13px;font-weight:700;color:#1B2A4A;background:#F5F0E8;padding:9px 14px;border-radius:6px;border-left:3px solid #C9A84C}
+.section-hdr{font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 10px;padding-bottom:7px;border-bottom:2px solid #C9A84C}
+.sn{color:#C9A84C;margin-right:6px}
+.body-text{font-size:13px;line-height:1.75;color:#222;margin-bottom:10px}
+.bullet-list{margin:6px 0 12px;padding-left:0;list-style:none}
+.bullet-list li{font-size:13px;line-height:1.65;color:#222;padding:3px 0 3px 20px;position:relative}
+.bullet-list li::before{content:"\2014";position:absolute;left:0;color:#C9A84C;font-weight:700}
+.kpi-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+.kpi-card{flex:1;min-width:140px;background:#1B2A4A;color:#fff;padding:14px 16px;border-radius:8px;border-left:3px solid #C9A84C}
+.kpi-card .label{font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.65);text-transform:uppercase;display:block;margin-bottom:6px}
+.kpi-card .value{font-size:22px;font-weight:700;color:#C9A84C;display:block;line-height:1.1}
+.kpi-card .sub{font-size:10px;color:rgba(255,255,255,.55);display:block;margin-top:4px}
+table.data{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12px}
+table.data thead{background:#1B2A4A;color:#fff}
+table.data th{padding:9px 10px;text-align:left;font-size:10px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+table.data td{padding:8px 10px;border-bottom:1px solid #EEE;color:#333;line-height:1.45;vertical-align:top}
+table.data tbody tr:nth-child(even){background:#FAFAFA}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.03em}
+.pill-active{background:rgba(46,125,50,.15);color:#2E7D32;border:1px solid rgba(46,125,50,.4)}
+.pill-progress{background:rgba(201,168,76,.18);color:#7B5500;border:1px solid rgba(201,168,76,.4)}
+.pill-out{background:rgba(120,120,120,.15);color:#666;border:1px solid rgba(120,120,120,.4)}
+.pill-new{background:rgba(33,150,243,.15);color:#0D47A1;border:1px solid rgba(33,150,243,.4)}
+.milestone-box{background:#E8F5E9;border:1px solid #4CAF50;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#1B5E20;line-height:1.6}
+.milestone-box strong{color:#2E7D32}
+.strategy-box{background:#FAF6ED;border-left:4px solid #C9A84C;padding:18px 22px;margin:14px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 8px 8px 0}
+.strategy-box .sb-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.partner-message{background:#F5F0E8;border-left:4px solid #C9A84C;padding:16px 20px;margin:16px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 6px 6px 0}
+.partner-message .pm-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.value-callout{background:#F1F8F4;border-left:4px solid #2E7D32;padding:12px 16px;margin:10px 0;font-size:12px;line-height:1.65;color:#1B5E20;border-radius:0 6px 6px 0}
+.value-callout strong{color:#2E7D32}
+.alert-box{background:#FCE4D6;border:1px solid #ED7D31;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#7B3000;line-height:1.6}
+.alert-box strong{color:#C00000}
+.signoff{font-size:13px;color:#222;margin-top:20px;line-height:1.7}
+.signoff strong{color:#1B2A4A}
+.small{font-size:11px;color:#777}
+.footer-strip{background:#1B2A4A;color:rgba(255,255,255,.55);padding:14px 28px;border-radius:0 0 12px 12px;font-size:10px;text-align:center;letter-spacing:.04em;margin-top:0}
+@media (max-width:640px){.panel{padding:18px 16px}.kpi-card{min-width:130px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <h1>LANDCO NEXA</h1>
+        <p>ITP Houston - Monthly Project Report</p>
+      </div>
+      <div>
+        <div class="date-badge">
+          <span class="month">August</span>
+          <span class="year">2026</span>
+          <span class="supp">Monthly Report</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="panel">
+      <div class="letter-header">
+        <p class="letter-meta">Reporting Period: August 1-31, 2026</p>
+        <p class="addr">ITP Houston · 12000 Bissonnet Street · Houston, TX 77099<br>~136 Acres · 30-Lot Master-Planned Development · MUD 584</p>
+        <p class="subject-line">Monthly Project Report - September 1, 2026</p>
+      </div>
+
+      <div class="section-hdr"><span class="sn">1.</span>Executive Summary</div>
+      <p class="body-text">August was defined by two developments that together reset the ITPH capitalization picture. First, the JV partner buyout with John Quinlan — the gating item for financing, sale, and permit control — reached a documented impasse in the first week of the month and was then taken to a face-to-face meeting in Puerto Rico (August 19-21) built specifically to resolve it. Post-trip correspondence indicates the negotiation reached agreement in principle; definitive terms were not yet documented at month-end. Second, the infrastructure budget was re-estimated by the general contractor from $23 million to $33.0 million all-in, with the MUD reimbursement projection rising to $28.3 million and total projected proceeds to $67.7 million. Both items now govern every lender, buyer, and partner conversation on the project.</p>
+      <p class="body-text">Around those two items, August was an outreach and readiness month: the Kennedy Funding letter of interest remained on hold pending the buyout, a cash-buyer investor group and a named retail-center buyer were introduced, an AI-assisted broker outreach campaign produced one qualified whole-site lead, a password-gated buyer landing page went live, and an internal accounting review flagged that ITPH has no financial ledger on the sponsor's own books — a diligence gap to close before the asset is presented as investable.</p>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">Total Acreage</span><span class="value">~136</span><span class="sub">99 net developable</span></div>
+        <div class="kpi-card"><span class="label">Infrastructure Cost</span><span class="value">$33.0M</span><span class="sub">Metro Structures estimate, Aug 9 (was $23M)</span></div>
+        <div class="kpi-card"><span class="label">MUD Reimbursement</span><span class="value">$28.3M</span><span class="sub">Prorated to updated cost; Nov. 2026 vote</span></div>
+        <div class="kpi-card"><span class="label">Quinlan Buyout</span><span class="value">In principle</span><span class="sub">Puerto Rico meeting Aug 19-21; terms pending</span></div>
+      </div>
+
+      <div class="section-hdr"><span class="sn">2.</span>Key Development #1 — Quinlan Buyout: Impasse to Agreement in Principle</div>
+      <p class="body-text">The month opened with the partner negotiation in writing for the first time. John Quinlan's position, set out in late July and carried into August, had two stated non-negotiables: a minimum <strong>10% per annum compounded</strong> return on his capital (reduced from the original 20% IRR / 85%-of-profits structure, but firmly above the sponsor's 8% simple-interest offer), and return of the landfill/development permits to him rather than their treatment as the sponsor's equity contribution into a new entity. He also expects $25 million-plus of infrastructure to be reimbursed through the MUD, and noted long-standing personal loans to the sponsor, one secured against personal property.</p>
+      <p class="body-text">The sponsor's response accepted the 10% compounded return in principle and proposed rolling Quinlan's capital and debt into the approximately $15 million payout number, but held two lines: the permit is the sponsor's equity contribution and cannot be assigned out before the new entity is capitalized, and the personal security must be released with any future security coming from the new JV. On <strong>August 3</strong> the sponsor described the negotiation as an impasse and raised the possibility that the MUD directors' meeting needed to move the November vote forward could be affected if the partner issue was not resolved — tying the buyout directly to public-finance timing.</p>
+      <p class="body-text">The sponsor's <strong>August 19-21 Puerto Rico trip</strong> was planned around a direct sit-down with Quinlan, supported by a written meeting plan covering current buyout and financing status, objectives in priority order, and an approach to reach agreement in principle in the room. Post-trip correspondence on August 24 characterized Houston as settled and congratulated the sponsor on getting the hard one done. As of August 31, no term sheet or executed buyout document had been circulated; the working assumption for this report is agreement in principle with documentation to follow in September.</p>
+      <table class="data">
+        <thead><tr><th>Buyout Issue</th><th>Quinlan Position</th><th>Sponsor Position</th><th>August Status</th></tr></thead>
+        <tbody>
+          <tr><td>Return on capital</td><td>Minimum 10% per annum compounded</td><td>Accepted 10% compounded in principle (had offered 8% simple)</td><td><span class="pill pill-active">Converged</span></td></tr>
+          <tr><td>Permit ownership / control</td><td>Permits to be transferred back to Quinlan now</td><td>Permit is sponsor equity contribution; assignment only after new entity is capitalized</td><td><span class="pill pill-progress">Resolved in principle (per post-trip signal)</span></td></tr>
+          <tr><td>Personal loan security</td><td>Existing security remains until paid</td><td>Release required; future security from new JV</td><td><span class="pill pill-progress">Resolved in principle (per post-trip signal)</span></td></tr>
+          <tr><td>Payout mechanics</td><td>Capital + return paid from financing / lot proceeds</td><td>Roll capital and debt into ~$15M payout; small ancillary costs included</td><td><span class="pill pill-progress">Documentation pending</span></td></tr>
+          <tr><td>MUD election continuity</td><td>Proceed; expects $25M+ reimbursement</td><td>Proceed with MUD election regardless of buyout timing</td><td><span class="pill pill-active">Aligned</span></td></tr>
+        </tbody>
+      </table>
+      <div class="alert-box"><strong>Reporting note:</strong> the agreement-in-principle characterization rests on post-trip correspondence, not on an executed document. Definitive terms — return calculation basis, permit treatment, security release, and payout schedule — should be confirmed in writing and reflected in the September report.</div>
+
+      <div class="section-hdr"><span class="sn">3.</span>Key Development #2 — Infrastructure Budget Re-Estimated to $33.0M</div>
+      <p class="body-text">On <strong>August 7</strong> the sponsor advised that the infrastructure budget could rise by roughly $6 million against the $23 million carried in the model, driven by TCEQ requirements for exporting fill material from retention areas, and that three buyout investor sources were evaluating the project. On <strong>August 9-10</strong> Metro Structures delivered its updated opinion of probable cost including a 5% contingency, and the capital model was updated to a <strong>$33.0 million all-in development cost</strong>. The MUD reimbursement projection was prorated upward to <strong>$28.3 million</strong> and total projected proceeds to <strong>$67.7 million</strong>. The sponsor's framing is that return metrics should not change materially because reimbursable infrastructure scales with the MUD; that framing depends on the November 2026 MUD vote and on the reimbursement scaling as assumed.</p>
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">Prior Budget</span><span class="value">$23M</span><span class="sub">Carried in model through July</span></div>
+        <div class="kpi-card"><span class="label">Updated Budget</span><span class="value">$33.0M</span><span class="sub">Metro Structures OPC + 5% contingency, Aug 9</span></div>
+        <div class="kpi-card"><span class="label">Change</span><span class="value">+43%</span><span class="sub">TCEQ fill-export requirements a primary driver</span></div>
+        <div class="kpi-card"><span class="label">Projected Proceeds</span><span class="value">$67.7M</span><span class="sub">Updated one-page investor summary, Aug 10</span></div>
+      </div>
+      <table class="data">
+        <thead><tr><th>Capital Model Item</th><th>Through July</th><th>August Update</th><th>Read</th></tr></thead>
+        <tbody>
+          <tr><td>Infrastructure / development cost</td><td>$23.0M</td><td>$33.0M</td><td>GC-sourced; replaces prior working assumption in all investor materials.</td></tr>
+          <tr><td>MUD reimbursement</td><td>$23.4M framework</td><td>$28.3M</td><td>Prorated to updated cost; contingent on November 2026 vote and bond capacity.</td></tr>
+          <tr><td>Total projected proceeds</td><td>—</td><td>$67.7M</td><td>Lot sales plus MUD reimbursement per updated tear sheet.</td></tr>
+          <tr><td>Initial capital to start</td><td>—</td><td>~$10M</td><td>Sponsor estimate provided to cash-buyer investor group, Aug 10.</td></tr>
+          <tr><td>Buyout line</td><td>Under negotiation</td><td>TBD in model</td><td>To be populated once Quinlan terms are documented.</td></tr>
+        </tbody>
+      </table>
+      <div class="value-callout"><strong>Why it matters:</strong> the updated cost figure feeds every buyer-facing document (landing page financial model and MUD analysis), every lender conversation, and the Quinlan payout math at the same time. Counterparties who received materials before August 10 are working from a stale budget and should be updated.</div>
+
+      <div class="section-hdr"><span class="sn">4.</span>Contracts &amp; Negotiations</div>
+      <table class="data">
+        <thead><tr><th>Workstream</th><th>Status</th><th>August Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Quinlan Buyout</td><td><span class="pill pill-active">Agreement in principle</span></td><td>Impasse documented Aug 3; resolved in principle at the Aug 19-21 Puerto Rico meeting per post-trip correspondence. Definitive documentation pending.</td></tr>
+          <tr><td>Kennedy Funding LOI</td><td><span class="pill pill-progress">On hold</span></td><td>Letter of interest for Bissonnet 136, LLC (received July 29) remained unsigned. Kennedy checked in Aug 5 and Aug 18; sponsor team advised the loan was gated on final buyout terms. Ready to re-engage now that the partner issue is moving.</td></tr>
+          <tr><td>Trez Capital</td><td><span class="pill pill-new">Conversation open</span></td><td>Referenced Aug 24 as an active financing conversation running parallel to Kennedy Funding.</td></tr>
+          <tr><td>Cash-buyer investor group</td><td><span class="pill pill-new">Introduced</span></td><td>Aug 10: one-hour call with an investor with two all-cash high-net-worth partners, introduced through a broker. Group requested a simplified money-in / money-out summary; primary concern is initial capital (~$10M). Updated one-page tear sheet delivered same day.</td></tr>
+          <tr><td>Shopping Center Interests LLC</td><td><span class="pill pill-new">Engaged</span></td><td>Aug 19: managing member received landing-page access and confirmed receipt. Most concrete named-buyer engagement of the month.</td></tr>
+          <tr><td>Lee &amp; Associates (broker)</td><td><span class="pill pill-progress">Follow-up</span></td><td>Aug 6: broker expressed interest in the entire 99-net-acre site (whole-site only). Sponsor to follow up; likely representing a listing interest or undisclosed buyer.</td></tr>
+          <tr><td>Metro Structures</td><td><span class="pill pill-active">Engaged</span></td><td>Delivered updated infrastructure OPC Aug 9; remains GC / pre-construction counterparty of record.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">5.</span>Public Finance - MUD &amp; TIRZ</div>
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">MUD 584</span><span class="value">Active</span><span class="sub">District created; directors' meeting ahead of vote</span></div>
+        <div class="kpi-card"><span class="label">Election</span><span class="value">Nov.</span><span class="sub">2026 vote remains the central milestone</span></div>
+        <div class="kpi-card"><span class="label">Reimbursement</span><span class="value">$28.3M</span><span class="sub">Prorated to $33.0M cost</span></div>
+        <div class="kpi-card"><span class="label">TIRZ</span><span class="value">TBD</span><span class="sub">Structuring work continues</span></div>
+      </div>
+      <p class="body-text"><strong>MUD:</strong> August confirmed the district has been created and is headed to the November 2026 vote. Both the sponsor and the JV partner are aligned that the election should proceed regardless of buyout timing. The updated infrastructure cost lifts the projected reimbursement to $28.3 million, which makes the vote and subsequent bond capacity more consequential to project economics than they were under the $23 million budget. A TCEQ requirement on fill export from retention areas is now a documented cost driver in the MUD-reimbursable scope.</p>
+      <p class="body-text"><strong>TIRZ / other public finance:</strong> structuring work referenced as ongoing in late August; no quantified update this month. FEMA / Harvey-related support pursued in July had no documented August activity.</p>
+
+      <div class="section-hdr"><span class="sn">6.</span>Retail Marketing &amp; Buyer Outreach</div>
+      <p class="body-text">Outreach shifted from lender-only to a dual buyer / capital track in August. An AI voice-agent campaign was relaunched August 6 against the de-duplicated LoopNet contact list (51 contacts, 43 dialed), with leads routed directly to the sponsor team and the script tightened to whole-project or large-parcel acquisition interest only. Result: one qualified broker lead with whole-site interest. On August 19 a password-gated buyer landing page went live, exposing eight diligence tabs (Dashboard, Lot Schedule, Cash Flows, Capital Stack, Financial Model, Site Plan, MUD Analysis, Design Concepts) while keeping expenditures, deemed-capital treatment, admin tools, and the full capital model spreadsheet internal. The first named buyer contact received access the same day.</p>
+      <ul class="bullet-list">
+        <li><strong>Retail remains intersection-led</strong> - no change to the June/July reconfiguration premise; highest-value pads stay at visible corner and intersection frontage.</li>
+        <li><strong>Whole-site interest is emerging</strong> - both the broker lead and the cash-buyer group are oriented to the full 99 net acres rather than individual parcels, which supports presenting ITPH as a single recapitalization or acquisition opportunity alongside the parcel program.</li>
+        <li><strong>Materials must reflect the $33.0M budget</strong> - the landing page financial model and MUD analysis were updated; earlier tear sheets in circulation should be superseded.</li>
+      </ul>
+
+      <div class="section-hdr"><span class="sn">7.</span>Design Concepts &amp; Capital Plan Platform</div>
+      <table class="data">
+        <thead><tr><th>Scenario / Tool</th><th>Status</th><th>August Treatment</th></tr></thead>
+        <tbody>
+          <tr><td>Balanced Mixed-Use</td><td><span class="pill pill-active">Available</span></td><td>Baseline diversified strategy; unchanged.</td></tr>
+          <tr><td>Town Center / Logistics Corridor / Workforce Village / Premium Pad</td><td><span class="pill pill-active">Available</span></td><td>Alternative scenarios retained for buyer and lender presentation.</td></tr>
+          <tr><td>Buyer landing page</td><td><span class="pill pill-new">Live Aug 19</span></td><td>Password-gated eight-tab diligence view; internal-only items locked.</td></tr>
+          <tr><td>Capital model</td><td><span class="pill pill-active">Updated Aug 10</span></td><td>Development cost $33.0M; MUD reimbursement $28.3M; proceeds $67.7M; buyout line TBD.</td></tr>
+          <tr><td>Viewer role</td><td><span class="pill pill-active">Deployed</span></td><td>Restricted eight-tab view with no admin surfaces for external viewers.</td></tr>
+        </tbody>
+      </table>
+      <div class="milestone-box"><strong>Platform note:</strong> August is published as the current monthly report; April, May, June, and July remain available as historical tabs.</div>
+
+      <div class="section-hdr"><span class="sn">8.</span>Capital Structure</div>
+      <table class="data">
+        <thead><tr><th>Layer</th><th>Amount / Status</th><th>August Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MUD Bond / Public Infrastructure</td><td>$28.3M projected reimbursement</td><td>Up from $23.4M framework; contingent on November 2026 vote.</td></tr>
+          <tr><td>Infrastructure / development cost</td><td>$33.0M all-in</td><td>Metro Structures OPC with 5% contingency, Aug 9.</td></tr>
+          <tr><td>Initial capital requirement</td><td>~$10M</td><td>Sponsor estimate to start the project, as presented to the cash-buyer group.</td></tr>
+          <tr><td>Kennedy Funding LOI</td><td>Received July 29; on hold</td><td>Gated on buyout terms through August; re-engagement is the September step.</td></tr>
+          <tr><td>Trez Capital</td><td>Conversation open</td><td>Parallel financing track referenced Aug 24.</td></tr>
+          <tr><td>Quinlan capital / return</td><td>10% compounded, in principle; ~$15M payout framework</td><td>Agreement in principle following Puerto Rico meeting; documentation pending.</td></tr>
+          <tr><td>Permit contribution / sponsor equity</td><td>Sponsor equity contribution</td><td>Position held through negotiation; resolved in principle per post-trip signal.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">9.</span>Operations, Controls &amp; Infrastructure</div>
+      <table class="data">
+        <thead><tr><th>Item</th><th>Status</th><th>August Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MUD 584</td><td><span class="pill pill-active">Active</span></td><td>District created; November 2026 vote is the milestone; election to proceed regardless of buyout timing.</td></tr>
+          <tr><td>TCEQ fill-export requirement</td><td><span class="pill pill-progress">Cost driver</span></td><td>Requirements for exporting fill from retention areas identified as a primary driver of the budget increase.</td></tr>
+          <tr><td>Metro Structures</td><td><span class="pill pill-active">Updated OPC delivered</span></td><td>$33.0M all-in estimate dated Aug 9 incorporated into model.</td></tr>
+          <tr><td>Financial controls</td><td><span class="pill pill-out">Gap identified</span></td><td>Aug 14-17: confirmed ITPH has no ledger on the sponsor's books; accounting sits with the local ownership group. Aug 24: flagged as a diligence risk given concurrent buyout, financing, and MUD/TIRZ work. Fix options: stand up a controlled ledger entity, or obtain periodic third-party financials.</td></tr>
+          <tr><td>Holding-company balance sheet</td><td><span class="pill pill-progress">Support requested</span></td><td>Aug 29: a Bissonnet-related increase on the holding-company balance sheet flagged as needing supporting documentation.</td></tr>
+          <tr><td>SKA environmental proposals</td><td><span class="pill pill-progress">Carried from July</span></td><td>No August correspondence; unsigned proposals from July remain an open authorization item.</td></tr>
+          <tr><td>Capital Plan Platform</td><td><span class="pill pill-active">Live</span></td><td>Buyer landing page, viewer role, and updated capital model deployed.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">10.</span>September Outlook</div>
+      <ul class="bullet-list">
+        <li><strong>Document the Quinlan agreement</strong> - convert the agreement in principle into a signed term sheet covering return basis, permit treatment, security release, and payout schedule.</li>
+        <li><strong>Re-engage Kennedy Funding and Trez Capital</strong> - with the buyout moving, respond to the outstanding LOI and align both lender conversations to the $33.0M / $28.3M / $67.7M model.</li>
+        <li><strong>Refresh all counterparty materials</strong> - ensure buyer, lender, and partner packages reflect the updated infrastructure budget and MUD reimbursement.</li>
+        <li><strong>Advance the cash-buyer and named-buyer conversations</strong> - follow up on the investor group's initial-capital question and the retail-center buyer's landing-page review.</li>
+        <li><strong>Close the financial-controls gap</strong> - establish an ITPH ledger or a periodic third-party financial feed before further diligence requests arrive.</li>
+        <li><strong>Keep the MUD calendar</strong> - hold the directors' meeting and November election sequence; confirm reimbursement scaling assumptions with district counsel.</li>
+        <li><strong>Authorize priority SKA work</strong> - clear the July carry-over so environmental schedule does not lag the capital timeline.</li>
+      </ul>
+
+      <div class="partner-message">
+        <div class="pm-title">Summary</div>
+        <p>August moved ITPH's two governing variables at once. The partner buyout went from a written impasse to agreement in principle through a purpose-built face-to-face meeting, and the infrastructure budget was re-based on a contractor estimate at $33.0 million with the MUD reimbursement scaling to $28.3 million. Buyer and capital outreach produced real, if early, engagement: a cash-buyer investor group, a named retail-center buyer, a whole-site broker lead, a live buyer landing page, and two lender conversations ready to re-engage.</p>
+        <p style="margin-top:10px">September's job is documentation and alignment: paper the Quinlan terms, put every counterparty on the same updated numbers, re-open the lender tracks, and close the financial-controls gap so the asset can withstand diligence as an investable position.</p>
+      </div>
+
+      <p class="signoff"><strong>LANDCO NEXA</strong><br>ITP Houston Monthly Project Report<br><span class="small">Prepared September 1, 2026 - Confidential</span></p>
+    </div>
+  </div>
+
+  <div class="footer-strip">Keystone&#8482; 2026</div>
+</div>
+</body></html>
