@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITPH, Houston TX - Monthly Project Report | September 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
+.shell{width:100%;max-width:960px;margin:0 auto}
+.top-bar{background:#1B2A4A;padding:18px 24px 0;border-radius:12px 12px 0 0}
+.top-bar-inner{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:16px}
+.top-bar-left h1{color:#C9A84C;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.top-bar-left p{color:rgba(255,255,255,.5);font-size:11px}
+.date-badge{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:8px;padding:8px 14px;text-align:right}
+.date-badge .month{color:#C9A84C;font-size:20px;font-weight:700;display:block;line-height:1.1}
+.date-badge .year{color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;display:block;margin-top:2px}
+.date-badge .supp{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.04em;display:block;margin-top:3px;text-transform:uppercase}
+.content{background:#fff;border:1px solid #ddd;border-radius:0 0 12px 12px}
+.panel{padding:28px 32px}
+.letter-header{border-bottom:1px solid #eee;padding-bottom:16px;margin-bottom:20px}
+.letter-meta{font-size:12px;color:#888;margin-bottom:4px}
+.addr{font-size:12px;color:#888;line-height:1.7;margin-bottom:10px}
+.subject-line{font-size:13px;font-weight:700;color:#1B2A4A;background:#F5F0E8;padding:9px 14px;border-radius:6px;border-left:3px solid #C9A84C}
+.section-hdr{font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 10px;padding-bottom:7px;border-bottom:2px solid #C9A84C}
+.sn{color:#C9A84C;margin-right:6px}
+.body-text{font-size:13px;line-height:1.75;color:#222;margin-bottom:10px}
+.bullet-list{margin:6px 0 12px;padding-left:0;list-style:none}
+.bullet-list li{font-size:13px;line-height:1.65;color:#222;padding:3px 0 3px 20px;position:relative}
+.bullet-list li::before{content:"\2014";position:absolute;left:0;color:#C9A84C;font-weight:700}
+.kpi-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+.kpi-card{flex:1;min-width:140px;background:#1B2A4A;color:#fff;padding:14px 16px;border-radius:8px;border-left:3px solid #C9A84C}
+.kpi-card .label{font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.65);text-transform:uppercase;display:block;margin-bottom:6px}
+.kpi-card .value{font-size:22px;font-weight:700;color:#C9A84C;display:block;line-height:1.1}
+.kpi-card .sub{font-size:10px;color:rgba(255,255,255,.55);display:block;margin-top:4px}
+table.data{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12px}
+table.data thead{background:#1B2A4A;color:#fff}
+table.data th{padding:9px 10px;text-align:left;font-size:10px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+table.data td{padding:8px 10px;border-bottom:1px solid #EEE;color:#333;line-height:1.45;vertical-align:top}
+table.data tbody tr:nth-child(even){background:#FAFAFA}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.03em}
+.pill-active{background:rgba(46,125,50,.15);color:#2E7D32;border:1px solid rgba(46,125,50,.4)}
+.pill-progress{background:rgba(201,168,76,.18);color:#7B5500;border:1px solid rgba(201,168,76,.4)}
+.pill-out{background:rgba(120,120,120,.15);color:#666;border:1px solid rgba(120,120,120,.4)}
+.pill-new{background:rgba(33,150,243,.15);color:#0D47A1;border:1px solid rgba(33,150,243,.4)}
+.milestone-box{background:#E8F5E9;border:1px solid #4CAF50;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#1B5E20;line-height:1.6}
+.milestone-box strong{color:#2E7D32}
+.strategy-box{background:#FAF6ED;border-left:4px solid #C9A84C;padding:18px 22px;margin:14px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 8px 8px 0}
+.strategy-box .sb-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.partner-message{background:#F5F0E8;border-left:4px solid #C9A84C;padding:16px 20px;margin:16px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 6px 6px 0}
+.partner-message .pm-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.value-callout{background:#F1F8F4;border-left:4px solid #2E7D32;padding:12px 16px;margin:10px 0;font-size:12px;line-height:1.65;color:#1B5E20;border-radius:0 6px 6px 0}
+.value-callout strong{color:#2E7D32}
+.alert-box{background:#FCE4D6;border:1px solid #ED7D31;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#7B3000;line-height:1.6}
+.alert-box strong{color:#C00000}
+.signoff{font-size:13px;color:#222;margin-top:20px;line-height:1.7}
+.signoff strong{color:#1B2A4A}
+.small{font-size:11px;color:#777}
+.footer-strip{background:#1B2A4A;color:rgba(255,255,255,.55);padding:14px 28px;border-radius:0 0 12px 12px;font-size:10px;text-align:center;letter-spacing:.04em;margin-top:0}
+@media (max-width:640px){.panel{padding:18px 16px}.kpi-card{min-width:130px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <h1>LANDCO NEXA</h1>
+        <p>ITP Houston - Monthly Project Report</p>
+      </div>
+      <div>
+        <div class="date-badge">
+          <span class="month">September</span>
+          <span class="year">2026</span>
+          <span class="supp">Monthly Report</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="panel">
+      <div class="letter-header">
+        <p class="letter-meta">Reporting Period: September 1-30, 2026</p>
+        <p class="addr">ITP Houston · 12000 Bissonnet Street · Houston, TX 77099<br>~136 Acres · 30-Lot Master-Planned Development · MUD 584</p>
+        <p class="subject-line">Monthly Project Report - October 1, 2026</p>
+      </div>
+
+      <div class="section-hdr"><span class="sn">1.</span>Executive Summary</div>
+      <p class="body-text">September was the month the two governing variables carried over from August's report moved from "in principle" toward paper. On <strong>September 23</strong> the sponsor and John Quinlan reached agreement on the partnership buyout in writing: Quinlan is paid $14.0 million (expenditures at a 10% IRR) plus $2.3 million (debt accrued to the sponsor), and the estimated $7.0 million of remaining profit splits evenly between the two, netting the sponsor roughly $3.5 million. A restated Bissonnet 136 Company Agreement carrying these terms was circulated and signed by the sponsor on September 23 — but John Quinlan / Dublin, Inc. had not executed any of his four signature blocks as of month-end, and the agreement's own terms state it is not binding until all members sign. A companion Assignment conveying the landfill permit from Metro Holdings into Bissonnet 136, LLC is, separately, fully executed on the sponsor's side.</p>
+      <p class="body-text">Against that backdrop the sponsor moved to the second governing variable: selling the property. By October 1 three competing offers were in hand at roughly $21.4-$24.0 million, and the sponsor is leaning toward the highest offer — Stream Capital, through its Clark East vehicle — for the co-venture opportunity it presents, a preference restated at the October 2 advisory meeting. Closer review of the paperwork found the Stream/Clark East terms read less like a purchase than a long, buyer-favorable option to purchase, and a formal ten-point issues memo was sent October 1 identifying the specific terms that need to be countered before leaning further into that offer. Separately, retail lot pricing discounting moved forward on its own track in late September, independent of the whole-site sale conversation.</p>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">Total Acreage</span><span class="value">~136</span><span class="sub">99 net developable</span></div>
+        <div class="kpi-card"><span class="label">Quinlan Buyout</span><span class="value">Agreed, Unsigned</span><span class="sub">$14.0M + $2.3M to Quinlan; sponsor-signed only, 9/23</span></div>
+        <div class="kpi-card"><span class="label">Purchase Offers</span><span class="value">3</span><span class="sub">$21.4M–$24.0M; none yet a signed contract</span></div>
+        <div class="kpi-card"><span class="label">Lead Offer Flag</span><span class="value">Option, Not Sale</span><span class="sub">Stream/Clark East — 10-issue memo sent 10/1</span></div>
+      </div>
+
+      <div class="section-hdr"><span class="sn">2.</span>Key Development #1 — Quinlan Buyout: Terms Agreed, Still Unsigned by Quinlan</div>
+      <p class="body-text">On <strong>September 23</strong> the sponsor reported reaching final agreement with John Quinlan on the ITPH partnership. As relayed: (1) expenditures at a <strong>10% IRR</strong>, totaling <strong>$14.0 million</strong>, paid to Quinlan; (2) debt accrued to the sponsor of <strong>$2.3 million</strong>, also paid to Quinlan; (3) an estimated <strong>$7.0 million</strong> of remaining profit, split equally between Quinlan and the sponsor, netting the sponsor roughly $3.5 million. The sponsor's same-day reply: "Sounds workable — get Quinlan to sign agreement, then get an offer accepted and a deposit to escrow." The email also flagged, separately, three competing purchase offers on the property at approximately $24 million.</p>
+      <p class="body-text">On <strong>September 24</strong> the underlying paper arrived: a 44-page restated Company Agreement of Bissonnet 136, LLC, carrying the agreed terms — Class A preferred return cut from 20% to 10% IRR, and the profit split flipped from 85/15 (Class A/sponsor) to 50/50. The sponsor signed (individually and as Metro Holdings' managing member) on September 23. <strong>John Quinlan / Dublin, Inc. has not signed any of his four blocks</strong> (Managing Member, and GP/Trustee for the Ireland FLP, International Interests, and Bolivar Equities entities), and the agreement's own §15.19 states it does not bind until all members execute — so despite the filename, this is not yet a completed agreement. Separately, the companion Assignment of the landfill permit interest (Metro Holdings → Bissonnet 136, LLC) is fully executed on the sponsor's side and does not require Quinlan's signature. Two drafting gaps were raised and accepted as-is by the sponsor: an Assignment Section 2 wording ambiguity (works in the sponsor's favor) and an Exhibit A membership table still showing the prior 99/1 split rather than the new 50/50 language — both left unresolved on the view that the parties' correspondence already establishes intent.</p>
+      <table class="data">
+        <thead><tr><th>Buyout Component</th><th>Amount / Terms</th><th>Status at Month-End</th></tr></thead>
+        <tbody>
+          <tr><td>Expenditures (10% IRR)</td><td>$14.0M paid to Quinlan</td><td><span class="pill pill-active">Agreed 9/23</span></td></tr>
+          <tr><td>Debt accrued to sponsor</td><td>$2.3M paid to Quinlan</td><td><span class="pill pill-active">Agreed 9/23</span></td></tr>
+          <tr><td>Remaining profit (est. $7.0M)</td><td>50/50 split; ≈$3.5M to sponsor</td><td><span class="pill pill-active">Agreed 9/23</span></td></tr>
+          <tr><td>Restated Company Agreement</td><td>Class A IRR 20%→10%; profit 85/15→50/50</td><td><span class="pill pill-progress">Signed by sponsor only</span></td></tr>
+          <tr><td>Quinlan / Dublin, Inc. signature</td><td>4 blocks outstanding (Managing Member + 3 trustee/GP roles)</td><td><span class="pill pill-out">Not signed</span></td></tr>
+          <tr><td>Permit Assignment (Metro Holdings → Bissonnet 136)</td><td>Landfill permit interest</td><td><span class="pill pill-active">Fully executed, sponsor side</span></td></tr>
+          <tr><td>Exhibit A membership table</td><td>Still shows old 99/1 split</td><td><span class="pill pill-progress">Gap accepted, not corrected</span></td></tr>
+        </tbody>
+      </table>
+      <div class="alert-box"><strong>Reporting note:</strong> per the agreement's own §15.19, the restated Company Agreement is not binding until John Quinlan / Dublin, Inc. executes all four of his blocks. Until that signature is in hand, the buyout terms above should be read as agreed-in-principle and documented, not as a closed transaction. Obtaining Quinlan's countersignature is the single highest-priority open item carried into October.</div>
+
+      <div class="section-hdr"><span class="sn">3.</span>Key Development #2 — Three Competing Purchase Offers; Lead Offer Flagged as an Option, Not a Sale</div>
+      <p class="body-text">On <strong>October 1</strong> the sponsor circulated a completed comparison of all offers received to purchase the ITPH property, framing the decision around who can close quickest and commit the most capital upfront. All three were described as serious, capable counterparties, with the sponsor "inclined to pursue the deal with Stream Capital" for the co-venture opportunity it presents — a preference the sponsor restated at the October 2 advisory meeting, where Stream/Clark East was also noted to have asked about co-venturing directly.</p>
+      <p class="body-text">Same day, review of the comparison matrix and the underlying LOI language produced a different read: the Stream Capital / Clark East offer, at $24.0 million the highest of the three, carries terms that function less like a sale and more like a buyer-controlled option to purchase — roughly 300 days of tie-up, a soft/conflicting earnest-money position, an unnamed building design that gates every permit and environmental question, and buyer exit rights at nearly every stage. A ten-point issues memo (<em>ITPH Offer Review — Top 10</em>) was sent October 1 identifying the specific terms to counter before committing further to that path. The memo's central ask: require the buyer to specify the project — site plan, building type, stories, foundations — before any permit contingency is negotiable, since refusal to specify is itself the answer on counterparty intent.</p>
+      <table class="data">
+        <thead><tr><th>Offer</th><th>Price</th><th>Earnest Money</th><th>Outside Close</th><th>Status at Month-End</th></tr></thead>
+        <tbody>
+          <tr><td>Clay Development</td><td>$21,413,225 ($3.60/SF)</td><td>$50,000 (0.23% of price)</td><td>≈270 days</td><td><span class="pill pill-out">LOI lapsed 9/27/26 — needs reissue</span></td></tr>
+          <tr><td>Stream Capital / Clark East (SCI)</td><td>$24,000,000 (≈$4.03/SF)</td><td>$240,000; refundable/hard conflict unresolved</td><td>≈300 days (buyer-extendable)</td><td><span class="pill pill-progress">Redline open; sponsor's lead choice</span></td></tr>
+          <tr><td>Panattoni Development</td><td>≈$23,792,472 ($4.00/SF, verbal)</td><td>≈$238,000 (assumed)</td><td>≈300 days (assumed)</td><td><span class="pill pill-new">No written LOI — verbal only</span></td></tr>
+        </tbody>
+      </table>
+      <p class="body-text"><strong>Why the Stream/Clark East terms are flagged:</strong> the LOI's own text conflicts on whether the deposit is refundable through the end of inspection or hard at the end of the permit period; the 120-day permit-confirmation period has no objective finish line ("obtainable" is buyer-controlled); no site plan or building type is specified despite the site's landfill-build-over exposure, which keeps environmental and remediation risk exposure open-ended; Stream Realty Capital's role as capital partner is referenced but not named in the LOI itself; and the whole-tract exclusivity functionally removes ITPH from the market for close to a year while the buyer carries little at risk. Clay Development, by contrast, is the cleanest and fastest of the three (no permit contingency, ~270-day close) but is the lowest-priced offer and its LOI lapsed September 27 without extension. Panattoni's $4.00/SF verbal indication has not yet been put in writing.</p>
+      <div class="milestone-box"><strong>Recommended next moves (per the October 1 memo):</strong> require the buyer to state the project before any permit contingency is negotiable; replace "obtainable" permit language with named City of Houston / TCEQ approvals and a hard deemed-satisfied date; hard the deposit to a real, early milestone; hold the environmental position to disclosure-only; name the vesting entity and confirm Stream Realty Capital's committed role; and revive the Clay LOI while getting Panattoni's indication in writing, so the sponsor is never negotiating against a single, soft bid.</div>
+
+      <div class="section-hdr"><span class="sn">4.</span>Contracts &amp; Negotiations</div>
+      <table class="data">
+        <thead><tr><th>Workstream</th><th>Status</th><th>September Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Quinlan Buyout</td><td><span class="pill pill-progress">Agreed, awaiting countersignature</span></td><td>Terms agreed 9/23; restated Company Agreement signed by sponsor 9/23; Quinlan/Dublin, Inc. has not yet executed any of his four blocks.</td></tr>
+          <tr><td>Clay Development (LOI)</td><td><span class="pill pill-out">Lapsed</span></td><td>$21.4M, cleanest terms, no permit contingency; LOI expired 5:00 PM CST 9/27/26 without extension or reissue.</td></tr>
+          <tr><td>Stream Capital / Clark East (SCI)</td><td><span class="pill pill-progress">Redline open; sponsor's stated lead</span></td><td>$24.0M headline price; requested a co-venture conversation directly (per 10/2 agenda); Top-10 issues memo sent 10/1 before further commitment.</td></tr>
+          <tr><td>Panattoni Development</td><td><span class="pill pill-new">Verbal only</span></td><td>$4.00/SF (≈$23.79M) verbal indication, terms assumed to mirror Clark East; no written LOI yet; "deep dive" discussed at 10/2 advisory meeting.</td></tr>
+          <tr><td>Kennedy Funding LOI</td><td><span class="pill pill-out">Closed out</span></td><td>9/18: Jared Levitt checked in again on the long-dormant $10M bridge LOI; sponsor replied directly that it will not be needed. Thanked and closed; no further action unless financing needs change.</td></tr>
+          <tr><td>Retail lot pricing</td><td><span class="pill pill-progress">In motion</span></td><td>9/27 exchange confirms active discounting off current asking pricing (sponsor: "ITPH — cranking!"), run as its own track alongside the whole-site sale conversation.</td></tr>
+          <tr><td>Metro Structures</td><td><span class="pill pill-active">Carried from August</span></td><td>No new September correspondence on file; August's $33.0M all-in OPC remains the governing infrastructure-cost estimate pending any update.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">5.</span>Public Finance — MUD &amp; TIRZ</div>
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">MUD 584</span><span class="value">Active</span><span class="sub">District created; November 2026 vote stands</span></div>
+        <div class="kpi-card"><span class="label">Election</span><span class="value">Nov.</span><span class="sub">2026 vote remains the central milestone</span></div>
+        <div class="kpi-card"><span class="label">Reimbursement</span><span class="value">$28.3M</span><span class="sub">Carried from August; no September revision on file</span></div>
+        <div class="kpi-card"><span class="label">TIRZ</span><span class="value">TBD</span><span class="sub">Structuring work continues</span></div>
+      </div>
+      <p class="body-text"><strong>MUD:</strong> no new correspondence surfaced a change to the MUD 584 picture this month — the district remains active and headed to the November 2026 vote carried over from August. That vote, and the bond capacity it unlocks, continues to govern the $28.3 million reimbursement estimate against the $33.0 million infrastructure budget set in August. Because the Quinlan buyout and the pending sale decision now run on their own timelines, confirming how the MUD election interacts with either path — particularly whether a closed sale to Stream/Clark East or another buyer would transfer or complicate the reimbursement right — is an open question worth raising with district counsel before November.</p>
+      <p class="body-text"><strong>TIRZ / other public finance:</strong> no quantified update this month; referenced only as ongoing structuring work as of late August and carried forward without new detail.</p>
+
+      <div class="section-hdr"><span class="sn">6.</span>Retail Marketing &amp; Lot Pricing</div>
+      <p class="body-text">September's retail/lot-level activity ran as a track parallel to the whole-site sale conversation rather than in place of it. A September 27 exchange confirmed the sponsor is actively discounting current lot pricing to move product, with the sponsor characterizing the effort as "ITPH — cranking!" when asked directly whether any signed contracts existed yet at month-end (none did, per that exchange — interest without signature). The August-built buyer landing page (password-gated, eight diligence tabs) and the broker/cash-buyer outreach threads opened in August were not referenced again in September correspondence; no update on their status is available this cycle.</p>
+      <ul class="bullet-list">
+        <li><strong>Two parallel sale conversations are now live</strong> - the whole-site institutional sale (three competing offers) and lot-level retail discounting are both active at the same time; keep them reconciled so a whole-site closing doesn't strand retail buyers mid-process, or vice versa.</li>
+        <li><strong>The parcel carve-out in the Stream/Clark East LOI is not a safe hedge</strong> - per the October 1 issues memo, any parcel sale during the whole-tract negotiation changes the acreage, frontage, and value the buyer is pricing and triggers a three-way renegotiation; it should not be relied on as a way to keep retail options open during that negotiation.</li>
+      </ul>
+
+      <div class="section-hdr"><span class="sn">7.</span>Design Concepts &amp; Capital Plan Platform</div>
+      <table class="data">
+        <thead><tr><th>Scenario / Tool</th><th>Status</th><th>September Treatment</th></tr></thead>
+        <tbody>
+          <tr><td>Balanced Mixed-Use</td><td><span class="pill pill-active">Available</span></td><td>Baseline diversified strategy; unchanged.</td></tr>
+          <tr><td>Town Center / Logistics Corridor / Workforce Village / Premium Pad</td><td><span class="pill pill-active">Available</span></td><td>Alternative scenarios retained for buyer and lender presentation.</td></tr>
+          <tr><td>Buyer landing page</td><td><span class="pill pill-active">Live since Aug 19</span></td><td>No September update on file; password-gated eight-tab diligence view remains the standing external-buyer surface.</td></tr>
+          <tr><td>ITPH LOI Comparison Matrix</td><td><span class="pill pill-new">New, Oct 1</span></td><td>Formal side-by-side of all three offers across price, deposit, contingencies, and closing mechanics — the basis for Section 3 above.</td></tr>
+          <tr><td>ITPH Offer Review — Top 10</td><td><span class="pill pill-new">New, Oct 1</span></td><td>Sponsor-facing issues-and-counters memo on the Stream/Clark East offer specifically.</td></tr>
+        </tbody>
+      </table>
+      <div class="milestone-box"><strong>Platform note:</strong> September is published as the current monthly report; April through August remain available as historical tabs.</div>
+
+      <div class="section-hdr"><span class="sn">8.</span>Capital Structure</div>
+      <table class="data">
+        <thead><tr><th>Layer</th><th>Amount / Status</th><th>September Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MUD Bond / Public Infrastructure</td><td>$28.3M projected reimbursement</td><td>Carried from August; contingent on November 2026 vote. No September revision on file.</td></tr>
+          <tr><td>Infrastructure / development cost</td><td>$33.0M all-in</td><td>Carried from August (Metro Structures OPC); no September update.</td></tr>
+          <tr><td>Quinlan payout — expenditures</td><td>$14.0M (10% IRR)</td><td>Agreed 9/23; paid to Quinlan per restated Company Agreement, pending his countersignature.</td></tr>
+          <tr><td>Quinlan payout — accrued debt</td><td>$2.3M</td><td>Agreed 9/23; paid to Quinlan.</td></tr>
+          <tr><td>Remaining profit split</td><td>≈$7.0M est., 50/50</td><td>≈$3.5M to sponsor; estimate, not yet realized — contingent on a closed sale.</td></tr>
+          <tr><td>Kennedy Funding LOI</td><td>Closed out 9/18</td><td>Sponsor confirmed to lender it will not be needed; no bridge financing in the current path.</td></tr>
+          <tr><td>Purchase offers (whole-site)</td><td>$21.4M–$24.0M, 3 offers</td><td>None yet converted to a signed purchase contract or escrow deposit as of month-end.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">9.</span>Operations, Controls &amp; Governance</div>
+      <table class="data">
+        <thead><tr><th>Item</th><th>Status</th><th>September Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Restated Company Agreement</td><td><span class="pill pill-progress">Partially executed</span></td><td>Signed by the sponsor individually and as Metro Holdings' managing member, 9/23. Not binding under its own §15.19 until Quinlan/Dublin, Inc. signs all four of his blocks — not yet done as of month-end.</td></tr>
+          <tr><td>Permit Assignment (Metro Holdings → Bissonnet 136)</td><td><span class="pill pill-active">Fully executed</span></td><td>Landfill permit interest conveyed; sponsor-side signature only required and is in hand.</td></tr>
+          <tr><td>Exhibit A membership table</td><td><span class="pill pill-out">Drafting gap, accepted as-is</span></td><td>Still reflects the prior 99/1 split rather than the new 50/50 profit language in §16.1(f)-(g); sponsor has accepted the risk given other correspondence establishing intent, no correction made.</td></tr>
+          <tr><td>MUD 584</td><td><span class="pill pill-active">Active</span></td><td>No change from August; November 2026 vote remains the milestone.</td></tr>
+          <tr><td>Financial controls (no ITPH ledger)</td><td><span class="pill pill-out">Open, carried from August</span></td><td>No September correspondence closing the gap identified in August — ITPH still has no ledger on the sponsor's own books. Remains a diligence risk given the live sale process.</td></tr>
+          <tr><td>SKA environmental proposals</td><td><span class="pill pill-progress">Carried from July/August</span></td><td>No September correspondence; unsigned proposals remain an open authorization item.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">10.</span>October Outlook</div>
+      <ul class="bullet-list">
+        <li><strong>Get Quinlan's countersignature</strong> - the restated Company Agreement is not binding until John Quinlan / Dublin, Inc. executes all four of his blocks; this is the single highest-priority open item.</li>
+        <li><strong>Resolve the lead-offer flags before advancing Stream/Clark East</strong> - require a named project design, fix the refundable/hard deposit conflict, replace "obtainable" permit language with named approvals and a hard date, and confirm Stream Realty Capital's committed role in writing.</li>
+        <li><strong>Keep the other two offers alive</strong> - revive the lapsed Clay Development LOI and get Panattoni's $4.00/SF verbal indication into a written LOI, so the sponsor never negotiates against a single, soft bid.</li>
+        <li><strong>Move one offer to contract and deposit</strong> - per the sponsor's own 9/23 framing, the next concrete milestone after a signed Quinlan agreement is an accepted offer with a deposit in escrow.</li>
+        <li><strong>Reconcile the retail/whole-site tension</strong> - confirm how ongoing lot-pricing discounts and any retained-parcel carve-out interact with a potential whole-tract sale before either track commits the other.</li>
+        <li><strong>Close the financial-controls gap</strong> - carried from August; establish an ITPH ledger or a periodic third-party financial feed given the live sale and buyout processes now underway.</li>
+        <li><strong>Confirm MUD election mechanics against a sale</strong> - raise with district counsel whether a closed sale affects the reimbursement right ahead of the November vote.</li>
+      </ul>
+
+      <div class="partner-message">
+        <div class="pm-title">Summary</div>
+        <p>September moved ITPH from "agreement in principle" to agreed terms on paper for the Quinlan buyout — $14.0 million plus $2.3 million to Quinlan, a 50/50 split of an estimated $7.0 million in remaining profit — with a restated Company Agreement signed on the sponsor's side September 23. The missing signature is Quinlan's own, and the agreement does not bind without it. In parallel, three competing purchase offers surfaced for the property itself, $21.4-$24.0 million, with the sponsor favoring the highest bid; a close review found that offer's terms read as a long option to purchase rather than a sale, and a formal counter-terms memo went out October 1 before committing further.</p>
+        <p style="margin-top:10px">October's job is to convert both agreements from "agreed" to "signed": get Quinlan's countersignature, and get the lead purchase offer's terms — or a cleaner alternative — into a contract with a deposit in escrow, while keeping the other two offers alive as leverage.</p>
+      </div>
+
+      <p class="signoff"><strong>LANDCO NEXA</strong><br>ITP Houston Monthly Project Report<br><span class="small">Prepared October 1, 2026 - Confidential</span></p>
+    </div>
+  </div>
+
+  <div class="footer-strip">Keystone&#8482; 2026</div>
+</div>
+</body></html>
