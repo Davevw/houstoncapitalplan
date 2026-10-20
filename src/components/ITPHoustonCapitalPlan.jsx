@@ -994,10 +994,10 @@ function SectionTitle({children,icon}){
 // MAIN APP
 // ═══════════════════════════════════════════════════════════════
 
-const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model","Site Plan","MUD Analysis","Design Concepts","JV Reports"];
+const TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Expenditures","Deemed Capital","Financial Model","Site Plan","MUD Analysis","Design Concepts"];
 // Viewer ("user" passcode) sees ONLY these tabs — no Expenditures, no Deemed
-// Capital, no Admin menu (Data Vault / Waterfall / Tax Dashboard).
-const VIEWER_TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Financial Model","Site Plan","MUD Analysis","Design Concepts","JV Reports"];
+// Capital, no Admin menu (Data Vault / Waterfall / Tax Dashboard / JV Reports).
+const VIEWER_TABS=["Dashboard","Lot Schedule","Cash Flows","Capital Stack","Financial Model","Site Plan","MUD Analysis","Design Concepts"];
 const BUILD_STAMP = "2026-03-30-1919";
 
 export default function App(){
@@ -1118,13 +1118,10 @@ export default function App(){
             </div>
           </div>
           <div style={{display:"flex",gap:3,marginTop:20,flexWrap:"wrap",alignItems:"center"}}>
-            {visibleTabs.filter(({t})=>t!=="JV Reports").map(({t,i})=>(
+            {visibleTabs.map(({t,i})=>(
               <button key={t} onClick={()=>setActiveTab(i)} style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeTab===i?"white":"rgba(255,255,255,0.12)",color:activeTab===i?NAVY:"rgba(255,255,255,0.8)"}}>{t}</button>
             ))}
             <a href="/design-standards" style={{padding:"9px 16px",borderRadius:"8px 8px 0 0",fontSize:12,fontWeight:600,letterSpacing:0.3,background:"rgba(255,255,255,0.12)",color:"rgba(255,255,255,0.8)",textDecoration:"none"}}>Design Standards</a>
-            {visibleTabs.filter(({t})=>t==="JV Reports").map(({t,i})=>(
-              <button key={t} onClick={()=>setActiveTab(i)} style={{padding:"9px 16px",border:"none",borderRadius:"8px 8px 0 0",cursor:"pointer",fontSize:12,fontWeight:600,letterSpacing:0.3,transition:"all 0.2s",background:activeTab===i?"white":"rgba(255,255,255,0.12)",color:activeTab===i?NAVY:"rgba(255,255,255,0.8)"}}>{t}</button>
-            ))}
             {isViewer && (
               <div style={{marginLeft:"auto",padding:"9px 16px",fontSize:11,fontWeight:600,letterSpacing:1,color:"rgba(255,255,255,0.55)",textTransform:"uppercase"}}>Viewer Access</div>
             )}
@@ -1144,7 +1141,7 @@ export default function App(){
               </button>
               {showAdminMenu && isAdminUnlocked() && (
                 <div style={{position:"absolute",right:0,top:"100%",background:"white",borderRadius:"0 0 8px 8px",boxShadow:"0 8px 24px rgba(0,0,0,0.2)",minWidth:180,zIndex:9999,overflow:"hidden"}}>
-                  {[{id:"waterfall",icon:"💧",label:"Waterfall"},{id:"tax-dashboard",icon:"🏛️",label:"Tax Dashboard"},{id:"capital-model",icon:"📈",label:"Capital Model"},{id:"data-vault",icon:"📊",label:"Data Vault"}].map(item=>(
+                  {[{id:"waterfall",icon:"💧",label:"Waterfall"},{id:"tax-dashboard",icon:"🏛️",label:"Tax Dashboard"},{id:"capital-model",icon:"📈",label:"Capital Model"},{id:"jv-reports",icon:"📋",label:"JV Reports"},{id:"data-vault",icon:"📊",label:"Data Vault"}].map(item=>(
                     <button key={item.id} onClick={()=>{setActiveAdminTab(item.id); setShowAdminMenu(false);}} style={{display:"flex",alignItems:"center",gap:8,width:"100%",padding:"12px 16px",border:"none",background:activeAdminTab===item.id?"#F0F6F8":"white",color:NAVY,fontSize:13,fontWeight:activeAdminTab===item.id?700:500,cursor:"pointer",textAlign:"left",transition:"background 0.15s"}}
                       onMouseEnter={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="#F7F9FB"}}
                       onMouseLeave={e=>{if(activeAdminTab!==item.id)e.currentTarget.style.background="white"}}
@@ -1170,7 +1167,6 @@ export default function App(){
         {activeTab===7&&<SitePlanTab/>}
         {activeTab===8&&<MUDAnalysisTab/>}
         {activeTab===9&&<DesignConceptsTab/>}
-        {activeTab===10&&<div style={{height:"calc(100vh - 220px)",minHeight:500}}><JVReports/></div>}
       </div>
 
       {/* Admin overlay panels (footer nav tabs) — never rendered for viewer sessions */}
@@ -1209,6 +1205,16 @@ export default function App(){
           </div>
           <div style={{maxWidth:1200,margin:"0 auto",padding:"24px 32px"}}>
             <CapitalModelDownload/>
+          </div>
+        </div>
+      )}
+      {!isViewer && activeAdminTab === "jv-reports" && (
+        <div style={{position:"fixed",top:0,left:0,right:0,bottom:0,background:"white",zIndex:8000,display:"flex",flexDirection:"column"}}>
+          <div style={{background:"white",borderBottom:"1px solid #E0E4E8",padding:"12px 20px",display:"flex",justifyContent:"flex-end"}}>
+            <button onClick={()=>setActiveAdminTab(null)} style={{background:"none",border:"none",color:"#7A8B9A",cursor:"pointer",fontSize:14,fontWeight:600,padding:"8px 14px",borderRadius:8,display:"flex",alignItems:"center",gap:6}}>✕ Close JV Reports</button>
+          </div>
+          <div style={{flex:1,minHeight:0}}>
+            <JVReports/>
           </div>
         </div>
       )}
