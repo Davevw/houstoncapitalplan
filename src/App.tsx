@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import AppErrorBoundary from "@/components/AppErrorBoundary";
+import EntryGate from "@/components/EntryGate";
 import Index from "./pages/Index.tsx";
 import Landing from "./pages/Landing.tsx";
 import AccessRequests from "./pages/AccessRequests.tsx";
@@ -20,11 +21,11 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/dashboard" element={<Index />} />
+            <Route path="/" element={<EntryGate><Index /></EntryGate>} />
+            <Route path="/dashboard" element={<EntryGate><Index /></EntryGate>} />
             <Route path="/landing" element={<Landing />} />
             <Route path="/access-requests" element={<AccessRequests />} />
-            <Route path="/design-standards" element={<DesignStandards />} />
+            <Route path="/design-standards" element={<EntryGate><DesignStandards /></EntryGate>} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
