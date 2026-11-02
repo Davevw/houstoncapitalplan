@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITPH, Houston TX - Monthly Project Report | October 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f4f4f4;color:#222;padding:20px}
+.shell{width:100%;max-width:960px;margin:0 auto}
+.top-bar{background:#1B2A4A;padding:18px 24px 0;border-radius:12px 12px 0 0}
+.top-bar-inner{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:16px}
+.top-bar-left h1{color:#C9A84C;font-size:15px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:2px}
+.top-bar-left p{color:rgba(255,255,255,.5);font-size:11px}
+.date-badge{background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.4);border-radius:8px;padding:8px 14px;text-align:right}
+.date-badge .month{color:#C9A84C;font-size:20px;font-weight:700;display:block;line-height:1.1}
+.date-badge .year{color:rgba(255,255,255,.6);font-size:12px;letter-spacing:.06em;display:block;margin-top:2px}
+.date-badge .supp{color:rgba(255,255,255,.35);font-size:10px;letter-spacing:.04em;display:block;margin-top:3px;text-transform:uppercase}
+.content{background:#fff;border:1px solid #ddd;border-radius:0 0 12px 12px}
+.panel{padding:28px 32px}
+.letter-header{border-bottom:1px solid #eee;padding-bottom:16px;margin-bottom:20px}
+.letter-meta{font-size:12px;color:#888;margin-bottom:4px}
+.addr{font-size:12px;color:#888;line-height:1.7;margin-bottom:10px}
+.subject-line{font-size:13px;font-weight:700;color:#1B2A4A;background:#F5F0E8;padding:9px 14px;border-radius:6px;border-left:3px solid #C9A84C}
+.section-hdr{font-size:13px;font-weight:700;color:#1B2A4A;text-transform:uppercase;letter-spacing:.06em;margin:24px 0 10px;padding-bottom:7px;border-bottom:2px solid #C9A84C}
+.sn{color:#C9A84C;margin-right:6px}
+.body-text{font-size:13px;line-height:1.75;color:#222;margin-bottom:10px}
+.bullet-list{margin:6px 0 12px;padding-left:0;list-style:none}
+.bullet-list li{font-size:13px;line-height:1.65;color:#222;padding:3px 0 3px 20px;position:relative}
+.bullet-list li::before{content:"\2014";position:absolute;left:0;color:#C9A84C;font-weight:700}
+.kpi-row{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0 18px}
+.kpi-card{flex:1;min-width:140px;background:#1B2A4A;color:#fff;padding:14px 16px;border-radius:8px;border-left:3px solid #C9A84C}
+.kpi-card .label{font-size:10px;letter-spacing:.06em;color:rgba(255,255,255,.65);text-transform:uppercase;display:block;margin-bottom:6px}
+.kpi-card .value{font-size:22px;font-weight:700;color:#C9A84C;display:block;line-height:1.1}
+.kpi-card .sub{font-size:10px;color:rgba(255,255,255,.55);display:block;margin-top:4px}
+table.data{width:100%;border-collapse:collapse;margin:10px 0 18px;font-size:12px}
+table.data thead{background:#1B2A4A;color:#fff}
+table.data th{padding:9px 10px;text-align:left;font-size:10px;letter-spacing:.05em;text-transform:uppercase;font-weight:700}
+table.data td{padding:8px 10px;border-bottom:1px solid #EEE;color:#333;line-height:1.45;vertical-align:top}
+table.data tbody tr:nth-child(even){background:#FAFAFA}
+.pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;letter-spacing:.03em}
+.pill-active{background:rgba(46,125,50,.15);color:#2E7D32;border:1px solid rgba(46,125,50,.4)}
+.pill-progress{background:rgba(201,168,76,.18);color:#7B5500;border:1px solid rgba(201,168,76,.4)}
+.pill-out{background:rgba(120,120,120,.15);color:#666;border:1px solid rgba(120,120,120,.4)}
+.pill-new{background:rgba(33,150,243,.15);color:#0D47A1;border:1px solid rgba(33,150,243,.4)}
+.milestone-box{background:#E8F5E9;border:1px solid #4CAF50;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#1B5E20;line-height:1.6}
+.milestone-box strong{color:#2E7D32}
+.strategy-box{background:#FAF6ED;border-left:4px solid #C9A84C;padding:18px 22px;margin:14px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 8px 8px 0}
+.strategy-box .sb-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+.partner-message{background:#F5F0E8;border-left:4px solid #C9A84C;padding:16px 20px;margin:16px 0;font-size:13px;line-height:1.75;color:#222;border-radius:0 6px 6px 0}
+.partner-message .pm-title{font-size:11px;font-weight:700;color:#1B2A4A;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.value-callout{background:#F1F8F4;border-left:4px solid #2E7D32;padding:12px 16px;margin:10px 0;font-size:12px;line-height:1.65;color:#1B5E20;border-radius:0 6px 6px 0}
+.value-callout strong{color:#2E7D32}
+.alert-box{background:#FCE4D6;border:1px solid #ED7D31;border-radius:6px;padding:12px 16px;margin:12px 0;font-size:12px;color:#7B3000;line-height:1.6}
+.alert-box strong{color:#C00000}
+.signoff{font-size:13px;color:#222;margin-top:20px;line-height:1.7}
+.signoff strong{color:#1B2A4A}
+.small{font-size:11px;color:#777}
+.footer-strip{background:#1B2A4A;color:rgba(255,255,255,.55);padding:14px 28px;border-radius:0 0 12px 12px;font-size:10px;text-align:center;letter-spacing:.04em;margin-top:0}
+@media (max-width:640px){.panel{padding:18px 16px}.kpi-card{min-width:130px}}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-bar-left">
+        <h1>LANDCO NEXA</h1>
+        <p>ITP Houston - Monthly Project Report</p>
+      </div>
+      <div>
+        <div class="date-badge">
+          <span class="month">October</span>
+          <span class="year">2026</span>
+          <span class="supp">Monthly Report</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="panel">
+      <div class="letter-header">
+        <p class="letter-meta">Reporting Period: October 1-31, 2026</p>
+        <p class="addr">ITP Houston · 12000 Bissonnet Street · Houston, TX 77099<br>~136 Acres · 30-Lot Master-Planned Development · MUD 584</p>
+        <p class="subject-line">Monthly Project Report - November 1, 2026</p>
+      </div>
+
+      <div class="section-hdr"><span class="sn">1.</span>Executive Summary</div>
+      <p class="body-text">October resolved the question September left open: which of the three competing purchase offers is real. <strong>Panattoni formally withdrew on October 30</strong> — a written pass from Riley Hix citing their institutional capital partners' preference for environmentally clean sites, after their Houston team's environmental and risk management groups reviewed the deal. Panattoni's $4.00/SF indication never made it to a written LOI. <strong>Stream Capital / Clark East remains flagged "unlikely"</strong> — the sponsor's own October 28 assessment is that Stream, like Panattoni, depends on outside capital neither has been forthright about. That leaves <strong>Clay Development as the clear leader</strong>, and their position improved materially over the month: a revised LOI received October 29 raised the price to $22,008,037 ($3.70/SF, up from $21,413,225) and increased earnest money to $190,000 total (up from $50,000). Clay's broker (NAI Robert Lynn) has stated this is their best and final offer.</p>
+      <p class="body-text">Separately, two other developments moved the project forward this month. On <strong>October 19</strong>, an operation to import 160,000 cubic yards of certified-clean fill onto the site began — placed in low areas and former golf-course ponds — before the sponsor had a hold-harmless agreement in hand or Metro Structures (the site's general contractor) confirmed as present to oversee placement; both are now being arranged after the fact. And on <strong>October 27</strong>, the project team presented to the Houston-area neighborhood association on the landfill-to-development plan, with environmental, geotechnical, and engineering representatives (Kimley-Horn) on hand to field public questions — a visible diligence moment worth carrying into investor materials. The Quinlan buyout, agreed in principle in September, saw no documented movement in October; it remains unsigned by John Quinlan / Dublin, Inc. as of month-end.</p>
+
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">Total Acreage</span><span class="value">~136</span><span class="sub">99 net developable</span></div>
+        <div class="kpi-card"><span class="label">Lead Offer</span><span class="value">Clay — $22.0M</span><span class="sub">$3.70/SF, $190K earnest money, revised 10/29</span></div>
+        <div class="kpi-card"><span class="label">Panattoni</span><span class="value">Withdrawn</span><span class="sub">Written pass, Oct 30 — capitalization/insurance concerns</span></div>
+        <div class="kpi-card"><span class="label">Quinlan Buyout</span><span class="value">Unsigned</span><span class="sub">Agreed 9/23; no October movement on file</span></div>
+      </div>
+
+      <div class="section-hdr"><span class="sn">2.</span>Key Development #1 — Field Narrows to One: Clay Leads, Panattoni Out, Stream Unlikely</div>
+      <p class="body-text">The month's central story is the collapse of three live offers down to one credible path. On <strong>October 28</strong>, the sponsor reported that, after further discussions, "it's becoming clear" Clay Development is the likely contender — both Stream and Panattoni rely on outside capital sources that neither has been willing to identify. The sponsor met with Clay's principals in Houston that same day. A revised LOI Comparison Matrix was circulated October 28 reordering Clay into the lead position, with Stream and Panattoni both flagged unlikely and the reasoning noted for each.</p>
+      <p class="body-text">On <strong>October 29</strong>, Clay's counter-offer landed (via NAI Robert Lynn, in response to the sponsor's October 16 track-changed comments on their prior LOI) — "best and final," per their broker Josh Carl. The sponsor met with Clay again that week and asked them to tighten the LOI further, with a further-improved or final version expected by October 30. On <strong>October 30</strong>, Panattoni's Riley Hix sent a written pass: after review by their Environmental and Risk Management teams, the site "presents challenges... from both a capitalization and insurance standpoint," noting their institutional capital partners prefer environmentally clean sites and that they've had similar issues with sites carrying any oil-and-gas history. The sponsor's reply characterized the site as "environmentally certified," not merely clean, pushing back lightly on the characterization while accepting the pass.</p>
+      <table class="data">
+        <thead><tr><th>Offer</th><th>Price</th><th>Earnest Money</th><th>Status at Month-End</th></tr></thead>
+        <tbody>
+          <tr><td>Clay Development</td><td>$22,008,037 ($3.70/SF)<br><span class="small">Was $21,413,225 ($3.60/SF) at Sept-end</span></td><td>$190,000 total (0.86%) — $70,000 within 5 days, $120,000 within 3 business days after feasibility ends<br><span class="small">Was $50,000 at Sept-end</span></td><td><span class="pill pill-active">Lead bidder — "best and final" per broker, tightened version expected</span></td></tr>
+          <tr><td>Stream Capital / Clark East (SCI)</td><td>$24,000,000 ($4.03/SF)</td><td>$240,000 (1.0%); refundability conflict in LOI text unresolved</td><td><span class="pill pill-progress">Unlikely — outside capital dependency confirmed by sponsor 10/28, sources undisclosed</span></td></tr>
+          <tr><td>Panattoni Development</td><td>$4.00/SF verbal (≈$23,792,472)</td><td>Never documented</td><td><span class="pill pill-out">Withdrawn — written pass received 10/30</span></td></tr>
+        </tbody>
+      </table>
+      <div class="alert-box"><strong>Open items before Clay's version is final</strong> (per the October 30 comparison memo): the LOI still shows a September 27, 2026 expiration on its face and needs reissue; whether the $120,000 second deposit is refundable once posted is unanswered in the LOI; the "Clay Development & Construction, Inc. or Affiliate" assignment right raises a question of whether a seller consent or capital-source disclosure should be required; and the LOI is silent on environmental disclosure despite the site's landfill history and the "environmentally certified" status the sponsor described to Panattoni — three items flagged for seller's counsel, plus a fourth for seller's tax advisor on roll-back tax exposure before closing.</div>
+      <div class="milestone-box"><strong>Read-through:</strong> the field narrowing to a single credible bidder is progress, not risk — Clay has no disclosed outside-capital dependency (unlike the other two), its price and earnest money both improved materially over the month, and its broker has called this their final position. The job now is converting "best and final" into a signed, binding contract with the open counsel questions resolved, while the expired LOI date gets formally cured.</div>
+
+      <div class="section-hdr"><span class="sn">3.</span>Key Development #2 — 160,000 CY Clean-Fill Import Begins Ahead of Paper</div>
+      <p class="body-text">On <strong>October 19</strong>, the sponsor learned — from a local contact, not through the project's own GC channel — that an operation to import 160,000 cubic yards of certified-clean fill onto the ITPH site had commenced, with material being placed in low-fill areas and former golf-course ponds. Metro Structures (site GC) had not been informed the start date was Monday and had not yet seen the hold-harmless agreement governing the placement; their primary concerns are hold-harmless language, and liability for road damage or material tracking from trucks. The sponsor favors a hold-harmless agreement but had not arranged one in advance of the start date, and is now working to get Metro's Steve Meyer and SKA's Michael Schultz looped in to oversee where the fill is placed and confirm it matches the intended plan.</p>
+      <div class="value-callout"><strong>Why this matters:</strong> 160,000 cubic yards of certified-clean fill delivered at no cost to the project is a meaningful in-kind contribution toward the site's development readiness — but starting the operation before the hold-harmless agreement and GC oversight were in place is a documentation and liability gap that should be closed immediately, not retroactively, especially with a live sale process underway.</div>
+      <table class="data">
+        <thead><tr><th>Item</th><th>Status</th><th>October Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Fill import volume</td><td><span class="pill pill-active">In progress</span></td><td>160,000 cubic yards, certified clean; placed in low-fill areas and former golf-course ponds. Sponsor characterizes as "an excellent deal" — site needed the dirt.</td></tr>
+          <tr><td>Hold-harmless agreement</td><td><span class="pill pill-out">Not yet executed</span></td><td>Sponsor favors one but had not arranged it before the Monday start date; being drafted after the fact.</td></tr>
+          <tr><td>GC site oversight (Metro Structures)</td><td><span class="pill pill-progress">Being arranged</span></td><td>Steve Meyer was not aware the start date was imminent; site visit planned to confirm placement matches plan and review road-damage/tracking liability.</td></tr>
+          <tr><td>Export right (Class 4 materials)</td><td><span class="pill pill-new">Referenced, unclear</span></td><td>Sponsor's email references "some sort of a right to export class 4 materials eventually" tied to the same deal — needs clarification and documentation.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">4.</span>Community Engagement &amp; Public Relations</div>
+      <p class="body-text">On <strong>October 27</strong>, the project team presented to the Houston-area neighborhood association on converting the 136-acre former landfill into commercial, residential, retail, and light-flex space. Environmental, geotechnical, and engineering representatives (Kimley-Horn) were present to answer public questions directly about the site's future and safety. The sponsor framed it as a model of coordinated teamwork and addressed community concerns head-on. Photos from the meeting have been filed into the project data vault under "Community Meeting."</p>
+      <div class="milestone-box"><strong>Investor-relevant takeaway:</strong> visible, in-person diligence in front of the public — with named technical experts fielding questions — is exactly the kind of record that supports the landfill-to-development thesis to lenders, buyers, and the MUD electorate ahead of November's vote. This has been noted for inclusion in investor-facing materials going forward.</div>
+
+      <div class="section-hdr"><span class="sn">5.</span>Quinlan Buyout — No Movement</div>
+      <p class="body-text">No correspondence addressing the Quinlan buyout or the restated Bissonnet 136 Company Agreement was identified in October. As of month-end, the position is unchanged from September: terms were agreed September 23 ($14.0 million expenditures at 10% IRR, plus $2.3 million accrued debt, plus a 50/50 split of an estimated $7.0 million remaining profit, netting the sponsor roughly $3.5 million), the sponsor has signed the restated Company Agreement, and <strong>John Quinlan / Dublin, Inc. has not executed any of his four signature blocks</strong>. Per the agreement's own §15.19, it does not bind until all members sign. With the purchase-offer field now narrowed to Clay, getting Quinlan's countersignature in hand becomes more urgent, not less — a signed sale needs a settled ownership structure behind it.</p>
+      <table class="data">
+        <thead><tr><th>Buyout Component</th><th>Amount / Terms</th><th>Status at Month-End</th></tr></thead>
+        <tbody>
+          <tr><td>Expenditures (10% IRR)</td><td>$14.0M paid to Quinlan</td><td><span class="pill pill-active">Agreed 9/23 — no October change</span></td></tr>
+          <tr><td>Debt accrued to sponsor</td><td>$2.3M paid to Quinlan</td><td><span class="pill pill-active">Agreed 9/23 — no October change</span></td></tr>
+          <tr><td>Remaining profit (est. $7.0M)</td><td>50/50 split; ≈$3.5M to sponsor</td><td><span class="pill pill-active">Agreed 9/23 — no October change</span></td></tr>
+          <tr><td>Restated Company Agreement</td><td>Class A IRR 20%→10%; profit 85/15→50/50</td><td><span class="pill pill-progress">Signed by sponsor only — no October change</span></td></tr>
+          <tr><td>Quinlan / Dublin, Inc. signature</td><td>4 blocks outstanding</td><td><span class="pill pill-out">Still not signed — no October correspondence found</span></td></tr>
+        </tbody>
+      </table>
+      <div class="alert-box"><strong>Carried forward from September, now more urgent:</strong> the restated Company Agreement is not binding until Quinlan/Dublin, Inc. executes all four blocks. With Clay emerging as the one credible buyer, this signature should be treated as a gating item for any purchase contract, not a parallel track.</div>
+
+      <div class="section-hdr"><span class="sn">6.</span>Public Finance — MUD &amp; TIRZ</div>
+      <div class="kpi-row">
+        <div class="kpi-card"><span class="label">MUD 584</span><span class="value">Active</span><span class="sub">District created; November 2026 vote stands</span></div>
+        <div class="kpi-card"><span class="label">Election</span><span class="value">Nov.</span><span class="sub">2026 vote remains the central milestone</span></div>
+        <div class="kpi-card"><span class="label">Reimbursement</span><span class="value">$28.3M</span><span class="sub">Carried from August; no October revision on file</span></div>
+        <div class="kpi-card"><span class="label">TIRZ</span><span class="value">TBD</span><span class="sub">Structuring work continues</span></div>
+      </div>
+      <p class="body-text"><strong>MUD:</strong> no new correspondence surfaced a change to the MUD 584 picture in October — the district remains active and headed to the November 2026 vote carried forward from prior months. That vote continues to govern the $28.3 million reimbursement estimate against the $33.0 million infrastructure budget set in August. The question raised in September — how the MUD election interacts with a pending sale to Clay — remains open and worth raising with district counsel before the vote, now that Clay has emerged as the one credible buyer rather than an abstract possibility.</p>
+      <p class="body-text"><strong>TIRZ / other public finance:</strong> no quantified update this month; referenced only as ongoing structuring work and carried forward without new detail.</p>
+
+      <div class="section-hdr"><span class="sn">7.</span>Contracts &amp; Negotiations Summary</div>
+      <table class="data">
+        <thead><tr><th>Workstream</th><th>Status</th><th>October Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Quinlan Buyout</td><td><span class="pill pill-progress">Agreed, awaiting countersignature</span></td><td>No October correspondence found; unchanged from September — Quinlan/Dublin, Inc. has not executed any of his four blocks.</td></tr>
+          <tr><td>Clay Development (LOI)</td><td><span class="pill pill-active">Lead bidder, tightening</span></td><td>Revised LOI received 10/29: $3.70/SF, $22,008,037, $190,000 earnest money. Broker calls it best and final; sponsor requested further tightening, expected by 10/30. Still shows stale 9/27 expiration.</td></tr>
+          <tr><td>Stream Capital / Clark East (SCI)</td><td><span class="pill pill-progress">Unlikely</span></td><td>No LOI movement; sponsor's 10/28 assessment confirms undisclosed outside-capital dependency, same concern as Panattoni.</td></tr>
+          <tr><td>Panattoni Development</td><td><span class="pill pill-out">Withdrawn</span></td><td>Written pass received 10/30 from Riley Hix, citing capitalization and insurance concerns from their institutional capital partners; never had a written LOI.</td></tr>
+          <tr><td>Clean-fill import (160,000 CY)</td><td><span class="pill pill-progress">In progress, paper trailing</span></td><td>Began 10/19/26; hold-harmless agreement and GC oversight being arranged after the start date.</td></tr>
+          <tr><td>Community engagement</td><td><span class="pill pill-active">Completed, positive</span></td><td>10/27 neighborhood association presentation with environmental/geotech/engineering reps on hand; filed to data vault.</td></tr>
+          <tr><td>Inbound buyer inquiries</td><td><span class="pill pill-new">One received</span></td><td>10/20: Tariq Zaka (Houston-area commercial developer) inquired via the project website; referred to the public capital-plan web app rather than NDA-gated materials; no further follow-up requested by inquirer.</td></tr>
+          <tr><td>Metro Structures (infrastructure OPC)</td><td><span class="pill pill-active">Carried from August</span></td><td>No new cost-estimate correspondence; August's $33.0M all-in OPC remains the governing figure pending any update.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">8.</span>Project Status Dashboard</div>
+      <table class="data">
+        <thead><tr><th>Topic</th><th>Status</th><th>Key Note</th></tr></thead>
+        <tbody>
+          <tr><td>Whole-site sale</td><td><span class="pill pill-active">One credible bidder</span></td><td>Clay Development leads, improving terms, broker calls it final; Stream unlikely, Panattoni withdrawn.</td></tr>
+          <tr><td>Quinlan buyout</td><td><span class="pill pill-progress">Agreed, unsigned</span></td><td>No October movement; Quinlan/Dublin, Inc. signature still the top open item.</td></tr>
+          <tr><td>Site infrastructure</td><td><span class="pill pill-active">Advancing</span></td><td>160,000 CY clean-fill import underway; hold-harmless/GC oversight catching up.</td></tr>
+          <tr><td>MUD 584</td><td><span class="pill pill-active">Active</span></td><td>No change; November 2026 vote remains the milestone.</td></tr>
+          <tr><td>Community relations</td><td><span class="pill pill-active">Positive</span></td><td>10/27 neighborhood presentation well received per sponsor's account.</td></tr>
+          <tr><td>Financial controls (no ITPH ledger)</td><td><span class="pill pill-out">Open, carried from August</span></td><td>No October correspondence closing this gap; remains a diligence risk given the live sale process.</td></tr>
+          <tr><td>Retail lot pricing</td><td><span class="pill pill-progress">No October update on file</span></td><td>September's active discounting track not referenced again this month.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">9.</span>Risk Assessment</div>
+      <table class="data">
+        <thead><tr><th>Risk</th><th>Level</th><th>Assessment</th></tr></thead>
+        <tbody>
+          <tr><td>Stale LOI expiration</td><td><span class="pill pill-out">Elevated</span></td><td>Clay's LOI still shows a September 27, 2026 expiration on its face and has not been formally reissued or extended in writing — a technical defect that should be cured before the deal is treated as binding.</td></tr>
+          <tr><td>Unresolved counsel questions</td><td><span class="pill pill-progress">Medium</span></td><td>Deposit refundability, assignment/capital-source disclosure, and environmental representation language are all open in the Clay LOI; should be resolved by counsel before signing, not after.</td></tr>
+          <tr><td>Quinlan signature risk</td><td><span class="pill pill-out">Elevated, increasing</span></td><td>With a credible buyer now in hand, an unsigned ownership restructuring becomes a closing risk rather than a background item — a purchase contract should not outrun the underlying ownership agreement.</td></tr>
+          <tr><td>Fill-import liability gap</td><td><span class="pill pill-progress">Medium, narrowing</span></td><td>Material placement began before hold-harmless paperwork and GC oversight were confirmed; being addressed retroactively, which narrows but does not eliminate exposure for the period already elapsed.</td></tr>
+          <tr><td>Financial controls</td><td><span class="pill pill-out">Medium-High, unaddressed</span></td><td>No ITPH ledger exists on the sponsor's own books; carried unresolved since August and now more relevant given active sale negotiations.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="section-hdr"><span class="sn">10.</span>November Outlook</div>
+      <ul class="bullet-list">
+        <li><strong>Get Clay's tightened LOI finalized and formally reissued</strong> — cure the stale September 27 expiration date and resolve the three counsel questions (deposit refundability, assignment/capital-source disclosure, environmental representation) before signing.</li>
+        <li><strong>Get Quinlan's countersignature</strong> — now the single highest-priority item given a credible buyer is in hand; a purchase contract should not close ahead of a settled ownership structure.</li>
+        <li><strong>Formalize the fill-import paperwork</strong> — execute the hold-harmless agreement and confirm Metro Structures' and SKA's ongoing site oversight for the remainder of the 160,000 CY operation.</li>
+        <li><strong>Raise the MUD-versus-sale question with district counsel</strong> — confirm whether a closed sale to Clay affects the reimbursement right ahead of the November vote.</li>
+        <li><strong>Close the financial-controls gap</strong> — carried from August; establish an ITPH ledger or periodic third-party financial feed given the live sale process.</li>
+        <li><strong>Carry the October 27 community meeting into investor materials</strong> — the public diligence moment (environmental, geotech, and engineering reps fielding questions) is a strong credibility point for lenders, buyers, and the MUD electorate.</li>
+      </ul>
+
+      <div class="partner-message">
+        <div class="pm-title">Summary</div>
+        <p>October narrowed three competing purchase offers to one credible path: Clay Development, now at $22,008,037 ($3.70/SF) with $190,000 in earnest money, improved and tightening through the month, with its broker calling it best and final. Panattoni formally withdrew October 30 over institutional capitalization and insurance concerns; Stream Capital / Clark East remains flagged unlikely over undisclosed outside-capital dependency. Separately, a 160,000-cubic-yard clean-fill import began on site October 19, and the project team presented to the neighborhood association October 27 with strong technical representation in the room.</p>
+        <p style="margin-top:10px">November's job is to convert Clay's best-and-final position into a signed, binding contract — curing the stale LOI expiration and resolving the counsel questions — while finally securing Quinlan's countersignature on the restated Company Agreement, since a sale now has somewhere real to land.</p>
+      </div>
+
+      <p class="signoff"><strong>LANDCO NEXA</strong><br>ITP Houston Monthly Project Report<br><span class="small">Prepared November 1, 2026 - Confidential</span></p>
+    </div>
+  </div>
+
+  <div class="footer-strip">Keystone&#8482; 2026</div>
+</div>
+</body></html>
