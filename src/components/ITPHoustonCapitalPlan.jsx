@@ -1103,8 +1103,8 @@ export default function App(){
               </div>
             </div>
             <div style={{textAlign:"right",fontSize:12,opacity:0.88}}>
-              <div>Last Update: August 1, 2026</div>
-              <div style={{marginTop:2,fontWeight:600,color:"rgba(255,255,255,0.92)"}}>Last JV Report: August 2026 — Issued September 1, 2026</div>
+              <div>Last Update: November 1, 2026</div>
+              <div style={{marginTop:2,fontWeight:600,color:"rgba(255,255,255,0.92)"}}>Last JV Report: October 2026 — Issued November 1, 2026</div>
               <div style={{display:"flex",gap:8,marginTop:8,flexWrap:"wrap",justifyContent:"flex-end"}}>
                 <button
                   onClick={() => setShowPresentation(true)}
