@@ -7,13 +7,14 @@ describe("passcode roles", () => {
     expect(resolveRole("user")).toBe("user");
     expect(resolveRole("UsEr")).toBe("user");
   });
-  it("HC01 and ML01 are admin codes, case-insensitive", () => {
-    expect(resolveRole("HC01")).toBe("admin");
-    expect(resolveRole("hc01")).toBe("admin");
+  it("ADMIN01 and ML01 are admin codes, case-insensitive", () => {
+    expect(resolveRole("ADMIN01")).toBe("admin");
+    expect(resolveRole("admin01")).toBe("admin");
     expect(resolveRole("ML01")).toBe("admin");
     expect(resolveRole("ml01")).toBe("admin");
   });
-  it("ROY01 no longer works", () => {
+  it("ROY01 and HC01 no longer work", () => {
     expect(resolveRole("ROY01")).toBeNull();
+    expect(resolveRole("HC01")).toBeNull();
   });
 });

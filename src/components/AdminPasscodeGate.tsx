@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 const NAVY = "#0B3D5C";
-const ADMIN_CODE = "HC01";
+const ADMIN_CODE = "ADMIN01";
 const SESSION_KEY = "admin_unlocked";
 const ROLE_KEY = "itph_access_role";
 
@@ -12,7 +12,7 @@ const ROLE_KEY = "itph_access_role";
 //            no Deemed Capital, no Admin menu.
 export type AccessRole = "admin" | "user" | null;
 
-const ADMIN_CODES = ["HC01", "ML01"];
+const ADMIN_CODES = ["ADMIN01", "ML01"];
 const USER_CODES = ["USER"];
 
 export function resolveRole(code: string): AccessRole {
